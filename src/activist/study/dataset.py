@@ -83,7 +83,10 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
         row = {k: c.get(k) for k in ("event_id", "campaign_key", "published", "form", "signal_class", "event_type",
                                      "filer_id", "filer_name", "issuer_id", "issuer_name", "url", "region")}
         row["activist"] = c.get("filer_name") or c.get("filer_id")
-        t = secmeta.ticker_asof(c["issuer_id"], c["published"][:10])
+        try:
+            t = secmeta.ticker_asof(c["issuer_id"], c["published"][:10])
+        except Exception:
+            funnel["SEC-Stammdaten nicht abrufbar"] += 1; row["status"] = "keine Stammdaten"; rows.append(row); continue
         if not t:
             funnel["ohne Ticker (Survivorship-Lücke)"] += 1; row["status"] = "kein Ticker"; rows.append(row); continue
         row["ticker"] = t["ticker"]
@@ -96,7 +99,10 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
         if chk.get("ok") is False:
             funnel["Kursquellen weichen ab"] += 1; row["status"] = "gesperrt: Kursabweichung"; rows.append(row); continue
         pf = price_features(px, c["published"])
-        so = secmeta.shares_outstanding_asof(c["issuer_id"], d0)
+        try:
+            so = secmeta.shares_outstanding_asof(c["issuer_id"], d0)
+        except Exception:
+            so = None
         uv = universe_check(cfg, pf, so[0] if so else None, secmeta.excluded_industry(co.get("sic")), t["otc"])
         row.update({k: pf.get(k) for k in ("price", "adv", "runup_20d", "half_spread")})
         row["mcap"] = so[0] * pf["price"] if so and pf.get("ok") else None

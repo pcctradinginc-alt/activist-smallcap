@@ -32,7 +32,13 @@ def _cache_path(kind: str, cik10: str) -> Path:
 
 
 def _fetch_json(url: str) -> dict:
-    return edgar._get(url).json()
+    """404 = für diese CIK gibt es keine Daten (z. B. kein XBRL) -> leeres Dict, wird ebenfalls gecacht."""
+    try:
+        return edgar._get(url).json()
+    except Exception as e:
+        if getattr(getattr(e, "response", None), "status_code", None) == 404:
+            return {}
+        raise
 
 
 def _cached(kind: str, url: str, cik10: str, ttl_days: float = CACHE_TTL_DAYS) -> dict:
