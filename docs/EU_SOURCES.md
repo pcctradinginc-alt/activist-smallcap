@@ -47,3 +47,33 @@ Tests: `tests/test_eu_sources.py` (offline, Fixtures in `tests/fixtures/eu/`, je
 - Der AFM-Export (NL) taugt wegen fehlender Publikationszeit nicht für Timing, könnte aber offline Filer/% nachtragen (Fuzzy-Join auf Emittent + Datum).
 - DACH ist nicht abgedeckt (BaFin/Unternehmensregister FAIL, SIX FAIL); Region "DACH" bleibt ohne Adapter. UK-NSM enthält teils DE/CH-Emittenten nicht.
 - Nicht verifiziert: Verhalten bei Korrekturmeldungen (NSM `latest_flag`, Oslo `correctedByMessageId` werden mitgeführt/gefiltert, aber nicht gemerged).
+
+## Nachtrag DACH (Deutschland, Österreich, Schweiz), Probe 2026-11-14
+
+robots.txt je Host vorab abgerufen und geprüft; UA `activist-smallcap research contact@example.org`, >= 1 s Abstand, kein Login/Bot-Check umgangen.
+
+| Quelle | Endpoint | Zeitstempel | Historie | IDs | robots / ToS | Verdikt |
+|---|---|---|---|---|---|---|
+| EQS News (eqs-news.com; ex-dgap.de, dgap.de leitet dorthin um) | Startseite/Firmenseiten `/company/<slug>/news/<uuid>` (HTML, je 30 Items); Einzelmeldung `/news/voting-rights/<..>/<uuid>_en` (Volltext, ISIN im Listing `data-news-isin`) | Datum+Uhrzeit (CET) | Listing nur die letzten 30 Items; Paging/Suche/Kategorien nur per `/wp-admin/admin-ajax.php` (JS `api_ajax_params.ajaxurl`) | ISIN (Listing), LEI (Text) | robots: `/wp-admin/`, `/search/`, `/wp-json/` Disallow -> Backend gesperrt; Legal Notice: Speicherung in Datenbanken/kommerzielle Nutzung nur mit schriftlicher Zustimmung, Text-und-Data-Mining ohne Zustimmung verboten | **FAIL** (3) Historie, ToS |
+| newsaktuell / presseportal.de | robots `Disallow:` leer (frei) | - | - | - | EQS-Stimmrechtsmeldungen werden dort nicht verbreitet (Stichprobe Suchseite ohne Treffer) | **FAIL** (kein Inhalt) |
+| pressetext.com | robots leer | - | - | - | Keine Stimmrechtsmeldungen (Startseite 0 Treffer) | **FAIL** (kein Inhalt) |
+| boerse-frankfurt.de News | SPA, Backend `bfw-api-prod.ariva-services.de`/`api.live.deutsche-boerse.com` (Token/Signatur-Header im Bundle) | - | - | - | Kein robots auf api-Host (404); Zugriff setzt app-interne Tokens voraus, keine EQS-Kategorie gefunden -> nicht weiterverfolgt (kein Umgehen) | **FAIL** (nicht öffentlich nutzbar) |
+| finanznachrichten.de | RSS `/rss-news/`, `/rss-aktien-nachrichten/` (je ~20 Items, 0 Stimmrechte); Artikel `/nachrichten-YYYY-MM/` | Uhrzeit | nur aktuelle Items; Kategorie-/Suchseiten (`/suche-aktie/`, `/artikel/`, `/a/`) robots-gesperrt | - | AGB-Seite nicht auffindbar (404); kommerzieller Aggregator | **FAIL** (kein Stimmrechts-Feed, Historie) |
+| BaFin MVP / Unternehmensregister | siehe oben | | | | robots Disallow | **FAIL** (bereits oben) |
+| AT, APA-OTS (ots.at) | Liste `GET https://core2023.ots.at/api/v1/search?query=EQS-PVR&channel[]=index&type=&from=<epoch>&to=<epoch>&page=&maxCountPerPage=` ; Detail `GET .../api/v1/pressrelease/<key>` (Volltext, strukturiertes Formular) | `timestamp` Epoche, sekundengenau (= EQS/euro-adhoc-Verteilzeit) | `EQS-PVR` ab 2021-12 (1248 Treffer inkl. EN-Zwilling), davor `EANS-Stimmrechte` ab 2009-03 (3189 Treffer; enthält auch einige deutsche Emittenten, z. B. TUI AG, §26 WpHG) | ISIN im Text (7.A), Filer im Text (Ziff. 3), % (Ziff. 6) | API-Host ohne robots (404); www.ots.at robots: nur `/app/`, `/service/gui/` gesperrt, **aber `TDM-policy: /tdmrep.json` mit `tdm-reservation: 1`** (Text-und-Data-Mining-Vorbehalt für die ganze Seite); API nicht als öffentliche Schnittstelle dokumentiert | **FAIL (ToS/TDM)**, technisch hervorragend; PASS erst mit Lizenz/Zustimmung APA-OTS. Parser + gesperrter Adapter implementiert |
+| CH, SIX Exchange Regulation | `GET https://www.ser-ag.com/sheldon/significant_shareholders/v1/overview.json?pageSize=&pageNumber=&sortAttribute=byDate&fromDate=YYYYMMDD&toDate=YYYYMMDD` (+ `issuers.json`); im JS-Bundle der SPA gefunden (`significant-shareholders/clientlibs.min...js`) | nur Datum (`publicationDate`), Folgetag-Regel | Stichprobe 1999-12-31 (288 Meldungen 1997-1999), 2000-2006: 2902, 2007-2010: 4661, 2021: 1599; Datumsfilter inklusive, pageSize bis 1000 ok | Emittent: Name + SER-Kürzel (`notificationSubmitterId`), ISIN nur in Positionslisten, ~55 % der Meldungen ohne ISIN; Filer = `beneficialNames`; % = `purchaseTotalVotingRate` | robots: nur `/bin`, `/*/shared/component/`, `/dam/downloads/regulation/listing-archive` gesperrt -> `/sheldon` erlaubt; kein Key; Disclaimer Ziff. 10: Nutzung für öffentliche/kommerzielle Zwecke ohne Zustimmung untersagt -> nur interne Auswertung; Backend nicht dokumentiert | **PASS** (Datum, Folgetag-Regel) |
+
+Adapter:
+
+| Modul | Region | source | Parser | issuer_id | filer | holding_ratio |
+|---|---|---|---|---|---|---|
+| `sources/eu_ch.py` | DACH | SIX_SER | `parse_overview`, `fetch_events(start, end)` | ISIN, sonst `SER:<Kürzel>` | `beneficialNames` | `purchaseTotalVotingRate`; Unterschreitung: nur `below_threshold` (kein Bruch) |
+| `sources/eu_de.py` | DACH | OTS_PVR | `parse_list`, `parse_notification`, `build_event`, `article_text`; `fetch_events(..., tdm_licensed=False)` | ISIN, sonst LEI, sonst OTS-Slug | Ziff. 3 der Meldung | Ziff. 6 Summe; `previous_ratio` = letzte Meldung |
+
+`eu_de.parse_notification` versteht das WpHG-Formular (EN, live geprüft am EQS-Text; DE-Beschriftungen nur synthetisch getestet), die BörseG-Beteiligungsmeldung und die alte euro-adhoc-Variante (Pipe-Tabellen). `eu_de.fetch_events` wirft PermissionError, solange `tdm_licensed` nicht gesetzt ist (ots.at TDM-Vorbehalt). Tests: `tests/test_eu_de_ch.py` (Fixtures `tests/fixtures/eu_de_ch/`, je < 35 KB).
+
+Limitierungen DACH:
+- Deutschland ist weiterhin ohne zulässige Quelle (BaFin, EQS-Backend, Unternehmensregister gesperrt/ToS). Realistische Wege: Lizenz bei EQS Group oder APA-OTS, oder ein kommerzieller Datenfeed; die Parser sind fertig.
+- OTS enthält nur Emittenten, die über APA/euro adhoc/EQS-Österreich verteilen (AT; vor 2021 vereinzelt DE). Zwillings-Meldungen (DE+EN) werden auf die deutsche Fassung reduziert, Korrekturen tragen `correction=True` und werden nicht zusammengeführt.
+- SIX: Veröffentlichungsdatum ohne Uhrzeit (Meldungen erscheinen auch an Samstagen, Datum = Publikationsdatum des Portals); ca. 55 % ohne ISIN -> Mapping über Namen/OpenFIGI nötig; `threshold_date` = `transactionDate`. Der RSS-Feed taugt nicht (Pseudo-Uhrzeit 12:00, keine Filer).
+- Schweizer 3 %-Schwelle (3/5/10/15/20/25/33,3/50/66,7 %), Rauschen durch Banken/Fondsgesellschaften wie bei UK.

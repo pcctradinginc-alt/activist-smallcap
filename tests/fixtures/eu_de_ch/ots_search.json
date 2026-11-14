@@ -1,0 +1,183 @@
+{
+ "error": [],
+ "meta": {
+  "endpoint": "search",
+  "from": 1793000000,
+  "to": 1794697199,
+  "count": 10,
+  "totalCount": "22",
+  "page": "1",
+  "totalPages": 3,
+  "maxCountPerPage": "10"
+ },
+ "result": [
+  {
+   "key": "EQS_20261111_EQS0016",
+   "titleSlug": "eqs-pvr-wienerberger-ag-release-according-to-article-135-section-2-boerseg-with-the-objective-of-europe-wide-distribution",
+   "emittentSlug": "wienerberger-ag",
+   "date": "2026-11-11",
+   "time": "17:16:14",
+   "timestamp": "1794413774",
+   "emittentName": "Wienerberger AG",
+   "docsrc": "EQS",
+   "pressreleasenumber": "EQS0016",
+   "title": {
+    "content": "EQS-PVR: Wienerberger AG: Release according to Article 135, Section 2 BörseG with the objective of Europe-wide distribution"
+   }
+  },
+  {
+   "key": "EQS_20261111_EQS0015",
+   "titleSlug": "eqs-pvr-wienerberger-ag-veroeffentlichung-gemaess-135-abs-2-boerseg-mit-dem-ziel-der-europaweiten-verbreitung",
+   "emittentSlug": "wienerberger-ag",
+   "date": "2026-11-11",
+   "time": "17:16:13",
+   "timestamp": "1794413773",
+   "emittentName": "Wienerberger AG",
+   "docsrc": "EQS",
+   "pressreleasenumber": "EQS0015",
+   "title": {
+    "content": "EQS-PVR: Wienerberger AG: Veröffentlichung gemäß § 135 Abs. 2 BörseG mit dem Ziel der europaweiten Verbreitung"
+   }
+  },
+  {
+   "key": "EQS_20261110_EQS0004",
+   "titleSlug": "eqs-pvr-wienerberger-ag-release-according-to-article-135-section-2-boerseg-with-the-objective-of-europe-wide-distribution",
+   "emittentSlug": "wienerberger-ag",
+   "date": "2026-11-10",
+   "time": "15:01:16",
+   "timestamp": "1794319276",
+   "emittentName": "Wienerberger AG",
+   "docsrc": "EQS",
+   "pressreleasenumber": "EQS0004",
+   "title": {
+    "content": "EQS-PVR: Wienerberger AG: Release according to Article 135, Section 2 BörseG with the objective of Europe-wide distribution"
+   }
+  },
+  {
+   "key": "EQS_20261110_EQS0003",
+   "titleSlug": "eqs-pvr-wienerberger-ag-veroeffentlichung-gemaess-135-abs-2-boerseg-mit-dem-ziel-der-europaweiten-verbreitung",
+   "emittentSlug": "wienerberger-ag",
+   "date": "2026-11-10",
+   "time": "15:01:15",
+   "timestamp": "1794319275",
+   "emittentName": "Wienerberger AG",
+   "docsrc": "EQS",
+   "pressreleasenumber": "EQS0003",
+   "title": {
+    "content": "EQS-PVR: Wienerberger AG: Veröffentlichung gemäß § 135 Abs. 2 BörseG mit dem Ziel der europaweiten Verbreitung"
+   }
+  },
+  {
+   "key": "EQS_20261106_EQS0006",
+   "titleSlug": "eqs-pvr-correction-lenzing-ag-release-according-to-article-135-section-2-boerseg-with-the-objective-of-europe-wide-distribution",
+   "emittentSlug": "lenzing-ag",
+   "date": "2026-11-06",
+   "time": "10:45:07",
+   "timestamp": "1793958307",
+   "emittentName": "Lenzing AG",
+   "docsrc": "EQS",
+   "pressreleasenumber": "EQS0006",
+   "title": {
+    "content": "EQS-PVR: Correction: Lenzing AG: Release according to Article 135, Section 2 BörseG with the objective of Europe-wide distribution"
+   }
+  },
+  {
+   "key": "EQS_20261106_EQS0005",
+   "titleSlug": "eqs-pvr-korrektur-lenzing-ag-veroeffentlichung-gemaess-135-abs-2-boerseg-mit-dem-ziel-der-europaweiten-verbreitung",
+   "emittentSlug": "lenzing-ag",
+   "date": "2026-11-06",
+   "time": "10:45:06",
+   "timestamp": "1793958306",
+   "emittentName": "Lenzing AG",
+   "docsrc": "EQS",
+   "pressreleasenumber": "EQS0005",
+   "title": {
+    "content": "EQS-PVR: Korrektur: Lenzing AG: Veröffentlichung gemäß § 135 Abs. 2 BörseG mit dem Ziel der europaweiten Verbreitung"
+   }
+  },
+  {
+   "key": "EQS_20261028_EQS0014",
+   "titleSlug": "eqs-pvr-correction-dated-23-october-2026-lenzing-ag-release-according-to-article-135-section-2-boerseg-with-the-objective-of-europe-wide-distribution",
+   "emittentSlug": "lenzing-ag",
+   "date": "2026-10-28",
+   "time": "14:35:12",
+   "timestamp": "1793194512",
+   "emittentName": "Lenzing AG",
+   "docsrc": "EQS",
+   "pressreleasenumber": "EQS0014",
+   "title": {
+    "content": "EQS-PVR: Correction dated 23 October 2026: Lenzing AG: Release according to Article 135, Section 2 BörseG with the objective of Europe-wide distribution"
+   }
+  },
+  {
+   "key": "EQS_20261028_EQS0013",
+   "titleSlug": "eqs-pvr-korrektur-vom-23102026-lenzing-ag-veroeffentlichung-gemaess-135-abs-2-boerseg-mit-dem-ziel-der-europaweiten-verbreitung",
+   "emittentSlug": "lenzing-ag",
+   "date": "2026-10-28",
+   "time": "14:35:12",
+   "timestamp": "1793194512",
+   "emittentName": "Lenzing AG",
+   "docsrc": "EQS",
+   "pressreleasenumber": "EQS0013",
+   "title": {
+    "content": "EQS-PVR: KORREKTUR vom 23.10.2026: Lenzing AG: Veröffentlichung gemäß § 135 Abs. 2 BörseG mit dem Ziel der europaweiten Verbreitung"
+   }
+  },
+  {
+   "key": "EQS_20261028_EQS0012",
+   "titleSlug": "eqs-pvr-correction-dated-27-october-2026-lenzing-ag-release-according-to-article-135-section-2-boerseg-with-the-objective-of-europe-wide-distribution",
+   "emittentSlug": "lenzing-ag",
+   "date": "2026-10-28",
+   "time": "14:30:59",
+   "timestamp": "1793194259",
+   "emittentName": "Lenzing AG",
+   "docsrc": "EQS",
+   "pressreleasenumber": "EQS0012",
+   "title": {
+    "content": "EQS-PVR: Correction dated 27 October 2026: Lenzing AG: Release according to Article 135, Section 2 BörseG with the objective of Europe-wide distribution"
+   }
+  },
+  {
+   "key": "EQS_20261028_EQS0011",
+   "titleSlug": "eqs-pvr-korrektur-vom-27102026-lenzing-ag-veroeffentlichung-gemaess-135-abs-2-boerseg-mit-dem-ziel-der-europaweiten-verbreitung",
+   "emittentSlug": "lenzing-ag",
+   "date": "2026-10-28",
+   "time": "14:30:59",
+   "timestamp": "1793194259",
+   "emittentName": "Lenzing AG",
+   "docsrc": "EQS",
+   "pressreleasenumber": "EQS0011",
+   "title": {
+    "content": "EQS-PVR: KORREKTUR vom 27.10.2026: Lenzing AG: Veröffentlichung gemäß § 135 Abs. 2 BörseG mit dem Ziel der europaweiten Verbreitung"
+   }
+  },
+  {
+   "key": "OTS_20211202_OTS0122",
+   "titleSlug": "eans-stimmrechte-bank-fuer-tirol-und-vorarlberg-ag-veroeffentlichung-einer-beteiligungsmeldung-gemaess-135-abs-2-boerseg",
+   "emittentSlug": "bank-fuer-tirol-und-vorarlberg-ag",
+   "date": "2021-12-02",
+   "time": "12:32:21",
+   "timestamp": "1638444741",
+   "emittentName": "Bank für Tirol und Vorarlberg AG",
+   "docsrc": "OTS",
+   "pressreleasenumber": "OTS0122",
+   "title": {
+    "content": "EANS-Stimmrechte: Bank für Tirol und Vorarlberg AG / Veröffentlichung einer Beteiligungsmeldung gemäß §135 Abs. 2 BörseG"
+   }
+  },
+  {
+   "key": "OTS_20211201_OTS0262",
+   "titleSlug": "eans-stimmrechte-wienerberger-ag-veroeffentlichung-einer-beteiligungsmeldung-gemaess-135-abs-2-boerseg",
+   "emittentSlug": "wienerberger-ag",
+   "date": "2021-12-01",
+   "time": "17:30:15",
+   "timestamp": "1638376215",
+   "emittentName": "Wienerberger AG",
+   "docsrc": "OTS",
+   "pressreleasenumber": "OTS0262",
+   "title": {
+    "content": "EANS-Stimmrechte: Wienerberger AG / Veröffentlichung einer Beteiligungsmeldung gemäß §135 Abs. 2 BörseG"
+   }
+  }
+ ]
+}

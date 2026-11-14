@@ -58,13 +58,23 @@ def cmd_study(a):
     if any(e.get("source") == "EDINET" for e in evs):
         dj, fj = build_jp(evs)
         ds = pd.concat([ds, dj], ignore_index=True); funnel.update(fj)
+    if any(e.get("region") in ("UK", "NORDIC", "BENELUX_FR", "DACH") for e in evs):
+        from .study.dataset_eu import build_eu, load_px
+        de, fe = build_eu(evs)
+        ds = pd.concat([ds, de], ignore_index=True); funnel.update(fe)
     U = params()["universe"]
 
     def pl(t, r, s, e):
+        if r in ("UK", "NORDIC", "BENELUX_FR", "DACH"):
+            from .study.dataset_eu import load_px
+            return load_px(t, s, e)          # EU: vollständiger Yahoo-Ticker, Pence -> Pfund
         return prices.load(t, r, s, e)[0]
 
     def bl(r, s, e):
-        return prices.load(U[r]["benchmark"], r, s, e)[0]
+        b = U[r]["benchmark"]
+        if b.startswith("^"):                 # Indizes ohne Börsensuffix direkt laden
+            return prices.yahoo(b, s, e)
+        return prices.load(b, r, s, e)[0]
     res, trades = run(ds, pl, bl, variants=not a.main_only)
     print(write_report(res, funnel, ds, trades, bench_loader=bl))
 
@@ -72,6 +82,31 @@ def cmd_study(a):
 def cmd_backfill_jp(a):
     from .sources.edinet_backfill import backfill
     backfill(date.fromisoformat(a.start), date.fromisoformat(a.end))
+
+
+def cmd_backfill_eu(a):
+    """EU-Ereignisse einer Quelle abrufen und append-only in den EventStore schreiben (--enrich: TR-1/PDF/Text je Meldung lesen,
+    1 Request je Meldung, >= 1 s Abstand -> langsam)."""
+    start, end = date.fromisoformat(a.start), date.fromisoformat(a.end)
+    if a.source == "nsm":
+        from .sources import eu_nsm
+        evs = eu_nsm.fetch_events(start, end, enrich_docs=a.enrich)
+    elif a.source == "nasdaq_nordic":
+        from .sources import eu_nasdaq_nordic
+        evs = eu_nasdaq_nordic.fetch_events(start, end, enrich_docs=a.enrich)
+    elif a.source == "oslo":
+        from .sources import eu_oslo, eu_pdf
+        evs = eu_oslo.fetch_events(start, end)
+        evs = [eu_pdf.enrich_oslo(e) for e in evs] if a.enrich else evs
+    elif a.source == "six":
+        from .sources import eu_ch
+        evs = eu_ch.fetch_events(start, end)
+    else:
+        from .sources import eu_amf, eu_pdf
+        evs = eu_amf.fetch_events(start, end)
+        evs = [eu_pdf.enrich_amf(e) for e in evs] if a.enrich else evs
+    n = EventStore().append(evs)
+    print(f"{a.source} {start}..{end}: {len(evs)} Meldungen, {n} neu")
 
 
 def cmd_backfill(a):
@@ -96,6 +131,9 @@ def main(argv=None):
     b.add_argument("--quarter", type=int); b.add_argument("--limit", type=int); b.set_defaults(fn=cmd_backfill)
     bj = sp.add_parser("backfill-jp"); bj.add_argument("--start", required=True); bj.add_argument("--end", required=True)
     bj.set_defaults(fn=cmd_backfill_jp)
+    be = sp.add_parser("backfill-eu"); be.add_argument("--source", required=True, choices=["nsm", "nasdaq_nordic", "oslo", "amf", "six"])
+    be.add_argument("--start", required=True); be.add_argument("--end", required=True)
+    be.add_argument("--enrich", action="store_true"); be.set_defaults(fn=cmd_backfill_eu)
     a = ap.parse_args(argv); a.fn(a)
 
 

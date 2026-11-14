@@ -85,8 +85,19 @@ def parse_tr1(raw: str) -> dict:
                 total = pct_to_fraction(nums[2])          # "Total of both in %"
             elif nums:
                 total = pct_to_fraction(nums[0])
+            # "Total number of voting rights held in issuer" = erste große Ganzzahl nach den Prozentwerten
+            ints = [int(re.sub(r"[,.\s]", "", x)) for x in lines[i + 1:i + 10] if re.fullmatch(r"\d{1,3}([,.\s]\d{3})+|\d{5,}", x)]
+            vr_total = ints[0] if ints else None
             break
-    return {"isin": isin, "issuer_name": after("Issuer Name"), "filer_name": filer, "holding_ratio": total}
+    else:
+        vr_total = None
+    # Kontrollkette (Abschnitt 9): für Alias-Abgleich (z. B. Paul E. Singer -> Elliott)
+    chain = ""
+    for i, l in enumerate(lines):
+        if re.match(r"9\.\s*Information in relation to the person", l, re.I):
+            chain = " | ".join(lines[i + 1:i + 40]); break
+    return {"isin": isin, "issuer_name": after("Issuer Name"), "filer_name": filer, "holding_ratio": total,
+            "voting_rights_held": vr_total, "chain_text": chain[:2000]}
 
 
 def enrich(ev: dict) -> dict:
@@ -103,6 +114,9 @@ def enrich(ev: dict) -> dict:
         ev["filer_name"] = d["filer_name"]
     if d["holding_ratio"] is not None:
         ev["holding_ratio"] = d["holding_ratio"]
+    for k in ("voting_rights_held", "chain_text"):
+        if d.get(k):
+            ev[k] = d[k]
     return ev
 
 

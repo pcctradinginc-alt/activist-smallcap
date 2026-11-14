@@ -1,0 +1,10 @@
+[
+ {"data": [
+  {"figi": "F1", "name": "BP PLC", "ticker": "BP/", "exchCode": "LN", "securityType": "Common Stock", "marketSector": "Equity"},
+  {"figi": "F2", "name": "BP PLC", "ticker": "BPE5", "exchCode": "GR", "securityType": "Common Stock", "marketSector": "Equity"}]},
+ {"data": [
+  {"figi": "F3", "name": "ERICSSON LM-B SHS", "ticker": "ERICB", "exchCode": "FH", "securityType": "Common Stock", "marketSector": "Equity"},
+  {"figi": "F4", "name": "ERICSSON LM-B SHS", "ticker": "ERICB", "exchCode": "SS", "securityType": "Common Stock", "marketSector": "Equity"},
+  {"figi": "F5", "name": "ERICSSON LM-B SHS", "ticker": "X", "exchCode": "SS", "securityType": "Corp", "marketSector": "Corp"}]},
+ {"warning": "No identifier found."}
+]

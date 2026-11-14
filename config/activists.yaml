@@ -17,3 +17,44 @@ activists:
   - {name: Cevian Capital, since: 2015-01-01, region: EU}
   - {name: Petrus Advisers, since: 2015-01-01, region: EU}
   - {name: Teleios Capital, since: 2015-01-01, region: EU}
+  # --- Europa, Ergänzung 2026-11-14: Namen aus dem Gedächtnis, '# zu prüfen' (Schreibweise im Filer-Feld, Aktivität seit 2015) ---
+  - {name: Elliott Advisors, since: 2015-01-01, region: EU}            # zu prüfen (UK-Einheit von Elliott)
+  - {name: Sherborne Investors, since: 2015-01-01, region: EU}         # zu prüfen
+  - {name: Crystal Amber, since: 2015-01-01, region: EU}               # zu prüfen
+  - {name: Harwood Capital, since: 2015-01-01, region: EU}             # zu prüfen
+  - {name: Gatemore Capital, since: 2015-01-01, region: EU}            # zu prüfen
+  - {name: Palliser Capital, since: 2019-01-01, region: EU}            # zu prüfen (Gründung ca. 2019)
+  - {name: Bluebell Capital, since: 2019-01-01, region: EU}            # zu prüfen (Gründung ca. 2019)
+  - {name: Amber Capital, since: 2015-01-01, region: EU}               # zu prüfen
+  - {name: Trian Fund Management, since: 2015-01-01, region: EU}       # zu prüfen
+  - {name: ValueAct, since: 2015-01-01, region: EU}                    # zu prüfen
+  - {name: Saba Capital, since: 2015-01-01, region: EU}                # zu prüfen (v. a. UK-Investmenttrusts)
+  - {name: Engine Capital, since: 2017-01-01, region: EU}              # zu prüfen
+  - {name: Active Ownership Capital, since: 2015-01-01, region: EU}    # zu prüfen
+  - {name: Enkraft Capital, since: 2015-01-01, region: EU}             # zu prüfen
+
+# Aliase: Melder erscheinen in Stimmrechtsmitteilungen oft als oberste kontrollierende Person oder als Fondsgesellschaft.
+# Abgleich gegen Meldepflichtigen UND jede Zeile der Kontrollkette (chain_text). Namen aus dem Gedächtnis – zu prüfen.
+aliases:
+  Elliott Investment Management: [Paul E. Singer, Paul Singer, Elliott Associates, Elliott International, Elliott Advisors, Elliott Capital Advisors, Elliott Management]
+  Elliott Advisors: [Paul E. Singer, Elliott Associates, Elliott International, Elliott Investment Management]
+  Cevian Capital: [Christer Gardell, Cevian Capital II, Cevian Capital Partners]
+  Petrus Advisers: [Klaus Umek, Petrus Advisers Investments Fund]
+  Teleios Capital: [Teleios Capital Partners, Adam Epstein]
+  Active Ownership: [Active Ownership Fund, Active Ownership Capital, Florian Schuhbauer, Klaus Röhrig]
+  Trian: [Trian Fund Management, Nelson Peltz]
+  ValueAct: [ValueAct Capital, ValueAct Holdings]
+  Saba Capital: [Saba Capital Management, Boaz Weinstein]
+  Sherborne Investors: [Edward Bramson]
+  Bluebell Capital: [Bluebell Capital Partners, Giuseppe Bivona, Marco Taricco]
+  Amber Capital: [Joseph Oughourlian, Amber Capital UK]
+  Palliser Capital: [Palliser Capital (UK), James Smith]
+  Harwood Capital: [Christopher Mills, North Atlantic Smaller Companies]
+  Enkraft: [Enkraft Capital, Enkraft IMPACT]
+  Engine Capital: [Engine Capital Management, Arnaud Ajdler]
+  Starboard Value: [Jeffrey C. Smith, Starboard Value and Opportunity]
+  Oasis Management: [Seth Fischer, Oasis Investments]
+  Dalton Investments: [Dalton Investments LLC, James B. Rosenwald]
+  Strategic Capital: [ストラテジックキャピタル]
+  City Index Eleventh: [シティインデックスイレブンス, 村上世彰, エスグラントコーポレーション, Yoshiaki Murakami]
+  3D Investment Partners: [3D OPPORTUNITY MASTER FUND]

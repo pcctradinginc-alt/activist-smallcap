@@ -1,0 +1,35 @@
+name: backfill_eu
+on:
+  workflow_dispatch:
+    inputs:
+      source: {description: "nsm | nasdaq_nordic | oslo | amf | six", default: "nsm"}
+permissions:
+  contents: write
+concurrency: data-write-eu-${{ inputs.source }}
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      max-parallel: 2          # höflich: je Job >= 1 s zwischen Anfragen
+      fail-fast: false
+      matrix:
+        half: ["2018-01-01:2018-06-30", "2018-07-01:2018-12-31", "2019-01-01:2019-06-30", "2019-07-01:2019-12-31",
+               "2020-01-01:2020-06-30", "2020-07-01:2020-12-31", "2021-01-01:2021-06-30", "2021-07-01:2021-12-31",
+               "2022-01-01:2022-06-30", "2022-07-01:2022-12-31", "2023-01-01:2023-06-30", "2023-07-01:2023-12-31",
+               "2024-01-01:2024-06-30", "2024-07-01:2024-12-31", "2025-01-01:2025-06-30", "2025-07-01:2025-12-31",
+               "2026-01-01:2026-06-30", "2026-07-01:2026-11-13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -r requirements.txt
+      - env:
+          PYTHONPATH: src
+        run: |
+          IFS=: read S E <<< "${{ matrix.half }}"
+          python -m activist.cli backfill-eu --source ${{ inputs.source }} --start $S --end $E --enrich
+      - if: always()
+        run: |
+          git config user.name "activist-bot"; git config user.email "actions@users.noreply.github.com"
+          git add data/events && git diff --cached --quiet || (git commit -m "data: EU ${{ inputs.source }} ${{ matrix.half }}" && for i in 1 2 3 4 5; do git pull --rebase && git push && break; sleep $((RANDOM % 20 + 5)); done)
