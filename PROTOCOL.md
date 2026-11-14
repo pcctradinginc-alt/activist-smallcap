@@ -37,3 +37,7 @@ Jede spätere Änderung steht mit Begründung in `PROTOCOL_CHANGES.md` und im Co
 - **Survivorship:** Kostenlose Kurse enthalten keine delisteten Titel; der Bericht weist den Anteil aus. Für ein Urteil braucht es eine Quelle mit delisteten Titeln.
 - **Ticker:** Zuordnung CIK → Ticker nur nach heutigem Stand; Tickerwechsel werden über die CIK aufgefangen, Delistings nicht.
 - **Forderung:** regelbasierte Klassifikation (Item 4) mit Textbeleg; Vorbehaltsformulierungen zählen als „keine“.
+
+## Entscheidung 2026-11-14: Deutschland und Österreich ausgeschlossen
+Keine kostenlose zulässige Quelle (EQS-Nutzungsbedingungen, BaFin/Unternehmensregister robots.txt, APA-OTS TDM-Vorbehalt).
+Region DACH umfasst daher nur die Schweiz (SIX). Parser für WpHG/BörseG-Mitteilungen bleiben im Code, ungenutzt.
