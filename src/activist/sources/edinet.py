@@ -6,7 +6,14 @@ import requests
 from ..common import effective_decision_time, event_id
 
 API = "https://api.edinet-fsa.go.jp/api/v2/documents.json"
-DOC_TYPES = {"350": "LargeHolding", "360": "LargeHoldingAmendment"}
+DOC_TYPES = {"350": "LargeHolding", "360": "LargeHoldingAmendment"}  # 360 = 訂正報告書 (Korrektur)
+
+
+def form_of(doc: dict) -> str:
+    """350 umfasst Erstmeldung (大量保有報告書) und Änderungsmeldung (変更報告書); unterschieden wird am Titel."""
+    if doc.get("docTypeCode") == "360" or "訂正" in (doc.get("docDescription") or ""):
+        return "LargeHoldingAmendment"
+    return "LargeHoldingChange" if "変更報告書" in (doc.get("docDescription") or "") else "LargeHolding"
 
 
 def fetch_events(d: date, key: str | None = None) -> list[dict]:
@@ -32,7 +39,7 @@ def parse_documents(results: list[dict]) -> list[dict]:
         pub = f"{sub.replace(' ', 'T')}:00+09:00" if sub else None
         out.append({
             "event_id": event_id("EDINET", doc["docID"]), "source": "EDINET", "region": "JP",
-            "form": DOC_TYPES[doc["docTypeCode"]],
+            "form": form_of(doc),
             "published": effective_decision_time(pub, (sub or "")[:10] or None).isoformat(),
             "has_time": bool(sub), "filing_date": (sub or "")[:10],
             "issuer_name": None, "issuer_id": doc.get("issuerEdinetCode") or doc.get("subjectEdinetCode"),

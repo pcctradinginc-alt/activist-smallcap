@@ -97,3 +97,10 @@ def test_edinet_parse_documents_mix():
 def test_edinet_date_only_submit():
     out = edinet.parse_documents([_doc(submitDateTime="2024-03-05")])
     assert out[0]["filing_date"] == "2024-03-05"
+
+
+def test_edinet_change_report_label():
+    from activist.sources.edinet import form_of
+    assert form_of({"docTypeCode": "350", "docDescription": "変更報告書"}) == "LargeHoldingChange"
+    assert form_of({"docTypeCode": "350", "docDescription": "大量保有報告書"}) == "LargeHolding"
+    assert form_of({"docTypeCode": "360", "docDescription": "訂正報告書（大量保有報告書・変更報告書）"}) == "LargeHoldingAmendment"
