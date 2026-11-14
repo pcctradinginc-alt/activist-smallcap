@@ -118,11 +118,14 @@ def fx_series(pair: str, end: date) -> pd.Series | None:
         return None
 
 
-def build_eu(events: list[dict], end: date | None = None, use_network_figi: bool = True) -> tuple[pd.DataFrame, Counter]:
+def build_eu(events: list[dict], end: date | None = None, use_network_figi: bool = True,
+             since: str | None = None) -> tuple[pd.DataFrame, Counter]:
     p, lim = params(), risk_limits()["candidate"]
     funnel, rows, fxc = Counter(), [], {}
     end = end or date.today()
     for c in eu_campaigns(events, funnel):
+        if since and c["published"] < since:
+            continue
         funnel["EU kampagnen"] += 1
         reg = c["region"]
         isin = _issuer_key(c)

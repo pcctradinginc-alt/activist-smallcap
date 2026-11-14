@@ -101,6 +101,9 @@ def cmd_backfill_eu(a):
     elif a.source == "six":
         from .sources import eu_ch
         evs = eu_ch.fetch_events(start, end)
+    elif a.source == "de_ir":
+        from .sources import eu_de_ir
+        evs = eu_de_ir.fetch_events(start, end)
     else:
         from .sources import eu_amf, eu_pdf
         evs = eu_amf.fetch_events(start, end)
@@ -118,6 +121,20 @@ def cmd_backfill(a):
             print(backfill(y, q, limit=a.limit), flush=True)
 
 
+def cmd_paper(a):
+    from .paper.portfolio import run_day
+    print(run_day())
+
+
+def cmd_weekly(a):
+    from .paper.report import weekly
+    subj, body = weekly()
+    if a.mail:
+        send(subj, body)
+    else:
+        print(subj); print(body)
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="activist")
     sp = ap.add_subparsers(required=True)
@@ -131,9 +148,11 @@ def main(argv=None):
     b.add_argument("--quarter", type=int); b.add_argument("--limit", type=int); b.set_defaults(fn=cmd_backfill)
     bj = sp.add_parser("backfill-jp"); bj.add_argument("--start", required=True); bj.add_argument("--end", required=True)
     bj.set_defaults(fn=cmd_backfill_jp)
-    be = sp.add_parser("backfill-eu"); be.add_argument("--source", required=True, choices=["nsm", "nasdaq_nordic", "oslo", "amf", "six"])
+    be = sp.add_parser("backfill-eu"); be.add_argument("--source", required=True, choices=["nsm", "nasdaq_nordic", "oslo", "amf", "six", "de_ir"])
     be.add_argument("--start", required=True); be.add_argument("--end", required=True)
     be.add_argument("--enrich", action="store_true"); be.set_defaults(fn=cmd_backfill_eu)
+    pp = sp.add_parser("paper"); pp.set_defaults(fn=cmd_paper)
+    wk = sp.add_parser("weekly"); wk.add_argument("--mail", action="store_true"); wk.set_defaults(fn=cmd_weekly)
     a = ap.parse_args(argv); a.fn(a)
 
 

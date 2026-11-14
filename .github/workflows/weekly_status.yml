@@ -2,6 +2,8 @@ name: weekly_status
 on:
   schedule: [{cron: "0 8 * * 6"}]   # Samstag
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   status:
     runs-on: ubuntu-latest
@@ -16,4 +18,9 @@ jobs:
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           MAIL_TO: ${{ secrets.MAIL_TO }}
-        run: python -m activist.cli status --mail
+        run: |
+          python -m activist.cli status --mail
+          python -m activist.cli weekly --mail
+      - run: |
+          git config user.name "activist-bot"; git config user.email "actions@users.noreply.github.com"
+          git add reports && git diff --cached --quiet || (git commit -m "report: Wochenbericht $(date -u +%F)" && git pull --rebase && git push)

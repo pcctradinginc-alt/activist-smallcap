@@ -72,13 +72,16 @@ def campaigns(events: list[dict], reg: Register) -> list[dict]:
     return out
 
 
-def build(events: list[dict], end: date | None = None, parse_filings: bool = True) -> tuple[pd.DataFrame, Counter]:
+def build(events: list[dict], end: date | None = None, parse_filings: bool = True,
+          since: str | None = None) -> tuple[pd.DataFrame, Counter]:
     p, lim = params(), risk_limits()["candidate"]
     reg = Register(events)
     funnel, rows, cache = Counter(), [], _parsed_cache()
     cfg = p["universe"]["US"]
     end = end or date.today()
     for c in campaigns(events, reg):
+        if since and c["published"] < since:      # Tagesbetrieb: nur neue Kampagnen, Historie bleibt für das Register
+            continue
         funnel["kampagnen"] += 1
         row = {k: c.get(k) for k in ("event_id", "campaign_key", "published", "form", "signal_class", "event_type",
                                      "filer_id", "filer_name", "issuer_id", "issuer_name", "url", "region")}
@@ -210,7 +213,7 @@ def jp_campaigns(events: list[dict]) -> list[dict]:
     return out
 
 
-def build_jp(events: list[dict], end: date | None = None) -> tuple[pd.DataFrame, Counter]:
+def build_jp(events: list[dict], end: date | None = None, since: str | None = None) -> tuple[pd.DataFrame, Counter]:
     p, lim = params(), risk_limits()["candidate"]
     cfg, funnel, rows = p["universe"]["JP"], Counter(), []
     end = end or date.today()
@@ -219,6 +222,8 @@ def build_jp(events: list[dict], end: date | None = None) -> tuple[pd.DataFrame,
     except Exception:
         fx = None
     for c in jp_campaigns(events):
+        if since and c["published"] < since:
+            continue
         funnel["JP kampagnen"] += 1
         row = {k: c.get(k) for k in ("event_id", "campaign_key", "published", "form", "signal_class", "event_type",
                                      "filer_id", "filer_name", "issuer_name", "url", "region", "ticker")}
