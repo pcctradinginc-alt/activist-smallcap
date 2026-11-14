@@ -4,3 +4,7 @@ pyyaml>=6.0
 requests>=2.31
 pytest>=7.0
 pypdf>=4.0
+beautifulsoup4>=4.12
+lxml>=5.0
+# Optional, nur fuer sources/js_render.py (js_only-IR-Seiten). CI/Setup MUSS danach ausfuehren: python -m playwright install --with-deps chromium
+playwright>=1.40

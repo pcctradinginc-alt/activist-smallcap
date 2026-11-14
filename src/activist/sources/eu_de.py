@@ -112,7 +112,7 @@ def parse_notification(text: str) -> dict:
             filer = _clean(re.split(r"\s+(?:City of registered|Sitz|Staat|Date of birth|Geburtsdatum)\b", m.group(1))[0])
             break
     if not filer:                                                         # natürliche Person: 'Surname/First name'
-        nm = re.findall(r"(?im)^[ |]*(?:Surname|Nachname|Vorname|First name)\s*:[ \t|]*(.+)$", sec3)
+        nm = re.findall(r"(?im)^[ |]*(?:Surname|Nachname|Vorname|First name)\s*:[ \t|]*\n?[ \t|]*(\S.*)$", sec3)       # Wert evtl. in Folgezeile
         filer = _clean(" ".join(reversed(nm))) if nm else None
     # Schwellendatum (Wert evtl. in Folgezeile)
     thr = _parse_date(sec5[:300]) if sec5 else None

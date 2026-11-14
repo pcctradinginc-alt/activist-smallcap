@@ -23,7 +23,7 @@ from ..common import DATA, load_yaml, params, risk_limits
 from ..features.universe import price_features, universe_check
 from ..sources import openfigi, prices
 
-EU_REGIONS = {"UK", "NORDIC", "BENELUX_FR"}
+EU_REGIONS = {"UK", "NORDIC", "BENELUX_FR", "DACH"}
 ISIN_RE = re.compile(r"^[A-Z]{2}[A-Z0-9]{9}\d$")
 EXIT_BELOW = {"UK": 0.03, "NORDIC": 0.05, "BENELUX_FR": 0.05, "DACH": 0.03}
 SUFFIX_FX = {".L": "GBPEUR=X", ".OL": "NOKEUR=X", ".ST": "SEKEUR=X", ".CO": "DKKEUR=X", ".SW": "CHFEUR=X"}      # EUR-Länder: kein FX

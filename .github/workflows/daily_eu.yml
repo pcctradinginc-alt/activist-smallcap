@@ -1,0 +1,26 @@
+name: daily_eu
+on:
+  schedule: [{cron: "0 19 * * 1-5"}]      # nach europäischem Börsenschluss
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: data-write-eu-daily
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -r requirements.txt && python -m playwright install --with-deps chromium
+      - name: Europa-Meldungen der letzten 3 Tage (append-only, Dubletten werden übersprungen)
+        env: {PYTHONPATH: src}
+        run: |
+          S=$(date -u -d '3 days ago' +%F); E=$(date -u +%F)
+          for src in six nsm nasdaq_nordic oslo amf de_ir activist_sites; do
+            python -m activist.cli backfill-eu --source $src --start $S --end $E --enrich || echo "::warning::$src fehlgeschlagen"
+          done
+      - run: |
+          git config user.name "activist-bot"; git config user.email "actions@users.noreply.github.com"
+          git add data/events && git diff --cached --quiet || (git commit -m "data: Europa $(date -u +%F)" && for i in 1 2 3; do git pull --rebase && git push && break; sleep 15; done)

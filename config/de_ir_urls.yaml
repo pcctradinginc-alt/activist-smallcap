@@ -1,0 +1,3366 @@
+# ISIN -> {name, voting_rights_url, verified, status, note, ...}; erzeugt/gepflegt von eu_de_ir.curate (siehe docs/EU_SOURCES.md).
+# status: ok | js_only (URL gesetzt, Liste nur per Rendering) | eqs_widget | bot_protection | none_found (voting_rights_url null).
+AT0000785407:
+  index: []
+  name: FABASOFT AG
+  note: 'https://www.fabasoft.com/en/investor-relations/ir-news/voting-rights-notifications-archive: Stimmrechtsseite ohne auslesbare datierte Eintraege (auch gerendert)'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.fabasoft.com/
+AT0000A0E9W5:
+  index:
+  - SDAX
+  - TecDAX
+  name: KONTRON AG O.N
+  note: robots.txt unlesbar/Bot-Schutz (http://www.snt.at)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.snt.at
+AT100ASTA001:
+  index:
+  - SDAX
+  name: ASTA Energy Solutions AG
+  note: robots.txt unlesbar/Bot-Schutz (https://www.asta.energy)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.asta.energy
+ATFREQUENT09:
+  index: []
+  name: FREQUENTIS AG
+  note: 10 datierte Stimmrechtseintraege, juengster 2026-05-15
+  segment: General Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.frequentis.com/de/IR?scroll=article-2014
+  website: https://www.frequentis.com/
+AU0000066086:
+  index: []
+  name: VULCAN ENERGY RESOURCES LIMITED
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://live.deutsche-boerse.com/news/EQS-PVR-Vulcan-Energy-Resources-Limited-Release-according-to-Article-40-Section-1-of-the-WpHG-the-German-Securities-Trading-Act-with-the-objective-of-Europe-wide-distribution-17207e64-48d9-4b26-a81c-e2c0e32df945
+  website: https://v-er.eu/
+BG1100003166:
+  index:
+  - SDAX
+  name: SHELLY GROUP SE
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://corporate.shelly.com/en/news/shelly-group-se-release-according-to-article-40-section-1-of-the-wphg-the-german-securities-trading-act-with-the-objecti
+  website: https://www.shelly.com/
+BG1100032140:
+  index: []
+  name: Sirma Group AD
+  note: keine Website (Wikidata)
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+CH0006539198:
+  index: []
+  name: HIGHLIGHT COMMUNICATIONS AG INH.SF 1
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.highlight-communications.ch/
+CH0038389992:
+  index: []
+  name: BB BIOTECH NAM. SF 0,20
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.bbbiotech.ch
+CH0303692047:
+  index: []
+  name: EDAG ENGINEERING G.SF-,04
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.edag.com
+CH0451424300:
+  index: []
+  name: IQ INTERNATIONAL AG SF-,01
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+CH0557519201:
+  index: []
+  name: VIDINEXT AG
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: General Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://investors.vidinext.com/investor-news/tmc-content-group-ag-release-of-the-home-member-state-according-to-article-5-of-the-wphg-the-german-securities-trading-act-with-the-objective-of-europe-wide-distribution/
+  website: https://www.contentgroup.ch/
+CH1398992755:
+  index: []
+  name: Multitude AG
+  note: robots.txt unlesbar/Bot-Schutz (http://www.ferratumgroup.fi)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.ferratumgroup.fi
+CNE1000031C1:
+  index: []
+  name: HAIER SMART HOME CO.D YC1
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.haier.com/
+DE0001262152:
+  index: []
+  name: B+S BANKSYSTEME AG O.N.
+  note: 24 datierte Stimmrechtseintraege, juengster 2025-11-24
+  segment: General Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://bs-ag.com/investor-relations/stimmrechtsmitteilungen/
+  website: http://www.bs-ag.com
+DE0005089031:
+  index:
+  - MDAX
+  - TecDAX
+  name: UTD.INTERNET AG NA
+  note: 7 datierte Stimmrechtseintraege, juengster 2025-06-20
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.united-internet.de/investor-relations/corporate-governance/stimmrechtsmitteilungen/
+  website: http://united-internet.de/
+DE0005093108:
+  index: []
+  name: AMADEUS FIRE AG
+  note: 'nur per Rendering: 9 Eintraege, juengster 2026-07-27'
+  segment: Prime Standard
+  status: js_only
+  verified: '2026-11-14'
+  voting_rights_url: https://group.amadeus-fire.de/investor-relations/stimmrechtsmitteilungen/
+  website: http://www.amadeus-fire.de/
+DE0005102008:
+  index:
+  - SDAX
+  name: BASLER AG O.N.
+  note: 'Website nicht erreichbar: HTTP 406: https://www.baslerweb.com/en/'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.baslerweb.com/en/
+DE0005103006:
+  index:
+  - SDAX
+  name: ADTRAN NETWORKS SE O.N.
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: General Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.adtran-networks.com/en/about-us/investors/corporate-governance/changes-in-voting-rights
+  website: http://www.adva.com
+DE0005104400:
+  index:
+  - SDAX
+  - TecDAX
+  name: ATOSS SOFTWARE SE
+  note: 'Website nicht erreichbar: HTTP 403: https://www.atoss.com/en/investor-relations'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.atoss.com/en/investor-relations
+DE0005104806:
+  index: []
+  name: SYZYGY AG O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.syzygy.net/
+DE0005110001:
+  index: []
+  name: ALL FOR ONE GROUP NA O.N.
+  note: 'https://www.all-for-one.com/de/company/news-presse/detail/ver%C3%B6ffentlichung-der-gesamtzahl-der-stimmrechte.html: Stimmrechtsseite ohne auslesbare datierte Eintraege (auch gerendert)'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.all-for-one.com/
+DE0005140008:
+  index:
+  - DAX
+  name: DEUTSCHE BANK AG NA O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.db.com
+DE0005146807:
+  index: []
+  name: DELTICOM AG NA O.N.
+  note: 2 datierte Stimmrechtseintraege, juengster 2021-12-22
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.delti.com/de/investor-relations/mitteilungen/stimmrechtsmitteilungen/
+  website: http://www.delti.com
+DE0005156004:
+  index: []
+  name: GIGASET AG O.N.
+  note: robots.txt unlesbar/Bot-Schutz (https://www.gigaset.ag/)
+  segment: General Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.gigaset.ag/
+DE0005157101:
+  index: []
+  name: HOENLE AG
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.hoenle.de
+DE0005158703:
+  index:
+  - MDAX
+  - TecDAX
+  name: BECHTLE AG O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.bechtle.com/
+DE0005167902:
+  index: []
+  name: 3U HOLDING AG
+  note: 7 datierte Stimmrechtseintraege, juengster 2023-11-13
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.3u.net/investor-relations/die-aktie/stimmrechtsmitteilungen/
+  website: http://www.3u.net/
+DE0005176903:
+  index: []
+  name: SURTECO GROUP SE INH O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.surteco.com
+DE0005178008:
+  index: []
+  name: SOFTING AG O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.softing.com/
+DE0005190003:
+  index:
+  - DAX
+  name: BAY.MOTOREN WERKE AG ST
+  note: robots.txt unlesbar/Bot-Schutz (https://www.bmw.com)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.bmw.com
+DE0005194005:
+  index: []
+  name: BAYWA AG NA O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.baywa.com/
+DE0005194062:
+  index: []
+  name: BAYWA AG VINK.NA. O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.baywa.com/
+DE0005200000:
+  index:
+  - DAX
+  name: BEIERSDORF AG O.N.
+  note: 72 datierte Stimmrechtseintraege, juengster 2025-10-24
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.beiersdorf.com/investor-relations/financial-reports/voting-rights-notifications
+  website: https://www.beiersdorf.com
+DE0005201602:
+  index: []
+  name: BERENTZEN-GRUPPE AG
+  note: Liste nur als EQS-Widget (nicht abgerufen)
+  segment: General Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.berentzen-gruppe.de/investoren/mitteilungen/stimmrechtsmitteilungen
+  website: http://www.berentzen-gruppe.de/
+DE0005203947:
+  index: []
+  name: BRAIN BIOTECH AG
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.brain-biotech.de
+DE0005220008:
+  index: []
+  name: ENBW ENERGIE BADEN-WUERTTEMBERG ON
+  note: keine Stimmrechts-Seite gefunden
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.enbw.com
+DE0005228779:
+  index: []
+  name: ORBIS SE O.N.
+  note: Liste nur als EQS-Widget (nicht abgerufen)
+  segment: General Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.orbis-group.com/de-de/investor-relations/aktie/aktionaersstruktur/stimmrechtsmitteilungen.html
+  website: https://www.orbis.de/
+DE0005229504:
+  index: []
+  name: BIJOU BRIGITTE O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.bijou-brigitte.com/
+DE0005232805:
+  index: []
+  name: BERTRANDT AG O.N.
+  note: 129 datierte Stimmrechtseintraege, juengster 2026-09-25
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.bertrandt.com/unternehmen/investor-relations/pflichtmitteilungen/stimmrechtsmitteilungen
+  website: https://bertrandt.com
+DE0005313506:
+  index:
+  - SDAX
+  name: ENERGIEKONTOR O.N.
+  note: 22 datierte Stimmrechtseintraege, juengster 2025-11-11
+  segment: General Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.energiekontor.de/investor-relations/pflichtmitteilungen.html
+  website: https://www.energiekontor.de
+DE0005313704:
+  index:
+  - SDAX
+  - TecDAX
+  name: CARL ZEISS MEDITEC AG
+  note: robots.txt unlesbar/Bot-Schutz (http://www.meditec.zeiss.com/)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.meditec.zeiss.com/
+DE0005403901:
+  index:
+  - SDAX
+  name: CEWE STIFTUNG KGAA O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.cewe-group.com/en/investor-relations.html
+DE0005419105:
+  index:
+  - SDAX
+  name: CANCOM SE O.N.
+  note: 'Website nicht erreichbar: HTTP 404: https://www.cancom.de/investor-relations/'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.cancom.de/investor-relations/
+DE0005439004:
+  index:
+  - DAX
+  name: CONTINENTAL AG O.N.
+  note: 19 datierte Stimmrechtseintraege, juengster 2026-08-21
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.continental.com/en/investors/ir-news/voting-rights/
+  website: https://continental.com/
+DE0005470306:
+  index:
+  - MDAX
+  name: CTS EVENTIM KGAA
+  note: robots.txt unlesbar/Bot-Schutz (http://www.eventim.de/)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.eventim.de/
+DE0005470405:
+  index:
+  - MDAX
+  name: LANXESS AG
+  note: Liste nur als EQS-Widget (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://lanxess.com/en/investors/stock/voting-rights-announcements
+  website: http://www.lanxess.com
+DE0005489561:
+  index: []
+  name: UNITED LABELS O.N.
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.ariva.de/news/eqs-pvr-evotec-se-release-according-to-article-40-section-12206766
+  website: http://www.unitedlabels.com/
+DE0005490601:
+  index: []
+  name: Leo International Precision Health AG
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE0005492938:
+  index: []
+  name: MASTERFLEX O.N.
+  note: 47 datierte Stimmrechtseintraege, juengster 2026-08-18
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.masterflexgroup.com/investor-relations/news-events/
+  website: http://www.masterflex.de/
+DE0005493092:
+  index: []
+  name: BORUSSIA DORTMUND
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.bvb.de/
+DE0005493365:
+  index:
+  - SDAX
+  name: HYPOPORT SE NA O.N.
+  note: 202 datierte Stimmrechtseintraege, juengster 2026-10-02
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.hypoport.de/investor-relations/corporate-governance/
+  website: https://www.hypoport.de
+DE0005498901:
+  index: []
+  name: DATA MODUL AG O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.data-modul.com
+DE0005545503:
+  index:
+  - SDAX
+  name: 1&1 AG
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.1und1.ag/investor-relations
+DE0005550602:
+  index: []
+  name: DRAEGERWERK ST.A.O.N.
+  note: keine Website (Wikidata)
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE0005550636:
+  index:
+  - SDAX
+  - TecDAX
+  name: DRAEGERWERK VZO O.N.
+  note: 4 datierte Stimmrechtseintraege, juengster 2025-01-06
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.draeger.com/de_de/Investor-Relations/Publications
+  website: http://www.draeger.com
+DE0005552004:
+  index:
+  - DAX
+  name: DHL AG
+  note: robots.txt unlesbar/Bot-Schutz (https://www.dpdhl.com/)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.dpdhl.com/
+DE0005557508:
+  index:
+  - DAX
+  - TecDAX
+  name: DT.TELEKOM AG NA
+  note: 3 datierte Stimmrechtseintraege, juengster 2017-06-28
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.telekom.com/en/investor-relations/publications/voting-rights-announcements
+  website: https://www.telekom.com/
+DE0005558696:
+  index: []
+  name: PARAGON KGAA INH O.N.
+  note: robots.txt unlesbar/Bot-Schutz (http://www.paragon.ag)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.paragon.ag
+DE0005565204:
+  index:
+  - SDAX
+  name: DUERR AG O.N.
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.durr-group.com/en/media/news/adhoc-detail/view/duerr-ag-secures-758-of-the-voting-rights-and-537-of-the-shares-of-homag-group-ag-and-announces-a-takeover-offer-to-acquire-the-remaining-shares-85055
+  website: http://www.durr-group.com
+DE0005580005:
+  index: []
+  name: DIERIG HOLDING AG O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.dierig.de/
+DE0005658009:
+  index: []
+  name: EISEN- UND HUETTENWERKE
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE0005659700:
+  index:
+  - SDAX
+  - TecDAX
+  name: ECKERT+ZIEGLER SE O.N.
+  note: 'Website nicht erreichbar: HTTP 404: https://www.ezag.com/en/investor-relations/'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.ezag.com/en/investor-relations/
+DE0005664809:
+  index:
+  - SDAX
+  - TecDAX
+  name: EVOTEC SE INH O.N.
+  note: Liste nur als EQS-Widget (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.evotec.com/news/hugin-ad-hoc-announcement-according-to-ss-15-wphg-acquisition-evotec-ag-perkinelmer-to-acquire-evotec-technologies
+  website: http://www.evotec.com/
+DE0005677108:
+  index:
+  - MDAX
+  - TecDAX
+  name: ELMOS SEMICONDUCTOR INH O.N.
+  note: 85 datierte Stimmrechtseintraege, juengster 2026-11-03
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.elmos.com/ueber-elmos/investor/regulatorische-bekanntmachungen.html
+  website: http://www.elmos.com/
+DE0005754402:
+  index: []
+  name: LS TELCOM AG
+  note: 9 datierte Stimmrechtseintraege, juengster 2014-06-11
+  segment: General Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.lstelcom.com/de/investor-relations/aktie/stimmrechtsmitteilungen/
+  website: https://www.lstelcom.com/
+DE0005759807:
+  index:
+  - SDAX
+  name: INIT INNOVATION O.N.
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.initse.com/ende/investors/the-share/voting-rights-annoucement/
+  website: https://initse.com
+DE0005772206:
+  index:
+  - SDAX
+  name: FIELMANN AG O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.fielmann-group.com
+DE0005773303:
+  index:
+  - MDAX
+  name: FRAPORT AG
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.fraport.com/en/investors.html
+DE0005774103:
+  index: []
+  name: FORTEC ELEKTRO. O.N.
+  note: 5 datierte Stimmrechtseintraege, juengster 2021-04-20
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.fortecag.de/Investor-Relations/News/Stimmrechte/
+  website: http://www.fortecag.de
+DE0005775803:
+  index: []
+  name: FORIS AG
+  note: 1 datierte Stimmrechtseintraege, juengster 2014-09-30
+  segment: General Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.foris.com/aktuelles/stimmrechtsmitteilung-der-foris-ag/
+  website: https://www.foris.com/
+DE0005785802:
+  index:
+  - DAX
+  name: FRESENIUS MEDICAL CARE AG O.N.
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://freseniusmedicalcare.com/en/investors/shares/notification-of-voting-rights/
+  website: https://fmcna.com/
+DE0005800601:
+  index:
+  - SDAX
+  name: GFT TECHNOLOGIES SE
+  note: 'Website nicht erreichbar: HTTP 404: https://www.gft.com:443/int/en/investor-relations'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://gft.com/int/en/investor-relations
+DE0005810055:
+  index:
+  - DAX
+  name: DEUTSCHE BOERSE NA O.N.
+  note: 10 datierte Stimmrechtseintraege, juengster 2026-10-15
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.deutsche-boerse.com/dbg-de/investor-relations/mitteilungen-und-services/stimmrechtsmitteilungen
+  website: https://www.deutsche-boerse.com
+DE0005878003:
+  index: []
+  name: DMG MORI AG O.N.
+  note: 'https://de.dmgmori-ag.com/investor-relations/stimmrechtsmitteilungen: Stimmrechtsseite ohne auslesbare datierte Eintraege (auch gerendert)'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.dmgmori.com
+DE0005895403:
+  index: []
+  name: GRAMMER AG O.N.
+  note: 25 datierte Stimmrechtseintraege, juengster 2019-12-16
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.grammer.com/investor-relations/aktie/stimmrechtsmitteilungen/
+  website: http://www.grammer.com
+DE0005909006:
+  index:
+  - MDAX
+  name: BILFINGER SE O.N.
+  note: robots.txt unlesbar/Bot-Schutz (https://www.bilfinger.com/)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.bilfinger.com/
+DE0005932735:
+  index: []
+  name: YOC AG O.N.
+  note: robots.txt unlesbar/Bot-Schutz (http://group.yoc.com)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://group.yoc.com
+DE0005936124:
+  index:
+  - SDAX
+  - TecDAX
+  name: OHB SE O.N.
+  note: Liste nur als EQS-Widget/EQS-Links (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.ohb.de/investor-relations/ohb-aktie/stimmrechte
+  website: https://www.ohb.de/
+DE0006042708:
+  index: []
+  name: HAWESKO HOLDING SE
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.hawesko-holding.com
+DE0006044001:
+  index: []
+  name: MATERNUS-KLINIKEN AG O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.maternus.de/
+DE0006047004:
+  index:
+  - DAX
+  name: HEIDELBERG MATERIALS AG O.N.
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.heidelbergmaterials.com/en/investor-relations/ir-announcements/notifications-of-voting-rights
+  website: https://www.heidelbergmaterials.com
+DE0006048408:
+  index: []
+  name: HENKEL AG+CO.KGAA ST O.N.
+  note: robots.txt unlesbar/Bot-Schutz (https://www.henkel-de/)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.henkel-de/
+DE0006048432:
+  index:
+  - DAX
+  name: HENKEL AG+CO.KGAA VZO
+  note: robots.txt unlesbar/Bot-Schutz (https://www.henkel-de/)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.henkel-de/
+DE0006052830:
+  index: []
+  name: MASCHINENFABRIK BERTHOLD HERMLE O.N. VZO
+  note: Kandidatenseiten ohne Stimmrechtseintraege
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.hermle.de/
+DE0006062144:
+  index: []
+  name: COVESTRO AG O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.covestro.com
+DE0006070006:
+  index:
+  - DAX
+  name: HOCHTIEF AG
+  note: 3 datierte Stimmrechtseintraege, juengster 2014-03-19
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.hochtief.de/investor-relations/hochtief-aktie
+  website: https://www.hochtief.de/
+DE0006083405:
+  index:
+  - SDAX
+  name: HORNBACH HOLDING ST O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.hornbach-holding.de/en/investor-relations/
+DE0006097108:
+  index: []
+  name: INFAS HOLDING AG O.N.
+  note: 8 datierte Stimmrechtseintraege, juengster 2024-05-21
+  segment: General Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.infas-holding.de/stimmrechtsmitteilung/
+  website: http://www.infas-holding.de/
+DE0006200108:
+  index:
+  - SDAX
+  name: INDUS HOLDING AG
+  note: 'Website nicht erreichbar: HTTP 404: https://indus.eu/en/investor-relations/'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.indus.de/en/investor-relations/
+DE0006202005:
+  index:
+  - MDAX
+  name: SALZGITTER AG O.N.
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.salzgitter-ag.com/de/investor-relations/aktie/stimmrechtsmitteilungen.html
+  website: https://www.salzgitter-ag.com/
+DE0006208408:
+  index: []
+  name: KAP AG INH O.N.
+  note: 6 datierte Stimmrechtseintraege, juengster 2026-09-16
+  segment: General Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.kap.de/investor-relations/mitteilungen/stimmrechtsmitteilungen
+  website: https://www.kap.de/
+DE0006219934:
+  index:
+  - SDAX
+  name: JUNGHEINRICH AG O.N.VZO
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.jungheinrich.com/investor-relations
+DE0006223407:
+  index:
+  - SDAX
+  name: PROCREDIT HOLDING AG NA EO 5
+  note: 8 datierte Stimmrechtseintraege, juengster 2026-03-06
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.procredit-holding.com/investor-relations/news/voting-rights-notifications/
+  website: https://www.procredit-holding.com
+DE0006223605:
+  index: []
+  name: INTERTAINMENT AG INH O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://intertainment.de/de/home.htm
+DE0006231004:
+  index:
+  - DAX
+  - TecDAX
+  name: INFINEON TECH.AG NA O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.infineon.cn/
+DE0006286560:
+  index: []
+  name: OVB HOLDING AG
+  note: robots.txt unlesbar/Bot-Schutz (http://www.ovb.ag)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.ovb.ag
+DE0006292006:
+  index: []
+  name: KSB SE+CO.KGAA ST O.N.
+  note: keine Website (Wikidata)
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE0006292030:
+  index:
+  - SDAX
+  name: KSB SE+CO.KGAA VZO O.N.
+  note: 'Website nicht erreichbar: HTTP 404: https://www.ksb.com/en-global/company/investor-relations'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.ksb.com/en-global/company/investor-relations
+DE0006305006:
+  index:
+  - MDAX
+  name: DEUTZ AG O.N.
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.deutz.com/en/investor-relations/mandatory-announcements/voting-rights-announcement/
+  website: http://www.deutz.com
+DE0006335003:
+  index:
+  - MDAX
+  name: KRONES AG O.N.
+  note: 'https://www.krones.com/en/company/investor-relations/releases/ad-hoc-disclosure-pursuant-to-15-of-the-german-securities-trading-act-wphg-executive-board-changes-at-krones-ag/: Stimmrechtsseite
+    ohne auslesbare datierte Eintraege (auch gerendert)'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.krones.com/
+DE0006450000:
+  index:
+  - SDAX
+  name: LPKF LASER+ELECTRONICS SE
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.lpkf.com/en/investor-relations/
+DE0006452907:
+  index:
+  - MDAX
+  - TecDAX
+  name: NEMETSCHEK SE O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://ir.nemetschek.com
+DE0006464506:
+  index: []
+  name: LEIFHEIT AG O.N.
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.leifheit-group.com/news-details?id=0879e7c4-8c0a-42d5-ac07-509122ed43c8
+  website: http://www.leifheit-group.com/
+DE0006492903:
+  index: []
+  name: A.I.S. AG
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE0006553464:
+  index: []
+  name: MAINOVA AG O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.mainova.de/
+DE0006569403:
+  index: []
+  name: ALBIS LEASING AG O.N.
+  note: 'https://www.nebenwerte-magazin.com/adler-group-endor-bittere-zeiten-fuer-aktionaere-starug-oder-instrumente-die-die-mehrheit-der-stimmrechte-repraesentieren-an-anleiheglaeubiger-auszugeben/: Stimmrechtsseite
+    ohne auslesbare datierte Eintraege (auch gerendert)'
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.albis-leasing.de
+DE0006569908:
+  index:
+  - SDAX
+  name: MLP SE INH. O.N.
+  note: robots.txt unlesbar/Bot-Schutz (https://mlp-group.de/ir/)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://mlp-group.de/ir/
+DE0006578008:
+  index: []
+  name: KHD HUMBOLDT WEDAG O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.khd.com
+DE0006595101:
+  index: []
+  name: MEDICLIN AG
+  note: 6 datierte Stimmrechtseintraege, juengster 2026-10-19
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.mediclin.de/investor-relations/ir-news-veranstaltungen/stimmrechtsmitteilungen/
+  website: https://www.mediclin.de
+DE0006599905:
+  index:
+  - DAX
+  name: MERCK KGAA O.N.
+  note: robots.txt unlesbar/Bot-Schutz (https://www.merckgroup.com/)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.merckgroup.com/
+DE0006602006:
+  index:
+  - DAX
+  name: GEA GROUP AG
+  note: Liste nur als EQS-Widget (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.gea.com/en/investors/corporate-governance/voting-rights/
+  website: https://www.gea.com/
+DE0006766504:
+  index:
+  - MDAX
+  name: AURUBIS AG
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.aurubis.com/en/about-us/corporate-governance/voting-rights-notifications
+  website: https://www.aurubis.com/
+DE0006775505:
+  index: []
+  name: NORDWEST HANDEL AG
+  note: keine Stimmrechts-Seite gefunden
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.nordwest.com/
+DE0006916604:
+  index: []
+  name: PFEIFFER VACUUM TECH. AG O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://group.pfeiffer-vacuum.com/
+DE0006925001:
+  index: []
+  name: PITTLER MASCHINENFABRIK AG
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE0006968001:
+  index: []
+  name: PWO AG
+  note: 1 datierte Stimmrechtseintraege, juengster 2020-12-15
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.pwo-group.com/en/press-and-investors/pwo-share/voting-rights-announcements.php
+  website: https://www.pwo-group.com/
+DE0006969603:
+  index:
+  - MDAX
+  name: PUMA SE
+  note: 192 datierte Stimmrechtseintraege, juengster 2026-10-16
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://about.puma.com/en/voting-rights-notifications
+  website: https://eu.puma.com/de/en/home
+DE0007008906:
+  index: []
+  name: REALTECH AG O.N.
+  note: 15 datierte Stimmrechtseintraege, juengster 2026-03-04
+  segment: General Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.realtech.com/unternehmen/investor-relations/finanznachrichten/stimmrechtsmitteilungen/
+  website: http://www.realtech.de/
+DE0007010803:
+  index:
+  - MDAX
+  name: RATIONAL AG
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.rational-online.com/de_de/unternehmen/investor-relations/meldungen/stimmrechtsmitteilungen/
+  website: https://www.rational-online.com
+DE0007016008:
+  index: []
+  name: WASGAU PRODUKTIONS & HANDELS NA O.N.
+  note: 'https://www.wasgau.com/stimmrechtsmitteilungen/: Stimmrechtsseite ohne auslesbare datierte Eintraege (auch gerendert)'
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.wasgau.de
+DE0007030009:
+  index:
+  - DAX
+  name: RHEINMETALL AG
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.rheinmetall.com/de/investor-relations/alt/stimmrechtsmitteilungen
+  website: https://www.rheinmetall.com/de
+DE0007037129:
+  index:
+  - DAX
+  name: RWE AG INH O.N.
+  note: Liste nur als EQS-Widget (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.rwe.com/investor-relations/finanzkalender-und-veroeffentlichungen/news-und-ad-hoc-mitteilungen/stimmrechtsmitteilungen/
+  website: https://www.rwe.com/
+DE0007042301:
+  index: []
+  name: RHOEN-KLINIKUM O.N.
+  note: 1 datierte Stimmrechtseintraege, juengster 2020-07-01
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://en.rhoen-klinikum-ag.com/investor-relations/notifications-of-major-holdings-sec-33-et-seq-wphg.html
+  website: https://en.rhoen-klinikum-ag.com
+DE0007074007:
+  index:
+  - SDAX
+  name: KWS SAAT KGAA INH O.N.
+  note: 17 datierte Stimmrechtseintraege, juengster 2015-11-26
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.kws.com/corp/en/investors/notifications/notifications-of-voting-rights/
+  website: https://www.kws.com/
+DE0007100000:
+  index:
+  - DAX
+  name: MERCEDES BENZ GROUP AG
+  note: robots.txt unlesbar/Bot-Schutz (https://group.mercedes-benz.com/)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://group.mercedes-benz.com/
+DE0007164600:
+  index:
+  - DAX
+  - TecDAX
+  name: SAP SE O.N.
+  note: robots.txt sperrt (https://www.sap.com/)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.sap.com/
+DE0007165607:
+  index:
+  - MDAX
+  - TecDAX
+  name: SARTORIUS AG O.N.
+  note: 14 datierte Stimmrechtseintraege, juengster 2026-09-25
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.sartorius.com/en/company/sartorius-ag-investor-relations/news-financial-publications
+  website: http://www.sartorius.com/
+DE0007165631:
+  index: []
+  name: SARTORIUS AG VZO O.N.
+  note: 14 datierte Stimmrechtseintraege, juengster 2026-09-25
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.sartorius.com/en/company/sartorius-ag-investor-relations/news-financial-publications
+  website: http://www.sartorius.com/
+DE0007193500:
+  index: []
+  name: KOENIG + BAUER AG ST O.N.
+  note: 'Website nicht erreichbar: HTTP 404: http://www.kba.com/'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.kba.com/
+DE0007201907:
+  index: []
+  name: FIRST SENSOR AG O.N.
+  note: robots.txt unlesbar/Bot-Schutz (http://www.first-sensor.com/en/)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.first-sensor.com/en/
+DE0007203705:
+  index: []
+  name: SNP SCHNEIDER-NEUREITHER O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.snpgroup.com/
+DE0007229007:
+  index: []
+  name: SCHLOSS WACHENHEIM AG O.N
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: General Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.schloss-wachenheim.com/cms/ad_hoc_mitteilungen-1006.html
+  website: http://www.schloss-wachenheim.com/
+DE0007231326:
+  index:
+  - SDAX
+  name: SIXT SE ST O.N.
+  note: 'https://about.sixt.com/ir/ad-hoc-mitteilung-nach-%C2%A7-15-wphg-2/: Stimmrechtsseite ohne auslesbare datierte Eintraege (auch gerendert)'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://about.sixt.com
+DE0007231334:
+  index: []
+  name: SIXT SE VZO O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.sixt.com
+DE0007235301:
+  index:
+  - SDAX
+  name: SGL CARBON SE O.N.
+  note: 2 datierte Stimmrechtseintraege, juengster 2025-04-07
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.sglcarbon.com/investor-relations/aktie/
+  website: https://www.sglcarbon.com/
+DE0007236101:
+  index:
+  - DAX
+  name: SIEMENS AG NA O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.siemens.com/
+DE0007257503:
+  index: []
+  name: CECONOMY AG ST O.N.
+  note: 'Website nicht erreichbar: HTTP 403: https://www.ceconomy.de/'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.ceconomy.de
+DE0007274136:
+  index:
+  - SDAX
+  name: STO SE+CO.KGAA VZO O.N.
+  note: 'Website nicht erreichbar: HTTP 404: https://www.sto.de/ir'
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.sto.de/ir
+DE0007276503:
+  index:
+  - SDAX
+  name: SECUNET SECURITY AG O.N.
+  note: 'Website nicht erreichbar: HTTP 404: https://www.secunet.com/en/about-secunet/investor-relations'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.secunet.com/en/about-secunet/investor-relations
+DE0007297004:
+  index:
+  - SDAX
+  name: SUEDZUCKER AG O.N.
+  note: Kandidatenseiten ohne Stimmrechtseintraege
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.suedzuckergroup.com/
+DE0007314007:
+  index:
+  - SDAX
+  name: HEIDELBERGER DRUCKMASCHINEN AG .O.N.
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.heidelberg.com/global/en/about_heidelberg/investor_relations/financial_publications/notifications__26_wphg/notifications_of_voting_rights/section_40.jsp
+  website: http://www.heidelberg.com
+DE0007446007:
+  index: []
+  name: TAKKT AG O.N.
+  note: Liste nur als EQS-Widget (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.takkt.de/investoren/aktie/stimmrechtsmitteilungen
+  website: http://www.takkt.de
+DE0007448508:
+  index: []
+  name: IVU TRAFFIC TECHN.AG O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.ivu.de/
+DE0007454209:
+  index: []
+  name: TC UNTERHALTUNGSELEKTRONIK
+  note: keine Stimmrechts-Seite gefunden
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://telecontrol.de/
+DE0007461006:
+  index:
+  - SDAX
+  - TecDAX
+  name: PVA TEPLA AG O.N.
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.pvatepla.com/corporate/investorrelations/news/voting-rights/?tx_sitepackage_votingrightdetail%5Baction%5D=detail&tx_sitepackage_votingrightdetail%5Bcontroller%5D=Votingright&tx_sitepackage_votingrightdetail%5Bvotingright%5D=1095&cHash=63ad896cbdffaefb6742ad942d577787
+  website: https://www.pvatepla.com/en/
+DE0007480204:
+  index:
+  - SDAX
+  name: DEUTSCHE EUROSHOP SE
+  note: 54 datierte Stimmrechtseintraege, juengster 2026-08-05
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.deutsche-euroshop.de/Investor-Relations/Aktie/Stimmrechte/Stimmrechtsmitteilungen
+  website: https://www.deutsche-euroshop.de
+DE0007493991:
+  index:
+  - MDAX
+  name: STROEER SE + CO. KGAA
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.stroeer.de/
+DE0007500001:
+  index:
+  - MDAX
+  name: THYSSENKRUPP AG O.N.
+  note: 'https://www.gesetze-im-internet.de/wphg/: Stimmrechtsseite ohne auslesbare datierte Eintraege (auch gerendert)'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.thyssenkrupp.com/
+DE0007501009:
+  index: []
+  name: TTL BETEILIGUNGS- UND GRUNDBESITZ AG INH ON
+  note: 'https://www.ttl-ag.de/de/investor-relations/corporate-governance/stimmrechtsmitteilungen.html: Stimmrechtsseite ohne auslesbare datierte Eintraege (auch gerendert)'
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.ttl-ag.de/de/
+DE0007507501:
+  index: []
+  name: WASHTEC AG O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.washtec.de/
+DE0007551509:
+  index: []
+  name: UZIN UTZ SE O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.uzin-utz.com/
+DE0007568578:
+  index:
+  - SDAX
+  name: SFC ENERGY AG
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.sfc.com/en/investor-relations/
+DE0007657231:
+  index: []
+  name: VILLEROY + BOCH AG VZ
+  note: 'https://www.villeroyboch-group.com/de/investor-relations/finanznachrichten/stimmrechtsbekanntmachungen.html: Stimmrechtsseite ohne auslesbare datierte Eintraege (auch gerendert)'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.villeroyboch-group.com/de/
+DE0007664005:
+  index:
+  - DAX
+  name: VOLKSWAGEN AG ST O.N.
+  note: 5 datierte Stimmrechtseintraege, juengster 2025-04-07
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.volkswagen-group.com/en/reporting-of-voting-rights-according-to-wphg-15780
+  website: https://www.volkswagenag.com/
+DE0007664039:
+  index: []
+  name: VOLKSWAGEN AG VZO O.N.
+  note: 5 datierte Stimmrechtseintraege, juengster 2025-04-07
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.volkswagen-group.com/en/reporting-of-voting-rights-according-to-wphg-15780
+  website: https://www.volkswagenag.com/
+DE0007667107:
+  index:
+  - SDAX
+  name: VOSSLOH AG O.N.
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.vossloh.com/en/voting-rights-notifications
+  website: http://www.vossloh.com
+DE0007760001:
+  index: []
+  name: GELSENWASSER AG
+  note: 'Website nicht erreichbar: HTTP 404: http://www.gelsenwasser.de/'
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.gelsenwasser.de/
+DE0007846867:
+  index: []
+  name: VISCOM SE
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.viscom.de
+DE0007856023:
+  index: []
+  name: ELRINGKLINGER AG NA O.N.
+  note: 'nur per Rendering: 5 Eintraege, juengster 2018-10-30'
+  segment: Prime Standard
+  status: js_only
+  verified: '2026-11-14'
+  voting_rights_url: https://elringklinger.de/investor-relations/mitteilungen/page?tx_news_pi1%5BoverwriteDemand%5D%5Bcategories%5D=4&cHash=57ea96b37dce9f46a824636d9612d38d
+  website: http://www.elringklinger.de
+DE0008019001:
+  index:
+  - SDAX
+  name: DT.PFANDBRIEFBK AG
+  note: 'https://www.pfandbriefbank.com/investoren/pflichtveroeffentlichungen/vorabbekanntmachungen-gem-wphg/: Stimmrechtsseite ohne auslesbare datierte Eintraege (auch gerendert)'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.pfandbriefbank.com
+DE0008055021:
+  index: []
+  name: DEUTSCHE REAL ESTATE AG O.N.
+  note: 'https://www.drestate.de/current_news/2026-08-24_en_bekanntmachung_gemaess_114-117_wphg: Stimmrechtsseite ohne auslesbare datierte Eintraege (auch gerendert)'
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.drestate.de/
+DE0008103102:
+  index: []
+  name: WEBAC HOLDING AG
+  note: keine Stimmrechts-Seite gefunden
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.webac-ag.com
+DE0008232125:
+  index:
+  - MDAX
+  name: LUFTHANSA AG VNA O.N.
+  note: robots.txt unlesbar/Bot-Schutz (https://www.lufthansagroup.com/)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.lufthansagroup.com/
+DE0008303504:
+  index:
+  - MDAX
+  name: TAG IMMOBILIEN AG
+  note: 384 datierte Stimmrechtseintraege, juengster 2025-05-12
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.tag-ag.com/news/stimmrechtsmitteilung
+  website: http://www.tag-ag.com
+DE0008402215:
+  index:
+  - DAX
+  name: HANNOVER RUECK SE NA O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.hannover-re.com/
+DE0008404005:
+  index:
+  - DAX
+  name: ALLIANZ SE NA O.N.
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.allianz.com/en/investor_relations/announcements/voting-rights-announcements.html
+  website: https://www.allianz.com/
+DE0008430026:
+  index:
+  - DAX
+  name: MUENCH.RUECKVERSICHERUNGS GESELLSCHAFT.VNA O.N.
+  note: 'https://www.munichre.com/de/unternehmen/investoren/pflichtveroeffentlichungen/stimmrechtsmitteilungen.html: Stimmrechtsseite ohne auslesbare datierte Eintraege (auch gerendert)'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.munichre.com
+DE000A0AFGF3:
+  index: []
+  name: PEARL GOLD AG
+  note: 'Website nicht erreichbar: HTTP 404: https://www.pearlgoldag.com/de/'
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.pearlgoldag.com/de/index.php
+DE000A0D6554:
+  index:
+  - MDAX
+  - TecDAX
+  name: NORDEX SE O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.nordex-online.com
+DE000A0D9PT0:
+  index:
+  - DAX
+  name: MTU AERO ENGINES NA O.N.
+  note: 48 datierte Stimmrechtseintraege, juengster 2026-11-04
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.mtu.de/investors/mtu-share/shareholder-structure/
+  website: https://www.mtu.de
+DE000A0DJ6J9:
+  index:
+  - SDAX
+  - TecDAX
+  name: SMA SOLAR TECHNOL.AG
+  note: 10 datierte Stimmrechtseintraege, juengster 2026-09-28
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.sma.de/investor-relations/stimmrechtsmitteilungen
+  website: http://www.sma.de/
+DE000A0DNAY5:
+  index: []
+  name: BET-AT-HOME.COM AG O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.bet-at-home.com
+DE000A0DPRE6:
+  index: []
+  name: Allane SE
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.sixt-leasing.de/
+DE000A0ETBQ4:
+  index:
+  - SDAX
+  name: MBB SE O.N.
+  note: 24 datierte Stimmrechtseintraege, juengster 2026-03-04
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.mbb.com/ir/corporate-governance/archiv-stimmrechtsmitteilungen.html
+  website: http://www.mbb.com/
+DE000A0H52F5:
+  index: []
+  name: MVV ENERGIE AG NA O.N.
+  note: 'https://www.mvv.de/journalisten/pressemitteilungen/detail/ad-hoc-mitteilung-gemaess-15-wphg-der-mvv-energie-ag-am-17122010: Stimmrechtsseite ohne auslesbare datierte Eintraege (auch gerendert)'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.mvv.de
+DE000A0HGQS8:
+  index: []
+  name: Planoptik AG
+  note: 8 datierte Stimmrechtseintraege, juengster 2026-04-17
+  segment: General Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.planoptik.com/de/investor_relations/
+  website: https://planoptik.com/
+DE000A0HN5C6:
+  index: []
+  name: DEUTSCHE WOHNEN SE INH
+  note: keine Stimmrechts-Seite gefunden
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.deutsche-wohnen.com/
+DE000A0JBPG2:
+  index:
+  - SDAX
+  name: PNE AG NA O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.pnegroup.com/investor-relations/
+DE000A0JL9W6:
+  index:
+  - SDAX
+  - TecDAX
+  name: VERBIO SE ON
+  note: 35 datierte Stimmrechtseintraege, juengster 2026-06-30
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.verbio.de/unternehmen/corporate-governance/
+  website: https://www.verbio.de/
+DE000A0LBFE4:
+  index: []
+  name: MEVIS MEDICAL SOLUTIONS NA O.N.
+  note: 'https://www.mevis.de/investor-relations/ir-mitteilungen/ir-mitteilung/mevis-medical-solutions-ag-veroeffentlichung-gemaess-43-abs-2-40-abs-1-wphg-mit-dem-ziel-der-europaweiten-verbreitung: Stimmrechtsseite
+    ohne auslesbare datierte Eintraege (auch gerendert)'
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.mevis.de/
+DE000A0LD6E6:
+  index: []
+  name: GERRESHEIMER AG
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.gerresheimer.com/investoren/corporate-governance/stimmrechtsmitteilungen
+  website: http://gerresheimer.de
+DE000A0LE3J1:
+  index: []
+  name: READCREST CAPITAL AG O.N.
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A0MW975:
+  index: []
+  name: FAIR VALUE REIT-AG INH.ON
+  note: 110 datierte Stimmrechtseintraege, juengster 2024-12-10
+  segment: General Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.fvreit.de/investor-relations/archiv-regelmaessige-stimmrechtsmitteilungen/
+  website: http://www.fvreit.de
+DE000A0N4N52:
+  index: []
+  name: NFON AG INH O.N.
+  note: robots.txt sperrt (http://www.nfon.net)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.nfon.net
+DE000A0S8488:
+  index: []
+  name: HAMBURGER HAFEN UND LOGISTIK A-SP NA
+  note: 32 datierte Stimmrechtseintraege, juengster 2024-12-02
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://hhla.de/investoren/mitteilungen/stimmrechtsmitteilungen
+  website: http://www.hhla.de/
+DE000A0WMPJ6:
+  index:
+  - MDAX
+  - TecDAX
+  name: AIXTRON SE NA O.N.
+  note: 5 datierte Stimmrechtseintraege, juengster 2026-11-12
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.aixtron.com/de/investoren/news/stimmrechte
+  website: http://www.aixtron.com
+DE000A0XFSF0:
+  index: []
+  name: DEMIRE DEUTSCHE MITTELSTAND REAL ESTATE AG
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.demire.ag/stimmrechtsm_de/magnat-real-estate-ag-veroeffentlichung-der-korrektur-einer-stimmrechtsmitteilung-gemaess-%C2%A7-26-abs-1-wphg-mit-dem-ziel-der-europaweiten-verbreitung/
+  website: https://www.demire.ag/
+DE000A0XYGA7:
+  index: []
+  name: TECHNOTRANS SE NA O.N.
+  note: 'Website nicht erreichbar: HTTP 404: http://www.technotrans.de/de/index.html'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.technotrans.de/de/index.html
+DE000A0Z1JH9:
+  index: []
+  name: PSI SOFTWARE SE
+  note: 'https://www.psi.de/unternehmen/investor-relations/ad-hoc-mitteilungen/ad-hoc-mitteilung-nach-15-wphg-aktienrueckkaufvorstand-der-psi-ag-beschliesst-aktienrueckkauf-4: Stimmrechtsseite ohne auslesbare
+    datierte Eintraege (auch gerendert)'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.psi.de
+DE000A0Z23Q5:
+  index: []
+  name: ADESSO SE INH O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.adesso.de/
+DE000A0Z2ZZ5:
+  index:
+  - MDAX
+  - TecDAX
+  name: FREENET AG NA O.N.
+  note: 2 datierte Stimmrechtseintraege, juengster 2026-03-26
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.freenet.ag/investor-relations/ir-mitteilungen/stimmrechtsmitteilungen/index.html
+  website: http://freenet.ag
+DE000A11QVV0:
+  index: []
+  name: HEIDELBERG PHARMA AG O.N.
+  note: 10 datierte Stimmrechtseintraege, juengster 2025-10-13
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://heidelberg-pharma.com/de/presse-investoren/mitteilungen-und-berichte/stimmrechtsmitteilungen
+  website: http://www.wilex.de/
+DE000A11QW68:
+  index: []
+  name: 7C SOLARPARKEN AG O.N.
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A12DM80:
+  index:
+  - DAX
+  name: SCOUT24 AG NA O.N.
+  note: 15 datierte Stimmrechtseintraege, juengster 2026-11-05
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.scout24.com/investor-relations/finanzmitteilungen/stimmrechtsmitteilungen
+  website: https://www.scout24.com/
+DE000A12UP37:
+  index: []
+  name: NORCOM INFORMATION TECHNOLOGY INH ON
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: General Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.norcom.de/ad-hoc-mitteilungen
+  website: http://www.norcom.de
+DE000A13SX22:
+  index:
+  - MDAX
+  name: HELLA GMBH+CO.KGAA
+  note: 'Website nicht erreichbar: HTTP 410: https://www.hella.com/hella-com/en/Investor-Relations-1.html'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.hella.com/hella-com/en/Investor-Relations-1.html
+DE000A14KRD3:
+  index: []
+  name: DT. Konsum Real Estae AG
+  note: 106 datierte Stimmrechtseintraege, juengster 2026-02-20
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.deutsche-konsum.de/investor-relations/ir-mitteilungen/stimmrechtsmitteilungen
+  website: https://www.deutsche-konsum.de
+DE000A161408:
+  index:
+  - SDAX
+  name: HELLOFRESH SE INH O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://ir.hellofreshgroup.com
+DE000A161N14:
+  index: []
+  name: YOUR FAMILY ENTERTAINMENT AG NA
+  note: 6 datierte Stimmrechtseintraege, juengster 2025-08-05
+  segment: General Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.yfe-ag.com/corporate-governance/stimmrechtsmitteilungen/
+  website: http://www.yf-e.com
+DE000A161N22:
+  index: []
+  name: LIBERO FOOTBALL FINANCE AG
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A161N30:
+  index:
+  - SDAX
+  name: GRENKE AG NA O.N.
+  note: 63 datierte Stimmrechtseintraege, juengster 2026-04-14
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.grenke.com/de/unternehmen/investor-relations/grenke-aktie/stimmrechte/
+  website: http://www.grenke.de
+DE000A1681X5:
+  index: []
+  name: SINGULUS TECHNOL. EO 1
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A1A6V48:
+  index: []
+  name: KPS AG NA O.N.
+  note: 19 datierte Stimmrechtseintraege, juengster 2026-06-08
+  segment: General Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://kps.com/de/unternehmen/investor-relations/ir-mitteilungen/
+  website: http://www.kps.com
+DE000A1A6WB2:
+  index: []
+  name: Path2 Hydrogen AG
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A1DAHH0:
+  index:
+  - DAX
+  name: BRENNTAG SE
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://corporate.brenntag.com/en/investor-relations/brenntag-share/voting-rights-notifications/
+  website: https://www.brenntag.com/
+DE000A1EWVY8:
+  index: []
+  name: FORMYCON AG
+  note: 7 datierte Stimmrechtseintraege, juengster 2024-11-13
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.formycon.com/investoren/stimmrechtsmitteilungen/
+  website: https://www.formycon.com
+DE000A1EWWW0:
+  index:
+  - DAX
+  name: ADIDAS AG NA O.N.
+  note: robots.txt unlesbar/Bot-Schutz (https://www.adidas.com/)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.adidas.com/
+DE000A1H8BV3:
+  index:
+  - SDAX
+  name: NORMA GROUP SE NA O.N.
+  note: 'Website nicht erreichbar: HTTP 404: https://www.normagroup.com/corp/en/investor-relations'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.normagroup.com/corp/en/investor-relations/
+DE000A1K0201:
+  index: []
+  name: GESCO SE NA O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.gesco.de/
+DE000A1K0235:
+  index:
+  - MDAX
+  - TecDAX
+  name: SUSS MicroTec SE
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.suss.com/en/news/voting-rights/ubs-group-ag-zurich-switzerland
+  website: http://www.suss.com/
+DE000A1K03W5:
+  index: []
+  name: NEXR TECHNOLOGIES SE INH O.N.
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A1ML7J1:
+  index:
+  - DAX
+  name: VONOVIA SE NA O.N.
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.vonovia.com/investoren/news-publikationen/stimmrechtsmitteilungen
+  website: https://www.vonovia.de
+DE000A1MMCC8:
+  index:
+  - SDAX
+  name: MEDIOS AG O.N.
+  note: 10 datierte Stimmrechtseintraege, juengster 2026-11-04
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://investors.medios.group/corporate-governance/stimmrechtsmitteilungen
+  website: https://medios.group/
+DE000A1PHBB5:
+  index: []
+  name: R. STAHL AG NA O.N.
+  note: 'Website nicht erreichbar: HTTP 403: https://r-stahl.com/de/global/home/'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.stahl.de/
+DE000A1PHFF7:
+  index:
+  - SDAX
+  name: HUGO BOSS AG NA O.N.
+  note: robots.txt unlesbar/Bot-Schutz (https://www.hugoboss.com)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.hugoboss.com
+DE000A1R1C81:
+  index: []
+  name: United Eco Solutions AG
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A1TNU68:
+  index: []
+  name: STS GROUP AG O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.sts.group/
+DE000A1TNUT7:
+  index:
+  - SDAX
+  name: DT.BETEILIG.AG NA O.N.
+  note: 'https://www.dbag.de/newsroom/detail/mitteilung-gemaess-30b-absatz-1-satz-1-nr-2-wphg-1/: Stimmrechtsseite ohne auslesbare datierte Eintraege (auch gerendert)'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.deutsche-beteiligung.de/
+DE000A1X3WW8:
+  index: []
+  name: KHD HUMBOLDT WEDAG VV NA O.N.
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A1X3XX4:
+  index: []
+  name: BRANICKS Group AG
+  note: 3 datierte Stimmrechtseintraege, juengster 2022-04-06
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://branicks.com/investor-relations/veroeffentlichungen/stimmrechtsmitteilungen/
+  website: http://www.dic-asset.de/
+DE000A1X3YY0:
+  index: []
+  name: BASTEI LUEBBE AG O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.luebbe.de/
+DE000A1YC996:
+  index: []
+  name: THE SOCIAL CHAIN AG
+  note: keine Stimmrechts-Seite gefunden
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.socialchain.com/
+DE000A254203:
+  index: []
+  name: META WOLF AG INH O.N.
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A254211:
+  index: []
+  name: INTERSHOP COMMUNICATIONS INH O.N.
+  note: keine Website (Wikidata)
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A254294:
+  index: []
+  name: SQD.AI STRATEGIES AG O.N.
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A255F11:
+  index:
+  - SDAX
+  name: FRIEDRICH VORWERK GROUP SE
+  note: robots.txt unlesbar/Bot-Schutz (https://www.friedrich-vorwerk.de/en/)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.friedrich-vorwerk.de/en/
+DE000A255G02:
+  index: []
+  name: ENAPTER AG INH O.N.
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A289B07:
+  index: []
+  name: Arzneiwerk AG VIDA
+  note: keine Website (Wikidata)
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A2AA204:
+  index: []
+  name: DF DEUTSCHE FORFAIT AG NA O.N.
+  note: 'https://www.dfag.de/news/artikel/ad-hoc-meldung-nach-paragraph-15-wphg-insolvenzplan-zur-einsichtnahme-niedergelegt/: Stimmrechtsseite ohne auslesbare datierte Eintraege (auch gerendert)'
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.dfag.de/
+DE000A2DA588:
+  index: []
+  name: MAX AUTOMATION SE NA O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.maxautomation.com/
+DE000A2DAM03:
+  index: []
+  name: AUMANN AG INH O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.aumann-ag.com
+DE000A2E4K43:
+  index:
+  - MDAX
+  name: DELIVERY HERO SE NA O.N.
+  note: robots.txt unlesbar/Bot-Schutz (https://www.deliveryhero.com/)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.deliveryhero.com/
+DE000A2E4LE9:
+  index: []
+  name: Voltatron AG
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.voltatron.com
+DE000A2G8X31:
+  index: []
+  name: SERVICEWARE SE INH O.N.
+  note: 'https://www.pressetext.com/news/20261026011: Stimmrechtsseite ohne auslesbare datierte Eintraege (auch gerendert)'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://serviceware-se.com/de/
+DE000A2GS5D8:
+  index:
+  - SDAX
+  name: DERMAPHARM HOLDING INH O.N.
+  note: robots.txt unlesbar/Bot-Schutz (http://www.dermapharm.de)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.dermapharm.de
+DE000A2GS633:
+  index: []
+  name: ALLGEIER SE NA O.N.
+  note: robots.txt unlesbar/Bot-Schutz (http://www.allgeier-holding.de/)
+  segment: General Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.allgeier-holding.de/
+DE000A2GSU42:
+  index: []
+  name: BROCKHAUS TECHNOLOGIES AG
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.brockhaus-technologies.com/en/
+DE000A2LQ728:
+  index: []
+  name: MING LE SPORTS AG
+  note: 'https://www.minglesports.de/news-archiv: Stimmrechtsseite ohne auslesbare datierte Eintraege (auch gerendert)'
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.minglesports.de/
+DE000A2LQ884:
+  index:
+  - MDAX
+  name: AUTO1 GROUP SE
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://ir.auto1-group.com
+DE000A2N4H07:
+  index: []
+  name: WESTWING GROUP INH. O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.westwing.fr/
+DE000A2NB601:
+  index:
+  - MDAX
+  - TecDAX
+  name: JENOPTIK AG NA O.N.
+  note: 143 datierte Stimmrechtseintraege, juengster 2026-11-04
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.jenoptik.com/investors/share
+  website: https://www.jenoptik.com
+DE000A2NB650:
+  index:
+  - SDAX
+  name: MUTARES KGAA NA O.N.
+  note: 9 datierte Stimmrechtseintraege, juengster 2026-04-07
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://ir.mutares.com/corporate-governance/stimmrechtsmitteilungen/
+  website: https://mutares.com/
+DE000A2NBX80:
+  index: []
+  name: INSTONE REAL ESTATE GROUP SE
+  note: 'Website nicht erreichbar: HTTP 404: https://instone-group.de/de/'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://instone-group.de/
+DE000A2TSU21:
+  index: []
+  name: WILD BUNCH AG O.N.
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A2YN504:
+  index: []
+  name: KNAUS TABBERT AG NA O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.knaustabbert.de/
+DE000A2YN777:
+  index: []
+  name: PFERDEWETTEN.DE AG NA ON
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A2YN900:
+  index:
+  - SDAX
+  - TecDAX
+  name: TEAMVIEWER SE INH O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://ir.teamviewer.com
+DE000A37FT41:
+  index: []
+  name: EPIGENOMICS AG NA O.N.
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A3CMGN3:
+  index: []
+  name: HGEARS AG
+  note: keine Website (Wikidata)
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A3CQ7F4:
+  index: []
+  name: BIKE24 HOLDING AG
+  note: 'Website nicht erreichbar: HTTP 403: https://www.bike24.com/'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.bike24.com/
+DE000A3CSAE2:
+  index: []
+  name: MISTER SPEX SE
+  note: keine Stimmrechts-Seite gefunden
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.misterspex.de/
+DE000A3DRAE2:
+  index: []
+  name: SMT Scharf AG
+  note: Liste nur als EQS-Widget (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.smtscharf.com/investorrelations/corporate-governance/stimmrechtsmitteilungen/
+  website: http://smtscharf.com
+DE000A3E00M1:
+  index:
+  - MDAX
+  - TecDAX
+  name: IONOS GROUP SE NA O.N.
+  note: 12 datierte Stimmrechtseintraege, juengster 2026-02-24
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.ionos-group.com/investor-relations/corporate-governance/voting-rights.html
+  website: https://www.ionos-group.com
+DE000A3E5C08:
+  index: []
+  name: CO.DON AG INH. O.N.
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A3E5CP0:
+  index: []
+  name: SIMONA AG O.N.
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A3E5D56:
+  index:
+  - MDAX
+  name: FUCHS SE O.N.
+  note: 5 datierte Stimmrechtseintraege, juengster 2026-10-01
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.fuchs.com/group/investor-relations/statutory-publications/voting-rights-announcements/
+  website: https://www.fuchs.com
+DE000A3E5D64:
+  index: []
+  name: FUCHS SE VZO O.N.
+  note: keine Website (Wikidata)
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A3E5E55:
+  index: []
+  name: RINGMETALL SE NA O.N.
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A3E5EG5:
+  index: []
+  name: PAION O.N
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A3ENQ51:
+  index:
+  - SDAX
+  name: SCHOTT Pharma AG & Co. KGaA
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.schott-pharma.com/en/investor-relations
+DE000A3H2101:
+  index: []
+  name: AAP IMPLANTATE AG
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A3H2200:
+  index: []
+  name: NAGARRO SE NA O.N.
+  note: 'Website nicht erreichbar: HTTP 404: https://www.nagarro.com/en'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.nagarro.com/
+DE000A3H2333:
+  index:
+  - SDAX
+  name: HAMBORNER REIT AG O.N.
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.hamborner.de/hamborner-reit-ag-ad-hoc-meldung-nach-%C2%A7-15-wphg-vorlaeufiges-ergebnis/
+  website: https://www.hamborner.de
+DE000A3H3L44:
+  index: []
+  name: 2INVEST AG NA O.N.
+  note: 'https://2invest-ag.com/neuigkeiten/vorabbekanntmachung-ueber-die-veroeffentlichung-von-finanzberichten-gemaess-%C2%A7%C2%A7-114-117-wphg-8/: Stimmrechtsseite ohne auslesbare datierte Eintraege
+    (auch gerendert)'
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://2invest-ag.com/
+DE000A3MQRK6:
+  index: []
+  name: Rostra AG
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A409732:
+  index: []
+  name: TISCON AG i.A.
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A40AEG0:
+  index: []
+  name: Pentixapharm Holding AG
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.pentixapharm.com/
+DE000A40ESU3:
+  index:
+  - SDAX
+  name: EINHELL GERMANY VZO O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.einhell.com
+DE000A40ZVK3:
+  index: []
+  name: ACCENTRO REAL ESTATE AG O.N.
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A41YD99:
+  index: []
+  name: ALTECH ADVANCED MATERIALS NA O.N.
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A41YDG0:
+  index: []
+  name: Q.BEYOND AG NA O.N.
+  note: keine Website (Wikidata)
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A41YFJ9:
+  index: []
+  name: CHERRY SE
+  note: keine Website (Wikidata)
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A41YFQ4:
+  index: []
+  name: 11 88 0 SOLUTIONS AG
+  note: keine Website (Wikidata)
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A41YGA6:
+  index: []
+  name: Nexum Group AG
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A41YHG1:
+  index:
+  - SDAX
+  name: ALZCHEM GROUP AG INH O.N.
+  note: Kandidatenseiten ohne Stimmrechtseintraege
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.alzchem.com
+DE000A420ZL4:
+  index: []
+  name: Electrovac AG
+  note: keine Website (Wikidata)
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A42D2N5:
+  index: []
+  name: HELIOS SOLAR AG
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000A4BGGM7:
+  index: []
+  name: BIOFRONTERA AG NA O.N.
+  note: keine Website (Wikidata)
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000AUM0V10:
+  index:
+  - MDAX
+  name: AUMOVIO SE
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.aumovio.com/en/investor-relations.html
+DE000BASF111:
+  index:
+  - DAX
+  name: BASF SE NA O.N.
+  note: 139 datierte Stimmrechtseintraege, juengster 2026-04-14
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.basf.com/global/en/investors/share-and-adrs/shareholder-structure/notification-of-voting-rights
+  website: https://www.basf.com
+DE000BAY0017:
+  index:
+  - DAX
+  name: BAYER AG NA O.N.
+  note: robots.txt unlesbar/Bot-Schutz (https://bayer.com)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://bayer.com
+DE000BCK2223:
+  index:
+  - SDAX
+  - TecDAX
+  name: Ottobock SE & Co. KGaA
+  note: 'Website nicht erreichbar: HTTP 404: https://www.ottobock.com/en-us//investor-relations'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.ottobock.com/en/investor-relations/
+DE000BEAU1Y4:
+  index:
+  - SDAX
+  name: DOUGLAS AG
+  note: robots.txt unlesbar/Bot-Schutz (https://www.douglas-group.com)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.douglas-group.com
+DE000CBK1001:
+  index:
+  - DAX
+  name: COMMERZBANK AG
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.commerzbank.com
+DE000DTR0CK8:
+  index:
+  - DAX
+  name: DAIMLER TRUCK HOLDING AG
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.daimlertruck.com/en/investors/capital-market-releases/voting-rights
+  website: https://www.daimlertruck.com/
+DE000DWS1007:
+  index:
+  - MDAX
+  name: DWS GROUP GMBH+CO.KGAA ON
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://group.dws.com/ir/
+DE000ENAG999:
+  index:
+  - DAX
+  name: E.ON SE NA O.N.
+  note: robots.txt unlesbar/Bot-Schutz (https://www.eon.se/)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.eon.se/
+DE000ENER6Y0:
+  index:
+  - DAX
+  name: SIEMENS ENERGY AG NA O.N.
+  note: 20 datierte Stimmrechtseintraege, juengster 2024-08-19
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.siemens-energy.com/de/de/home/investor-relations/aktie/aktionaersstruktur-stimmrechtsmitteilungen.html
+  website: https://www.siemens-energy.com/
+DE000EVNK013:
+  index:
+  - MDAX
+  name: EVONIK INDUSTRIES AG NA O.N.
+  note: 'Website nicht erreichbar: HTTP 404: https://www.evonik.com/en/investors.html'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.evonik.com/en/investors.html
+DE000FRE5EN2:
+  index:
+  - DAX
+  name: FRESENIUS SE+CO.KGAA O.N.
+  note: keine Website (Wikidata)
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000FTG1111:
+  index:
+  - MDAX
+  name: FLATEXDEGIRO SE
+  note: 'Website nicht erreichbar: HTTP 404: https://www.flatexdegiro.com/en/investor-relations/'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.flatexdegiro.com/en/investor-relations
+DE000HAG0005:
+  index:
+  - MDAX
+  - TecDAX
+  name: HENSOLDT AG NA O.N.
+  note: 'Website nicht erreichbar: HTTP 404: https://www.hensoldt.net/investors'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.hensoldt.net/investors/
+DE000HLAG475:
+  index: []
+  name: HAPAG-LLOYD AG NA O.N.
+  note: robots.txt unlesbar/Bot-Schutz (http://hapag-lloyd.com)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://hapag-lloyd.com
+DE000HNC2059:
+  index: []
+  name: CAMERIT AG
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000JST4000:
+  index:
+  - SDAX
+  name: JOST WERKE SE INH. O.N.
+  note: 28 datierte Stimmrechtseintraege, juengster 2024-01-18
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.jost-world.com/corporate/investors/financial-news/
+  website: http://www.jost-world.com
+DE000KBX1006:
+  index:
+  - MDAX
+  name: KNORR-BREMSE AG INH O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://ir.knorr-bremse.com
+DE000KGX8881:
+  index:
+  - MDAX
+  name: KION GROUP AG
+  note: 'https://www.kiongroup.com/en/Investors/Events-Publications/Financial-News/Press-Releases-Detail.html?id=2096419&type=PVR&title=KION%20GROUP%20AG:%20Release%20according%20to%20Article%2040,%20Section%201%20of%20the%20WpHG%20%5Bthe%20German%20Securities%20Trading%20Act%5D%20with%20the%20objective%20of%20Europe-wide%20distribution:
+    Stimmrechtsseite ohne auslesbare datierte Eintraege (auch gerendert)'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.kiongroup.com/en/Investors/
+DE000KSAG888:
+  index:
+  - MDAX
+  name: K+S AG NA O.N.
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.kpluss.com/en-us/investor-relations/publications/announcements/notification-of-voting-rights/index.html
+  website: https://www.kpluss.com/
+DE000LEG1110:
+  index:
+  - MDAX
+  name: LEG IMMOBILIEN SE
+  note: robots.txt unlesbar/Bot-Schutz (http://www.leg-nrw.de/)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.leg-nrw.de/
+DE000NCA0001:
+  index: []
+  name: THYSSENKRUPP NUCERA AG & KGAA
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://thyssenkrupp-nucera.com/
+DE000PAG9113:
+  index:
+  - MDAX
+  name: Porsche AG Vz
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://investorrelations.porsche.com
+DE000PAH0038:
+  index:
+  - MDAX
+  name: PORSCHE AUTOMOBIL HOLDING VZO
+  note: 20 datierte Stimmrechtseintraege, juengster 2025-04-16
+  segment: General Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.porsche-se.com/investor-relations/sonstige-veroeffentlichungen/stimmrechtsmitteilungen
+  website: http://www.porsche-se.com/
+DE000PAT1AG3:
+  index:
+  - SDAX
+  name: PATRIZIA SE NA ON
+  note: 35 datierte Stimmrechtseintraege, juengster 2026-10-22
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://ir.patrizia.ag/en/share/voting-rights-notifications
+  website: https://www.patrizia.ag/
+DE000PSM7770:
+  index: []
+  name: PROSIEBENSAT.1 MEDIA SE NA O.N.
+  note: Liste nur als EQS-Widget (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.prosiebensat1.com/investor-relations/publikationen/stimmrechtsmitteilungen
+  website: https://www.prosiebensat1.de/
+DE000RENK730:
+  index:
+  - MDAX
+  name: RENK GROUP AG
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.renk.com
+DE000SAFH001:
+  index:
+  - SDAX
+  name: SAF HOLLAND SE INH EO 1
+  note: 2 datierte Stimmrechtseintraege, juengster 2026-11-12
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://corporate.safholland.com/en/investor-relations/voting-rights-notifications/12-11-2026
+  website: https://www.safholland.com
+DE000SGU8886:
+  index: []
+  name: SINO-GERMAN UNITED AG O.N.
+  note: robots.txt unlesbar/Bot-Schutz (http://www.sgu-ag.de/Gesch.aspx?funId=489#m1)
+  segment: General Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.sgu-ag.de/Gesch.aspx?funId=489#m1
+DE000SHA0100:
+  index:
+  - MDAX
+  name: SCHAEFFLER AG NA O.N.
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.schaeffler.com/en/investor-relations/events-publications/voting-rights-announcements/
+  website: https://www.schaeffler.com
+DE000SHL1006:
+  index:
+  - DAX
+  - TecDAX
+  name: SIEMENS HEALTH.AG NA O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://siemens-healthineers.com
+DE000SPG1003:
+  index:
+  - SDAX
+  name: Springer Nature AG & Co. KGaA
+  note: 'Website nicht erreichbar: HTTP 404: https://www.springernature.com/gp/investors'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.springernature.com/gp/investors
+DE000STAB1L8:
+  index:
+  - SDAX
+  name: STABILUS SE INH. EO-,01
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.stabilus.com
+DE000STRA555:
+  index: []
+  name: STRATEC SE NA O.N.
+  note: keine Website (Wikidata)
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000SYM9999:
+  index:
+  - DAX
+  name: SYMRISE AG INH. O.N.
+  note: 35 datierte Stimmrechtseintraege, juengster 2026-10-30
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.symrise.com/investors/voting-rights-directors-dealings/
+  website: http://www.symrise.com/
+DE000TKCC1S8:
+  index: []
+  name: tk accelis Group AG & Co. KGaA
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.tkaccelis.com
+DE000TKMS001:
+  index:
+  - MDAX
+  name: TKMS AG + CO. KGAA O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.tkmsgroup.com/
+DE000TLX1005:
+  index:
+  - MDAX
+  name: TALANX AG NA O.N.
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.talanx.com/de/investor_relations/meldungen_-_service/stimmrechtsmitteilungen
+  website: http://www.talanx.com/
+DE000TRAT0N7:
+  index:
+  - MDAX
+  name: TRATON SE INH O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://traton.com
+DE000TUAG505:
+  index:
+  - MDAX
+  name: TUI AG
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.tuigroup.com/de/investoren/financial-news/stimmrechtsmitteilung-norges
+  website: https://www.tuigroup.com
+DE000UNSE026:
+  index: []
+  name: UNIPER SE NA O.N.
+  note: robots.txt unlesbar/Bot-Schutz (https://www.uniper.energy/)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.uniper.energy/
+DE000VNC0014:
+  index:
+  - SDAX
+  name: Vincorion SE
+  note: 'Website nicht erreichbar: HTTP 404: https://vincorion.com/en/investor-relations'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://vincorion.com/en/investor-relations
+DE000WACK012:
+  index:
+  - SDAX
+  name: WACKER NEUSON SE NA O.N.
+  note: 'Website nicht erreichbar: HTTP 404: https://www.wackerneuson.com/en/investor-relations/'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.wackerneuson.com/en/investor-relations/
+DE000WAF3001:
+  index:
+  - MDAX
+  - TecDAX
+  name: SILTRONIC AG NA O.N.
+  note: Stimmrechtsseite verweist nur auf EQS/DGAP (nicht abgerufen)
+  segment: Prime Standard
+  status: eqs_widget
+  verified: '2026-11-14'
+  voting_rights_url: https://www.siltronic.com/en/investors/financial-releases.html
+  website: http://www.siltronic.com
+DE000WCH8881:
+  index:
+  - MDAX
+  name: WACKER CHEMIE AG O.N.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.wacker.com
+DE000WNDL300:
+  index: []
+  name: NAKIKI SE
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+DE000ZAL1111:
+  index:
+  - DAX
+  name: ZALANDO SE
+  note: 'https://corporate.zalando.com/de/investor-relations/finanzpublikationen/pflichtveroeffentlichungen/stimmrechtsmitteilungen: Stimmrechtsseite ohne auslesbare datierte Eintraege (auch gerendert)'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.zalando.de/
+DE000ZEAL241:
+  index: []
+  name: ZEAL NETWORK SE NA O.N.
+  note: keine Website (Wikidata)
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+IE000ZVY0237:
+  index: []
+  name: Verve Group Media SE
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+IT0005239360:
+  index: []
+  name: UNICREDIT
+  note: robots.txt unlesbar/Bot-Schutz (https://www.unicreditgroup.eu)
+  segment: General Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.unicreditgroup.eu
+LU0061462528:
+  index:
+  - MDAX
+  name: RTL GROUP
+  note: robots.txt unlesbar/Bot-Schutz (https://www.rtl-group.com/investors)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.rtl-group.com/investors
+LU0251710041:
+  index: []
+  name: CPI PROPERTY GRP EO-,10
+  note: 33 datierte Stimmrechtseintraege, juengster 2026-05-28
+  segment: General Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://cpipg.com/en/for-investors/shareholders
+  website: http://cpipg.com/
+LU0775917882:
+  index:
+  - SDAX
+  name: GRAND CITY PROPERT.EO-,10
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://grandcityproperties.com/investor-relations/
+LU1250154413:
+  index: []
+  name: ADLER GROUP S.A.
+  note: robots.txt unlesbar/Bot-Schutz (http://www.ado.properties/)
+  segment: Prime Standard
+  status: bot_protection
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.ado.properties/
+LU1296758029:
+  index: []
+  name: CORESTATE CAPITAL HLDG
+  note: 'Website nicht erreichbar: HTTP 403: http://www.corestate-capital.ch/'
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.corestate-capital.ch
+LU1618151879:
+  index: []
+  name: LOGWIN AG NAM. O.N.
+  note: keine Website (Wikidata)
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+LU1673108939:
+  index:
+  - MDAX
+  name: AROUNDTOWN EO-,01
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.aroundtown.de
+LU1704650164:
+  index:
+  - SDAX
+  name: BEFESA S.A. ORD. O.N.
+  note: 20 datierte Stimmrechtseintraege, juengster 2024-11-07
+  segment: Prime Standard
+  status: ok
+  verified: '2026-11-14'
+  voting_rights_url: https://www.befesa.com/de/investors/ir-news/
+  website: https://www.befesa.com
+LU2010095458:
+  index: []
+  name: GLOBAL FASHION GRP EO-,01
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.global-fashion-group.com
+LU2290523658:
+  index: []
+  name: HOMETOGO SE
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.hometogo.com/
+LU2333563281:
+  index:
+  - SDAX
+  name: TONIES SE
+  note: 'Website nicht erreichbar: HTTP 404: https://tonies.com/en-gb/investors/'
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://tonies.com/en-gb/investors/
+LU2356314745:
+  index: []
+  name: NOVEM GROUP S.A.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://novem.com/
+LU2358378979:
+  index: []
+  name: AnchorCore SE
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+LU2380748603:
+  index: []
+  name: MARLEY SPOON GROUP SE
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+LU2380749676:
+  index: []
+  name: SMG EUROPEAN RECOV. EO 1
+  note: keine Website (Wikidata)
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+LU2818110020:
+  index: []
+  name: Eleving Group S.A.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.eleving.com/
+LU2859870326:
+  index: []
+  name: BigRep SE
+  note: 'https://www.pressetext.com/news/20251223026: Stimmrechtsseite ohne auslesbare datierte Eintraege (auch gerendert)'
+  segment: General Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://www.bigrep.com
+NL0000235190:
+  index:
+  - DAX
+  name: AIRBUS SE
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://airbus.com
+NL0000238145:
+  index: []
+  name: AD PEPPER MEDIA EO 0,05
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.adpepper.com/
+NL0000888691:
+  index: []
+  name: AMG Critical Materials N.V.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: http://www.amg-nv.com/
+NL0012044747:
+  index:
+  - SDAX
+  name: REDCARE PHARMACY N.V.
+  note: keine Stimmrechts-Seite gefunden
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: https://ir.redcare-pharmacy.com
+NL0015002SN0:
+  index:
+  - DAX
+  - TecDAX
+  name: QIAGEN NV EO -,01
+  note: keine Website (Wikidata)
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
+US00486H1059:
+  index: []
+  name: ADTRAN HOLDINGS INC.
+  note: keine Website (Wikidata)
+  segment: Prime Standard
+  status: none_found
+  verified: '2026-11-14'
+  voting_rights_url: null
+  website: null
