@@ -6,7 +6,7 @@ from email.message import EmailMessage
 REQUIRED_SECTION = "WAS DAGEGEN SPRICHT"
 
 
-def send(subject: str, body: str, dry_run: bool | None = None) -> bool:
+def send(subject: str, body: str, dry_run: bool | None = None, html: str | None = None) -> bool:
     if "[Papier-Kauf]" in subject and REQUIRED_SECTION not in body:
         raise ValueError("Pflichtabschnitt 'Was dagegen spricht' fehlt – E-Mail wird nicht versendet")
     repo = (os.environ.get("GITHUB_REPOSITORY") or "activist-smallcap").split("/")[-1]
@@ -17,6 +17,8 @@ def send(subject: str, body: str, dry_run: bool | None = None) -> bool:
         return False
     msg = EmailMessage(); msg["Subject"] = subject; msg["To"] = to
     msg["From"] = os.environ.get("MAIL_FROM", os.environ.get("SMTP_USER", to)); msg.set_content(body)
+    if html:
+        msg.add_alternative(html, subtype="html")   # Text bleibt als Fallback
     with smtplib.SMTP_SSL(host, int(os.environ.get("SMTP_PORT", 465))) as s:
         s.login(os.environ["SMTP_USER"], os.environ["SMTP_PASSWORD"]); s.send_message(msg)
     return True

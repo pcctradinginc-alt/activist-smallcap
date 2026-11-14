@@ -35,41 +35,24 @@ portfolio.book_shadow({"candidate_id": "x1", "ticker": "BEISPIEL-G", "region": "
 portfolio.book_shadow({"candidate_id": "x2", "ticker": "BEISPIEL-H", "region": "JP",
                        "reason": "verworfen: Mindestorder (100 Stück) > Position", "date": str(t)})
 subj, body = report.weekly(t)
-send("[TEST – Beispieldaten] " + subj, "*** TEST-MAIL MIT ERFUNDENEN BEISPIELDATEN ***\n\n" + body)
+html = report.weekly_html(t)
+(tmp / "weekly.html").write_text(html)
+send("[TEST – Beispieldaten] " + subj, "*** TEST-MAIL MIT ERFUNDENEN BEISPIELDATEN ***\n\n" + body, html=html)
 
-buy = f"""*** TEST-MAIL MIT ERFUNDENEN BEISPIELDATEN ***
-
-EREIGNIS
-Starboard Value hat am {t:%d.%m.%Y}, 16:42 Uhr (New York) eine Beteiligung von 7,2 % an Beispiel Corp.
-veröffentlicht (Schedule 13D, Erstmeldung). Forderung: Verkauf des Unternehmens.
-Textbeleg (Item 4): "…believe the Board should explore strategic alternatives, including a sale…"
-Link zur Meldung: https://www.sec.gov/ (Beispiel)
-Kampagne: C-0a1b2c3d4e5f, erstes Ereignis dieser Kampagne
-
-ORDER (identisch mit dem Journal)
-Kauflimit 12,77 USD = letzter Schlusskurs 12,40 USD + 3 %, gültig {t + timedelta(days=1):%d.%m.} bis {t + timedelta(days=3):%d.%m.%Y}
-Positionsgröße: 5 % des Papierdepots = 1.000 €, höchstens 5 % des Tagesumsatzes je Tag
-Kosten geschätzt: 1,0 % Gebühr (10 €) + 0,75 % Spread/FX je Seite
-Ob und zu welchem Kurs die Order ausgeführt wurde, folgt in der Bestätigungs-Mail.
-
-ERWARTUNG AUS VERGLEICHSFÄLLEN (USA, Klasse A)
-Erwartete Nettoüberrendite: +5,1 % (90-%-Bereich +1,2 bis +9,0 %)
-Unabhängige Vergleichskampagnen: 84
-Schlechtestes Viertel: −14 % oder schlechter | schlechtester Fall: −61 %
-Anteil mit positiver Nettoüberrendite: 57 %
-
-RISIKOPRÜFUNG
-Liquidität ok | Spread 1,1 % | keine Kapitalerhöhung | kein Mehrheitsaktionär
-Portfolio danach: 5 Positionen, Region 40 %, Branche 18 %, Cash 61 %
-
-WAS DAGEGEN SPRICHT
-Der Kurs ist in den letzten 20 Tagen bereits um 14 % gestiegen; ein Teil des Effekts ist womöglich eingepreist.
-Starboard hat bei zwei der letzten fünf Kampagnen ohne Ergebnis verkauft.
-
-AUSSTIEG
-Verkauf bei: Aktivist reduziert | Ergebnis erreicht | 12 Monate | −30 %
-
-Journal-Prüfwert: 3f9a1c0e7b2d4a55
-Papier-Trade aus einem Forschungssystem. Keine Anlageberatung."""
-send("[TEST – Beispieldaten] [Papier-Kauf] BEISPIEL | USA, Klasse A | Starboard Value meldet 7,2 %", buy)
-print("2 Test-Mails versendet")
+from activist.notify.templates import buy_mail   # noqa: E402
+s2, txt, h2 = buy_mail({
+    "ticker": "BEISPIEL", "company": "Beispiel Corp.", "region": "USA", "cls": "A", "activist": "Starboard Value",
+    "stake": "7,2 %", "when": f"{t:%d.%m.%Y}, 16:42 Uhr (New York)", "form": "Schedule 13D, Erstmeldung",
+    "demand": "Verkauf des Unternehmens", "evidence": "…believe the Board should explore strategic alternatives, including a sale…",
+    "url": "https://www.sec.gov/", "campaign": "C-0a1b2c3d4e5f · erstes Ereignis",
+    "limit": "12,77 USD", "valid": f"{t + timedelta(days=1):%d.%m.} – {t + timedelta(days=3):%d.%m.%Y}",
+    "size": "5 % des Papierdepots = 1.000 €", "size_short": "1.000 €", "costs": "10 € Gebühr + ca. 0,75 % Spread/FX je Seite",
+    "conf": {"mean": "+5,1 %", "ci": "+1,2 bis +9,0 %", "n": "84", "q25": "−14 %", "worst": "−61 %", "pos": "57 %"},
+    "risk": "Liquidität ok · Spread 1,1 % · keine Kapitalerhöhung · kein Mehrheitsaktionär",
+    "after": "5 Positionen · Region 40 % · Branche 18 % · Cash 61 %",
+    "against": "Der Kurs ist in den letzten 20 Tagen bereits um 14 % gestiegen; ein Teil des Effekts ist womöglich eingepreist. "
+               "Starboard hat bei zwei der letzten fünf Kampagnen ohne Ergebnis verkauft.",
+    "hash": "3f9a1c0e7b2d4a55", "banner": "TEST-MAIL mit erfundenen Beispieldaten"})
+(tmp / "buy.html").write_text(h2)
+send("[TEST – Beispieldaten] " + s2, "*** TEST-MAIL MIT ERFUNDENEN BEISPIELDATEN ***\n\n" + txt, html=h2)
+print("2 Test-Mails versendet", tmp)

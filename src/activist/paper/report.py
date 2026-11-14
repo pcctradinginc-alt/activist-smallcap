@@ -62,3 +62,57 @@ def weekly(today: date | None = None) -> tuple[str, str]:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(body, encoding="utf-8")
     return _de(f"[Wochenbericht] Papierdepot KW {today:%V}: {val:,.0f} € ({perf:+.1%}), {len(st['positions'])} Positionen"), body
+
+
+def weekly_html(today: date | None = None) -> str:
+    from ..notify import html as H
+    today = today or date.today()
+    st = load_state()
+    val = portfolio_value(st, today)
+    dd = 1 - val / st["peak_value"] if st["peak_value"] else 0.0
+    perf = val / st["start_value"] - 1
+    week = [h for h in st["history"] if h["date"] >= str(today - timedelta(days=7))]
+    wk = (week[-1]["value"] / week[0]["value"] - 1) if len(week) >= 2 else None
+    cards = [H.card(None, H.kpis([("Depotwert", H.eur(val)), ("Seit Start", H.signed(perf)), ("Diese Woche", H.signed(wk))])
+                    + '<div style="height:18px"></div>'
+                    + H.kpis([("Cash", f'{H.eur(st["cash"])} <span style="font-size:13px;color:#86868b">'
+                                       f'{st["cash"] / val:.0%}</span>'.replace(".", ",")),
+                              ("Rückgang vom Hoch", H.signed(-dd) if dd > 0 else H.signed(0.0)),
+                              ("Positionen", str(len(st["positions"])))]))]
+    rows = []
+    for x in sorted(st["positions"].values(), key=lambda v: v["entry_date"]):
+        r = x["last_eur"] / x["entry_eur"] - 1
+        tag = "" if x.get("validated") else "<br>" + H.pill("nicht nachgewiesen", H.ORANGE)
+        trig = "<br>" + H.pill("Ausstieg: " + x["exit_trigger"], H.RED) if x.get("exit_trigger") else ""
+        rows.append([f'<b>{H.e(x["ticker"])}</b><div style="color:{H.SUB};font-size:12px">{H.e(x.get("activist"))} · '
+                     f'{H.e(x["region"])} · Kl. {H.e(x.get("signal_class"))}</div>{tag}{trig}',
+                     H.e(x["entry_date"][8:10] + "." + x["entry_date"][5:7] + "."),
+                     H.eur(x["entry_eur"], 2) + f'<div style="color:{H.SUB};font-size:12px">→ {H.eur(x["last_eur"], 2)}</div>',
+                     H.signed(r), H.eur(x["qty"] * x["last_eur"])])
+    cards.append(H.card("Offene Positionen", H.table(["Titel", "Seit", "Kurs", "+/−", "Wert"], rows,
+                                                      ["left", "left", "right", "right", "right"])))
+    if st["orders"]:
+        cards.append(H.card("Offene Orders", H.table(["Titel", "Order", "Betrag"], [
+            [f'<b>{H.e(o["ticker"])}</b><div style="color:{H.SUB};font-size:12px">{H.e(o.get("activist"))} · {H.e(o["region"])}</div>',
+             H.e(o["order_date"]), H.eur(o["position_eur"])] for o in st["orders"].values()], ["left", "left", "right"])))
+    closed_w = [c for c in st["closed"] if c["exit_date"] >= str(today - timedelta(days=7))]
+    if closed_w:
+        cards.append(H.card("Ausstiege diese Woche", H.table(["Titel", "Grund", "Brutto", "Index", "Netto ggü. Index"], [
+            [f'<b>{H.e(c["ticker"])}</b>', H.e(c["reason"]), H.signed(c["gross"]), H.signed(c["bench"]), H.signed(c["net_excess"])]
+            for c in closed_w], ["left", "left", "right", "right", "right"])))
+    if st["closed"]:
+        n = [c["net_excess"] for c in st["closed"]]
+        cards.append(H.card("Bilanz abgeschlossener Trades", H.kpis([
+            ("Trades", str(len(n))), ("Ø netto ggü. Index", H.signed(sum(n) / len(n))),
+            ("Trefferquote", f"{sum(1 for v in n if v > 0) / len(n):.0%}")])))
+    sh = []
+    if SHADOW.exists():
+        with open(SHADOW) as f:
+            sh = [r for r in csv.DictReader(f) if (r.get("date") or "") >= str(today - timedelta(days=7))]
+    cards.append(H.card("Verworfene Kandidaten", H.table(["Titel", "Grund"], [
+        [f'<b>{H.e(r["ticker"] or "?")}</b><div style="color:{H.SUB};font-size:12px">{H.e(r["region"])}</div>',
+         f'<span style="color:{H.SUB}">{H.e(r["reason"])}</span>'] for r in sh[:25]])))
+    footer = (f"Journal-Prüfwert {file_hash(TRADES) if TRADES.exists() else '–'} · Start {st['start_date']} mit "
+              f"{H.eur(st['start_value'])}<br>Papier-Trades aus einem Forschungssystem. Kein echtes Geld. Keine Anlageberatung.")
+    return H.page("activist-smallcap · Papierdepot", "Wochenbericht", f"KW {today:%V} · Stand {today:%d.%m.%Y}", cards, footer,
+                  banner="Schattenmodus – Regionen ohne bestandene Ereignisstudie sind markiert.")

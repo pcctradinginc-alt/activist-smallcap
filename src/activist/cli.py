@@ -127,10 +127,10 @@ def cmd_paper(a):
 
 
 def cmd_weekly(a):
-    from .paper.report import weekly
+    from .paper.report import weekly, weekly_html
     subj, body = weekly()
     if a.mail:
-        send(subj, body)
+        send(subj, body, html=weekly_html())
     else:
         print(subj); print(body)
 
