@@ -75,7 +75,15 @@ def cmd_study(a):
         if b.startswith("^"):                 # Indizes ohne Börsensuffix direkt laden
             return prices.yahoo(b, s, e)
         return prices.load(b, r, s, e)[0]
-    res, trades = run(ds, pl, bl, variants=not a.main_only)
+    from .paper.portfolio import eur_per_unit
+    fx_cache = {}
+
+    def fxl(t, r, d):            # Landeswährung je EUR (gecacht je Region/Tag)
+        k = (r, t.rsplit(".", 1)[-1] if r in ("UK", "NORDIC", "DACH", "BENELUX_FR") else "", d)
+        if k not in fx_cache:
+            fx_cache[k] = 1 / eur_per_unit(t, r, d)
+        return fx_cache[k]
+    res, trades = run(ds, pl, bl, variants=not a.main_only, fx_loader=fxl)
     print(write_report(res, funnel, ds, trades, bench_loader=bl))
 
 

@@ -33,7 +33,7 @@ def env(tmp_path, monkeypatch):
     monkeypatch.setattr(common, "REPORTS", r)
     monkeypatch.setattr(report, "REPORTS", r)
     monkeypatch.setattr(pf, "validated_combos", lambda: set())
-    monkeypatch.setattr(pf, "_bench_close", lambda region, day: 100.0)
+    monkeypatch.setattr(pf, "_bench_close", lambda region, day, field="close": 100.0)
     monkeypatch.setattr(pf, "eur_per_unit", lambda *a: 1.0)   # new_signals ruft eur_per_unit direkt (nicht fx)
     return tmp_path
 
@@ -198,34 +198,33 @@ def test_row_without_campaign_key_ignored():
 BUG_NO_TRIGGER = pytest.mark.xfail(raises=KeyError, strict=True, reason="portfolio.py:186 KeyError trigger_date")
 
 # ------------------------------------------------------------------ 4. Stopp
-@pytest.mark.parametrize("next_open,sell", [(80.0, 70.0), (60.0, 60.0)])
-def test_stop_loss_trigger_then_sell_next_day_at_min(next_open, sell):
-    px = price_path([(90, 91, 65, 66, 1e7),                      # idx2: -35 % (Tief 65)
-                     (next_open, next_open + 1, next_open - 1, next_open, 1e7)])
+def test_stop_loss_sells_on_trigger_day_at_min_open_stop():
+    """Wie in der Studie: ruhende Stopp-Order -> Verkauf am Auslösetag zu min(Eröffnung, Stopp-Niveau)."""
+    px = price_path([(90, 91, 65, 66, 1e7), (80, 81, 79, 80, 1e7)])   # Tag 2: Tief 65 < 70
     st = open_position(px)
     (pid,) = st["positions"]
-    run(D2, px)
-    st = state()
-    pos = st["positions"][pid]
-    assert pos["exit_trigger"].startswith("Stopp") and pos["trigger_date"] == str(D2)
-    assert st["closed"] == [] and len(trades()) == 1             # noch nicht verkauft
     cash_before = st["cash"]
-
-    run(D3, px)
+    run(D2, px)
     st = state()
     assert st["positions"] == {}
     (c,) = st["closed"]
-    assert c["reason"].startswith("Stopp") and c["exit_date"] == str(D3) and c["entry_date"] == str(D1)
-    sell_cost = cost_one_side(0.01, COSTS, "US", "sell", 10 * sell)
-    assert c["gross"] == pytest.approx(sell / 100 - 1)
-    assert c["bench"] == 0.0
-    assert c["net_excess"] == pytest.approx(sell / 100 - 1 - BUY_COST - sell_cost)
+    assert c["reason"].startswith("Stopp") and c["exit_date"] == str(D2) and c["entry_date"] == str(D1)
+    sell_cost = cost_one_side(0.01, COSTS, "US", "sell", 10 * 70.0)
+    assert c["gross"] == pytest.approx(-0.30)
+    assert c["net_excess"] == pytest.approx(-0.30 - BUY_COST - sell_cost)
     assert c["validated"] is False
-    assert st["cash"] == pytest.approx(cash_before + 10 * sell * (1 - sell_cost))
+    assert st["cash"] == pytest.approx(cash_before + 10 * 70.0 * (1 - sell_cost))
     buy, sell_row = trades()
     assert sell_row["side"] == "SELL" and sell_row["trade_id"] == pid + "-S"
-    assert float(sell_row["price"]) == pytest.approx(sell) and sell_row["order_date"] == str(D2)
-    assert sell_row["fill_date"] == str(D3)
+    assert float(sell_row["price"]) == pytest.approx(70.0) and sell_row["fill_date"] == str(D2)
+
+
+def test_stop_gap_down_sells_at_open():
+    px = price_path([(60, 61, 59, 60, 1e7)])                 # Eröffnung unter Stopp -> Verkauf zu 60
+    open_position(px)
+    run(D2, px)
+    (c,) = state()["closed"]
+    assert c["gross"] == pytest.approx(-0.40)
 
 
 def test_no_stop_when_drop_is_only_20_percent():
@@ -244,18 +243,15 @@ def reduction(ratio, **kw):
 
 
 def test_activist_reduction_triggers_exit_and_sells_next_open():
+    """Meldung am Einstiegstag 09:00 -> Verkauf zur nächsten Eröffnung (Tag 2, 105)."""
     px = price_path([(105, 106, 104, 105, 1e7), (108, 109, 107, 108, 1e7)])
-    st = open_position(px)
-    (pid,) = st["positions"]
+    open_position(px)
     run(D2, px, events=[reduction(0.02)])
-    pos = state()["positions"][pid]
-    assert pos["exit_trigger"] == "Aktivist reduziert" and pos["trigger_date"] == str(D2)
-    run(D3, px, events=[reduction(0.02)])
     st = state()
     (c,) = st["closed"]
-    assert c["reason"] == "Aktivist reduziert" and c["exit_date"] == str(D3)
-    assert c["gross"] == pytest.approx(0.08)
-    assert [t["side"] for t in trades()] == ["BUY", "SELL"] and float(trades()[1]["price"]) == 108.0
+    assert c["reason"] == "Aktivist reduziert" and c["exit_date"] == str(D2)
+    assert c["gross"] == pytest.approx(0.05)
+    assert [t["side"] for t in trades()] == ["BUY", "SELL"] and float(trades()[1]["price"]) == 105.0
 
 
 @pytest.mark.parametrize("ev", [reduction(0.08),                               # über Schwelle
@@ -266,25 +262,21 @@ def test_no_exit_for_unrelated_or_non_reducing_events(ev):
     px = price_path([(101, 102, 100, 101, 1e7), (101, 102, 100, 101, 1e7)])
     open_position(px)
     run(D2, px, events=[ev])
-    assert state()["positions"] and not next(iter(state()["positions"].values())).get("exit_trigger")
+    assert state()["positions"] and not state()["closed"]
 
 
 # ------------------------------------------------------------------ 6. Haltedauer
 def test_holding_period_252_days_exit():
+    """Ausstieg zum Schlusskurs des 252. Handelstags nach Einstieg (wie in der Studie)."""
     px = flat()
-    st = open_position(px)
-    (pid,) = st["positions"]
-    d251 = IDX[1 + 251].date()      # Pfad = 251 Tage -> noch kein Ausstieg
-    d252 = IDX[1 + 252].date()
-    run(d251, px)
-    assert not state()["positions"][pid].get("exit_trigger")
-    run(d252, px)
-    assert state()["positions"][pid]["exit_trigger"] == "12 Monate"
-    run(IDX[1 + 253].date(), px)
+    open_position(px)
+    run(IDX[1 + 251].date(), px)
+    assert state()["positions"] and not state()["closed"]
+    run(IDX[1 + 252].date(), px)
     st = state()
     (c,) = st["closed"]
     assert c["reason"] == "12 Monate" and st["positions"] == {}
-    assert c["exit_date"] == str(IDX[1 + 253].date())
+    assert c["exit_date"] == str(IDX[1 + 252].date())
 
 
 # ------------------------------------------------------------------ 7. Limits

@@ -55,10 +55,15 @@ def campaigns(events: list[dict], reg: Register) -> list[dict]:
         passive_before = False
         for idx, e in enumerate(evs):
             act = reg.is_activist(f, e["published"])
-            if e["form"] in INITIAL or (e["form"] in AMEND and idx == 0):
+            if e["form"] in AMEND and idx == 0:
+                break                          # Änderung ohne Erstmeldung im Datenfenster = laufende Kampagne, kein Einstieg
+            if e["form"] in INITIAL:
                 cls = "A" if act else None     # 13D eines Nicht-Aktivisten (Gründer, Insider) = kein Signal
                 etype = "switch_13g_13d" if passive_before else "initial_13d"
             elif e["form"] in PASSIVE:
+                if e["form"].endswith("/A") and not passive_before:
+                    passive_before = True      # 13G/A ohne Erstmeldung = bestehende Position, kein Einstieg
+                    continue
                 passive_before = True
                 cls, etype = ("B" if act else None), "passive"
                 if cls is None:
@@ -69,7 +74,17 @@ def campaigns(events: list[dict], reg: Register) -> list[dict]:
                 out.append(dict(e, campaign_key=f"{f}-{i}", signal_class=cls, event_type=etype,
                                 followups=[x for x in evs[idx + 1:]]))
             break
-    return out
+    # Wolfsrudel / mehrere Vehikel einer Gruppe: je Emittent zählt nur die erste Kampagne innerhalb von 30 Tagen
+    out.sort(key=lambda c: c["published"])
+    last: dict[str, str] = {}
+    dedup = []
+    for c in out:
+        iss = str(c.get("issuer_id")).lstrip("0")
+        prev = last.get(iss)
+        if prev and (pd.Timestamp(c["published"]) - pd.Timestamp(prev)).days < 30:
+            continue
+        last[iss] = c["published"]; dedup.append(c)
+    return dedup
 
 
 def build(events: list[dict], end: date | None = None, parse_filings: bool = True,
@@ -139,7 +154,8 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
             so = secmeta.shares_outstanding_asof(c["issuer_id"], d0)
         except Exception:
             so = None
-        uv = universe_check(cfg, pf, so[0] if so else None, secmeta.excluded_industry(co.get("sic")), t["otc"])
+        uv = universe_check(cfg, pf, so[0] if so else None, secmeta.excluded_industry(co.get("sic")),
+                            bool(t and t["otc"]) if since else False)   # OTC-Status nur heute bekannt -> nur im Live-Betrieb
         row.update({k: pf.get(k) for k in ("price", "adv", "runup_20d", "half_spread")})
         row["mcap"] = so[0] * pf["price"] if so and pf.get("ok") else None
         if uv:
@@ -158,13 +174,18 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
             reasons.append("Anstieg 20T")
         if row["activist_cost"] and row["price"] > row["activist_cost"] * (1 + lim["max_premium_over_activist_cost"]):
             reasons.append("Kurs über Aktivisten-Einstand")
-        if p["order"]["position_eur"] > lim["max_position_share_of_adv"] * row["adv"]:
+        try:
+            from ..paper.portfolio import eur_per_unit
+            pos_usd = p["order"]["position_eur"] / eur_per_unit(row["ticker"], "US", d0)
+        except Exception:
+            pos_usd = p["order"]["position_eur"] * 1.1
+        if pos_usd > lim["max_position_share_of_adv"] * row["adv"]:      # ADV in USD
             reasons.append("Liquidität")
         # Ausstiege: spätere Meldungen dieser Kampagne mit Anteil < 5 % oder Exit-Formulierung
         exits = []
         if parse_filings:
             for fu in c["followups"]:
-                if fu["form"] in AMEND and _parse(fu["url"], cache).get("is_exit"):
+                if fu["form"] in AMEND | PASSIVE and _parse(fu["url"], cache).get("is_exit"):
                     exits.append(fu["published"]); break
         row["exit_events"] = exits
         row["status"] = ("verworfen: " + "; ".join(reasons)) if reasons else "qualifiziert"
@@ -190,7 +211,10 @@ def jp_campaigns(events: list[dict]) -> list[dict]:
              if a.get("region") == "JP"]
     jp = sorted([e for e in events if e.get("source") == "EDINET" and e.get("form") in JP_FORMS and e.get("doc_parsed")],
                 key=lambda e: e["published"])
-    prior_a: dict[str, list[str]] = {}
+    prior_a: dict[str, list[tuple[str, str]]] = {}     # Melder -> [(Zeit, Emittent)] aller A-Meldungen, zeitlich sortiert
+    for e in jp:
+        if e.get("important_proposal") and e.get("filer_id"):
+            prior_a.setdefault(e["filer_id"], []).append((e["published"], e.get("issuer_sec_code")))
     by: dict[tuple, list] = {}
     for e in jp:
         by.setdefault((e.get("filer_id"), e.get("issuer_sec_code")), []).append(e)
@@ -201,15 +225,12 @@ def jp_campaigns(events: list[dict]) -> list[dict]:
         for idx, e in enumerate(evs):
             nm = _norm_name(e.get("filer_name"))
             listed = any(k and k in nm and since <= e["published"][:10] for k, since in names)
-            behav = len({x for x in prior_a.get(f, []) if x < e["published"]}) >= 3
+            behav = len({iss for t, iss in prior_a.get(f, []) if t < e["published"] and iss != sec}) >= 3
             cls = "A" if e.get("important_proposal") else ("B" if (listed or behav) else None)
             if cls:
                 out.append(dict(e, campaign_key=f"{f}-{sec}", signal_class=cls, event_type="jp_" + cls,
                                 followups=evs[idx + 1:], ticker=sec))
                 break
-        for e in evs:
-            if e.get("important_proposal"):
-                prior_a.setdefault(f, []).append(e["published"])
     return out
 
 

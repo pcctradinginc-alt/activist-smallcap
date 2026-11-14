@@ -47,9 +47,15 @@ def eur_per_unit(ticker: str, region: str, day: date) -> float:
         pair = next((v for k, v in SUFFIX_FX.items() if ticker.endswith(k)), None); inverse = False
     if not pair:
         return 1.0
-    s = prices.yahoo(pair, day - timedelta(days=10), day)["close"]
-    v = float(s.iloc[-1])
+    if pair not in _FX:                       # einmal je Währungspaar die ganze Historie laden
+        _FX[pair] = prices.yahoo(pair, date(2014, 1, 1), date.today())["close"]
+    v = float(_FX[pair].asof(pd.Timestamp(day)))
+    if pd.isna(v):
+        raise ValueError(f"kein Wechselkurs {pair} am {day}")
     return 1 / v if inverse else v
+
+
+_FX: dict = {}
 
 
 # ------------------------------------------------------------------ Zustand / Journal
@@ -111,112 +117,146 @@ def check_limits(st: dict, cand: dict) -> str | None:
         return "max. Positionen erreicht"
     if sum(1 for x in pos if x.get("activist") == cand.get("activist")) >= P["max_per_activist"]:
         return "max. Positionen je Aktivist"
+    if any(x.get("ticker") == cand.get("ticker") for x in pos):
+        return "Titel bereits im Depot/Orderbuch"
     return None
 
 
 def process_orders(st: dict, today: date, p: dict, loader=load_prices, fx=eur_per_unit):
     for oid, o in list(st["orders"].items()):
         d0 = date.fromisoformat(o["published"][:10])
+        if (today - date.fromisoformat(o["order_date"])).days > 10:      # hängende Order (keine Kurse) verfällt
+            book_shadow({"candidate_id": oid, "event_id": o["event_id"], "ticker": o["ticker"], "region": o["region"],
+                         "reason": "Order verfallen (keine Kurse)", "date": str(today)})
+            del st["orders"][oid]; continue
         try:
             px = loader(o["ticker"], o["region"], d0 - timedelta(days=40), today)
         except Exception:
             continue
-        after = px[px.index > pd.Timestamp(d0)]
+        px = px[px.index < pd.Timestamp(today)] if o.get("exclude_today") else px
+        from ..features.universe import local_day
+        after = px[px.index > local_day(o["published"])]
         if len(after) == 0:
             continue                                   # noch kein Handelstag nach Veröffentlichung
         fill = simulate_entry(px, pd.Timestamp(o["published"]), p["order"], o["position_eur_local"])
         days_seen = len(after.head(p["order"]["max_fill_days"]))
-        if fill.filled:
+        complete = fill.filled and fill.fill_ratio >= 0.999
+        if fill.filled and (complete or days_seen >= p["order"]["max_fill_days"]):
+            # wie in der Studie: Teilausführungen über bis zu 3 Tage, gebucht wird erst das Endergebnis
             rate = fx(o["ticker"], o["region"], fill.fill_date.date())
             value_eur = o["position_eur"] * fill.fill_ratio
-            qty = value_eur / (fill.price * rate)
             cost = cost_one_side(o.get("half_spread"), p["costs"], o["region"], "buy", value_eur)
+            cost += p["costs"].get("fixed_fee_eur_per_order", 0.0) * max(fill.fill_days - 1, 0) / max(value_eur, 1e-9)
             st["cash"] -= value_eur * (1 + cost)
             st["positions"][oid] = {**o, "entry_date": str(fill.fill_date.date()), "entry_local": fill.price,
-                                    "entry_eur": fill.price * rate, "qty": qty, "buy_cost": cost,
-                                    "fill_ratio": fill.fill_ratio, "last_eur": fill.price * rate,
-                                    "bench_entry": _bench_close(o["region"], fill.fill_date.date())}
+                                    "ref_close": float(px.close.asof(fill.fill_date)), "entry_rate": rate,
+                                    "entry_eur": fill.price * rate, "qty": value_eur / (fill.price * rate),
+                                    "buy_cost": cost, "fill_ratio": fill.fill_ratio, "last_eur": fill.price * rate,
+                                    "bench_entry": _bench_close(o["region"], fill.fill_date.date(), "open")}
             book_trade({"trade_id": oid, "event_id": o["event_id"], "campaign_id": o["campaign_key"], "ticker": o["ticker"],
                         "region": o["region"], "side": "BUY", "order_date": o["order_date"],
-                        "fill_date": str(fill.fill_date.date()), "price": round(fill.price, 4), "qty": round(qty, 4),
-                        "cost_pct": round(cost, 5)})
+                        "fill_date": str(fill.fill_date.date()), "price": round(fill.price, 4),
+                        "qty": round(value_eur / (fill.price * rate), 4), "cost_pct": round(cost, 5)})
             del st["orders"][oid]
-        elif days_seen >= p["order"]["max_fill_days"]:
+        elif not fill.filled and days_seen >= p["order"]["max_fill_days"]:
             book_shadow({"candidate_id": oid, "event_id": o["event_id"], "ticker": o["ticker"], "region": o["region"],
                          "reason": "Order verfallen (Limit nicht erreicht)", "date": str(today)})
             del st["orders"][oid]
 
 
-def _bench_close(region: str, day: date) -> float | None:
+def _bench(region: str, day: date, field: str = "close") -> float | None:
     from ..sources import prices
     b = params()["universe"][region]["benchmark"]
     try:
-        s = (prices.yahoo(b, day - timedelta(days=10), day + timedelta(days=1)) if b.startswith("^")
-             else prices.load(b, region, day - timedelta(days=10), day + timedelta(days=1), cache=False)[0])["close"]
-        return float(s.asof(pd.Timestamp(day)))
+        df = (prices.yahoo(b, day - timedelta(days=10), day + timedelta(days=1)) if b.startswith("^")
+              else prices.load(b, region, day - timedelta(days=10), day + timedelta(days=1), cache=False)[0])
+        v = df[field].get(pd.Timestamp(day))
+        return float(v) if v is not None and pd.notna(v) else None
     except Exception:
         return None
 
 
+_bench_close = _bench   # Rückwärtskompatibilität (Tests)
+
+
 def process_exits(st: dict, today: date, p: dict, events: list[dict], loader=load_prices, fx=eur_per_unit):
-    """Regeln: Aktivist reduziert (spätere Meldung derselben Kampagne mit Anteil unter Schwelle oder 13D-Exit) |
-    Haltedauer 252 Handelstage | Stopp −30 %. Verkauf zum nächsten Eröffnungskurs nach dem Auslöser."""
+    """Exakt dieselben Ausstiegsregeln wie die Ereignisstudie (simulate_exit): Aktivist reduziert -> nächste Eröffnung,
+    Stopp −30 % -> am Auslösetag zu min(Eröffnung, Stopp), 252 Handelstage -> Schlusskurs. Kurse werden bei jedem Lauf
+    neu geladen und sind nachträglich split-/dividendenbereinigt; der Einstieg wird deshalb auf die aktuelle Reihe
+    umgerechnet (ref_close), damit Splits keinen falschen Stopp auslösen."""
+    from .execution import simulate_exit
+    from ..study.event_study import OPEN
     for pid, pos in list(st["positions"].items()):
         try:
             px = loader(pos["ticker"], pos["region"], date.fromisoformat(pos["entry_date"]) - timedelta(days=5), today)
         except Exception:
             continue
-        path = px[px.index > pd.Timestamp(pos["entry_date"])]
+        ed = pd.Timestamp(pos["entry_date"])
+        ref = px.close.asof(ed)
+        if pd.isna(ref) or not pos.get("ref_close"):
+            continue
+        entry_adj = pos["entry_local"] * float(ref) / pos["ref_close"]
+        path = px[px.index > ed]
         if path.empty:
             continue
         rate = fx(pos["ticker"], pos["region"], today)
-        pos["last_eur"] = float(path.close.iloc[-1]) * rate
+        er = pos.get("entry_rate") or rate
+        pos["last_eur"] = pos["entry_eur"] * float(path.close.iloc[-1]) / entry_adj * rate / er
         pos["last_date"] = str(path.index[-1].date())
-        trigger = pos.get("exit_trigger")
-        if not trigger:
-            if pos.get("exit_event_time") or _activist_reduced(pos, events):
-                trigger = "Aktivist reduziert"
-            elif path.low.min() <= pos["entry_local"] * (1 + p["exit"]["stop_loss"]):
-                trigger = "Stopp −30 %"
-            elif len(path) >= p["exit"]["max_holding_days"]:
-                trigger = "12 Monate"
-            if trigger:
-                pos["exit_trigger"], pos["trigger_date"] = trigger, pos["last_date"]
-                continue                             # Verkauf am nächsten Handelstag zur Eröffnung
-            continue                                 # kein Auslöser -> Position bleibt offen
-        nxt = path[path.index > pd.Timestamp(pos["trigger_date"])]
-        if nxt.empty:
-            continue
-        sell = float(nxt.open.iloc[0])
-        if pos["exit_trigger"].startswith("Stopp"):
-            sell = min(sell, pos["entry_local"] * (1 + p["exit"]["stop_loss"]))
-        value = pos["qty"] * sell * rate
+        ex = [pd.Timestamp(t) for t in (pos.get("exit_events") or [])]
+        red = _activist_reduced(pos, events)
+        if red:
+            ex.append(pd.Timestamp(red))
+        xd, xp, why = simulate_exit(px, ed, entry_adj, p["exit"], ex, stop=True)
+        if why in OPEN:
+            continue                                   # kein Auslöser -> Position bleibt offen
+        why = {"Stopp": "Stopp −30 %", "Haltedauer": "12 Monate"}.get(why, why)
+        rx = fx(pos["ticker"], pos["region"], xd.date())
+        value = pos["qty"] * pos["entry_eur"] * (xp / entry_adj) * (rx / er)
         cost = cost_one_side(pos.get("half_spread"), p["costs"], pos["region"], "sell", value)
         st["cash"] += value * (1 - cost)
-        gross = sell / pos["entry_local"] - 1
-        b1 = _bench_close(pos["region"], nxt.index[0].date())
-        bret = (b1 / pos["bench_entry"] - 1) if b1 and pos.get("bench_entry") else 0.0
-        st["closed"].append({**{k: pos[k] for k in ("ticker", "region", "activist", "entry_date", "signal_class",
-                                                    "validated")},
-                             "exit_date": str(nxt.index[0].date()), "reason": pos["exit_trigger"], "gross": gross,
-                             "bench": bret, "net_excess": gross - bret - pos["buy_cost"] - cost})
+        gross = xp / entry_adj - 1
+        b1 = _bench_close(pos["region"], xd.date(), "close" if why == "12 Monate" else "open")
+        b0 = pos.get("bench_entry")
+        bret = (b1 / b0 - 1) if b1 and b0 else None
+        st["closed"].append({**{k: pos.get(k) for k in ("ticker", "region", "activist", "entry_date", "signal_class",
+                                                        "validated")},
+                             "exit_date": str(xd.date()), "reason": why, "gross": gross, "bench": bret or 0.0,
+                             "bench_missing": bret is None,
+                             "net_excess": gross - (bret or 0.0) - pos["buy_cost"] - cost})
         book_trade({"trade_id": pid + "-S", "event_id": pos["event_id"], "campaign_id": pos["campaign_key"],
-                    "ticker": pos["ticker"], "region": pos["region"], "side": "SELL", "order_date": pos["trigger_date"],
-                    "fill_date": str(nxt.index[0].date()), "price": round(sell, 4), "qty": round(pos["qty"], 4),
+                    "ticker": pos["ticker"], "region": pos["region"], "side": "SELL", "order_date": str(today),
+                    "fill_date": str(xd.date()), "price": round(xp, 4), "qty": round(pos["qty"], 4),
                     "cost_pct": round(cost, 5)})
         del st["positions"][pid]
 
 
-def _activist_reduced(pos: dict, events: list[dict]) -> bool:
+AMEND_OR_13G = {"SC 13D/A", "SCHEDULE 13D/A", "SC 13G/A", "SCHEDULE 13G/A"}
+
+
+def _activist_reduced(pos: dict, events: list[dict]) -> str | None:
+    """Früheste spätere Meldung desselben Melders zum selben Emittenten, die eine Reduktion unter die Schwelle zeigt.
+    EU/JP: holding_ratio aus der Meldung; USA: 13D/A bzw. 13G/A wird gelesen (is_exit)."""
     thr = 0.03 if pos["region"] in ("UK", "DACH") else 0.05
-    for e in events:
+    who = str(pos.get("filer_id") or pos.get("filer_name") or "").lstrip("0")
+    iss = {str(pos.get("issuer_id") or "").lstrip("0"), str(pos.get("ticker"))}
+    for e in sorted(events, key=lambda e: e["published"]):
         if e["published"] <= pos["published"]:
             continue
-        same = (str(e.get("filer_id") or e.get("filer_name")) == str(pos.get("filer_id") or pos.get("filer_name"))
-                and str(e.get("issuer_id") or e.get("issuer_sec_code")) in (str(pos.get("issuer_id")), str(pos.get("ticker"))))
-        if same and e.get("holding_ratio") is not None and e["holding_ratio"] < thr:
-            return True
-    return False
+        if str(e.get("filer_id") or e.get("filer_name") or "").lstrip("0") != who:
+            continue
+        if str(e.get("issuer_id") or e.get("issuer_sec_code") or "").lstrip("0") not in iss:
+            continue
+        if e.get("holding_ratio") is not None and e["holding_ratio"] < thr:
+            return e["published"]
+        if e.get("form") in AMEND_OR_13G and e.get("url"):
+            try:
+                from ..study.dataset import _parse, _parsed_cache
+                if _parse(e["url"], _parsed_cache()).get("is_exit"):
+                    return e["published"]
+            except Exception:
+                pass
+    return None
 
 
 def new_signals(st: dict, today: date, p: dict, events: list[dict], since: str, rows: pd.DataFrame | None = None,
@@ -259,7 +299,9 @@ def new_signals(st: dict, today: date, p: dict, events: list[dict], since: str, 
                              "issuer_id": r.get("issuer_id") or r.get("isin"), "published": r["published"],
                              "order_date": str(today), "position_eur": pos_eur, "position_eur_local": local,
                              "half_spread": r.get("half_spread"), "limit_hint": (r.get("price") or 0) * 1.03,
-                             "validated": combo in ok, "demand": r.get("demand"), "url": r.get("url")}
+                             "validated": combo in ok, "demand": r.get("demand"), "url": r.get("url"),
+                             "exit_events": [str(x) for x in (r.get("exit_events") or [])
+                                             if isinstance(r.get("exit_events"), list)]}
         (JOURNAL / "decisions").mkdir(parents=True, exist_ok=True)
         (JOURNAL / "decisions" / f"{oid}.json").write_text(json.dumps({**r, "decision": "order", "combo": combo,
                                                                          "validated": combo in ok}, default=str,

@@ -48,7 +48,8 @@ def ds():
 def test_run_variants_main_uses_stop_and_trades(ds):
     res, t = es.run(ds, price_loader, bench_loader)
     assert set(t.variant) == {"main", "no_stop", "hold_21", "hold_63", "hold_126", "hold_252"}
-    assert set(t.campaign_key) == {"k1", "k2", "k3", "k4", "k5"}   # filtered by status, loader error skipped
+    assert set(t.campaign_key) == {"k1", "k2", "k3", "k4", "k5", "k7"}   # Ladefehler wird als nicht ausgeführtes Signal gezählt
+    assert not t[t.campaign_key == "k7"].executed.any()
     crash = t[t.campaign_key == "k1"].set_index("variant")
     assert crash.loc["main", "exit_reason"] == "Stopp"
     assert crash.loc["main", "gross"] == pytest.approx(-0.4)
@@ -68,7 +69,7 @@ def test_run_results_count_only_complete_trades(ds):
     res, t = es.run(ds, price_loader, bench_loader)
     c = res["combos"]["US/A"]
     assert c["qualifiziert:main"]["n"] == 3          # k1, k2, k3 complete; k4 open (Datenende)
-    assert res["execution"]["US/A"] == {"signale": 4, "ausgeführt": 4, "offen": 1}
+    assert res["execution"]["US/A"] == {"signale": 5, "ausgeführt": 4, "offen": 1}
     assert c["schatten:main"]["n"] == 1
     assert "qualifiziert:no_stop" in c
     assert c["qualifiziert:no_stop"]["mean"] > c["qualifiziert:main"]["mean"]   # stop cut k1 at -40 %

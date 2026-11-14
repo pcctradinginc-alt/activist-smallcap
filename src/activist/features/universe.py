@@ -4,16 +4,24 @@ import numpy as np
 import pandas as pd
 
 
+def local_day(decision_time) -> pd.Timestamp:
+    """Börsenlokales Kalenderdatum der Veröffentlichung. Zeitstempel werden mit ihrem Original-Offset gespeichert
+    (EDGAR: New York, EDINET: Tokio), daher Ortszeit = Wanduhrzeit. Muss identisch zu simulate_entry sein:
+    Merkmale nur aus Kursen bis einschließlich diesem Tag, Einstieg frühestens am Folgehandelstag."""
+    d = pd.Timestamp(decision_time)
+    return (d.tz_localize(None) if d.tzinfo else d).normalize()
+
+
 def price_features(px: pd.DataFrame, decision_time) -> dict:
     """Kurs, 20T-Median-Dollarumsatz, 20T-Anstieg, Spread-Schätzer – nur Kurse bis zum Vortag/Entscheidungstag."""
-    d = pd.Timestamp(decision_time)
-    d = d.tz_convert(None) if d.tzinfo else d
-    hist = px[px.index <= d.normalize()].tail(21)
+    d = local_day(decision_time)
+    hist = px[px.index <= d].tail(21)
     if len(hist) < 21:
         return {"ok": False, "reason": "zu wenig Kurshistorie"}
     last = hist.iloc[-1]
     dv = (hist.close * hist.volume).tail(20)
-    return {"ok": True, "price": float(last.close), "adv": float(dv.median()),
+    raw = float(last["close_unadj"]) if "close_unadj" in hist and pd.notna(last.get("close_unadj")) else float(last.close)
+    return {"ok": True, "price": raw, "price_adj": float(last.close), "adv": float(dv.median()),
             "runup_20d": float(hist.close.iloc[-1] / hist.close.iloc[0] - 1),
             "half_spread": corwin_schultz(hist) / 2}
 

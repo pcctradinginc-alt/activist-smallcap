@@ -163,7 +163,7 @@ def test_build_exit_events_from_first_exit_amendment(env):
     row = df.set_index("campaign_key").loc["1517137-100"]
     assert row.exit_events == ["2023-06-01T10:00:00+00:00"]
     assert "http://x/exit2" not in parsed      # break after first exit
-    assert "http://x/g" not in parsed          # only amendments parsed for followups
+    assert "http://x/g" in parsed              # 13G-Folgemeldungen werden ebenfalls auf Ausstieg geprüft
     assert df.set_index("campaign_key").loc["1871408-500", "exit_events"] == []
     # cache written, and reused on second run
     n = len(parsed)

@@ -83,6 +83,8 @@ def eu_campaigns(events: list[dict], funnel: Counter | None = None) -> list[dict
         if not is_c and not (_is_activist(f, first["published"][:10], names) or (chain and _is_activist(chain, first["published"][:10], names))):
             continue
         thr = EXIT_BELOW[first["region"]]
+        if first.get("previous_ratio") is not None and first["previous_ratio"] >= thr:
+            funnel["EU laufende Beteiligung (Vorquote über Schwelle, kein Einstieg)"] += 1; continue
         if first.get("holding_ratio") is not None and first["holding_ratio"] < thr:
             funnel["EU erste Meldung unter Ausstiegsschwelle (kein Einstieg)"] += 1; continue
         cls = "C" if is_c else "B"

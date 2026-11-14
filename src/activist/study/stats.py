@@ -24,9 +24,11 @@ def summarize(df: pd.DataFrame, col: str = "net_excess", level=0.9, reps=2000) -
     df = df.assign(month=pd.to_datetime(df["entry_date"]).dt.to_period("M").astype(str))
     ci_a = cluster_bootstrap_ci(df, col, "activist", level, reps)
     ci_m = cluster_bootstrap_ci(df, col, "month", level, reps)
-    lows = [v for v in (ci_a[0], ci_m[0]) if not np.isnan(v)]
-    highs = [v for v in (ci_a[1], ci_m[1]) if not np.isnan(v)]
-    lo, hi = (min(lows), max(highs)) if lows else (float("nan"), float("nan"))
+    # beide Bündelungen müssen berechenbar sein, sonst gilt der Bereich als unbestimmt (Prüfung scheitert)
+    if any(np.isnan(v) for v in (*ci_a, *ci_m)):
+        lo, hi = float("nan"), float("nan")
+    else:
+        lo, hi = min(ci_a[0], ci_m[0]), max(ci_a[1], ci_m[1])
     x = df[col]
     return {"n": int(len(df)), "mean": float(x.mean()), "ci_low": float(lo), "ci_high": float(hi),
             "worst_quartile": float(x.quantile(0.25)), "worst": float(x.min()), "p_positive": float((x > 0).mean()),
@@ -42,14 +44,20 @@ def verdict(df: pd.DataFrame, years: float, p: dict) -> dict:
     h1, h2 = d.iloc[:half]["net_excess"].mean(), d.iloc[half:]["net_excess"].mean()
     trades_per_year = summ["n"] / max(years, 1e-9)
     pos_frac = 0.05  # Basis-Positionsgröße
-    exp_eur = trades_per_year * pos_frac * s["econ_portfolio_eur"] * summ["mean"]
+    # Kapazität: höchstens max_positions gleichzeitig -> nutzbare Trades/Jahr = Plätze * 252 / Ø Haltedauer
+    from ..common import risk_limits
+    hold = float(df["hold_days"].mean()) if "hold_days" in df and df["hold_days"].notna().any() else 252.0
+    capacity = risk_limits()["portfolio"]["max_positions"] * 252 / max(hold, 1.0)
+    used = min(trades_per_year, capacity)
+    exp_eur = used * pos_frac * s["econ_portfolio_eur"] * summ["mean"]
     checks = {
         "n>=min_campaigns": summ["n"] >= s["min_campaigns"],
         "mean>=3%": summ["mean"] >= s["pass_min_mean"],
-        "ci_low>0": summ["ci_low"] > 0,
+        "ci_low>0": bool(summ["ci_low"] > 0),           # NaN -> False
         "both_halves_positive": bool(h1 > 0 and h2 > 0),
         "economics": exp_eur >= s["econ_min_excess_eur"],
     }
     status = "nicht beurteilbar" if not checks["n>=min_campaigns"] else ("bestanden" if all(checks.values()) else "nicht bestanden")
     return {"status": status, **summ, "half1": float(h1), "half2": float(h2),
-            "trades_per_year": trades_per_year, "expected_eur_per_year": exp_eur, "checks": checks}
+            "trades_per_year": trades_per_year, "trades_used_per_year": used, "expected_eur_per_year": exp_eur,
+            "checks": checks}

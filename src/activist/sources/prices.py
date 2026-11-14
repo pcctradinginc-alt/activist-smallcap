@@ -22,7 +22,17 @@ def yahoo(ticker: str, start: date, end: date) -> pd.DataFrame:
     adj = res["indicators"].get("adjclose", [{}])[0].get("adjclose")
     df = pd.DataFrame({"open": q["open"], "high": q["high"], "low": q["low"], "close": q["close"],
                        "volume": q["volume"]}, index=pd.to_datetime(res["timestamp"], unit="s").normalize())
-    df["close_raw"] = df["close"]
+    df["close_raw"] = df["close"]                     # Yahoo 'close' ist split-, aber nicht dividendenbereinigt
+    # tatsächlich gehandelter Kurs am Tag (für Niveau-Filter: Mindestkurs, Marktkapitalisierung, Aktivisten-Einstand):
+    # spätere Splits zurückrechnen, sonst Look-ahead über Reverse-Splits
+    splits = (res.get("events") or {}).get("splits") or {}
+    f_unadj = pd.Series(1.0, index=df.index)
+    for sp in splits.values():
+        d = pd.to_datetime(sp["date"], unit="s").normalize()
+        ratio = float(sp["numerator"]) / float(sp["denominator"])
+        if ratio > 0:
+            f_unadj[df.index < d] *= ratio
+    df["close_unadj"] = df["close"] * f_unadj
     if adj:  # Split-/Dividendenbereinigung auf OHLC übertragen
         f = pd.Series(adj, index=df.index) / df["close"]
         for c in ("open", "high", "low", "close"):

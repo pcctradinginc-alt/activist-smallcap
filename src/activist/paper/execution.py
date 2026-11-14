@@ -12,6 +12,7 @@ class Fill:
     fill_ratio: float
     limit: float | None
     reason: str = ""
+    fill_days: int = 0          # Anzahl Tage mit Teilausführung -> je Tag eine Ordergebühr
 
 
 def cost_one_side(half_spread: float | None, cfg: dict, region: str, side: str,
@@ -29,13 +30,14 @@ def cost_one_side(half_spread: float | None, cfg: dict, region: str, side: str,
 def simulate_entry(px: pd.DataFrame, decision_time: pd.Timestamp, order_cfg: dict, position_value: float) -> Fill:
     """px: Tageskurse (open, high, low, close, volume) mit DatetimeIndex.
     Erster Handelstag nach Veröffentlichung; Limit = letzter Schluss vor Order * (1+3 %)."""
-    d0 = pd.Timestamp(decision_time).tz_localize(None) if pd.Timestamp(decision_time).tzinfo else pd.Timestamp(decision_time)
-    before = px[px.index < d0.normalize() + pd.Timedelta(days=1)]
-    after = px[px.index > d0.normalize()]
+    from ..features.universe import local_day
+    d0 = local_day(decision_time)                       # identisch zu den Merkmalen (kein Look-ahead)
+    before = px[px.index <= d0]
+    after = px[px.index > d0]
     if before.empty or after.empty:
         return Fill(False, None, None, 0.0, None, "keine Kurse")
     limit = float(before.close.iloc[-1]) * (1 + order_cfg["limit_above_last_close"])
-    remaining, notional, qty_val, first = 1.0, 0.0, 0.0, None
+    remaining, notional, qty_val, first, days = 1.0, 0.0, 0.0, None, 0
     for ts, row in after.head(order_cfg["max_fill_days"]).iterrows():
         if row.open <= limit:
             p = float(row.open)
@@ -43,17 +45,18 @@ def simulate_entry(px: pd.DataFrame, decision_time: pd.Timestamp, order_cfg: dic
             p = limit
         else:
             continue
-        cap = order_cfg["max_share_of_daily_volume"] * float(row.volume or 0) * p / max(position_value, 1e-9)
+        vol = float(row.volume) if pd.notna(row.volume) else 0.0     # fehlender Umsatz = keine Ausführung
+        cap = order_cfg["max_share_of_daily_volume"] * vol * p / max(position_value, 1e-9)
         take = min(remaining, cap)
         if take <= 0:
             continue
-        notional += take * p; qty_val += take; remaining -= take
+        notional += take * p; qty_val += take; remaining -= take; days += 1
         first = first or ts
         if remaining <= 1e-9:
             break
     if qty_val == 0:
         return Fill(False, None, None, 0.0, limit, "Limit nicht erreicht / kein Umsatz")
-    return Fill(True, first, notional / qty_val, qty_val, limit)
+    return Fill(True, first, notional / qty_val, qty_val, limit, fill_days=days)
 
 
 def simulate_exit(px: pd.DataFrame, entry_date: pd.Timestamp, entry_price: float, exit_cfg: dict,
