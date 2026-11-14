@@ -48,3 +48,9 @@ def test_ratelimiter_real_time_spacing():
         rl.wait()
     assert time.monotonic() - t0 >= 5 * 0.02 - 0.005
 
+
+
+def test_select_same_accession_under_two_ciks_once():
+    rows = [row("SC 13D", "Issuer", "edgar/data/100/0001-19-000001.txt"),
+            row("SC 13D", "Filer", "edgar/data/200/0001-19-000001.txt", "2")]
+    assert len(bf.select(rows, set())) == 1

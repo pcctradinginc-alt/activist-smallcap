@@ -44,11 +44,12 @@ def quarter_rows(year: int, q: int) -> list[dict]:
 
 def select(rows: list[dict], keys: set[str]) -> dict[str, dict]:
     """Gruppiert Indexzeilen je Filing (Pfad). Jede Meldung steht zweimal im Index (Melder + Emittent)."""
-    by = defaultdict(list)
+    by = defaultdict(list)   # Schlüssel = Accession: dieselbe Meldung steht unter Melder- und Emittenten-CIK
     for r in rows:
-        by[r["path"]].append(r)
+        by[r["path"].rsplit("/", 1)[-1]].append(r)
     out = {}
-    for path, rs in by.items():
+    for _, rs in by.items():
+        path = rs[0]["path"]
         form = rs[0]["form"]
         if form in ACTIVE or any(_norm(x["company"])[:10] in keys for x in rs):
             out[path] = rs[0]
