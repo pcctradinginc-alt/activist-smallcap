@@ -1,0 +1,19 @@
+# Aktivisten-Register (Startliste). Kennzahlen werden je Stichtag point-in-time aus data/ berechnet.
+# cik = SEC Filer-CIK; edinet = EDINET-Code des Melders. Liste ist vor Phase 1 zu prüfen und zu erweitern.
+activists:
+  - {name: Starboard Value, cik: "0001517137", since: 2011-01-01}
+  - {name: Elliott Investment Management, cik: "0001791786", since: 2015-01-01}
+  - {name: Engaged Capital, cik: "0001559771", since: 2012-01-01}
+  - {name: Land & Buildings, cik: "0001536924", since: 2015-01-01}
+  - {name: Legion Partners, cik: "0001537095", since: 2015-01-01}
+  - {name: Ancora, cik: "0001425854", since: 2015-01-01}
+  - {name: Politan Capital, cik: "0001871408", since: 2021-01-01}
+  - {name: Irenic Capital, cik: "0001967423", since: 2023-01-01}
+  - {name: Oasis Management, edinet: null, since: 2015-01-01, region: JP}
+  - {name: Strategic Capital, edinet: null, since: 2015-01-01, region: JP}
+  - {name: City Index Eleventh, edinet: null, since: 2015-01-01, region: JP}
+  - {name: Dalton Investments, edinet: null, since: 2015-01-01, region: JP}
+  - {name: 3D Investment Partners, edinet: null, since: 2015-01-01, region: JP}
+  - {name: Cevian Capital, since: 2015-01-01, region: EU}
+  - {name: Petrus Advisers, since: 2015-01-01, region: EU}
+  - {name: Teleios Capital, since: 2015-01-01, region: EU}

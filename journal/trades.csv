@@ -1,0 +1,1 @@
+trade_id,event_id,campaign_id,ticker,region,side,order_date,fill_date,price,qty,cost_pct,journal_hash

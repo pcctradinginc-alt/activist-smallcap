@@ -1,0 +1,40 @@
+# Research Protocol v1 – Parameter (versioniert; Änderungen nur mit Begründung im Commit)
+protocol_version: "1.0-draft"
+frozen: false            # wird am Ende von Phase 0 auf true gesetzt und getaggt (protocol-v1)
+
+universe:
+  US:   {mcap_min: 50e6, mcap_max: 2e9, currency: USD, min_adv: 100000, min_price: 1.0, benchmark: IWM}
+  JP:   {mcap_min: 7e9,  mcap_max: 300e9, currency: JPY, min_adv: 15e6, min_price: 100, benchmark: "1306.JP", lot_size: 100}
+  UK:   {mcap_min: 50e6, mcap_max: 2e9, currency: EUR, min_adv: 100000, min_price: 1.0, benchmark: "^FTSC"}
+  DACH: {mcap_min: 50e6, mcap_max: 2e9, currency: EUR, min_adv: 100000, min_price: 1.0, benchmark: "^SDAXI"}
+  BENELUX_FR: {mcap_min: 50e6, mcap_max: 2e9, currency: EUR, min_adv: 100000, min_price: 1.0, benchmark: "^N100"}
+  NORDIC: {mcap_min: 50e6, mcap_max: 2e9, currency: EUR, min_adv: 100000, min_price: 1.0, benchmark: "^OMXSPI"}
+
+order:
+  limit_above_last_close: 0.03
+  max_fill_days: 3
+  max_share_of_daily_volume: 0.05
+  position_eur: 500
+
+exit:
+  max_holding_days: 252      # 12 Monate
+  stop_loss: -0.30           # in der Studie gegen Variante ohne Stopp getestet
+
+costs:
+  min_half_spread: 0.005
+  fx_and_fees: 0.0025        # je Seite
+  default_half_spread: 0.01
+  levies_buy: {UK: 0.005}    # Stempelsteuer Main Market
+  fixed_fee_eur_per_order: 0.0   # wird in Phase 0 je Handelsplatz erhoben
+
+study:
+  min_campaigns: 100
+  ci_level: 0.90
+  bootstrap_reps: 2000
+  pass_min_mean: 0.03
+  econ_portfolio_eur: 10000
+  econ_min_excess_eur: 300
+  explore_holding_days: [21, 63, 126, 252]
+
+data_quality:
+  max_price_source_deviation: 0.02

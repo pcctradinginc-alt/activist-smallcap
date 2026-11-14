@@ -1,0 +1,27 @@
+name: daily
+on:
+  schedule:
+    - cron: "30 22 * * 1-5"   # nach US-Börsenschluss (EDGAR)
+    - cron: "0 9 * * 1-5"     # nach Tokioter Meldeschluss (EDINET, 18:00 JST)
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: data-write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -r requirements.txt
+      - name: Abruf
+        env:
+          PYTHONPATH: src
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+          EDINET_API_KEY: ${{ secrets.EDINET_API_KEY }}
+        run: python -m activist.cli fetch --source all --days 2
+      - name: Commit (append-only)
+        run: |
+          git config user.name "activist-bot"; git config user.email "actions@users.noreply.github.com"
+          git add data/events && git diff --cached --quiet || git commit -m "data: Meldungen $(date -u +%F)" && git push

@@ -1,0 +1,17 @@
+# NUR MANUELL ÄNDERBAR. Das System darf diese Datei nicht schreiben (siehe tests/test_risk_guard.py).
+candidate:
+  max_position_share_of_adv: 0.05
+  max_spread: 0.02
+  max_premium_over_activist_cost: 0.15
+  max_runup_20d: 0.20
+  max_major_holder: 0.50
+  earnings_blackout_days: 3
+portfolio:
+  max_positions: 15
+  base_position: 0.05
+  max_position: 0.08
+  max_sector: 0.25
+  max_region_once_3_regions_pass: 0.50
+  max_per_activist: 3
+  drawdown_half_size: 0.15
+  drawdown_stop: 0.25
