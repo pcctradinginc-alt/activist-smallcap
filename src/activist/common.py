@@ -9,7 +9,7 @@ CONFIG = ROOT / "config"
 DATA = ROOT / "data"
 JOURNAL = ROOT / "journal"
 REPORTS = ROOT / "reports"
-USER_AGENT = os.environ.get("SEC_USER_AGENT", "activist-smallcap research bot admin@example.invalid")
+USER_AGENT = os.environ.get("SEC_USER_AGENT") or "activist-smallcap research contact@example.org"
 
 
 def load_yaml(name: str) -> dict:
