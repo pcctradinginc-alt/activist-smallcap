@@ -71,8 +71,10 @@ def parse_header(text: str) -> dict:
 
 
 def fetch_events(d: date, with_headers: bool = True, limit: int | None = None) -> list[dict]:
+    from .edgar_backfill import activist_name_keys, select
     out = []
-    for row in daily_index(d)[:limit]:
+    rows = list(select(daily_index(d), activist_name_keys()).values())   # 13D immer, 13G nur von Aktivisten
+    for row in rows[:limit]:
         hdr = {}
         if with_headers:
             try:

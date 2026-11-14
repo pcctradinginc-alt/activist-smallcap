@@ -1,0 +1,1695 @@
+<SEC-DOCUMENT>0001058854-16-000056.txt : 20160301
+<SEC-HEADER>0001058854-16-000056.hdr.sgml : 20160301
+<ACCEPTANCE-DATETIME>20160229174833
+ACCESSION NUMBER:		0001058854-16-000056
+CONFORMED SUBMISSION TYPE:	SC 13D
+PUBLIC DOCUMENT COUNT:		2
+FILED AS OF DATE:		20160301
+DATE AS OF CHANGE:		20160229
+
+SUBJECT COMPANY:	
+
+	COMPANY DATA:	
+		COMPANY CONFORMED NAME:			RIGHTSIDE GROUP, LTD.
+		CENTRAL INDEX KEY:			0001589094
+		STANDARD INDUSTRIAL CLASSIFICATION:	SERVICES-BUSINESS SERVICES, NEC [7389]
+		IRS NUMBER:				320415537
+		STATE OF INCORPORATION:			DE
+		FISCAL YEAR END:			1231
+
+	FILING VALUES:
+		FORM TYPE:		SC 13D
+		SEC ACT:		1934 Act
+		SEC FILE NUMBER:	005-88435
+		FILM NUMBER:		161470014
+
+	BUSINESS ADDRESS:	
+		STREET 1:		5808 LAKE WASHINGTON BLVD., NE, STE. 300
+		CITY:			KIRKLAND
+		STATE:			WA
+		ZIP:			98033
+		BUSINESS PHONE:		425-298-2500
+
+	MAIL ADDRESS:	
+		STREET 1:		5808 LAKE WASHINGTON BLVD., NE, STE. 300
+		CITY:			KIRKLAND
+		STATE:			WA
+		ZIP:			98033
+
+FILED BY:		
+
+	COMPANY DATA:	
+		COMPANY CONFORMED NAME:			CANNELL CAPITAL LLC
+		CENTRAL INDEX KEY:			0001058854
+		IRS NUMBER:				943366999
+		STATE OF INCORPORATION:			WY
+		FISCAL YEAR END:			1231
+
+	FILING VALUES:
+		FORM TYPE:		SC 13D
+
+	BUSINESS ADDRESS:	
+		STREET 1:		150 EAST HANSEN AVENUE, P.O. BOX 3459
+		CITY:			JACKSON
+		STATE:			WY
+		ZIP:			83001
+		BUSINESS PHONE:		4158358300
+
+	MAIL ADDRESS:	
+		STREET 1:		150 EAST HANSEN AVENUE, P.O. BOX 3459
+		CITY:			JACKSON
+		STATE:			WY
+		ZIP:			83001
+
+	FORMER COMPANY:	
+		FORMER CONFORMED NAME:	CANNELL J CARLO DBA CANNELL CAPITAL MGMT
+		DATE OF NAME CHANGE:	19980330
+</SEC-HEADER>
+<DOCUMENT>
+<TYPE>SC 13D
+<SEQUENCE>1
+<FILENAME>ccllc_name-13d.htm
+<DESCRIPTION>SCHEDULE 13D
+<TEXT>
+
+
+<html>
+<body>
+
+
+
+
+<p style="MARGIN-TOP:10PX;MARGIN-BOTTOM:0PX" align="CENTER">
+	<font style="FONT-FAMILY:TIMES NEW ROMAN" size="5">
+		<b>
+			SECURITIES AND EXCHANGE COMMISSION
+		</b>
+	</font>
+</p>
+
+
+<p style="MARGIN-TOP:0PX;MARGIN-BOTTOM:12PX" align="CENTER">
+	<font style="FONT-FAMILY:TIMES NEW ROMAN" size="3">
+		<b>
+			Washington, D.C. 20549
+		</b>
+	</font>
+</p>
+
+<p style="MARGIN-TOP:16PX;MARGIN-BOTTOM:0PX" align="CENTER">
+	<font style="FONT-FAMILY:TIMES NEW ROMAN" size="5">
+		<b>
+			SCHEDULE 13D
+		</b>
+	</font>
+</p>
+
+<p style="MARGIN-TOP:12PX;MARGIN-BOTTOM:0PX" align="CENTER">
+	<font style="FONT-FAMILY:TIMES NEW ROMAN" size="3">
+		<b>
+			Under the Securities Exchange Act of 1934
+		</b>
+	</font>
+</p>
+
+
+<p style="MARGIN-TOP:0PX;MARGIN-BOTTOM:0PX" align="CENTER">
+	<font style="FONT-FAMILY:TIMES NEW ROMAN" size="3">
+		<b>
+			(Amendment No.&nbsp;)
+			<sup></sup>
+		</b>
+	</font>
+</p>
+
+<p style="margin-top: 0; margin-bottom: 0; text-align: center">
+	<hr width="250" align="center"></hr>
+</p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center">
+	<b>Rightside Group, Ltd.</b>
+</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center">
+	<b>(Name of Issuer)</b>
+</p>
+
+<p style="font: 12pt Times New Roman, Times, Serif; margin-top: 10; margin-bottom: 0; text-align: center">
+	<b>Common Stock, par value $0.0001 per share</b>
+</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center">
+	<b>(Title of Class of Securities)</b>
+</p>
+
+<p style="font: 12pt Times New Roman, Times, Serif; margin-top: 16; margin-bottom: 0; text-align: center">
+	<b>76658B100</b>
+</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 16; text-align: center">
+	<b>(CUSIP Number)</b>
+</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center">
+	<b>J. Carlo Cannell</b>
+</p>
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center">
+	<b>Cannell Capital LLC</b>
+</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center">
+		<b>245 Meriwether Circle</b>
+</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center">
+	<b>Alta, WY
+		<font style="text-transform: uppercase">
+			83414
+		</font>
+	</b>
+</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center">
+	<b>(307) 733-2284</b>
+</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center">
+	<b>(Name, Address and Telephone Number of Person</b>
+</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 16; text-align: center">
+	<b>to Receive Notices and Communications)</b>
+</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center">
+	<b>February 19, 2016</b>
+</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 16; text-align: center">
+	<b>(Date of Event Which Requires Filing of This Statement)</b>
+</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 6; text-align: center">
+	<hr width="250" align="center"> </hr>
+</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0;">
+	If the filing person has previously filed a statement on Schedule 13G to report the acquisition that is
+	the subject of this Schedule 13D, and is filing this schedule because of &sect;&sect;240.13d-1(e), 240.13d-1(f)
+	or 240.13d-1(g), check the following box. &#9745;
+</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top 0; margain-bottom 0">
+	<i>Note.</i>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Schedules filed in paper format shall include a signed original and
+	five copies of the schedule, including all exhibits. See &sect;240.13d-7
+	for other parties to whom copies are to be sent.
+</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 6pt; text-align: center">
+	(Continued on following pages)
+</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4pt; text-align: center">
+	(Page 1 of 8 Pages)
+</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 12pt">
+	______________________
+</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 8pt 0.5in 12pt 0">
+	* The remainder of this cover page shall be filled out for a reporting person&rsquo;s
+	initial filing on this form with respect to the subject class of securities, and
+	for any subsequent amendment containing information which would alter disclosures
+	provided in a prior cover page.
+</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 12pt 0.5in 12pt 0">
+	The information required on the remainder of this cover page shall not be deemed
+	to be &ldquo;filed&rdquo; for the purpose of Section 18 of the Securities Exchange Act of 1934
+	(&ldquo;<u>Act</u>&rdquo;) or otherwise subject to the liabilities of that section of the Act
+	but shall be subject to all other provisions of the Act (however,&nbsp;<i>see</i> the <i>Notes</i>).
+</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 12pt 0.5in 12pt 0">
+	Potential persons who are to respond to the collection of information contained
+	in this form are not required to respond unless the form displays a current
+	valid OMB control number.
+</p>
+
+<!-- Field: Page; Sequence: 1 -->
+
+<div style="page-break-before: always; margin-top: 6pt; margin-bottom: 12pt">
+	<table style="width: 100%; font: 10pt Times New Roman, Times, Serif" cellpadding="0"    cellspacing="0">
+		<tr>
+			<td style="text-align: center; width: 100%">
+				&nbsp;
+			</td>
+		</tr>
+	</table>
+</div>
+<!-- Field: /Page -->
+
+
+<table width="100%" >
+	<tr style="font: 10pt Times New Roman, Times, Serif;">
+		<td><b> CUSIP No. 76658B100</b></td>
+		<td align="right"><b> Page 2 of 8 Pages</b></td>
+	</tr>
+</table>
+
+
+ <!--Main T
+ <!--Main Table-->
+<table style="width: 100%; border-collapse: collapse" cellpadding="0" cellspacing="0">
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;" >
+    <td  style="border: black 1pt solid; padding-top: 4pt; padding-bottom: 12pt; text-align: center">
+		1
+	</td>
+	<td colspan="3" style="border: black 1pt solid; padding-left: 6pt">
+		<p style="margin: 4pt 0 2pt">NAMES OF REPORTING PERSONS</p>
+		<p style="margin: 0 0 8pt">I.R.S. Identification Nos. of above persons (entities only)</p>
+        <p style="margin: 0 0 8pt">J. Carlo Cannell</p>
+
+	</td>
+
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;" >
+    <td  style="border: black 1pt solid; padding-top: 4pt; padding-bottom: 12pt; text-align: center">
+		2
+	</td>
+    <td colspan="3"  style="border: black 1pt solid; padding-left: 6pt">
+        <p style="margin: 4pt 0 8pt">CHECK THE APPROPRIATE BOX IF A MEMBER OF A GROUP</p>
+        <p style="margin: 0 0 2pt">(a)&nbsp; &#x2610; </p>
+		<p style="margin: 0 0 4pt">(b)&nbsp; &#x2610;</p>
+	</td>
+	<td></td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;" >
+    <td style="border: black 1pt solid; padding-top: 4pt; padding-bottom: 12pt; text-align: center">
+		3
+	</td>
+    <td colspan="3"  style="border: black 1pt solid; padding-left: 6pt">
+        <p style="margin: 4pt 0 4pt">SEC USE ONLY</p>
+	</td>
+	<td></td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;" >
+    <td  style="border: black 1pt solid; padding-top: 4pt; padding-bottom: 12pt; text-align: center">
+		4
+	</td>
+    <td colspan="3"  style="border: black 1pt solid; padding-left: 6pt">
+        <p style="margin: 4pt 0 2pt">SOURCE OF FUNDS</p>
+        <p style="margin: 0 0 8pt">(see instructions)</p>
+		<p style="margin: 0 0 4pt">WC/OO</p>
+	</td>
+
+	<td></td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;" >
+    <td style="border: black 1pt solid; padding-top: 4pt; padding-bottom: 12pt; text-align: center">
+		5
+	</td>
+    <td colspan="3" style="border: black 1pt solid; padding-left: 6pt">
+        <p style="margin: 4pt 0 2pt">CHECK IF DISCLOSURE OF LEGAL PROCEEDINGS IS REQUIRED PURSUANT TO ITEM 2(d) &nbsp;&#9744; or 2(e) &nbsp;&#9744; </p>
+
+	</td>
+	<td></td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;" >
+    <td  style="border: black 1pt solid; padding-top: 4pt; padding-bottom: 12pt; text-align: center">
+		6
+	</td>
+    <td colspan="3" style="border: black 1pt solid; padding-left: 6pt">
+        <p style="margin: 4pt 0 2pt">CITIZENSHIP OR PLACE OF ORGANIZATION</p>
+        <p style="margin: 0 0 4pt">USA</p>
+	</td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;" >
+    <td colspan="2" rowspan="4" style="border: black 1pt solid; padding-top: 4pt; padding-bottom: 12pt; text-align: center; vertical-align: center;">
+		<p style="margin: 25pt 0 0pt">NUMBER OF SHARES</p>
+        <p style="margin: 4pt 0 0pt">BENEFICIALLY OWNED BY</p>
+		<p style="margin: 4pt 0 0pt">EACH REPORTING </p>
+		<p style="margin: 4pt 0 0pt">PERSON WITH</p>
+	</td>
+	    <td style="border: black 1pt solid; padding-top: 4pt; padding-bottom: 12pt; text-align: center">
+	7
+	</td>
+	<td style="border: black 1pt solid; padding-left: 6pt">
+	    <p style="margin: 4pt 0 2pt">SOLE VOTING POWER*</p>
+        <p style="margin: 0 0 4pt">1,389,953</p>
+	</td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;" >
+    <td style="border: black 1pt solid; padding-top: 4pt; padding-bottom: 12pt; text-align: center">
+	8
+	</td>
+	<td style="border: black 1pt solid; padding-left: 6pt">
+	    <p style="margin: 4pt 0 2pt">SHARED VOTING POWER</p>
+        <p style="margin: 0 0 4pt">0</p>
+	</td>
+</tr>
+
+
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;" >
+    <td style="border: black 1pt solid; padding-top: 4pt; padding-bottom: 12pt; text-align: center">
+	9
+	</td>
+	<td style="border: black 1pt solid; padding-left: 6pt">
+		<p style="margin: 4pt 0 2pt">SOLE DISPOSITIVE POWER*</p>
+        <p style="margin: 0 0 4pt">1,389,953</p>
+	</td>
+</tr>
+
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;" >
+    <td style="border: black 1pt solid; padding-top: 4pt; padding-bottom: 12pt; text-align: center">
+	10
+	</td>
+	<td style="border: black 1pt solid; padding-left: 6pt">
+		<p style="margin: 4pt 0 2pt">SHARED DISPOSITIVE POWER</p>
+        <p style="margin: 0 0 4pt">0</p>
+	</td>
+</tr>
+
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;" >
+    <td  style="border: black 1pt solid; padding-top: 4pt; padding-bottom: 12pt; text-align: center">
+		11
+	</td>
+    <td colspan="3" style="border: black 1pt solid; padding-left: 6pt">
+        <p style="margin: 4pt 0 2pt">AGGREGATE AMOUNT BENEFICIALLY OWNED BY EACH REPORTING PERSON</p>
+        <p style="margin: 0 0 4pt">1,389,953</p>
+	</td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;" >
+    <td  style="border: black 1pt solid; padding-top: 4pt; padding-bottom: 12pt; text-align: center">
+		12
+	</td>
+    <td colspan="3" style="border: black 1pt solid; padding-left: 6pt">
+        <p style="margin: 4pt 0 2pt"> 	CHECK BOX IF THE AGGREGATE AMOUNT IN ROW (11) EXCLUDES CERTAIN SHARES  &#9744;</p>
+        <p style="margin: 0 0 4pt">(see instructions)</p>
+	</td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;" >
+    <td  style="border: black 1pt solid; padding-top: 4pt; padding-bottom: 12pt; text-align: center">
+		13
+	</td>
+    <td colspan="3" style="border: black 1pt solid; padding-left: 6pt">
+        <p style="margin: 4pt 0 2pt">PERCENT OF CLASS REPRESENTED BY AMOUNT IN ROW 11</p>
+        <p style="margin: 0 0 4pt">7.32%*</p>
+	</td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;" >
+    <td  style="border: black 1pt solid; padding-top: 4pt; padding-bottom: 12pt; text-align: center">
+		14
+	</td>
+    <td colspan="3" style="border: black 1pt solid; padding-left: 6pt">
+        <p style="margin: 4pt 0 2pt">TYPE OF REPORTING PERSON</p>
+        <p style="margin: 0 0 4pt">IN</p>
+	</td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;" >
+    <td width="50px"   style="border-bottom: none; border-left: none; border-right: none">
+	</td>
+	<td width="70px"  style="border-bottom: none; border-left: none; border-right: none">
+	</td>
+	<td width="50px" style="border-bottom: none; border-left: none; border-right: none">
+	</td>
+	<td style="border-bottom: none; border-left: none; border-right: none">
+	</td>
+</tr>
+</table>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 0">
+	*	Based on information set forth on the Form 10-Q of Rightside Group, Ltd.,
+	(the &ldquo;Company&rdquo;) as filed with the Securities and Exchange Commission on
+	November 10, 2015, there were 18,987,303 shares of Common Stock par value $0.0001
+	per share (the &ldquo;Shares&rdquo;), of the Company issued and outstanding as of
+	November 4, 2015.
+</p>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 2 0">
+	&nbsp;&nbsp;&nbsp;As of February 23, 2016 (the &ldquo;Reporting Date&rdquo;), the Cuttyhunk Master Portfolio
+	(&ldquo;Cuttyhunk&rdquo;), Tristan Partners, L.P. (&ldquo;Tristan&rdquo;),
+	the Tristan Offshore Fund Ltd. (&ldquo;Tristan Offshore&rdquo;),
+	Tonga Partners, L.P. (&ldquo;Tonga&rdquo;), and sundry separately managed accounts, over
+	which J. Carlo Cannell has investment discretion (the &ldquo;Cannell SMAs&rdquo; and collectively
+	with Cuttyhunk, Tonga, Tristan and Tristan Offshore, the &ldquo;Investment Vehicles&rdquo;),
+	held in the aggregate 1,389,953 Shares.
+</p>
+
+
+<!-- Field: Page; Sequence: 2 -->
+
+
+<div style="page-break-before: always; margin-top: 6pt; margin-bottom: 12pt">
+	<table style="width: 100%; font: 10pt Times New Roman, Times, Serif" cellpadding="0"    cellspacing="0">
+		<tr>
+			<td style="text-align: center; width: 100%">
+				&nbsp;
+			</td>
+		</tr>
+	</table>
+</div>
+<!-- Field: /Page -->
+
+
+
+<table width="100%" >
+	<tr style="font: 10pt Times New Roman, Times, Serif;">
+		<td><b> CUSIP No. 76658B100</b></td>
+		<td align="right"><b> Page 3 of 8 Pages</b></td>
+	</tr>
+</table>
+
+
+
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 2 0">
+	&nbsp;&nbsp;&nbsp;Cannell Capital LLC acts as the investment adviser to to Tonga, Tristan,
+	Tristan Offshore, the Cannell SMAs, and the investor sub-advisor for Cuttyhunk.
+	Mr. J. Carlo Cannell is the sole managing member of Cannell Capital LLC.
+	The Reporting Person possesses the sole power to vote and to direct
+	the disposition of the Shares held by the Investment Vehicles.
+</p>
+
+
+
+
+
+
+<table style="width: 100%;border: black 1pt solid; border-collapse: collapse; " cellpadding="0" cellspacing="0">
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<th style="border: solid black 1pt; width: 35px"></th>
+	<th style="border: solid black 1pt" width="15"></th>
+	<th style="border: solid black 1pt"></th>
+	<th style="border: solid black 1pt" width="150"></th>
+	<th style="border: solid black 1pt" width="80"></th>
+	<th style="border: solid black 1pt" width="80"></th>
+	<th style="border: solid black 1pt" width="80"></th>
+	<th style="border: solid black 1pt" width="100"></th>
+	<th style="border: solid black 1pt" width="40"></th>
+	<th style="border: solid black 1pt" width="100"></th>
+	<th style="border: solid black 1pt"></th>
+	<th style="border: solid black 1pt"  width="1"></th>
+</tr>
+
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td colspan="12" style="border: black 1pt solid; margin 0 0 6 0">
+		<b>Item 1.&nbsp;&nbsp;&nbsp;Security and Issuer</b>
+	</td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td >
+	</td>
+	<td>
+	</td>
+	<td colspan="10" >
+		The title of the class of equity securities to which this Schedule 13D relates is
+	the Common Stock par value $0.0001 per share of Rightside Group, Ltd.,
+	a Minnesota corporation.  <br>
+	The address of the principal executive offices of the
+	Company is 5808 Lake Washington Blvd. NE, Suite 300, Kirkland, WA 98033
+	</td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td colspan="12" style="border: black 1pt solid; margin 0 0 6 0">
+		<b>Item 2.&nbsp;&nbsp;&nbsp;Identity and Background</b>
+	</td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td   >
+	</td>
+	<td>
+	a)
+	</td>
+	<td colspan="10" >
+	<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 0; text-align: left">
+			The name of the Reporting Person is J. Carlo Cannell (the &ldquo;Reporting Person&rdquo;).
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 2pt; text-align: left">
+			The Reporting Person is the sole managing member of Cannell Capital LLC, an
+			investment sub-advisor for the Cuttyhunk Master Portfolio and investment adviser to
+			the Cannell SMAs and to the following entities:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 10pt">
+			Tonga Partners, L.P.
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 10pt">
+			Tristan Partners, L.P.
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 10pt">
+			Tristan Offshore Fund, Ltd.
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 2pt 0 4pt 0">
+			Set forth in the attached Annex "A" and incorporated herein by reference is a
+			listing of the directors, general partners, managing members and controlling
+			persons of the Reporting Person and the Investment Vehicles (collectively,
+			the &ldquo;Covered Persons&rdquo;), and sets forth the principal occupation,
+			citizenship and principal place of business of each Covered Person.
+		</p>
+	</td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td>
+	</td>
+	<td>
+	b)
+	</td>
+	<td colspan="10">
+	<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 0; text-align: left">
+			The principal business address of the Reporting Person is:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 10pt">
+			245 Meriwether Circle
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4pt 10pt">
+			Alta, WY 83414
+		</p>
+	</td>
+</tr>
+
+
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td>
+	</td>
+	<td>
+	c)
+	</td>
+	<td colspan="10">
+	<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 2pt 0; text-align: left">
+			The principal business of the Reporting Person is the performance of
+			investment management and advisory services.  The principal business of the
+			Investment Vehicles is investment in securities.
+	</p>
+	</td>
+</tr>
+
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td>
+	</td>
+	<td>
+	d)
+	</td>
+	<td colspan="10">
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4pt 0; text-align: left">
+			Neither the Reporting Person, nor to the best of its knowledge, any of the
+			Investment Vehicles, has, in the last five years, been convicted in a criminal
+			proceeding (excluding traffic violations or similar misdemeanors).
+		</p>
+	</td>
+</tr>
+
+
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td>
+	</td>
+	<td>
+	e)
+	</td>
+	<td colspan="10">
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4pt 0; text-align: left">
+			Neither the Reporting Person, nor to the best of its knowledge, any of the Investment
+			Vehicles, has, during the last five years, been a party to a civil proceeding of
+			a judicial or administrative body of competent jurisdiction and as a result of
+			such proceeding was or is subject to a judgement, decree or final order
+			enjoining future violations of, or prohibiting or mandating activities subject
+			to, federal or state securities laws or finding any violations with respect to
+			such laws.
+		</p>
+	</td>
+</tr>
+
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td>
+	</td>
+	<td>
+	f)
+	</td>
+	<td colspan="10">
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 2pt 0; text-align: left">
+			The place of organization of the Reporting Person is as follows:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 2pt 0; text-align: left">
+			The citizenship of each Covered Person is set forth on the attached Annex A
+			and incorporated herein by reference.
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4pt 0; text-align: left">
+			Mr. J. Carlo Cannell is the Managing Member of Cannell Capital LLC, a Wyoming
+			limited liability company.
+		</p>
+	</td>
+</tr>
+
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td colspan="12" style="border: black 1pt solid; margin 0 0 6 0">
+		<b>Item 3.&nbsp;&nbsp;&nbsp;Source and Amount of Funds or Other Consideration</b>
+	</td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td>
+	</td>
+	<td>
+	</td>
+	<td colspan="10" >
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 2pt 0; text-align: left">
+			The securities to which this statement relates were acquired by the Reporting
+			Person using the working capital of each Investment Vehicle as follows:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 10pt; text-align: left">
+			The Cuttyhunk Master Portfolio:  $1,682,941
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 10pt; text-align: left">
+			Tonga Partners, L.P.:   $3,802,337
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 10pt; text-align: left">
+			Tristan Partners, L.P.: $3,361,014
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 10pt; text-align: left">
+			Tristan Offshore Fund, Ltd.:   $1,658,271
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 10pt; text-align: left">
+			Cannell Separately Managed Accounts:   $1,362,282
+		</p>
+
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4pt 10pt; text-align: left">
+			The Investment Vehicles have invested an aggregate amount of approximately $11,866,844 in the Shares.
+		</p>
+	</td>
+</tr>
+
+
+
+</table>
+
+
+<!-- Field: Page; Sequence: 2 -->
+
+
+<div style="page-break-before: always; margin-top: 6pt; margin-bottom: 12pt">
+	<table style="width: 100%; font: 10pt Times New Roman, Times, Serif" cellpadding="0"    cellspacing="0">
+		<tr>
+			<td style="text-align: center; width: 100%">
+				&nbsp;
+			</td>
+		</tr>
+	</table>
+</div>
+<!-- Field: /Page -->
+
+
+
+<table width="100%" >
+	<tr style="font: 10pt Times New Roman, Times, Serif;">
+		<td><b> CUSIP No. 76658B100</b></td>
+		<td align="right"><b> Page 4 of 8 Pages</b></td>
+	</tr>
+</table>
+
+
+
+
+
+
+
+
+<table style="width: 100%;border: black 1pt solid; border-collapse: collapse; table-layout: fixed; " cellpadding="0" cellspacing="0">
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<th style="border: solid black 1pt; width: 35px"></th>
+	<th style="border: solid black 1pt" width="15"></th>
+	<th style="border: solid black 1pt"></th>
+	<th style="border: solid black 1pt" width="150"></th>
+	<th style="border: solid black 1pt" width="80"></th>
+	<th style="border: solid black 1pt" width="80"></th>
+	<th style="border: solid black 1pt" width="80"></th>
+	<th style="border: solid black 1pt" width="40"></th>
+	<th style="border: solid black 1pt" width="100"></th>
+	<th style="border: solid black 1pt" width="40"></th>
+	<th style="border: solid black 1pt"></th>
+	<th style="border: solid black 1pt"  width="1"></th>
+</tr>
+
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td colspan="12" style="border: black 1pt solid; margin 0 0 6 0">
+		<b>Item 4.&nbsp;&nbsp;&nbsp;Purpose of Transaction</b>
+	</td>
+</tr>
+
+<tr></tr
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td>
+	</td>
+	<td>
+	</td>
+	<td colspan="10">
+
+
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 2pt; text-align: left">
+			 <br>
+			 Mr. Cannell, on behalf of the Investment Vehicles, identified the Company as an
+			 entity satisfying each Fund's investment criteria.  The Funds acquired and continue
+			 to hold the Shares as a long-term investment.
+			 <br><br>
+			 On February 19, 2016, Cannell Capital LLC sent a letter to the Company&rsquo;s chairman.
+			 A redacted version of this letter is attached as Exhibit 99.
+			  <br><br>
+			 Mr. Cannell reserves the right to discuss various views and opinions with respect to
+			 the Company and its business plans with the Company or the members of its senior
+			 management. The discussion of such views and opinions may extend from ordinary
+			 day-to-day business operations to matters such as nominees for representation on the
+			 Company&rsquo;s board of directors, senior management decisions and extraordinary business
+			 transactions.  Mr. Cannell reserves the right to take such action as he may deem
+			 necessary from time to time to seek to maximize the value of the Shares.  Such
+			 actions may include, but may not necessarily be limited to, pursuit of strategic
+			 initiatives to enhance shareholder value.
+			 <br><br>
+			 Mr. Cannell may engage in any of the actions specified in Items 4(a) through 4(j) to the Schedule 13D general instructions.
+			 <br><br>
+			 Except as set forth above and laid out in the Exhibit, Mr. Cannell has no
+			 present plans or proposals that relate to or would result in any of the
+			 transactions described in Item 4 of Schedule 13D.
+
+		</p>
+
+	</td>
+</tr>
+
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td colspan="12" style="border: black 1pt solid; margin 0 0 6 0">
+			<b>Item 5.&nbsp;&nbsp;&nbsp;Interest in Securities of the Issuer</b>
+	</td>
+</tr>
+
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td>
+	</td>
+	<td>
+	</td>
+	<td colspan="10">
+	<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4pt 0; text-align: left">
+
+		Based on information set forth in the Company's Form 10-Q as filed with the
+		Securities and Exchange Commission on November 10, 2015, there were 18,987,303
+		Common Shares issued and outstanding as of November 4, 2015.
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 10pt; text-align: left">
+			(a)&nbsp;&nbsp;As of the Reporting Date, for the purposes of Reg. Section 240.13d-3, Cannell
+				Capital LLC may be deemed to beneficially own 1,389,953 Shares, or approximately
+				7.32% of the Shares deemed issued and outstanding as of the Reporting Date.
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 10pt; text-align: left">
+
+			(b)&nbsp;&nbsp;Cannell Capital LLC possesses the sole power to vote and to direct
+			the disposition of the Shares held by the Investment Vehicles.
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 10pt; text-align: left">
+			(c)&nbsp;&nbsp;The following table details the transactions during the sixty days on or prior
+			to the Reporting Date in Shares, or securities convertible into, exercisable for or
+			exchangeable for Shares, by Cannell Capital LLC or any other person or entity
+			controlled by him or any person or entity for which he possesses voting or
+			investment control over the securities thereof (each of which was effected in
+			an ordinary brokerage transaction by Cannell Capital LLC on behalf
+			of the Investment Vehicles).
+		</p>
+	</td>
+</tr>
+
+
+<!-- TABLE WITH TRNS -->
+
+
+
+    <tr style="vertical-align:bottom; font: 10pt bold Times New Roman, Times, Serif;">
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td align="left" style="border-bottom: black 1pt solid;">Entity</td>
+      <td align="left" style="border-bottom: black 1pt solid;">Date</td>
+      <td align="right" style="border-bottom: black 1pt solid;">Quantity</td>
+      <td align="right" style="border-bottom: black 1pt solid;">Price <p style="margin: 0 0 0 0">Per Share</p></td>
+	  <td style="border-bottom: black 1pt solid;"> </td>
+      <td align="left" style="border-bottom: black 1pt solid;">Form Of<p style="margin: 0 0 0 0"> Transaction</p></td>
+      <td  colspan="3" style="border-right: black 1pt solid;"></td>
+   </tr>
+
+<tr>
+      <td colspan="12" style="vertical-align:bottom; font: 10pt bold Times New Roman, Times, Serif;">&nbsp </td>
+
+</tr>
+
+<tr style="vertical-align:bottom; font: 10pt Times New Roman, Times, Serif;"><td></td><td></td><td></td><td align="left">Cannell SMAs</td><td align="left">12/30/2015</td><td align="right">24,771</td><td align="right">8.1200</td><td></td><td align="left">Buy</td><td  colspan="3" style="border-right: black 1pt solid;"></td></tr>
+<tr style="vertical-align:bottom; font: 10pt Times New Roman, Times, Serif;"><td></td><td></td><td></td><td align="left">Cuttyhunk</td><td align="left">12/30/2015</td><td align="right">29,440</td><td align="right">8.1200</td><td></td><td align="left">Buy</td><td  colspan="3" style="border-right: black 1pt solid;"></td></tr>
+<tr style="vertical-align:bottom; font: 10pt Times New Roman, Times, Serif;"><td></td><td></td><td></td><td align="left">Tonga</td><td align="left">12/30/2015</td><td align="right">59,472</td><td align="right">8.1200</td><td></td><td align="left">Buy</td><td  colspan="3" style="border-right: black 1pt solid;"></td></tr>
+<tr style="vertical-align:bottom; font: 10pt Times New Roman, Times, Serif;"><td></td><td></td><td></td><td align="left">Tristan</td><td align="left">12/30/2015</td><td align="right">277,903</td><td align="right">8.1200</td><td></td><td align="left">Buy</td><td  colspan="3" style="border-right: black 1pt solid;"></td></tr>
+<tr style="vertical-align:bottom; font: 10pt Times New Roman, Times, Serif;"><td></td><td></td><td></td><td align="left">Tristan Offshore</td><td align="left">12/30/2015</td><td align="right">135,883</td><td align="right">8.1200</td><td></td><td align="left">Buy</td><td  colspan="3" style="border-right: black 1pt solid;"></td></tr>
+<tr style="vertical-align:bottom; font: 10pt Times New Roman, Times, Serif;"><td></td><td></td><td></td><td align="left">Cannell SMAs</td><td align="left">01/21/2016</td><td align="right">765</td><td align="right">8.0511</td><td></td><td align="left">Buy</td><td  colspan="3" style="border-right: black 1pt solid;"></td></tr>
+<tr style="vertical-align:bottom; font: 10pt Times New Roman, Times, Serif;"><td></td><td></td><td></td><td align="left">Cuttyhunk</td><td align="left">01/21/2016</td><td align="right">433</td><td align="right">8.0511</td><td></td><td align="left">Buy</td><td  colspan="3" style="border-right: black 1pt solid;"></td></tr>
+<tr style="vertical-align:bottom; font: 10pt Times New Roman, Times, Serif;"><td></td><td></td><td></td><td align="left">Tonga</td><td align="left">01/21/2016</td><td align="right">2,210</td><td align="right">8.0511</td><td></td><td align="left">Buy</td><td  colspan="3" style="border-right: black 1pt solid;"></td></tr>
+<tr style="vertical-align:bottom; font: 10pt Times New Roman, Times, Serif;"><td></td><td></td><td></td><td align="left">Tristan</td><td align="left">01/21/2016</td><td align="right">1,640</td><td align="right">8.0511</td><td></td><td align="left">Buy</td><td  colspan="3" style="border-right: black 1pt solid;"></td></tr>
+<tr style="vertical-align:bottom; font: 10pt Times New Roman, Times, Serif;"><td></td><td></td><td></td><td align="left">Tristan Offshore</td><td align="left">01/21/2016</td><td align="right">905</td><td align="right">8.0511</td><td></td><td align="left">Buy</td><td  colspan="3" style="border-right: black 1pt solid;"></td></tr>
+<tr style="vertical-align:bottom; font: 10pt Times New Roman, Times, Serif;"><td></td><td></td><td></td><td align="left">Cannell SMAs</td><td align="left">01/22/2016</td><td align="right">1,063</td><td align="right">8.3951</td><td></td><td align="left">Buy</td><td  colspan="3" style="border-right: black 1pt solid;"></td></tr>
+<tr style="vertical-align:bottom; font: 10pt Times New Roman, Times, Serif;"><td></td><td></td><td></td><td align="left">Cuttyhunk</td><td align="left">01/22/2016</td><td align="right">602</td><td align="right">8.3951</td><td></td><td align="left">Buy</td><td  colspan="3" style="border-right: black 1pt solid;"></td></tr>
+<tr style="vertical-align:bottom; font: 10pt Times New Roman, Times, Serif;"><td></td><td></td><td></td><td align="left">Tonga</td><td align="left">01/22/2016</td><td align="right">3,067</td><td align="right">8.3951</td><td></td><td align="left">Buy</td><td  colspan="3" style="border-right: black 1pt solid;"></td></tr>
+<tr style="vertical-align:bottom; font: 10pt Times New Roman, Times, Serif;"><td></td><td></td><td></td><td align="left">Tristan</td><td align="left">01/22/2016</td><td align="right">2,276</td><td align="right">8.3951</td><td></td><td align="left">Buy</td><td  colspan="3" style="border-right: black 1pt solid;"></td></tr>
+<tr style="vertical-align:bottom; font: 10pt Times New Roman, Times, Serif;"><td></td><td></td><td></td><td align="left">Tristan Offshore</td><td align="left">01/22/2016</td><td align="right">1,256</td><td align="right">8.3951</td><td></td><td align="left">Buy</td><td  colspan="3" style="border-right: black 1pt solid;"></td></tr>
+
+</table>
+
+
+
+<div style="page-break-before: always; margin-top: 6pt; margin-bottom: 12pt">
+	<table style="width: 100%; font: 10pt Times New Roman, Times, Serif" cellpadding="0"    cellspacing="0">
+		<tr>
+			<td style="text-align: center; width: 100%">
+				&nbsp;
+			</td>
+		</tr>
+	</table>
+</div>
+<!-- Field: /Page -->
+
+
+
+<table width="100%" >
+	<tr style="font: 10pt Times New Roman, Times, Serif;">
+		<td><b> CUSIP No. 76658B100</b></td>
+		<td align="right"><b> Page 5 of 8 Pages</b></td>
+	</tr>
+</table>
+
+
+
+
+
+
+
+
+<table style="width: 100%;border: black 1pt solid; border-collapse: collapse; table-layout: fixed; " cellpadding="0" cellspacing="0">
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<th style="border: solid black 1pt; width: 35px"></th>
+	<th style="border: solid black 1pt" width="15"></th>
+	<th style="border: solid black 1pt"></th>
+	<th style="border: solid black 1pt" width="150"></th>
+	<th style="border: solid black 1pt" width="80"></th>
+	<th style="border: solid black 1pt" width="80"></th>
+	<th style="border: solid black 1pt" width="80"></th>
+	<th style="border: solid black 1pt" width="40"></th>
+	<th style="border: solid black 1pt" width="100"></th>
+	<th style="border: solid black 1pt" width="40"></th>
+	<th style="border: solid black 1pt"></th>
+	<th style="border: solid black 1pt"  width="1"></th>
+</tr>
+
+
+
+
+    <tr style="vertical-align:bottom; font: 10pt bold Times New Roman, Times, Serif;">
+      <td></td>
+      <td></td>
+	  <td></td>
+      <td align="left" style="border-bottom: black 1pt solid;">Entity</td>
+      <td align="left" style="border-bottom: black 1pt solid;">Date</td>
+      <td align="right" style="border-bottom: black 1pt solid;">Quantity</td>
+      <td align="right" style="border-bottom: black 1pt solid;">Price <p style="margin: 0 0 0 0">Per Share</p></td>
+	  <td style="border-bottom: black 1pt solid;"> </td>
+      <td align="left" style="border-bottom: black 1pt solid;">Form Of<p style="margin: 0 0 0 0"> Transaction</p></td>
+      <td  colspan="3" style="border-right: black 1pt solid;"></td>
+   </tr>
+
+<tr>
+      <td colspan="12" style="vertical-align:bottom; font: 10pt bold Times New Roman, Times, Serif;">&nbsp </td>
+
+</tr>
+
+<tr style="vertical-align:bottom; font: 10pt Times New Roman, Times, Serif;"><td></td><td></td><td></td><td align="left">Cannell SMAs</td><td align="left">01/29/2016</td><td align="right">90</td><td align="right">8.6526</td><td></td><td align="left">Buy</td><td  colspan="3" style="border-right: black 1pt solid;"></td></tr>
+<tr style="vertical-align:bottom; font: 10pt Times New Roman, Times, Serif;"><td></td><td></td><td></td><td align="left">Cuttyhunk</td><td align="left">01/29/2016</td><td align="right">51</td><td align="right">8.6524</td><td></td><td align="left">Buy</td><td  colspan="3" style="border-right: black 1pt solid;"></td></tr>
+<tr style="vertical-align:bottom; font: 10pt Times New Roman, Times, Serif;"><td></td><td></td><td></td><td align="left">Tonga</td><td align="left">01/29/2016</td><td align="right">261</td><td align="right">8.6525</td><td></td><td align="left">Buy</td><td  colspan="3" style="border-right: black 1pt solid;"></td></tr>
+<tr style="vertical-align:bottom; font: 10pt Times New Roman, Times, Serif;"><td></td><td></td><td></td><td align="left">Tristan</td><td align="left">01/29/2016</td><td align="right">192</td><td align="right">8.6525</td><td></td><td align="left">Buy</td><td  colspan="3" style="border-right: black 1pt solid;"></td></tr>
+<tr style="vertical-align:bottom; font: 10pt Times New Roman, Times, Serif;"><td></td><td></td><td></td><td align="left">Tristan Offshore</td><td align="left">01/29/2016</td><td align="right">106</td><td align="right">8.6525</td><td></td><td align="left">Buy</td><td  colspan="3" style="border-right: black 1pt solid;"></td></tr>
+<tr style="vertical-align:bottom; font: 10pt Times New Roman, Times, Serif;"><td></td><td></td><td></td><td align="left">Tonga</td><td align="left">02/03/2016</td><td align="right">19,275</td><td align="right">8.5196</td><td></td><td align="left">Buy</td><td  colspan="3" style="border-right: black 1pt solid;"></td></tr>
+<tr style="vertical-align:bottom; font: 10pt Times New Roman, Times, Serif;"><td></td><td></td><td></td><td align="left">Tristan</td><td align="left">02/03/2016</td><td align="right">19,631</td><td align="right">8.5196</td><td></td><td align="left">Buy</td><td  colspan="3" style="border-right: black 1pt solid;"></td></tr>
+<tr style="vertical-align:bottom; font: 10pt Times New Roman, Times, Serif;"><td></td><td></td><td></td><td align="left">Tristan Offshore</td><td align="left">02/03/2016</td><td align="right">11,189</td><td align="right">8.5196</td><td></td><td align="left">Buy</td><td  colspan="3" style="border-right: black 1pt solid;"></td></tr>
+
+
+ <tr>
+      <td colspan="12" style="vertical-align:bottom; font: 10pt bold Times New Roman, Times, Serif;">&nbsp </td>
+
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td colspan="12" style="border: black 1pt solid; margin 0 0 6 0">
+		<b>Item 6.&nbsp;&nbsp;&nbsp;Contracts, Arrangements, Understandings or Relationships with Respect to Securities of the Issuer</b>
+	</td>
+</tr>
+
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td>
+	</td>
+	<td>
+	</td>
+	<td colspan="10">
+	None
+	</td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td colspan="12" style="border: black 1pt solid; margin 0 0 6 0">
+		<b>Item 7.&nbsp;&nbsp;&nbsp;Material to Be Filed as Exhibits</b>
+	</td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td>
+	</td>
+	<td>
+	</td>
+	<td colspan="10">
+	Letter to Mr. David E. Panos, Chairman of the Board <br>
+	February 19, 2016
+	</td>
+</tr>
+
+
+</table>
+
+
+
+
+	<!-- Field: Page; Sequence:   SIGNATURE PAGE-->
+
+    <div style="page-break-before: always; margin-top: 6pt; margin-bottom: 12pt">
+		<table style="width: 100%; font: 10pt Times New Roman, Times, Serif" cellpadding="0" cellspacing="0">
+				<tr>
+					<td style="text-align: center; width: 100%">&nbsp;</td>
+				</tr>
+		</table>
+	</div>
+    <!-- Field: /Page -->
+
+
+
+<table width="100%" >
+	<tr style="font: 10pt Times New Roman, Times, Serif;">
+		<td><b> CUSIP No. 76658B100</b></td>
+		<td align="right"><b> Page 6 of 8 Pages</b></td>
+	</tr>
+</table>
+
+
+
+
+<p style="font: bold 10pt Times New Roman, Times, Serif; margin: 0 0 12pt; text-align:center">
+	SIGNATURE
+</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 12pt">
+	After reasonable inquiry and to the best of my knowledge and belief,
+	I certify that the information set forth in this statement is true, complete and correct.
+</p>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 12pt">
+	Dated:&nbsp;&nbsp;February 24, 2016
+</p>
+
+
+
+<table width="100%" >
+	<tr style="font: 10pt Times New Roman, Times, Serif;">
+		<td></td>
+		<td width="50%" align="left" >
+			<p style="font:  10pt Times New Roman, Times, Serif; margin: 0 0 12pt">
+				Cannell Capital LLC
+			</p>
+			<p style="font:  10pt Times New Roman, Times, Serif; margin: 0 0 6pt">
+				<u>By:&nbsp;&nbsp;/s/ J. Carlo Cannell&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>
+			</p>
+						<p style="font:  10pt Times New Roman, Times, Serif; margin: 0 0 0pt">
+				Name:&nbsp;&nbsp;J. Carlo Cannell
+			</p>
+						<p style="font:  10pt Times New Roman, Times, Serif; margin: 0 0 12pt">
+				Title:&nbsp;&nbsp;Managing Member
+			</p>
+		</td>
+	</tr>
+</table>
+
+
+	<!-- Field: Page; Sequence:   SIGNATURE PAGE-->
+
+<div style="page-break-before: always; margin-top: 6pt; margin-bottom: 12pt">
+		<table style="width: 100%; font: 10pt Times New Roman, Times, Serif" cellpadding="0" cellspacing="0">
+				<tr>
+					<td style="text-align: center; width: 100%">&nbsp;</td>
+				</tr>
+		</table>
+	</div>
+    <!-- Field: /Page -->
+
+
+
+<table width="100%" >
+	<tr style="font: 10pt Times New Roman, Times, Serif;">
+		<td><b> CUSIP No. 76658B100</b></td>
+		<td align="right"><b> Page 7 of 8 Pages</b></td>
+	</tr>
+</table>
+
+<p style="font: bold 10pt Times New Roman, Times, Serif; margin: 0 0 12pt;text-align: center;">
+	Annex "A"
+</p>
+
+
+<p style="font: bold 10pt Times New Roman, Times, Serif; margin: 0 0 12pt">
+	MANAGERS AND GENERAL PARTNERS OF THE REPORTING PERSON AND THE INVESTMENT VEHICLES
+</p>
+
+<p style="font: bold 10pt Times New Roman, Times, Serif; margin: 0 0 12pt">
+	The following sets forth the name, principal occupation, citizenship or
+	jurisdiction of organization and principal place of business of the
+	directors, general partners, managing members or controlling persons
+	of the Reporting Person and the Investment Vehicles (the &ldquo;Covered Persons&rdquo;) indicated below:
+</p>
+
+<!--- Signature table-->
+
+
+
+<table style="width: 100%;border: none; border-collapse: collapse" cellpadding="0" cellspacing="0">
+
+
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 0; text-align: left;">
+	<b>J. Carlo Cannell</b>
+	</td>
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4 0; text-align: left;">
+
+	</td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 0; text-align: left;">
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Name:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0pt 0; text-align: left">
+		Title or Relationship with Reporting Person:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0pt 0; text-align: left">
+		Principal Occupation or Employment:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Citizenship or Jurisdiction of Organization:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4pt 0; text-align: left">
+		Principal Place of Business:
+		</p>
+	</td>
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 0; text-align: left;">
+				<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		J. Carlo Cannell
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Managing Member
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Investment Management
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Wyoming, United States
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4pt 0; text-align: left">
+		(1)
+		</p>
+	</td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 0; text-align: left;">
+	<b>Cannell Capital LLC</b>
+	</td>
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4 0; text-align: left;">
+
+	</td>
+</tr>
+
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 0; text-align: left;">
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Name:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0pt 0; text-align: left">
+		Title or Relationship with Reporting Person:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0pt 0; text-align: left">
+		Principal Occupation or Employment:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Citizenship or Jurisdiction of Organization:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4pt 0; text-align: left">
+		Principal Place of Business:
+		</p>
+	</td>
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 0; text-align: left;">
+				<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		J. Carlo Cannell
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Managing Member
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Investment Management
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Wyoming, United States
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4pt 0; text-align: left">
+		(1)
+		</p>
+	</td>
+</tr>
+
+
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 0; text-align: left;">
+	<b>Tonga Partners, L.P.</b>
+	</td>
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4 0; text-align: left;">
+
+	</td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 0; text-align: left;">
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Name:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0pt 0; text-align: left">
+		Title or Relationship with Reporting Person:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0pt 0; text-align: left">
+		Principal Occupation or Employment:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Citizenship or Jurisdiction of Organization:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4pt 0; text-align: left">
+		Principal Place of Business:
+		</p>
+	</td>
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 0; text-align: left;">
+				<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Cannell Capital LLC
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Investment Adviser and General Partner
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Investment Management
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Wyoming, United States
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4pt 0; text-align: left">
+		(1)
+		</p>
+	</td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 0; text-align: left;">
+	<b>The Cuttyhunk Master Portfolio</b>
+	</td>
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4 0; text-align: left;">
+
+	</td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 0; text-align: left;">
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Name:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0pt 0; text-align: left">
+		Title or Relationship with Reporting Person:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0pt 0; text-align: left">
+		Principal Occupation or Employment:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Citizenship or Jurisdiction of Organization:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4pt 0; text-align: left">
+		Principal Place of Business:
+		</p>
+	</td>
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 0; text-align: left;">
+				<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Cannell Capital LLC
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Investment Subadviser
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Investment Management
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Wyoming, United States
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4pt 0; text-align: left">
+		(1)
+		</p>
+	</td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 0; text-align: left;">
+	<b>Tristan Partners, L.P.</b>
+	</td>
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4 0; text-align: left;">
+
+	</td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 0; text-align: left;">
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Name:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0pt 0; text-align: left">
+		Title or Relationship with Reporting Person:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0pt 0; text-align: left">
+		Principal Occupation or Employment:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Citizenship or Jurisdiction of Organization:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4pt 0; text-align: left">
+		Principal Place of Business:
+		</p>
+	</td>
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 0; text-align: left;">
+				<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Cannell Capital LLC
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Investment Adviser and General Partner
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Investment Management
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Wyoming, United States
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4pt 0; text-align: left">
+		(1)
+		</p>
+	</td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 0; text-align: left;">
+	<b>Tristan Offshore Fund, Ltd.</b>
+	</td>
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4 0; text-align: left;">
+
+	</td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 0; text-align: left;">
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Name:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0pt 0; text-align: left">
+		Title or Relationship with Reporting Person:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0pt 0; text-align: left">
+		Principal Occupation or Employment:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Citizenship or Jurisdiction of Organization:
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4pt 0; text-align: left">
+		Principal Place of Business:
+		</p>
+	</td>
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 0; text-align: left;">
+				<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Cannell Capital LLC
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Investment Adviser
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Investment Management
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0pt 0; text-align: left">
+		Cayman Islands
+		</p>
+		<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 4pt 0; text-align: left">
+		(2)
+		</p>
+	</td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+	<td width="400" style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 0; text-align: left;">
+	</td>
+	<td style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 0; text-align: left;">
+	</td>
+</tr>
+
+</table>
+
+	<!-- Field: Page; Sequence:   SIGNATURE PAGE-->
+
+<div style="page-break-before: always; margin-top: 6pt; margin-bottom: 12pt">
+		<table style="width: 100%; font: 10pt Times New Roman, Times, Serif" cellpadding="0" cellspacing="0">
+				<tr>
+					<td style="text-align: center; width: 100%">&nbsp;</td>
+				</tr>
+		</table>
+	</div>
+    <!-- Field: /Page -->
+
+
+
+<table width="100%" >
+	<tr style="font: 10pt Times New Roman, Times, Serif;">
+		<td><b> CUSIP No. 76658B100</b></td>
+		<td align="right"><b> Page 8 of 8 Pages</b></td>
+	</tr>
+</table>
+
+
+
+<p style="font: bold 10pt Times New Roman, Times, Serif; margin: 0 0 12pt;text-align: center;">
+	Annex "B"
+</p>
+<p style="font: bold 10pt Times New Roman, Times, Serif; margin: 0 0 12pt;text-align: center;">
+	Agreement Regarding the Joint Filing of Schedule 13D
+</p>
+
+
+<table>
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+<td>1)</td>
+<td>
+	Each of them is individually eligible to use the Schedule 13D to which this
+	Exhibit is attached, and such Schedule 13D is filed on behalf each of them;
+</td>
+</tr>
+
+<tr style="vertical-align: top; font: 10pt Times New Roman, Times, Serif;">
+<td>2)</td>
+<td>
+	Each of them is responsible for the timely filing of such Schedule 13D and
+	any amendments thereto, and for the completeness and accuracy of the
+	information concerning such person contained therein; but none of them is
+	responsible for the completeness or accuracy of the information concerning the
+	other persons making the filing, unless such person knows or has reason to
+	believe that such information is inaccurate.
+</td>
+</tr>
+</table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 12pt 0 12pt">
+	Dated:&nbsp;&nbsp;February 29, 2016
+</p>
+
+
+<!-- Signatures-->
+
+<table width="100%" >
+	<tr style="font: 10pt Times New Roman, Times, Serif;">
+		<td></td>
+		<td width="50%" align="left" >
+
+			<p style="font:  10pt Times New Roman, Times, Serif; margin: 0 0 6pt">
+				<u>By:&nbsp;&nbsp;/s/ J. Carlo Cannell&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>
+			</p>
+						<p style="font:  10pt Times New Roman, Times, Serif; margin: 0 0 0pt">
+				Name:&nbsp;&nbsp;J. Carlo Cannell
+			</p>
+
+		</td>
+	</tr>
+</table>
+
+<table width="100%" >
+	<tr style="font: 10pt Times New Roman, Times, Serif;">
+		<td></td>
+		<td width="50%" align="left" >
+			<p></p>
+			<p style="font:  10pt Times New Roman, Times, Serif; margin: 0 0 6pt">
+				Cannell Capital LLC
+			</p>
+			<p style="font:  10pt Times New Roman, Times, Serif; margin: 0 0 6pt">
+				<u>By:&nbsp;&nbsp;/s/ J. Carlo Cannell&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>
+			</p>
+						<p style="font:  10pt Times New Roman, Times, Serif; margin: 0 0 0pt">
+				Name:&nbsp;&nbsp;J. Carlo Cannell
+			</p>
+						<p style="font:  10pt Times New Roman, Times, Serif; margin: 0 0 12pt">
+				Title:&nbsp;&nbsp;Managing Member
+			</p>
+		</td>
+	</tr>
+</table>
+
+
+
+
+
+
+
+</body>
+
+</html>
+
+</TEXT>
+</DOCUMENT>
+<DOCUMENT>
+<TYPE>EX-99
+<SEQUENCE>2
+<FILENAME>Exhibit_99.htm
+<DESCRIPTION>EXHIBIT 99
+<TEXT>
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+
+<body>
+
+<p style="MARGIN-TOP:30PX;MARGIN-BOTTOM:0PX" align="CENTER">
+	<font style="FONT-FAMILY:TIMES NEW ROMAN" size="3">
+		<b>
+			Cannell Capital LLC
+		</b>
+	</font>
+</p>
+
+
+<p style="MARGIN-TOP:0PX;MARGIN-BOTTOM:0PX" align="CENTER">
+	<font style="FONT-FAMILY:TIMES NEW ROMAN" size="2">
+			245 Meriwether Circle
+	</font>
+</p>
+<p style="MARGIN-TOP:0PX;MARGIN-BOTTOM:0PX" align="CENTER">
+	<font style="FONT-FAMILY:TIMES NEW ROMAN" size="2">
+			Alta, WY 83414
+	</font>
+</p>
+
+<p style="MARGIN-TOP:0PX;MARGIN-BOTTOM:0PX" align="CENTER">
+	<font style="FONT-FAMILY:TIMES NEW ROMAN" size="2">
+			<b>Tel</b> (307) 733-2284 <b>Fax</b> (307) 264-0600
+	</font>
+</p>
+
+<p style="MARGIN-TOP:0PX;MARGIN-BOTTOM:12PX" align="CENTER">
+	<font style="FONT-FAMILY:TIMES NEW ROMAN" size="2">
+			info@cannellcap.com
+	</font>
+</p>
+
+<p style="MARGIN-TOP:0PX;MARGIN-BOTTOM:12PX" align="RIGHT">
+	<font style="FONT-FAMILY:TIMES NEW ROMAN" size="2">
+			February 19, 2016
+	</font>
+</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 12pt 0">
+	  Mr. David E. Panos <br>
+	  Chairman of the Board <br>
+	  Rightside Group, Ltd.<br>
+	  5808 Lake Washington Boulevard NE<br>
+	  Suite 300 <br>
+	  Kirkland, WA 98033 <br>
+
+</p>
+
+
+<div style="TEXT-INDENT: 0pt; DISPLAY: block; MARGIN-LEFT: 0pt; MARGIN-RIGHT: 0pt" align="left"><font style="DISPLAY: inline; FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">
+Dear Mr Panos</font></div>
+
+<div style="TEXT-INDENT: 0pt; DISPLAY: block"><br>
+</div>
+
+
+
+<div style="TEXT-INDENT: 0pt; DISPLAY: block; MARGIN-LEFT: 0pt; MARGIN-RIGHT: 0pt" align="left"><font style="DISPLAY: inline; FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">
+I am troubled by the pivot toward, and unrelenting propaganda about, new generic top-level domain
+names (&ldquo;GTLDs&rdquo;). Whilst I concede that new GTLDs are one of many opportunities in the
+emerging market for second generation domain names, Rightside Group, Ltd. (&ldquo;Rightside&rdquo;,
+&ldquo;NAME&rdquo;, or our &ldquo;Company&rdquo;) is the second-largest domain name registrar, a business that is here
+and now. I don&rsquo;t hear Rightside speaking to this strength. Our Company glosses over this critical
+revenue component and plays up new GTLDs at the expense of the revenue contribution made by
+the traditional registrar business.</font></div>
+
+<div style="TEXT-INDENT: 0pt; DISPLAY: block"><br>
+</div>
+
+
+<div style="TEXT-INDENT: 0pt; DISPLAY: block; MARGIN-LEFT: 0pt; MARGIN-RIGHT: 0pt" align="left"><font style="DISPLAY: inline; FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">
+The user interfaces at eNom and Namejet look and feel clumsy and stale. Looking past the main
+page of NAME&rsquo;s sites, the logged-in front-end infrastructure is untouched and acts like time capsule
+to what existed half a decade ago. Most of our growth in names under management is coming from
+a reseller channel that is out-executing your own in-house registrar eNom.</font></div>
+
+<div style="TEXT-INDENT: 0pt; DISPLAY: block"><br>
+</div>
+
+<div style="TEXT-INDENT: 0pt; DISPLAY: block; MARGIN-LEFT: 0pt; MARGIN-RIGHT: 0pt" align="left"><font style="DISPLAY: inline; FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">
+
+While I am a believer in new GTLDs, it is going to be many years before their revenue in any way
+materially approaches the revenue potential of our registrar operations. In my view, NAME&rsquo;s
+registrar has become like a crazy aunt kept in the basement, one that you refuse to adequately clothe
+or feed, but who steadfastly spins straw into gold used to subsidize a stable of largely substandard
+new GTLDs such as .democrat, .dance, .army, .navy, and .airforce. Most of these new GTLDs are
+irrelevant and will never be sold in material volumes. NAME is holding back the growth potential of
+your registrar by pushing garbage extensions to a user base that quietly knows better.</font></div>
+
+<div style="TEXT-INDENT: 0pt; DISPLAY: block"><br>
+</div>
+
+
+<div style="TEXT-INDENT: 0pt; DISPLAY: block"><br>
+</div>
+
+<div style="TEXT-INDENT: 0pt; DISPLAY: block; MARGIN-LEFT: 0pt; MARGIN-RIGHT: 0pt" align="left"><font style="DISPLAY: inline; FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">
+Rightside is a gem in that it has many assets which are unique or difficult to duplicate. Cannell
+Capital LLC would not have acquired 1,389,953 shares otherwise. We have some good new domain-endings
+as well, with .news being one example, but this particular domain-ending and a clutch of
+others like it do not constitute enough of a &ldquo;front&rdquo; to gloss over the majority of your extensions
+which are low in value and should be spun-off. I believe that we should sell or even abandon some
+of our worst extensions. They should not consume all the resources of our Company at the expense
+of the assets that are currently profitable.</font></div>
+
+<div style="TEXT-INDENT: 0pt; DISPLAY: block"><br>
+</div>
+
+
+<div style="TEXT-INDENT: 0pt; DISPLAY: block; MARGIN-LEFT: 0pt; MARGIN-RIGHT: 0pt" align="left"><font style="DISPLAY: inline; FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">
+The current members of the Board of Directors and indeed many of your shareholders don&rsquo;t seem
+to recognize this. I do. Today I stand up to be that paladin. To wit, I submit both a plan and a
+request: (i) Unify all Company products under the eNom.com brand; (ii) Terminate no less than
+20% of your weaker staff; (iii) Move the Name.com entity to Seattle under the eNom.com brand
+and close expensive ancillary offices; (iv) Rebuild and relaunch the front-end infrastructure at
+eNom.com to bring it to the current standard expected by consumers; (v) Refinance all debt; and
+(vi) Add two new board members with a suggestion, but not a requirement that two incumbents
+resign.
+
+
+</font></div>
+
+<div style="TEXT-INDENT: 0pt; DISPLAY: block"><br>
+</div>
+
+<div style="TEXT-INDENT: 0pt; DISPLAY: block; MARGIN-LEFT: 0pt; MARGIN-RIGHT: 0pt" align="left"><font style="DISPLAY: inline; FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">
+I would prefer to avoid waging an expensive proxy battle to elect my own slate of directors. Such a
+fight would be costly to both myself and our Company. It is my sincere hope that substantive
+discussions between myself and the current Board of Directors could result in the infusion of fresh
+blood without such a fight.
+
+</font></div>
+
+<div style="TEXT-INDENT: 0pt; DISPLAY: block"><br>
+</div>
+
+
+<div style="TEXT-INDENT: 0pt; DISPLAY: block; MARGIN-LEFT: 0pt; MARGIN-RIGHT: 0pt" align="left"><font style="DISPLAY: inline; FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">
+Best Regards!
+
+</font></div>
+
+<div style="TEXT-INDENT: 0pt; DISPLAY: block"><br>
+</div>
+
+
+<div style="TEXT-INDENT: 0pt; DISPLAY: block; MARGIN-LEFT: 0pt; MARGIN-RIGHT: 0pt" align="left"><font style="DISPLAY: inline; FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">
+Sincerely,
+
+</font></div>
+
+
+<div style="TEXT-INDENT: 0pt; DISPLAY: block"><br>
+</div>
+
+<div style="TEXT-INDENT: 0pt; DISPLAY: block; MARGIN-LEFT: 0pt; MARGIN-RIGHT: 0pt" align="left"><font style="DISPLAY: inline; FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">
+/s/
+</font></div>
+<div style="TEXT-INDENT: 0pt; DISPLAY: block; MARGIN-LEFT: 0pt; MARGIN-RIGHT: 0pt" align="left"><font style="DISPLAY: inline; FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">
+J. Carlo Cannell
+</font></div>
+
+
+</body>
+
+</html>
+
+
+</TEXT>
+</DOCUMENT>
+</SEC-DOCUMENT>

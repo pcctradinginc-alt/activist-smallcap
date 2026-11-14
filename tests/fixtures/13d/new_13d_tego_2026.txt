@@ -1,0 +1,231 @@
+<SEC-DOCUMENT>0001815632-26-000005.txt : 20261112
+<SEC-HEADER>0001815632-26-000005.hdr.sgml : 20261112
+<ACCEPTANCE-DATETIME>20261112123958
+ACCESSION NUMBER:		0001815632-26-000005
+CONFORMED SUBMISSION TYPE:	SCHEDULE 13D
+PUBLIC DOCUMENT COUNT:		2
+FILED AS OF DATE:		20261112
+DATE AS OF CHANGE:		20261112
+
+SUBJECT COMPANY:	
+
+	COMPANY DATA:	
+		COMPANY CONFORMED NAME:			INTRUSION INC
+		CENTRAL INDEX KEY:			0000736012
+		STANDARD INDUSTRIAL CLASSIFICATION:	COMPUTER COMMUNICATIONS EQUIPMENT [3576]
+		ORGANIZATION NAME:           	06 Technology
+		EIN:				751911917
+		STATE OF INCORPORATION:			DE
+		FISCAL YEAR END:			1231
+
+	FILING VALUES:
+		FORM TYPE:		SCHEDULE 13D
+		SEC ACT:		1934 Act
+		SEC FILE NUMBER:	005-49215
+		FILM NUMBER:		261545560
+
+	BUSINESS ADDRESS:	
+		STREET 1:		101 EAST PARK BLVD, SUITE 1200
+		CITY:			PLANO
+		STATE:			TX
+		ZIP:			75074
+		BUSINESS PHONE:		(888) 637-7770
+
+	MAIL ADDRESS:	
+		STREET 1:		101 EAST PARK BLVD, SUITE 1200
+		CITY:			PLANO
+		STATE:			TX
+		ZIP:			75074
+
+	FORMER COMPANY:	
+		FORMER CONFORMED NAME:	INTRUSION COM INC
+		DATE OF NAME CHANGE:	20000601
+
+	FORMER COMPANY:	
+		FORMER CONFORMED NAME:	ODS NETWORKS INC
+		DATE OF NAME CHANGE:	19970507
+
+	FORMER COMPANY:	
+		FORMER CONFORMED NAME:	OPTICAL DATA SYSTEMS INC
+		DATE OF NAME CHANGE:	19950517
+
+FILED BY:		
+
+	COMPANY DATA:	
+		COMPANY CONFORMED NAME:			Tego Cyber, Inc.
+		CENTRAL INDEX KEY:			0001815632
+		STANDARD INDUSTRIAL CLASSIFICATION:	SERVICES-COMPUTER PROGRAMMING, DATA PROCESSING, ETC. [7370]
+		ORGANIZATION NAME:           	06 Technology
+		EIN:				842678167
+		STATE OF INCORPORATION:			NV
+		FISCAL YEAR END:			0630
+
+	FILING VALUES:
+		FORM TYPE:		SCHEDULE 13D
+
+	BUSINESS ADDRESS:	
+		STREET 1:		8565 S. EASTERN AVENUE SUITE 150
+		CITY:			LAS VEGAS
+		STATE:			NV
+		ZIP:			89123
+		BUSINESS PHONE:		855-939-0100
+
+	MAIL ADDRESS:	
+		STREET 1:		8565 S. EASTERN AVENUE SUITE 150
+		CITY:			LAS VEGAS
+		STATE:			NV
+		ZIP:			89123
+</SEC-HEADER>
+<DOCUMENT>
+<TYPE>SCHEDULE 13D
+<SEQUENCE>1
+<FILENAME>primary_doc.xml
+<TEXT>
+<XML>
+<?xml version="1.0" encoding="UTF-8"?><edgarSubmission xmlns="http://www.sec.gov/edgar/schedule13D" xmlns:com="http://www.sec.gov/edgar/common">
+  <schemaVersion>X0202</schemaVersion>
+<headerData>
+    <submissionType>SCHEDULE 13D</submissionType>
+    <filerInfo>
+      <filer>
+        <filerCredentials>
+          <cik>0001815632</cik>
+          <ccc>XXXXXXXX</ccc>
+        </filerCredentials>
+      </filer>
+      <liveTestFlag>LIVE</liveTestFlag>
+
+
+    </filerInfo>
+  </headerData>
+  <formData>
+    <coverPageHeader>
+      <securitiesClassTitle>Common Stock, par value $0.01 per share</securitiesClassTitle>
+      <dateOfEvent>11/12/2026</dateOfEvent>
+      <previouslyFiledFlag>true</previouslyFiledFlag>
+      <issuerInfo>
+        <issuerCIK>0000736012</issuerCIK>
+        <issuerCusips>
+          <issuerCusipNumber>46121E304</issuerCusipNumber>
+        </issuerCusips>
+        <issuerName>INTRUSION INC</issuerName>
+        <address>
+          <com:street1>101 EAST PARK BLVD, SUITE 1200</com:street1>
+          <com:city>PLANO</com:city>
+          <com:stateOrCountry>TX</com:stateOrCountry>
+          <com:zipCode>75074</com:zipCode>
+        </address>
+      </issuerInfo>
+      <authorizedPersons>
+        <notificationInfo>
+          <personName>Richard Smith</personName>
+          <personPhoneNum>7789891667</personPhoneNum>
+          <personAddress>
+            <com:street1>8565 S Eastern Ave Suite 150</com:street1>
+            <com:city>Las Vegas</com:city>
+            <com:stateOrCountry>NV</com:stateOrCountry>
+            <com:zipCode>89123</com:zipCode>
+          </personAddress>
+        </notificationInfo>
+      </authorizedPersons>
+    </coverPageHeader>
+    <reportingPersons>
+      <reportingPersonInfo>
+        <reportingPersonCIK>0001815632</reportingPersonCIK>
+        <reportingPersonNoCIK>N</reportingPersonNoCIK>
+        <reportingPersonName>Tego Cyber, Inc.</reportingPersonName>
+        <fundType>OO</fundType>
+        <legalProceedings>N</legalProceedings>
+        <citizenshipOrOrganization>NV</citizenshipOrOrganization>
+        <soleVotingPower>2373134.00</soleVotingPower>
+        <sharedVotingPower>0.00</sharedVotingPower>
+        <soleDispositivePower>2373134.00</soleDispositivePower>
+        <sharedDispositivePower>0.00</sharedDispositivePower>
+        <aggregateAmountOwned>2373134.00</aggregateAmountOwned>
+        <isAggregateExcludeShares>N</isAggregateExcludeShares>
+        <percentOfClass>8.9</percentOfClass>
+        <typeOfReportingPerson>CO</typeOfReportingPerson>
+      </reportingPersonInfo>
+    </reportingPersons>
+    <items1To7>
+      <item1>
+        <securityTitle>Common Stock, par value $0.01 per share</securityTitle>
+        <issuerName>INTRUSION INC</issuerName>
+        <issuerPrincipalAddress>
+          <com:street1>101 EAST PARK BLVD, SUITE 1200</com:street1>
+          <com:city>PLANO</com:city>
+          <com:stateOrCountry>TX</com:stateOrCountry>
+          <com:zipCode>75074</com:zipCode>
+        </issuerPrincipalAddress>
+      </item1>
+      <item2>
+        <filingPersonName>Tego Cyber Inc is a corporation organized under the laws of Nevada</filingPersonName>
+        <principalBusinessAddress>8565 S Eastern Ave, Suite 150, Las Vegas, NV 89123</principalBusinessAddress>
+        <principalJob>Holding Company</principalJob>
+        <hasBeenConvicted>No</hasBeenConvicted>
+        <convictionDescription>No</convictionDescription>
+        <citizenship>United States of America</citizenship>
+      </item2>
+      <item3>
+        <fundsSource>The shares of common stock of Intrusion Inc. beneficially owned by the Reporting Person were acquired as partial consideration for the sale of a 60% membership interest in OW Cyber LLC (operating as VigilAigent) to Intrusion Inc. pursuant to a Membership Interest Purchase Agreement dated June 29, 2026.</fundsSource>
+      </item3>
+      <item4>
+        <transactionPurpose>The reporting person acquired the shares for investment purposes. Based on publicly available information, the reporting person has determined that the Company's current board and management have not delivered acceptable operating or capital structure results and that changes are necessary to protect and enhance shareholder value. The reporting person intents to engage with the Board of Directors regarding the following matters and reserves the right to take any actions it deems appropriate in furtherance of these purposes.
+
+Operating performance - The Company has reported continuing losses and a going-concern warning. Cash balances have been low relative to operating cash burn. Revenue growth has not translated into improved profitability or a clear path to sustainable operations.
+
+Capital structure and dilution - In August 2026 the Company conducted a warrant inducement in which certain existing warrants were exercised at a temporarily reduced price of $0.795 per share and new warrants were issued at $0.67. The new low priced warrant overhang increases potential dilution and creates additional downward pressure on the stock price. This structure impairs the Company's ability to maintain compliance with Nasdaq listing standards.
+
+Repeated optimistic representations that were never realized - Management has repeatedly stated objectives of reaching profitability or cash flow positivity (including targets framed around the of of 2026, even break even by the third quarter of 2026). Actual results have not met these eqxpectations.
+
+Governance and accountability - At the August 27, 2026 annual meeting the Board nominated and shareholders elected the same five directors (Anthony Scott, Anthony J. LeVecchio, Katrinka B. McCallum, Gregory K. Wilson, and Dion Hinchcliffe). The election was uncontested. No alternative nominees were advanced. The CEO's employment agreement is set to expire on November 15, 2026. The Board has not demonstrated accountability for the results described above.
+
+Capital markets execution - The August 2026 warrant inducement reflects decisions that have increased dilution, created a low price warrant overhand, and limited the Company's options for raising capital on terms that protect existing common shareholders.
+
+Proposals
+The reporting person intends to seek discussions with the Board regarding:
+
+-Decline to enter into a new employment agreement with the current CEO on terms that continue the status quo, and instead initiate an orderly CEO succession process.
+
+-Reconstitute the Board to add directors with demonstrated public-company operating, financial, and capital markets experience who are independent of the current management team.
+
+-Implement immediate and material reductions in operating expenses to align with current revenue levels.
+
+-Commission an independent review of historical gross margin presentation and expense classifications.
+
+The reporting person may communicate with other shareholders, make further proposals, nominate directors, or take other steps it deems appropriate. It may also acquire additional shares or dispose of shares, subject to applicable law and any required 13D amendments. The reporting person reserves the rights to change its plans or intentions at any time.</transactionPurpose>
+      </item4>
+      <item5>
+        <percentageOfClassSecurities>2,373,134 shares of common stock representing approximately 8.9% of outstanding shares based on latest report filed with SEC</percentageOfClassSecurities>
+        <numberOfShares>2,373,134</numberOfShares>
+        <transactionDesc>none</transactionDesc>
+        <listOfShareholders>none</listOfShareholders>
+        <date5PercentOwnership>n/a</date5PercentOwnership>
+      </item5>
+      <item6>
+        <contractDescription>Other than as described in this Schedule 13D, the Reporting Person has no contracts, arrangements, understandings, or relationships (legal or otherwise) with any person with respect to any securities of the Issuer, including by not limited to transfer of voting of any of the securities, finder fees, joint ventures, loan or option arrangements, puts or calls, guarantees of profits, division of profits or loss, or the giving or withholding of proxies.
+
+The Reporting Person is party to a Membership Interest Purchase Agreement dated June 29, 2026 with Intrusion Inc. and OW Cyber LLC, pursuant to which the Reporting Person sold its membership interest in OW Cyber LLC. Under the agreement, the Reporting Person is entitled to receive additional consideration of up to $6,900,000 in unregistered shares of Intrusion Inc. common stock upon the achievement of specified annual recurring revenue and operating cash flow milestones through March 31, 2028, as more fully described in Intrusion Inc.'s Current Report on Form 8-K filed on June 30, 2026. The Reporting Person may also be entitled to the release of shares previously placed in escrow for potential indemnity claims under the agreement.
+
+On or about November 9, 2026, the Reporting Person sent a letter to the Board of Directors of Intrusion Inc. outlining its views on the Company's operating performance, capital structure, and governance and requesting discussions regarding possible changes to the Board and management. A copy of the letter is attached as Exhibit 1 and is incorporated herein by reference.
+
+Except as set forth in this Item 6, the Reporting Person has no other contracts, arrangements, understandings, or relationships with respect to the securities of the Issuer.</contractDescription>
+      </item6>
+    </items1To7>
+    <signatureInfo>
+      <signaturePerson>
+        <signatureReportingPerson>Tego Cyber, Inc.</signatureReportingPerson>
+        <signatureDetails>
+          <signature>Anthony (Tony) Emililo D'Andrea</signature>
+          <title>CEO/Director</title>
+          <date>11/12/2026</date>
+        </signatureDetails>
+      </signaturePerson>
+    </signatureInfo>
+  </formData>
+
+</edgarSubmission>
+</XML>
+</TEXT>
+</DOCUMENT>
+</SEC-DOCUMENT>

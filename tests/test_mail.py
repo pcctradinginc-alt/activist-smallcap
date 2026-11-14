@@ -47,4 +47,4 @@ def test_sends_via_smtp_mocked(monkeypatch):
     for k, v in {"SMTP_HOST": "h", "MAIL_TO": "a@b.invalid", "SMTP_USER": "u", "SMTP_PASSWORD": "p"}.items():
         monkeypatch.setenv(k, v)
     assert mail.send("[Status] x", "body") is True
-    assert sent["subject"] == "[Status] x" and sent["host"] == ("h", 465)
+    assert sent["subject"].endswith("] [Status] x") and sent["host"] == ("h", 465)

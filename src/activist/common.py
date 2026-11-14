@@ -50,11 +50,14 @@ class EventStore:
         self.root.mkdir(parents=True, exist_ok=True)
 
     def _ids(self) -> set[str]:
+        if getattr(self, "_cache", None) is not None:
+            return self._cache
         ids = set()
         for p in self.root.glob("*.jsonl"):
             for line in p.read_text(encoding="utf-8").splitlines():
                 if line.strip():
                     ids.add(json.loads(line)["event_id"])
+        self._cache = ids
         return ids
 
     def append(self, events: list[dict]) -> int:

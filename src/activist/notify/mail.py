@@ -9,6 +9,8 @@ REQUIRED_SECTION = "WAS DAGEGEN SPRICHT"
 def send(subject: str, body: str, dry_run: bool | None = None) -> bool:
     if "[Papier-Kauf]" in subject and REQUIRED_SECTION not in body:
         raise ValueError("Pflichtabschnitt 'Was dagegen spricht' fehlt – E-Mail wird nicht versendet")
+    repo = (os.environ.get("GITHUB_REPOSITORY") or "activist-smallcap").split("/")[-1]
+    subject = f"[{repo}] {subject}"   # Repo-Name im Betreff zur Zuordnung
     host, to = os.environ.get("SMTP_HOST"), os.environ.get("MAIL_TO")
     if dry_run or not host or not to:
         print(f"[dry-run] {subject}\n{body}")

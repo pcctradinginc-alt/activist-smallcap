@@ -1,0 +1,26 @@
+name: backfill
+on:
+  workflow_dispatch:
+    inputs:
+      start: {description: "Startjahr", default: "2015"}
+      end: {description: "Endjahr", default: "2015"}
+permissions:
+  contents: write
+concurrency: data-write
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -r requirements.txt
+      - env:
+          PYTHONPATH: src
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+        run: python -m activist.cli backfill --start ${{ inputs.start }} --end ${{ inputs.end }}
+      - if: always()
+        run: |
+          git config user.name "activist-bot"; git config user.email "actions@users.noreply.github.com"
+          git add data/events && git diff --cached --quiet || (git commit -m "data: Backfill ${{ inputs.start }}-${{ inputs.end }}" && git pull --rebase && git push)

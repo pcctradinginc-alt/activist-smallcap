@@ -44,23 +44,30 @@ def cmd_status(a):
 
 
 def cmd_study(a):
-    from .sources import prices
-    from .study.event_study import run, write_report
-    from .sources.edgar import ticker_map
     from .common import params
-    tm = ticker_map(); P = params()["universe"]
-    evs = EventStore().all()
-    for e in evs:
-        if e["region"] == "US" and e.get("issuer_id"):
-            e["ticker"] = tm.get(str(e["issuer_id"]).zfill(10))
+    from .sources import prices
+    from .study.dataset import build
+    from .study.event_study import run, write_report
+    evs = [e for e in EventStore().all() if not a.since or e["published"] >= a.since]
+    ds, funnel = build(evs, parse_filings=not a.no_parse)
+    U = params()["universe"]
+
     def pl(t, r, s, e):
-        df, chk = prices.load(t, r, s, e)
-        if chk.get("ok") is False:   # Regel: >2 % Abweichung der Kursquellen => Ereignis gesperrt
-            raise ValueError(f"Kursquellen weichen ab ({chk.get('max_dev'):.1%})")
-        return df
-    bl = lambda r, s, e: prices.load(P[r]["benchmark"], "US" if r == "US" else "IDX", s, e)[0]
-    res = run(pl, bl, evs, variants=not a.main_only)
-    print(write_report(res))
+        return prices.load(t, r, s, e)[0]
+
+    def bl(r, s, e):
+        return prices.load(U[r]["benchmark"], r, s, e)[0]
+    res, trades = run(ds, pl, bl, variants=not a.main_only)
+    print(write_report(res, funnel, ds, trades))
+
+
+def cmd_backfill(a):
+    from .sources.edgar_backfill import backfill
+    for y in range(a.start, a.end + 1):
+        for q in range(1, 5):
+            if a.quarter and q != a.quarter:
+                continue
+            print(backfill(y, q, limit=a.limit), flush=True)
 
 
 def main(argv=None):
@@ -70,7 +77,10 @@ def main(argv=None):
     f.add_argument("--date"); f.add_argument("--days", type=int, default=1); f.add_argument("--limit", type=int)
     f.add_argument("--no-headers", action="store_true"); f.set_defaults(fn=cmd_fetch)
     s = sp.add_parser("status"); s.add_argument("--mail", action="store_true"); s.set_defaults(fn=cmd_status)
-    st = sp.add_parser("study"); st.add_argument("--main-only", action="store_true"); st.set_defaults(fn=cmd_study)
+    st = sp.add_parser("study"); st.add_argument("--main-only", action="store_true")
+    st.add_argument("--since"); st.add_argument("--no-parse", action="store_true"); st.set_defaults(fn=cmd_study)
+    b = sp.add_parser("backfill"); b.add_argument("--start", type=int, default=2015); b.add_argument("--end", type=int, default=2015)
+    b.add_argument("--quarter", type=int); b.add_argument("--limit", type=int); b.set_defaults(fn=cmd_backfill)
     a = ap.parse_args(argv); a.fn(a)
 
 

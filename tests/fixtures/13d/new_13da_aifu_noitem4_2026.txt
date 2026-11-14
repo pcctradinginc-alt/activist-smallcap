@@ -1,0 +1,413 @@
+<SEC-DOCUMENT>0001213900-26-118474.txt : 20261112
+<SEC-HEADER>0001213900-26-118474.hdr.sgml : 20261112
+<ACCEPTANCE-DATETIME>20261112083001
+ACCESSION NUMBER:		0001213900-26-118474
+CONFORMED SUBMISSION TYPE:	SCHEDULE 13D/A
+PUBLIC DOCUMENT COUNT:		3
+FILED AS OF DATE:		20261112
+DATE AS OF CHANGE:		20261112
+
+SUBJECT COMPANY:	
+
+	COMPANY DATA:	
+		COMPANY CONFORMED NAME:			AIFU Inc.
+		CENTRAL INDEX KEY:			0001413855
+		STANDARD INDUSTRIAL CLASSIFICATION:	INSURANCE AGENTS BROKERS & SERVICES [6411]
+		ORGANIZATION NAME:           	02 Finance
+		EIN:				000000000
+		STATE OF INCORPORATION:			E9
+		FISCAL YEAR END:			1231
+
+	FILING VALUES:
+		FORM TYPE:		SCHEDULE 13D/A
+		SEC ACT:		1934 Act
+		SEC FILE NUMBER:	005-83564
+		FILM NUMBER:		261543601
+
+	BUSINESS ADDRESS:	
+		ADDRESS IS A NON US LOCATION: 	YES
+		STREET 1:		ROOM 1, BUILDING 10,  JINZHONG GUOBIN HU
+		STREET 2:		QINYUAN 2ND ROAD, XILI STREET
+		CITY:			SHENZHEN
+		PROVINCE COUNTRY:   	F4
+		BUSINESS PHONE:		(86-755) 2267 1879
+
+	MAIL ADDRESS:	
+		ADDRESS IS A NON US LOCATION: 	YES
+		STREET 1:		ROOM 1, BUILDING 10,  JINZHONG GUOBIN HU
+		STREET 2:		QINYUAN 2ND ROAD, XILI STREET
+		CITY:			SHENZHEN
+		PROVINCE COUNTRY:   	F4
+
+	FORMER COMPANY:	
+		FORMER CONFORMED NAME:	AIX Inc.
+		DATE OF NAME CHANGE:	20241105
+
+	FORMER COMPANY:	
+		FORMER CONFORMED NAME:	FANHUA INC.
+		DATE OF NAME CHANGE:	20161206
+
+	FORMER COMPANY:	
+		FORMER CONFORMED NAME:	CNINSURE INC.
+		DATE OF NAME CHANGE:	20071001
+
+FILED BY:		
+
+	COMPANY DATA:	
+		COMPANY CONFORMED NAME:			Liu Yif
+		CENTRAL INDEX KEY:			0002079530
+		ORGANIZATION NAME:           	
+
+	FILING VALUES:
+		FORM TYPE:		SCHEDULE 13D/A
+
+	MAIL ADDRESS:	
+		ADDRESS IS A NON US LOCATION: 	YES
+		STREET 1:		ROOM H, 32/F., BLOCK16, LAGUNA VERDE
+		STREET 2:		HUNG HOM, KOWLOON
+		CITY:			HONG KONG
+		PROVINCE COUNTRY:   	K3
+		ZIP:			00000
+</SEC-HEADER>
+<DOCUMENT>
+<TYPE>SCHEDULE 13D/A
+<SEQUENCE>1
+<FILENAME>primary_doc.xml
+<TEXT>
+<XML>
+<?xml version="1.0" encoding="UTF-8"?><edgarSubmission xmlns="http://www.sec.gov/edgar/schedule13D" xmlns:com="http://www.sec.gov/edgar/common">
+  <schemaVersion>X0202</schemaVersion>
+<headerData>
+    <submissionType>SCHEDULE 13D/A</submissionType>
+    <filerInfo>
+      <filer>
+        <filerCredentials>
+          <!-- Field: Pseudo-Tag; ID: Name; Data: Liu Yif -->
+          <cik>0002079530</cik>
+          <ccc>XXXXXXXX</ccc>
+        </filerCredentials>
+      </filer>
+      <liveTestFlag>LIVE</liveTestFlag>
+
+
+    </filerInfo>
+  </headerData>
+  <formData>
+    <coverPageHeader>
+      <amendmentNo>3</amendmentNo>
+      <securitiesClassTitle>Class A ordinary share, par value $0.002 per share</securitiesClassTitle>
+      <dateOfEvent>11/06/2026</dateOfEvent>
+      <previouslyFiledFlag>false</previouslyFiledFlag>
+      <issuerInfo>
+        <issuerCIK>0001413855</issuerCIK>
+        <issuerCusips>
+          <issuerCusipNumber>G3314G128</issuerCusipNumber>
+        </issuerCusips>
+        <issuerName>AIFU Inc.</issuerName>
+        <address>
+          <com:street1>01-10, Jinzhong Guobin Hui</com:street1>
+          <com:street2>Xili St.</com:street2>
+          <com:city>Shenzhen</com:city>
+          <com:stateOrCountry>F4</com:stateOrCountry>
+          <com:zipCode>518055</com:zipCode>
+        </address>
+      </issuerInfo>
+      <authorizedPersons>
+        <notificationInfo>
+          <personName>YS Management Company Limited</personName>
+          <personPhoneNum>852 84353173</personPhoneNum>
+          <personAddress>
+            <com:street1>c/o Yif Liu 28 Lower Kent Ridge Road</com:street1>
+            <com:city>Singapore</com:city>
+            <com:stateOrCountry>U0</com:stateOrCountry>
+            <com:zipCode>11837</com:zipCode>
+          </personAddress>
+        </notificationInfo>
+        <notificationInfo>
+          <personName>Yif Liu</personName>
+          <personPhoneNum>852 84353173</personPhoneNum>
+          <personAddress>
+            <com:street1>28 Lower Kent Ridge Road</com:street1>
+            <com:city>Singapore</com:city>
+            <com:stateOrCountry>U0</com:stateOrCountry>
+            <com:zipCode>11837</com:zipCode>
+          </personAddress>
+        </notificationInfo>
+      </authorizedPersons>
+    </coverPageHeader>
+    <reportingPersons>
+      <reportingPersonInfo>
+        <reportingPersonNoCIK>Y</reportingPersonNoCIK>
+        <reportingPersonName>YS Management Company Limited</reportingPersonName>
+        <fundType>PF</fundType>
+        <legalProceedings>N</legalProceedings>
+        <citizenshipOrOrganization>K3</citizenshipOrOrganization>
+        <soleVotingPower>4826333.00</soleVotingPower>
+        <sharedVotingPower>0.00</sharedVotingPower>
+        <soleDispositivePower>4826333.00</soleDispositivePower>
+        <sharedDispositivePower>0.00</sharedDispositivePower>
+        <aggregateAmountOwned>4826333.00</aggregateAmountOwned>
+        <isAggregateExcludeShares>N</isAggregateExcludeShares>
+        <percentOfClass>6.67</percentOfClass>
+        <typeOfReportingPerson>CO</typeOfReportingPerson>
+        <commentContent>Note to Row 7, 9, 11: Represents 4,826,333 Class A ordinary shares directly held by YS Management Company Limited, which is 100% owned by Yif Liu.
+
+Note to Row 13: The percentage calculation is based on 72,379,191 ordinary shares, including 62,129,191 Class A ordinary shares and 10,250,000 Class B ordinary shares, of the Issuer outstanding as of November 6, 2026 according to the records of the Issuer.</commentContent>
+      </reportingPersonInfo>
+      <reportingPersonInfo>
+        <reportingPersonCIK>0002079530</reportingPersonCIK>
+        <reportingPersonNoCIK>N</reportingPersonNoCIK>
+        <reportingPersonName>Yif Liu</reportingPersonName>
+        <fundType>PF</fundType>
+        <legalProceedings>N</legalProceedings>
+        <citizenshipOrOrganization>S0</citizenshipOrOrganization>
+        <soleVotingPower>4826333.00</soleVotingPower>
+        <sharedVotingPower>0.00</sharedVotingPower>
+        <soleDispositivePower>4826333.00</soleDispositivePower>
+        <sharedDispositivePower>0.00</sharedDispositivePower>
+        <aggregateAmountOwned>4826333.00</aggregateAmountOwned>
+        <isAggregateExcludeShares>N</isAggregateExcludeShares>
+        <percentOfClass>6.67</percentOfClass>
+        <typeOfReportingPerson>IN</typeOfReportingPerson>
+        <commentContent>Note to Row 7, 9, 11: Represents 4,826,333 Class A ordinary shares directly held by YS Management Company Limited, which is 100% owned by Yif Liu.
+
+Note to Row 13: The percentage calculation is based on 72,379,191 ordinary shares, including 62,129,191 Class A ordinary shares and 10,250,000 Class B ordinary shares, of the Issuer outstanding as of November 6, 2026 according to the records of the Issuer.</commentContent>
+      </reportingPersonInfo>
+    </reportingPersons>
+    <items1To7>
+      <item1>
+        <securityTitle>Class A ordinary share, par value $0.002 per share</securityTitle>
+        <issuerName>AIFU Inc.</issuerName>
+        <issuerPrincipalAddress>
+          <com:street1>01-10, Jinzhong Guobin Hui</com:street1>
+          <com:street2>Xili St.</com:street2>
+          <com:city>Shenzhen</com:city>
+          <com:stateOrCountry>F4</com:stateOrCountry>
+          <com:zipCode>518055</com:zipCode>
+        </issuerPrincipalAddress>
+        <commentText>This Amendment No. 3 to Schedule 13D (the "Amendment") amends and supplements the prior statement on Schedule 13D as filed on January 16, 2026 (the "Original 13D"), Amendment No. 1 to Schedule 13D as filed on September 28, 2026, Amendment No. 2 to Schedule 13D as filed on October 14, 2026 (the Original 13D as amended and supplemented, the "Previous Schedule 13D"), and relates to the beneficial ownership of Class A ordinary shares, par value $0.002 per share (the "Class A Ordinary Shares") of AIFU Inc., a Cayman Islands exempted company (the "Issuer") whose principal executive office is located at Room 001, Build 10, Jinzhong Guobin Hui, 2nd Road, Qinyuan, Lihu Community, Xili Street, Nanshan District, Shenzhen, People's Republic of China.
+
+Except as set forth below, all items of the Previous Schedule 13D remain unchanged. All capitalized terms not otherwise defined herein shall have the meanings ascribed to such terms in the Previous Schedule 13D.</commentText>
+      </item1>
+      <item2>
+        <principalBusinessAddress>Item 2(b) of the Previous Schedule 13D is hereby amended and supplemented in its entirety as follows:
+
+The registered address of YS Management Company Limited is RM 502C 5/F Ho King Commercial Centre, 2-16 Fayuen Street, Mongkok, Hong Kong.
+
+The address of Yif Liu is 28 Lower Kent Ridge Road, Singapore 11837</principalBusinessAddress>
+      </item2>
+      <item5>
+        <percentageOfClassSecurities>The responses of each of the Reporting Persons to Rows (7) through (13), including the footnotes thereto, of the cover pages of this Amendment are hereby incorporated by reference in this Item 5.
+
+Item 5(a)  of the Previous Schedule 13D is hereby amended and restated as follow:
+
+Pursuant to the current report of the Issuer on Form 6-K filed on November 6, 2026, on November 6, 2026, the Issuer completed the issuance of 11,203,443 Class A ordinary shares to certain third parties ("Share Issuance") in relation to an acquisition. The Reporting Persons did not acquire or dispose of any shares subsequent to the filing of the Previous Schedule 13D on October 14, 2026. The decrease in the Reporting Persons' aggregate beneficial ownership and their aggregate voting power was solely due to the increase in the total number of the Issuer's outstanding shares from the Share Issuance.
+
+Following the Share Issuance, YSM beneficially owns 4,826,333 Class A ordinary shares of the Issuer, representing approximately 6.67% of the Issuer's total issued and outstanding ordinary shares and approximately 0.44% of the total voting power.  YSM is 100% owned by Yif Liu. Consequently, Yif Liu may be deemed to beneficially own the Ordinary Shares held by YSM.
+
+The percentage calculation is based on 72,379,191 ordinary shares, including 62,129,191 Class A ordinary shares and 10,250,000 Class B ordinary shares, of the Issuer outstanding as of November 6, 2026 according to the records of the Issuer.
+
+The Class B ordinary shares are treated as converted into Class A ordinary shares only for the purpose of calculating the percentage ownership. Percentage of aggregate voting power is calculated by dividing the voting power beneficially owned by each Reporting Person by the voting power of all of our Class A ordinary shares and Class B ordinary shares as a single class. Each Class A ordinary share is entitled to one (1) vote while each Class B ordinary share is entitled to one hundred (100) votes on any and all matters submitted for a vote. Our Class A ordinary shares and Class B ordinary shares vote together as a single class on all matters submitted to a vote of our shareholders, except as may otherwise be required by law.</percentageOfClassSecurities>
+        <transactionDesc>During the 60 days preceding the filing of this Amendment, none of the Reporting Persons has effected any transactions in the Ordinary Shares.</transactionDesc>
+      </item5>
+      <item7>
+        <filedExhibits>Exhibit 1: Joint Filing Agreement dated November 12, 2026 by and between the Reporting Persons
+
+Exhibit 2: List of directors and executive officers of YS Management Company Limited (filed herewith)</filedExhibits>
+      </item7>
+    </items1To7>
+    <signatureInfo>
+      <signaturePerson>
+        <signatureReportingPerson>YS Management Company Limited</signatureReportingPerson>
+        <signatureDetails>
+          <signature>/s/ Yif Liu</signature>
+          <title>Yif Liu /Director</title>
+          <date>11/12/2026</date>
+        </signatureDetails>
+      </signaturePerson>
+      <signaturePerson>
+        <signatureReportingPerson>Yif Liu</signatureReportingPerson>
+        <signatureDetails>
+          <signature>/s/ Yif Liu</signature>
+          <title>Yif Liu</title>
+          <date>11/12/2026</date>
+        </signatureDetails>
+      </signaturePerson>
+    </signatureInfo>
+  </formData>
+
+</edgarSubmission>
+</XML>
+</TEXT>
+</DOCUMENT>
+<DOCUMENT>
+<TYPE>EX-1
+<SEQUENCE>2
+<FILENAME>ea031200303ex-1.htm
+<DESCRIPTION>JOINT FILING AGREEMENT DATED NOVEMBER 12, 2026 BY AND BETWEEN THE REPORTING PERSONS
+<TEXT>
+<HTML>
+<HEAD>
+     <TITLE></TITLE>
+</HEAD>
+<BODY STYLE="font: 10pt Times New Roman, Times, Serif">
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right"><B>Exhibit 1</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>JOINT FILING AGREEMENT</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">In accordance with Rule 13d-1(k)(1) under the
+Securities Exchange Act of 1934, each of the undersigned parties hereby agrees to file jointly the statement on Schedule 13D (including
+any amendments thereto) with respect to the Ordinary Shares, par value $0.002 per share, of AIFU Inc.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">It is understood and agreed that each of the parties
+hereto is responsible for the timely filing of such statement and any amendments thereto, and for the completeness and accuracy of information
+concerning such party contained therein, but such party is not responsible for the completeness and accuracy of information concerning
+another party unless such party knows or has reason to believe such information is inaccurate. It is understood and agreed that a copy
+of this agreement shall be attached as an exhibit to the statement on Schedule 13D, and any amendments thereto, filed on behalf of the
+parties hereto.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">This Agreement may be executed in any number of counterparts, all of
+which taken together shall constitute one and the same instrument.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">[Remainder of this page has been left intentionally
+blank.]</P>
+
+<P STYLE="text-align: center; font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></P>
+
+<!-- Field: Page; Sequence: 1 -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></P></DIV>
+    <DIV STYLE="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><P STYLE="text-align: center; margin-top: 0pt; margin-bottom: 0pt">&nbsp;</P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><B>&nbsp;</B></P>
+
+<P STYLE="text-align: center; font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"><B>Signature Page</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">IN WITNESS WHEREOF, the undersigned hereby execute this Agreement as
+of November 12, 2026.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify">&nbsp;</TD>
+    <TD COLSPAN="3" STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">YS Management Company Limited</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify">&nbsp;</TD>
+    <TD COLSPAN="3" STYLE="text-align: justify">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify">&nbsp;</TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">By:&nbsp; </FONT></TD>
+    <TD COLSPAN="2" STYLE="border-bottom: black 1.5pt solid; text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">/s/ Yif Liu</FONT></TD></TR>
+  <TR>
+    <TD STYLE="vertical-align: top; width: 60%; text-align: justify">&nbsp;</TD>
+    <TD STYLE="vertical-align: top; width: 3%; text-align: justify">&nbsp;</TD>
+    <TD STYLE="vertical-align: top; width: 5%"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Name:&nbsp; </FONT></TD>
+    <TD STYLE="width: 32%"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Yif Liu</FONT></TD></TR>
+  <TR>
+    <TD STYLE="vertical-align: top; text-align: justify">&nbsp;</TD>
+    <TD STYLE="vertical-align: top; text-align: justify">&nbsp;</TD>
+    <TD STYLE="vertical-align: top"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Title: </FONT></TD>
+    <TD><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Director&nbsp;</FONT></TD></TR>
+  </TABLE>
+<P STYLE="text-align: center; font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="width: 60%; text-align: justify">&nbsp;</TD>
+    <TD STYLE="width: 40%; text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Yif Liu</FONT></TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify">&nbsp;</TD>
+    <TD STYLE="text-align: justify">&nbsp;</TD></TR>
+  <TR STYLE="vertical-align: top">
+    <TD STYLE="text-align: justify">&nbsp;</TD>
+    <TD STYLE="border-bottom: black 1.5pt solid; text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">/s/ Yif Liu</FONT></TD></TR>
+  </TABLE>
+<P STYLE="text-align: center; font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></P>
+
+<!-- Field: Page; Sequence: 2; Options: Last -->
+    <DIV STYLE="margin-top: 12pt; margin-bottom: 6pt; border-bottom: Black 1.5pt solid"><P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></P></DIV>
+    <!-- Field: /Page -->
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&nbsp;</P>
+
+</BODY>
+</HTML>
+</TEXT>
+</DOCUMENT>
+<DOCUMENT>
+<TYPE>EX-2
+<SEQUENCE>3
+<FILENAME>ea031200303ex-2.htm
+<DESCRIPTION>LIST OF DIRECTORS AND EXECUTIVE OFFICERS OF YS MANAGEMENT COMPANY LIMITED
+<TEXT>
+<HTML>
+<HEAD>
+     <TITLE></TITLE>
+</HEAD>
+<BODY STYLE="font: 10pt Times New Roman, Times, Serif">
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right"><B>Exhibit 2</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>&nbsp;</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><B>DIRECTORS AND EXECUTIVE OFFICERS OF YS MANAGEMENT
+COMPANY LIMITED</B></P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The name, business address, present principal
+employment and citizenship of the sole director of YS Management Company Limited are set forth below.</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<TABLE CELLSPACING="0" CELLPADDING="0" STYLE="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <TR STYLE="vertical-align: bottom">
+    <TD STYLE="border-bottom: black 1.5pt solid; width: 18%"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Name</B></FONT></TD>
+    <TD STYLE="width: 1%; text-align: center">&nbsp;</TD>
+    <TD STYLE="border-bottom: black 1.5pt solid; width: 38%; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Business Address</B></FONT></TD>
+    <TD STYLE="width: 1%; text-align: center">&nbsp;</TD>
+    <TD STYLE="border-bottom: black 1.5pt solid; width: 26%; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Present Principal <BR>
+Employment</B></FONT></TD>
+    <TD STYLE="width: 1%; text-align: center">&nbsp;</TD>
+    <TD STYLE="border-bottom: black 1.5pt solid; width: 15%; text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt"><B>Citizenship</B></FONT></TD></TR>
+  <TR STYLE="vertical-align: top; background-color: #CCEEFF">
+    <TD><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Yif</FONT></TD>
+    <TD>&nbsp;</TD>
+    <TD STYLE="text-align: justify"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">28 Lower Kent Ridge Road, Singapore 11837</FONT></TD>
+    <TD>&nbsp;</TD>
+    <TD STYLE="text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">Director of YS Management Company Limited</FONT></TD>
+    <TD>&nbsp;</TD>
+    <TD STYLE="text-align: center"><FONT STYLE="font-family: Times New Roman, Times, Serif; font-size: 10pt">The Republic of<BR>
+Guinea-Bissau</FONT></TD></TR>
+  </TABLE>
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&nbsp;</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">YS Management Company Limited is 100% owned by
+Yif Liu. Yif Liu is the sole director of YS Management Company Limited. (See above for the information on Yif Liu.)</P>
+
+<P STYLE="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&nbsp;</P>
+
+
+</BODY>
+</HTML>
+</TEXT>
+</DOCUMENT>
+</SEC-DOCUMENT>

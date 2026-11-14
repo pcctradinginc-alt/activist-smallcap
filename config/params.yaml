@@ -3,12 +3,12 @@ protocol_version: "1.0-draft"
 frozen: false            # wird am Ende von Phase 0 auf true gesetzt und getaggt (protocol-v1)
 
 universe:
-  US:   {mcap_min: 50e6, mcap_max: 2e9, currency: USD, min_adv: 100000, min_price: 1.0, benchmark: IWM}
-  JP:   {mcap_min: 7e9,  mcap_max: 300e9, currency: JPY, min_adv: 15e6, min_price: 100, benchmark: "1306.JP", lot_size: 100}
-  UK:   {mcap_min: 50e6, mcap_max: 2e9, currency: EUR, min_adv: 100000, min_price: 1.0, benchmark: "^FTSC"}
-  DACH: {mcap_min: 50e6, mcap_max: 2e9, currency: EUR, min_adv: 100000, min_price: 1.0, benchmark: "^SDAXI"}
-  BENELUX_FR: {mcap_min: 50e6, mcap_max: 2e9, currency: EUR, min_adv: 100000, min_price: 1.0, benchmark: "^N100"}
-  NORDIC: {mcap_min: 50e6, mcap_max: 2e9, currency: EUR, min_adv: 100000, min_price: 1.0, benchmark: "^OMXSPI"}
+  US:   {mcap_min: 50.0e+6, mcap_max: 2.0e+9, currency: USD, min_adv: 100000, min_price: 1.0, benchmark: IWM}
+  JP:   {mcap_min: 7.0e+9, mcap_max: 300.0e+9, currency: JPY, min_adv: 15.0e+6, min_price: 100, benchmark: "1306.JP", lot_size: 100}
+  UK:   {mcap_min: 50.0e+6, mcap_max: 2.0e+9, currency: EUR, min_adv: 100000, min_price: 1.0, benchmark: "^FTSC"}
+  DACH: {mcap_min: 50.0e+6, mcap_max: 2.0e+9, currency: EUR, min_adv: 100000, min_price: 1.0, benchmark: "^SDAXI"}
+  BENELUX_FR: {mcap_min: 50.0e+6, mcap_max: 2.0e+9, currency: EUR, min_adv: 100000, min_price: 1.0, benchmark: "^N100"}
+  NORDIC: {mcap_min: 50.0e+6, mcap_max: 2.0e+9, currency: EUR, min_adv: 100000, min_price: 1.0, benchmark: "^OMXSPI"}
 
 order:
   limit_above_last_close: 0.03

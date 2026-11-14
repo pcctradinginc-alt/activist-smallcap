@@ -1,0 +1,25 @@
+name: study
+on:
+  schedule: [{cron: "0 6 1-7 * 6"}]   # erster Samstag im Monat
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: data-write
+jobs:
+  study:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -r requirements.txt
+      - uses: actions/cache@v4
+        with: {path: data/cache, key: "sec-cache-${{ github.run_id }}", restore-keys: "sec-cache-"}
+      - env:
+          PYTHONPATH: src
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+        run: python -m activist.cli study
+      - run: |
+          git config user.name "activist-bot"; git config user.email "actions@users.noreply.github.com"
+          git add reports && git diff --cached --quiet || (git commit -m "report: Ereignisstudie $(date -u +%F)" && git pull --rebase && git push)

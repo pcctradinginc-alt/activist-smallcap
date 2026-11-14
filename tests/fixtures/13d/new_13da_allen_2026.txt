@@ -1,0 +1,243 @@
+<SEC-DOCUMENT>0001493152-26-051427.txt : 20261112
+<SEC-HEADER>0001493152-26-051427.hdr.sgml : 20261112
+<ACCEPTANCE-DATETIME>20261112163007
+ACCESSION NUMBER:		0001493152-26-051427
+CONFORMED SUBMISSION TYPE:	SCHEDULE 13D/A
+PUBLIC DOCUMENT COUNT:		1
+FILED AS OF DATE:		20261112
+DATE AS OF CHANGE:		20261112
+
+SUBJECT COMPANY:	
+
+	COMPANY DATA:	
+		COMPANY CONFORMED NAME:			BuzzFeed, Inc.
+		CENTRAL INDEX KEY:			0001828972
+		STANDARD INDUSTRIAL CLASSIFICATION:	COMMUNICATION SERVICES, NEC [4899]
+		ORGANIZATION NAME:           	06 Technology
+		EIN:				853022075
+		STATE OF INCORPORATION:			DE
+		FISCAL YEAR END:			1231
+
+	FILING VALUES:
+		FORM TYPE:		SCHEDULE 13D/A
+		SEC ACT:		1934 Act
+		SEC FILE NUMBER:	005-92012
+		FILM NUMBER:		261547515
+
+	BUSINESS ADDRESS:	
+		STREET 1:		50 WEST 23RD STREET, 6TH FLOOR
+		CITY:			NEW YORK
+		STATE:			NY
+		ZIP:			10010
+		BUSINESS PHONE:		646-397-2039
+
+	MAIL ADDRESS:	
+		STREET 1:		50 WEST 23RD STREET, 6TH FLOOR
+		CITY:			NEW YORK
+		STATE:			NY
+		ZIP:			10010
+
+	FORMER COMPANY:	
+		FORMER CONFORMED NAME:	890 5th Avenue Partners, Inc.
+		DATE OF NAME CHANGE:	20201019
+
+FILED BY:		
+
+	COMPANY DATA:	
+		COMPANY CONFORMED NAME:			Allen Family Digital, LLC
+		CENTRAL INDEX KEY:			0002136301
+		ORGANIZATION NAME:           	
+		EIN:				000000000
+		STATE OF INCORPORATION:			CA
+		FISCAL YEAR END:			1231
+
+	FILING VALUES:
+		FORM TYPE:		SCHEDULE 13D/A
+
+	BUSINESS ADDRESS:	
+		STREET 1:		9903 SANTA MONICA BL.
+		STREET 2:		#418
+		CITY:			BEVERLY HILLS
+		STATE:			CA
+		ZIP:			90212
+		BUSINESS PHONE:		(310) 277-3500
+
+	MAIL ADDRESS:	
+		STREET 1:		9903 SANTA MONICA BL.
+		STREET 2:		#418
+		CITY:			BEVERLY HILLS
+		STATE:			CA
+		ZIP:			90212
+</SEC-HEADER>
+<DOCUMENT>
+<TYPE>SCHEDULE 13D/A
+<SEQUENCE>1
+<FILENAME>primary_doc.xml
+<TEXT>
+<XML>
+<?xml version="1.0" encoding="UTF-8"?><edgarSubmission xmlns="http://www.sec.gov/edgar/schedule13D" xmlns:com="http://www.sec.gov/edgar/common">
+  <schemaVersion>X0202</schemaVersion>
+<headerData>
+    <submissionType>SCHEDULE 13D/A</submissionType>
+    <filerInfo>
+      <filer>
+        <filerCredentials>
+          <!-- Field: Pseudo-Tag; ID: Name; Data: Allen Family Digital, LLC -->
+          <cik>0002136301</cik>
+          <ccc>XXXXXXXX</ccc>
+        </filerCredentials>
+      </filer>
+      <liveTestFlag>LIVE</liveTestFlag>
+
+
+
+    </filerInfo>
+  </headerData>
+  <formData>
+    <coverPageHeader>
+      <amendmentNo>4</amendmentNo>
+      <securitiesClassTitle>Class A Common Stock, $0.0001 par value per share</securitiesClassTitle>
+      <dateOfEvent>11/09/2026</dateOfEvent>
+      <previouslyFiledFlag>false</previouslyFiledFlag>
+      <issuerInfo>
+        <issuerCIK>0001828972</issuerCIK>
+        <issuerCusips>
+          <issuerCusipNumber>12430A300</issuerCusipNumber>
+        </issuerCusips>
+        <issuerName>BuzzFeed, Inc.</issuerName>
+        <address>
+          <com:street1>50 West 23rd Street</com:street1>
+          <com:street2>6th Floor</com:street2>
+          <com:city>New York</com:city>
+          <com:stateOrCountry>NY</com:stateOrCountry>
+          <com:zipCode>10010</com:zipCode>
+        </address>
+      </issuerInfo>
+      <authorizedPersons>
+        <notificationInfo>
+          <personName>Byron Allen Folks</personName>
+          <personPhoneNum>(310) 277-3500</personPhoneNum>
+          <personAddress>
+            <com:street1>9903 Santa Monica Bl.</com:street1>
+            <com:street2>#418</com:street2>
+            <com:city>Beverly Hills</com:city>
+            <com:stateOrCountry>CA</com:stateOrCountry>
+            <com:zipCode>90212</com:zipCode>
+          </personAddress>
+        </notificationInfo>
+      </authorizedPersons>
+    </coverPageHeader>
+    <reportingPersons>
+      <reportingPersonInfo>
+        <reportingPersonCIK>0002136301</reportingPersonCIK>
+        <reportingPersonNoCIK>N</reportingPersonNoCIK>
+        <reportingPersonName>Allen Family Digital, LLC</reportingPersonName>
+        <fundType>OO</fundType>
+        <legalProceedings>N</legalProceedings>
+        <citizenshipOrOrganization>CA</citizenshipOrOrganization>
+        <soleVotingPower>0.00</soleVotingPower>
+        <sharedVotingPower>64498356.00</sharedVotingPower>
+        <soleDispositivePower>0.00</soleDispositivePower>
+        <sharedDispositivePower>64498356.00</sharedDispositivePower>
+        <aggregateAmountOwned>64498356.00</aggregateAmountOwned>
+        <isAggregateExcludeShares>N</isAggregateExcludeShares>
+        <percentOfClass>61.8</percentOfClass>
+        <typeOfReportingPerson>OO</typeOfReportingPerson>
+        <commentContent>Limited Liability Company</commentContent>
+      </reportingPersonInfo>
+      <reportingPersonInfo>
+        <reportingPersonCIK>0002105544</reportingPersonCIK>
+        <reportingPersonNoCIK>N</reportingPersonNoCIK>
+        <reportingPersonName>Byron Allen Folks</reportingPersonName>
+        <fundType>OO</fundType>
+        <legalProceedings>N</legalProceedings>
+        <citizenshipOrOrganization>X1</citizenshipOrOrganization>
+        <soleVotingPower>0.00</soleVotingPower>
+        <sharedVotingPower>64498356.00</sharedVotingPower>
+        <soleDispositivePower>0.00</soleDispositivePower>
+        <sharedDispositivePower>64498356.00</sharedDispositivePower>
+        <aggregateAmountOwned>64498356.00</aggregateAmountOwned>
+        <isAggregateExcludeShares>N</isAggregateExcludeShares>
+        <percentOfClass>61.8</percentOfClass>
+        <typeOfReportingPerson>IN</typeOfReportingPerson>
+      </reportingPersonInfo>
+    </reportingPersons>
+    <items1To7>
+      <item1>
+        <securityTitle>Class A Common Stock, $0.0001 par value per share</securityTitle>
+        <issuerName>BuzzFeed, Inc.</issuerName>
+        <issuerPrincipalAddress>
+          <com:street1>50 West 23rd Street</com:street1>
+          <com:street2>6th Floor</com:street2>
+          <com:city>New York</com:city>
+          <com:stateOrCountry>NY</com:stateOrCountry>
+          <com:zipCode>10010</com:zipCode>
+        </issuerPrincipalAddress>
+        <commentText>This Amendment No. 4 to Schedule 13D (this "Amendment No. 4") amends and supplements the Statement on Schedule 13D filed with the United States Securities and Exchange Commission on May 29, 2026 (as amended to date, the "Schedule 13D"), relating to the Class A Common Stock of BuzzFeed, Inc. (the "Issuer"). Capitalized terms used herein without definition shall have the meaning set forth in the Schedule 13D.</commentText>
+      </item1>
+      <item3>
+        <fundsSource>Item 3 of the Schedule 13D is hereby amended and supplemented as follows:
+
+On November 9, 2026, in connection with the closing of the Offering (as defined below), AFD purchased 14,498,356 shares of Class A Common Stock at a purchase price of $0.5173 per share of Class A Common Stock, for aggregate consideration of approximately $7.5 million. AFD used working capital to purchase the Class A Common Stock.</fundsSource>
+      </item3>
+      <item4>
+        <transactionPurpose>Item 4 of the Schedule 13D is hereby amended and supplemented as follows:
+
+November 2026 Share Purchase Agreement
+
+On November 9, 2026, the Issuer entered into a Share Purchase Agreement (the "November 2026 Share Purchase Agreement") with AFD, pursuant to which the Issuer agreed to sell to AFD a total of 14,498,356 shares of Class A Common Stock at a purchase price of $0.5173 per share of Class A Common Stock (the "Offering"). The Offering closed on November 9, 2026.
+
+As promptly as reasonably practicable following a request by the Reporting Person (and in any event within 60 days thereafter), the Issuer shall file with the SEC a registration statement on Form S-3 covering the resale of the 14,498,356 shares of Class A Common Stock.
+
+The foregoing description of the November 2026 Share Purchase Agreement does not purport to be complete and is qualified in its entirety by reference to such agreement, which is attached as an exhibit to this Schedule 13D and incorporated herein by reference.</transactionPurpose>
+      </item4>
+      <item5>
+        <percentageOfClassSecurities>Item 5 of the Schedule 13D is hereby amended and restated in its entirety as follows:
+
+The ownership information set forth herein represents beneficial ownership of the Class A Common Stock as of the date hereof, based upon 104,294,645 shares of Class A Common Stock outstanding following the closing of the Offering.
+
+AFD is the record holder of 64,498,356 shares of Class A Common Stock, representing approximately 61.8% of the outstanding Class A Common Stock. Byron Allen Folks is the sole member of AFD, and as a result, may be deemed to share beneficial ownership of the securities held of record by AFD.</percentageOfClassSecurities>
+        <numberOfShares>Sole power to vote or to direct the vote: 0
+
+Shared power to vote or to direct the vote: 64,498,356
+
+Sole power to dispose or to direct the disposition: 0
+
+Shared power to dispose or to direct the disposition: 64,498,356</numberOfShares>
+        <transactionDesc>Except as otherwise disclosed in Items 3 and 4 herein, none of the Reporting Persons has effected any transactions in the Class A Common Stock since Amendment No. 3.</transactionDesc>
+        <listOfShareholders>None.</listOfShareholders>
+        <date5PercentOwnership>Not applicable.</date5PercentOwnership>
+      </item5>
+      <item6>
+        <contractDescription>The information in Item 4 is incorporated by reference herein.
+
+Except as set forth herein, none of the Reporting Persons has any contracts, arrangements, understandings or relationships (legal or otherwise) with any person with respect to any securities of the Issuer, including, but not limited to, any contracts, arrangements, understandings or relationships concerning the transfer or voting of such securities, finder's fees, joint ventures, loan or option arrangements, puts or calls, guarantees of profits, division of profits or losses, or the giving or withholding of proxies.</contractDescription>
+      </item6>
+      <item7>
+        <filedExhibits>Exhibit 99.9: Share Purchase Agreement, dated November 9, 2026 by and between BuzzFeed, Inc. and Allen Family Digital, LLC (incorporated by reference to Exhibit 2.9 to the Issuer's Quarterly Report on Form 10-Q filed on November 9, 2026).</filedExhibits>
+      </item7>
+    </items1To7>
+    <signatureInfo>
+      <signaturePerson>
+        <signatureReportingPerson>Allen Family Digital, LLC</signatureReportingPerson>
+        <signatureDetails>
+          <signature>/s/ Byron Allen Folks</signature>
+          <title>Byron Allen Folks, Manager</title>
+          <date>11/12/2026</date>
+        </signatureDetails>
+      </signaturePerson>
+      <signaturePerson>
+        <signatureReportingPerson>Byron Allen Folks</signatureReportingPerson>
+        <signatureDetails>
+          <signature>/s/ Byron Allen Folks</signature>
+          <title>Byron Allen Folks</title>
+          <date>11/12/2026</date>
+        </signatureDetails>
+      </signaturePerson>
+    </signatureInfo>
+  </formData>
+</edgarSubmission>
+</XML>
+</TEXT>
+</DOCUMENT>
+</SEC-DOCUMENT>
