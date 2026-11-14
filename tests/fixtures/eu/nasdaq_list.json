@@ -1,0 +1,224 @@
+{
+ "results": {
+  "item": [
+   {
+    "disclosureId": 1477062,
+    "categoryId": 144,
+    "headline": "WISA Group Plc: Notification of change in holdings according to Chapter 9, Section 10 of the Finnish Securities Markets Act",
+    "language": "en",
+    "languages": [
+     "en"
+    ],
+    "cnsCategory": "Major shareholder announcements",
+    "messageUrl": "https://view.news.eu.nasdaq.com/view?id=b077644b330b732850231d813f78d92c7&lang=en&src=listed",
+    "releaseTime": "2026-11-13 10:30:00",
+    "published": "2026-11-13 10:30:00",
+    "market": "Main Market, Helsinki",
+    "attachment": [],
+    "company": "Wisa Group Oyj",
+    "cnsTypeId": "6"
+   },
+   {
+    "disclosureId": 1477061,
+    "categoryId": 144,
+    "headline": "WISA Group Oyj: Arvopaperimarkkinalain 9 luvun 10 pykälän mukainen ilmoitus omistusosuuden muutoksesta",
+    "language": "fi",
+    "languages": [
+     "fi"
+    ],
+    "cnsCategory": "Major shareholder announcements",
+    "messageUrl": "https://view.news.eu.nasdaq.com/view?id=b2233b5f14be17f2fdd2743253c97c9b7&lang=fi&src=listed",
+    "releaseTime": "2026-11-13 10:30:00",
+    "published": "2026-11-13 10:30:00",
+    "market": "Main Market, Helsinki",
+    "attachment": [],
+    "company": "Wisa Group Oyj",
+    "cnsTypeId": "6"
+   },
+   {
+    "disclosureId": 1476628,
+    "categoryId": 144,
+    "headline": "Major shareholder announcement - BlackRock, Inc.",
+    "language": "en",
+    "languages": [
+     "en",
+     "da"
+    ],
+    "cnsCategory": "Major shareholder announcements",
+    "messageUrl": "https://view.news.eu.nasdaq.com/view?id=b261092eb7352c6b5829b1d1768cf57fe&lang=en&src=listed",
+    "releaseTime": "2026-11-11 18:45:44",
+    "published": "2026-11-11 18:45:44",
+    "market": "Main Market, Copenhagen",
+    "attachment": [
+     {
+      "mimetype": "application/pdf",
+      "fileName": "Major shareholder announcement - BlackRock Inc.pdf",
+      "attachmentUrl": "https://attachment.news.eu.nasdaq.com/ae3f4668ba4465d268af87d140ab44dfb"
+     }
+    ],
+    "company": "ChemoMetec",
+    "cnsTypeId": "6"
+   },
+   {
+    "disclosureId": 1476515,
+    "categoryId": 144,
+    "headline": "Storaktionærmeddelelse",
+    "language": "da",
+    "languages": [
+     "da"
+    ],
+    "cnsCategory": "Major shareholder announcements",
+    "messageUrl": "https://view.news.eu.nasdaq.com/view?id=b05e5ab780f2abfdf9a4ab130e17679bf&lang=da&src=listed",
+    "releaseTime": "2026-11-11 14:11:25",
+    "published": "2026-11-11 14:11:25",
+    "market": "Main Market, Copenhagen",
+    "attachment": [
+     {
+      "mimetype": "application/pdf",
+      "fileName": "Major shareholder announcement BlackRock Inc 2026-11-06.pdf",
+      "attachmentUrl": "https://attachment.news.eu.nasdaq.com/ac9fa62c593651ce7d558b631309a2155"
+     },
+     {
+      "mimetype": "application/pdf",
+      "fileName": "11117697.pdf",
+      "attachmentUrl": "https://attachment.news.eu.nasdaq.com/a8bf3ef7b1f2dfdd38d990858363f5946"
+     }
+    ],
+    "company": "NKT A/S",
+    "cnsTypeId": "6"
+   },
+   {
+    "disclosureId": 1476514,
+    "categoryId": 144,
+    "headline": "Notification of major shareholding",
+    "language": "en",
+    "languages": [
+     "en"
+    ],
+    "cnsCategory": "Major shareholder announcements",
+    "messageUrl": "https://view.news.eu.nasdaq.com/view?id=bd021f75cea724e9a51abe9ff403c8a90&lang=en&src=listed",
+    "releaseTime": "2026-11-11 14:11:25",
+    "published": "2026-11-11 14:11:25",
+    "market": "Main Market, Copenhagen",
+    "attachment": [
+     {
+      "mimetype": "application/pdf",
+      "fileName": "11117696.pdf",
+      "attachmentUrl": "https://attachment.news.eu.nasdaq.com/a1718dd4ca8922f2a5da683462db9a7ed"
+     },
+     {
+      "mimetype": "application/pdf",
+      "fileName": "Major shareholder announcement BlackRock Inc 2026-11-06.pdf",
+      "attachmentUrl": "https://attachment.news.eu.nasdaq.com/a8a7c3086258cb5b4941b98a5fdc8e567"
+     }
+    ],
+    "company": "NKT A/S",
+    "cnsTypeId": "6"
+   },
+   {
+    "disclosureId": 1476283,
+    "categoryId": 144,
+    "headline": "Storaktionærmeddelelse - Lars Ole Kornum",
+    "language": "da",
+    "languages": [
+     "da"
+    ],
+    "cnsCategory": "Major shareholder announcements",
+    "messageUrl": "https://view.news.eu.nasdaq.com/view?id=b31a3db827b9941cb4d345ac13511e034&lang=da&src=listed",
+    "releaseTime": "2026-11-10 15:55:03",
+    "published": "2026-11-10 15:55:03",
+    "market": "Main Market, Copenhagen",
+    "attachment": [
+     {
+      "mimetype": "application/pdf",
+      "fileName": "Selskabsmeddelelse nr. 14 - Storaktionrmeddelelse.pdf",
+      "attachmentUrl": "https://attachment.news.eu.nasdaq.com/a1a577ff66660147054fa29f668beec09"
+     }
+    ],
+    "company": "Gyldendal A/S",
+    "cnsTypeId": "6"
+   },
+   {
+    "disclosureId": 1476114,
+    "categoryId": 144,
+    "headline": "WISA Group Plc: Notification of change in holdings according to Chapter 9, Section 10 of the Finnish Securities Markets Act",
+    "language": "en",
+    "languages": [
+     "en"
+    ],
+    "cnsCategory": "Major shareholder announcements",
+    "messageUrl": "https://view.news.eu.nasdaq.com/view?id=bb24aa734f8e338767a3c8a2751c9f85d&lang=en&src=listed",
+    "releaseTime": "2026-11-09 21:00:00",
+    "published": "2026-11-09 21:00:00",
+    "market": "Main Market, Helsinki",
+    "attachment": [],
+    "company": "Wisa Group Oyj",
+    "cnsTypeId": "6"
+   },
+   {
+    "disclosureId": 1476112,
+    "categoryId": 144,
+    "headline": "WISA Group Oyj: Arvopaperimarkkinalain 9 luvun 10 pykälän mukainen ilmoitus omistusosuuden muutoksesta",
+    "language": "fi",
+    "languages": [
+     "fi"
+    ],
+    "cnsCategory": "Major shareholder announcements",
+    "messageUrl": "https://view.news.eu.nasdaq.com/view?id=b753cd28ed8cf89a51b652d5ca80bf6c4&lang=fi&src=listed",
+    "releaseTime": "2026-11-09 21:00:00",
+    "published": "2026-11-09 21:00:00",
+    "market": "Main Market, Helsinki",
+    "attachment": [],
+    "company": "Wisa Group Oyj",
+    "cnsTypeId": "6"
+   },
+   {
+    "disclosureId": 1475924,
+    "categoryId": 144,
+    "headline": "Flöggun: Ívar ehf.",
+    "language": "is",
+    "languages": [
+     "is"
+    ],
+    "cnsCategory": "Major shareholder announcements",
+    "messageUrl": "https://view.news.eu.nasdaq.com/view?id=b44a644549aa68109af3404e45b288ef5&lang=is&src=listed",
+    "releaseTime": "2026-11-09 12:20:43",
+    "published": "2026-11-09 12:20:43",
+    "market": "Main Market, Iceland",
+    "attachment": [
+     {
+      "mimetype": "application/pdf",
+      "fileName": "Eydublad vegna breytinga a verulegum hlut atkvaedisrettar floggun 9.11.26_undirr..pdf",
+      "attachmentUrl": "https://attachment.news.eu.nasdaq.com/ad08a0aa1e296180ea321cf32d98cd4bd"
+     }
+    ],
+    "company": "Brim hf.",
+    "cnsTypeId": "6"
+   },
+   {
+    "disclosureId": 1475865,
+    "categoryId": 144,
+    "headline": "Orthex Corporation: Disclosure of the change in holdings under Chapter 9, Section 10 of the Finnish Securities Markets Act (Handelsbanken)",
+    "language": "en",
+    "languages": [
+     "en"
+    ],
+    "cnsCategory": "Major shareholder announcements",
+    "messageUrl": "https://view.news.eu.nasdaq.com/view?id=b3859039152fdf45ab4e70afda1c2bc5b&lang=en&src=listed",
+    "releaseTime": "2026-11-09 09:50:00",
+    "published": "2026-11-09 09:50:00",
+    "market": "Main Market, Helsinki",
+    "attachment": [
+     {
+      "mimetype": "application/pdf",
+      "fileName": "11096555.pdf",
+      "attachmentUrl": "https://attachment.news.eu.nasdaq.com/a0c3c0a903f1b4cf0dc220e03c6c4ca37"
+     }
+    ],
+    "company": "Orthex Oyj",
+    "cnsTypeId": "6"
+   }
+  ]
+ },
+ "count": 10000
+}

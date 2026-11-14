@@ -93,7 +93,7 @@ def test_run_exit_events_used_for_main_not_hold_variants():
 
 def test_write_report_files(ds, tmp_path):
     res, t = es.run(ds, price_loader, bench_loader)
-    funnel = Counter({"kampagnen": 10, "ohne Ticker (Survivorship-Lücke)": 2, "qualifiziert": 4})
+    funnel = Counter({"kampagnen": 10, "Survivorship: Endwert unknown": 2, "qualifiziert": 4})
     out = es.write_report(res, funnel, ds, t, path=tmp_path / "sub" / "r.md")
     assert out == str(tmp_path / "sub" / "r.md")
     md = (tmp_path / "sub" / "r.md").read_text(encoding="utf-8")

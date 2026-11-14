@@ -1,0 +1,151 @@
+{
+ "took": 6,
+ "timed_out": false,
+ "_shards": {
+  "failed": 0.0,
+  "skipped": 0.0,
+  "successful": 4.0,
+  "total": 4.0
+ },
+ "hits": {
+  "total": {
+   "relation": "eq",
+   "value": 120526
+  },
+  "hits": [
+   {
+    "_index": "fca-nsm-searchdata",
+    "_id": "237b8fe8-c423-4b76-8351-c7190406412a",
+    "_source": {
+     "submitted_date": "2026-11-13T18:30:09Z",
+     "tag_esef": "",
+     "classifications_code": "",
+     "document_date": "2026-11-13T18:30:09Z",
+     "source": "RNS",
+     "type": "Holding(s) in Company",
+     "related_org": [
+      {
+       "lei": "IGJSJL3JD5P30I6NJZ34",
+       "company": "MORGAN STANLEY"
+      }
+     ],
+     "lei_remediation_flag": "N",
+     "document_format": "Plain text",
+     "category_group": "Holdings",
+     "classifications": "",
+     "lei": "2138004GX1VAUMH66L31",
+     "download_link": "NSM/RNS/237b8fe8-c423-4b76-8351-c7190406412a.html",
+     "disclosure_id": "237b8fe8-c423-4b76-8351-c7190406412a",
+     "latest_flag": "Y",
+     "hist_seq": "1",
+     "publication_date": "2026-11-13T18:18:15Z",
+     "seq_id": "237b8fe8-c423-4b76-8351-c7190406412a",
+     "company": "NEWRIVER REIT PLC",
+     "last_updated_date": "2026-11-13T18:18:15Z",
+     "headline": "Holding(s) in Company",
+     "type_code": "HOL"
+    },
+    "sort": [
+     1794594609000,
+     1794594609000
+    ]
+   },
+   {
+    "_index": "fca-nsm-searchdata",
+    "_id": "9beca89a-d510-49cc-9d08-4e54c23893d0",
+    "_source": {
+     "submitted_date": "2026-11-13T18:12:09Z",
+     "tag_esef": "",
+     "classifications_code": "",
+     "document_date": "2026-11-13T18:12:09Z",
+     "source": "RNS",
+     "type": "Holding(s) in Company",
+     "related_org": [],
+     "lei_remediation_flag": "N",
+     "document_format": "Plain text",
+     "category_group": "Holdings",
+     "classifications": "",
+     "lei": "213800LVPDNO2Z9T9I39",
+     "download_link": "NSM/RNS/9beca89a-d510-49cc-9d08-4e54c23893d0.html",
+     "disclosure_id": "9beca89a-d510-49cc-9d08-4e54c23893d0",
+     "latest_flag": "Y",
+     "hist_seq": "1",
+     "publication_date": "2026-11-13T18:00:00Z",
+     "seq_id": "9beca89a-d510-49cc-9d08-4e54c23893d0",
+     "company": "PURETECH HEALTH PLC",
+     "last_updated_date": "2026-11-13T18:00:00Z",
+     "headline": "Holding(s) in Company",
+     "type_code": "HOL"
+    },
+    "sort": [
+     1794593529000,
+     1794593529000
+    ]
+   },
+   {
+    "_index": "fca-nsm-searchdata",
+    "_id": "b51478bd-d8ab-47b2-99ef-8b68060f85b1",
+    "_source": {
+     "submitted_date": "2026-11-13T17:21:10Z",
+     "tag_esef": "",
+     "classifications_code": "",
+     "document_date": "2026-11-13T17:21:10Z",
+     "source": "RNS",
+     "type": "Holding(s) in Company",
+     "related_org": [],
+     "lei_remediation_flag": "N",
+     "document_format": "Plain text",
+     "category_group": "Holdings",
+     "classifications": "",
+     "lei": "213800MPBIJS12Q88F71",
+     "download_link": "NSM/RNS/b51478bd-d8ab-47b2-99ef-8b68060f85b1.html",
+     "disclosure_id": "b51478bd-d8ab-47b2-99ef-8b68060f85b1",
+     "latest_flag": "Y",
+     "hist_seq": "1",
+     "publication_date": "2026-11-13T17:10:26Z",
+     "seq_id": "b51478bd-d8ab-47b2-99ef-8b68060f85b1",
+     "company": "ALTERNATIVE INCOME REIT PLC",
+     "last_updated_date": "2026-11-13T17:10:26Z",
+     "headline": "Holding(s) in Company",
+     "type_code": "HOL"
+    },
+    "sort": [
+     1794590470000,
+     1794590470000
+    ]
+   },
+   {
+    "_index": "fca-nsm-searchdata",
+    "_id": "19010781_20200424081908724",
+    "_source": {
+     "submitted_date": "2010-09-30T00:00:00Z",
+     "symbol": "",
+     "tag_esef": "",
+     "classifications_code": "0.0",
+     "source": "Portal (pre-Sept 2017)",
+     "type": "Miscellaneous",
+     "lei_remediation_flag": "Y",
+     "document_format": "Other",
+     "category_group": "Miscellaneous",
+     "lei": "635400BR2ROC1FVEBQ56",
+     "classifications": "",
+     "download_link": "NSM/data-migration/19010781.doc",
+     "disclosure_id": "19010781_20200424081908724",
+     "latest_flag": "Y",
+     "hist_seq": "1",
+     "publication_date": "2010-09-30T00:00:00Z",
+     "company": "Ryanair Holdings PLC",
+     "seq_id": "19010781_20200424081908724",
+     "last_updated_date": "2026-08-22T10:53:56.672338183Z",
+     "headline": "Holding(s) in Company",
+     "isin": "IE00BYTBXV33",
+     "type_code": "MSCL"
+    },
+    "sort": [
+     1285804800000,
+     1285804800000
+    ]
+   }
+  ]
+ }
+}

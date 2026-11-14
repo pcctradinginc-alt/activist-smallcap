@@ -136,13 +136,13 @@ def test_build_funnel_and_statuses(env):
     df, f = dataset.build(events(), end=date(2025, 1, 1))
     st = dict(zip(df.campaign_key, df.status))
     assert st["1517137-100"] == "qualifiziert"
-    assert st["1517137-200"] == "kein Ticker"
+    assert st["1517137-200"] == "nur Endwert"
     assert st["1517137-300"].startswith("außerhalb Universum") and "Marktkapitalisierung außerhalb" in st["1517137-300"]
     assert st["1517137-400"] == "verworfen: Anstieg 20T"
     assert st["1871408-500"] == "qualifiziert"
     assert len(df) == 5 and "888-100" not in st
     assert f["kampagnen"] == 5
-    assert f["ohne Ticker (Survivorship-Lücke)"] == 1
+    assert f["Survivorship: Endwert unknown"] == 1
     assert f["Universum: Marktkapitalisierung außerhalb"] == 1
     assert f["im Universum"] == 3
     assert f["verworfen (Schattenportfolio)"] == 1 and f["qualifiziert"] == 2
@@ -185,7 +185,7 @@ def test_build_price_failures(env, monkeypatch):
         raise RuntimeError("net")
     monkeypatch.setattr(dataset.prices, "load", boom)
     df, f = dataset.build(events()[:1], end=date(2025, 1, 1))
-    assert df.status.tolist() == ["keine Kurse"] and f["keine Kurse"] == 1
+    assert df.status.tolist() == ["nur Endwert"] and f["Survivorship: Endwert unknown"] == 1
     monkeypatch.setattr(dataset.prices, "load", lambda *a: (pd.DataFrame(), {"ok": False}))
     df, f = dataset.build(events()[:1], end=date(2025, 1, 1))
     assert df.status.tolist() == ["gesperrt: Kursabweichung"]
@@ -202,3 +202,9 @@ def test_build_parse_error_is_cached_not_raised(env, monkeypatch):
 def test_params_yaml_numbers_are_numeric():
     cfg = dataset.params()["universe"]["US"]
     assert isinstance(cfg["mcap_min"], (int, float)) and isinstance(cfg["mcap_max"], (int, float))
+
+
+@pytest.fixture(autouse=True)
+def _no_survivorship_network(monkeypatch):
+    monkeypatch.setattr(dataset.hist_ticker, "ticker_hist", lambda *a, **k: {})
+    monkeypatch.setattr(dataset.delisting, "terminal_outcome", lambda *a, **k: {"type": "unknown"})

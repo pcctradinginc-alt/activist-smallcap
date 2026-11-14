@@ -1,0 +1,162 @@
+{
+ "aggregations": {},
+ "result": [
+  {
+   "id": 378643,
+   "titre": null,
+   "numero": "226C2066",
+   "numeroSOIF": null,
+   "numeroConcatene": "226C2066",
+   "domaine": "DOP",
+   "regulateur": "AMF",
+   "roleRegulateur": "Document",
+   "indexYear": 2026,
+   "anneeComptable": null,
+   "marche": null,
+   "instrumentFinancier": null,
+   "sousTypeDocument": null,
+   "langue": "FR",
+   "masque": null,
+   "version": 1,
+   "dateCreation": "2026-11-13T16:24:05.3",
+   "datePublication": "2026-11-13T16:24:30.86402+01:00",
+   "dateAction": null,
+   "dateMiseEnLigne": "2026-11-13T16:24:05.253",
+   "dateInformation": "2026-11-13T00:00:00",
+   "typesDocument": [
+    "Declarations"
+   ],
+   "typesInformation": [
+    "SPDE"
+   ],
+   "typesOperation": [],
+   "relations": [],
+   "documents": [
+    {
+     "nomFichier": "226C2066.pdf",
+     "numero": null,
+     "accessible": true,
+     "docRegulateur": true,
+     "path": "2026/226C2066/558FFA811F7AE35EF82E5C991DDA6EBB1886D220686666FCA95D5F025DC343B8.pdf",
+     "issuerId": "BdifInterne_sha512",
+     "format": "PDF",
+     "signature": "x",
+     "dateReception": null,
+     "data": null
+    }
+   ],
+   "societes": [
+    {
+     "jeton": "RS00003553",
+     "raisonSociale": "NEXANS",
+     "role": "SocieteConcernee"
+    }
+   ]
+  },
+  {
+   "id": 378642,
+   "titre": null,
+   "numero": "226C2065",
+   "numeroSOIF": null,
+   "numeroConcatene": "226C2065",
+   "domaine": "DOP",
+   "regulateur": "AMF",
+   "roleRegulateur": "Document",
+   "indexYear": 2026,
+   "anneeComptable": null,
+   "marche": null,
+   "instrumentFinancier": null,
+   "sousTypeDocument": null,
+   "langue": "FR",
+   "masque": null,
+   "version": 1,
+   "dateCreation": "2026-11-13T16:22:16.953",
+   "datePublication": "2026-11-13T16:22:29.5637986+01:00",
+   "dateAction": null,
+   "dateMiseEnLigne": "2026-11-13T16:22:16.903",
+   "dateInformation": "2026-11-13T00:00:00",
+   "typesDocument": [
+    "Declarations"
+   ],
+   "typesInformation": [
+    "SPDE"
+   ],
+   "typesOperation": [],
+   "relations": [],
+   "documents": [
+    {
+     "nomFichier": "226C2065.pdf",
+     "numero": null,
+     "accessible": true,
+     "docRegulateur": true,
+     "path": "2026/226C2065/6C26B0F2CB83157863EDE6A7CEC4820A5910175AA6FB9E5D92A8C39BB327ABBC.pdf",
+     "issuerId": "BdifInterne_sha512",
+     "format": "PDF",
+     "signature": "x",
+     "dateReception": null,
+     "data": null
+    }
+   ],
+   "societes": [
+    {
+     "jeton": "RS00006262",
+     "raisonSociale": "INVENTIVA",
+     "role": "SocieteConcernee"
+    }
+   ]
+  },
+  {
+   "id": 60295,
+   "titre": null,
+   "numero": "218C2062",
+   "numeroSOIF": null,
+   "numeroConcatene": "218C2062",
+   "domaine": "DOP",
+   "regulateur": "AMF",
+   "roleRegulateur": "Document",
+   "indexYear": 2018,
+   "anneeComptable": null,
+   "marche": null,
+   "instrumentFinancier": null,
+   "sousTypeDocument": null,
+   "langue": "FR",
+   "masque": null,
+   "version": 1,
+   "dateCreation": "2021-12-14T14:27:57.277",
+   "datePublication": "2022-01-07T19:39:56.8944427+01:00",
+   "dateAction": null,
+   "dateMiseEnLigne": "2018-12-28T08:20:33",
+   "dateInformation": "2018-12-27T00:00:00",
+   "typesDocument": [
+    "Declarations"
+   ],
+   "typesInformation": [
+    "SPDE"
+   ],
+   "typesOperation": [],
+   "relations": [],
+   "documents": [
+    {
+     "nomFichier": "218C2062.pdf",
+     "numero": null,
+     "accessible": true,
+     "docRegulateur": true,
+     "path": "2018/218C2062/CE179199BFF52899CE47F230D4490499A9F38BD3211AC5C1B30C08D5924651EE.pdf",
+     "issuerId": null,
+     "format": "PDF",
+     "signature": "x",
+     "dateReception": null,
+     "data": null
+    }
+   ],
+   "societes": [
+    {
+     "jeton": "RS00006352",
+     "raisonSociale": "NEXTSTAGE",
+     "role": "SocieteConcernee"
+    }
+   ]
+  }
+ ],
+ "total": 39
+}

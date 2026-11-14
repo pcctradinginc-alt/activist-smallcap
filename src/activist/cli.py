@@ -66,7 +66,7 @@ def cmd_study(a):
     def bl(r, s, e):
         return prices.load(U[r]["benchmark"], r, s, e)[0]
     res, trades = run(ds, pl, bl, variants=not a.main_only)
-    print(write_report(res, funnel, ds, trades))
+    print(write_report(res, funnel, ds, trades, bench_loader=bl))
 
 
 def cmd_backfill_jp(a):

@@ -13,7 +13,7 @@ from ..common import DATA, params, risk_limits
 from ..features.register import Register
 from ..features.universe import price_features, universe_check
 from ..parse import filing13d
-from ..sources import prices, secmeta
+from ..sources import delisting, hist_ticker, prices, secmeta
 
 INITIAL = {"SC 13D", "SCHEDULE 13D"}
 AMEND = {"SC 13D/A", "SCHEDULE 13D/A"}
@@ -87,17 +87,50 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
             t = secmeta.ticker_asof(c["issuer_id"], c["published"][:10])
         except Exception:
             funnel["SEC-Stammdaten nicht abrufbar"] += 1; row["status"] = "keine Stammdaten"; rows.append(row); continue
-        if not t:
-            funnel["ohne Ticker (Survivorship-Lücke)"] += 1; row["status"] = "kein Ticker"; rows.append(row); continue
-        row["ticker"] = t["ticker"]
-        co = secmeta.company(c["issuer_id"])
         d0 = date.fromisoformat(c["published"][:10])
         try:
-            px, chk = prices.load(t["ticker"], "US", d0 - timedelta(days=45), min(d0 + timedelta(days=420), end))
+            co = secmeta.company(c["issuer_id"])
         except Exception:
-            funnel["keine Kurse"] += 1; row["status"] = "keine Kurse"; rows.append(row); continue
-        if chk.get("ok") is False:
-            funnel["Kursquellen weichen ab"] += 1; row["status"] = "gesperrt: Kursabweichung"; rows.append(row); continue
+            co = {}
+        px, row["price_source"] = None, None
+        if t:
+            row["ticker"] = t["ticker"]
+            try:
+                px, chk = prices.load(t["ticker"], "US", d0 - timedelta(days=45), min(d0 + timedelta(days=420), end))
+                row["price_source"] = "yahoo"
+            except Exception:
+                px = None
+            if px is not None and chk.get("ok") is False:
+                funnel["Kursquellen weichen ab"] += 1; row["status"] = "gesperrt: Kursabweichung"; rows.append(row); continue
+        if px is None:
+            # Survivorship: historischen Ticker aus den eigenen SEC-Meldungen rekonstruieren, Kurse über Tiingo
+            ft0 = _parse(c["url"], cache) if parse_filings else {}
+            row["activist_cost"] = ft0.get("avg_purchase_price")
+            try:
+                h = hist_ticker.ticker_hist(c["issuer_id"], d0)
+            except Exception:
+                h = {}
+            if h.get("ticker"):
+                row["ticker"], row["ticker_source"] = h["ticker"], "hist:" + str(h.get("source"))
+                try:
+                    tp = prices.tiingo(h["ticker"], d0 - timedelta(days=45), min(d0 + timedelta(days=420), end))
+                    # Ticker-Wiederverwendung ausschließen: Kurs muss zum Einstand des Aktivisten passen
+                    if prices.validate_against(tp, d0, row["activist_cost"]):
+                        px, row["price_source"] = tp, "tiingo"
+                    else:
+                        funnel["Survivorship: Tiingo-Kurs nicht plausibel"] += 1
+                except Exception:
+                    pass
+        if px is None:
+            # letzte Stufe: Endwert aus Übernahme-/Insolvenzmeldungen (für Spannweiten und Imputation)
+            try:
+                out = delisting.terminal_outcome(c["issuer_id"], d0)
+            except Exception:
+                out = {"type": "unknown"}
+            row.update(terminal_type=out.get("type"), terminal_date=out.get("date"),
+                       terminal_cash=out.get("cash_per_share"), terminal_evidence=out.get("evidence"))
+            funnel[f"Survivorship: Endwert {out.get('type')}"] += 1
+            row["status"] = "nur Endwert"; rows.append(row); continue
         pf = price_features(px, c["published"])
         try:
             so = secmeta.shares_outstanding_asof(c["issuer_id"], d0)

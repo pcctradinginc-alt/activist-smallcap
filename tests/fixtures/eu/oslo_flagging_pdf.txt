@@ -1,0 +1,102 @@
+ 
+1 
+ 
+ 
+Standard form for notification of major holdings 
+ 
+NOTIFICATION OF MAJOR HOLDINGS (to be sent to the relevant issuer and to the competent authority)i 
+ 
+1. Identity of the issuer or the underlying issuer of existing shares to which voting rights are at-
+tachedii:  
+ 
+Name: Nordic Mining ASA (ISIN: NO0013162693) 
+ 
+2. Reason for the notification (please tick the appropriate box or boxes): 
+ 
+[X] An acquisition or disposal of voting rights 
+[ ] An acquisition or disposal of financial instruments 
+[ ] An event changing the breakdown of voting rights 
+[ ] Other (please specify)iii: 
+ 
+3. Details of person subject to the notification obligationiv :  
+Name: Mirabella Financial Services LLP City and country of registered office (if applicable): 
+London, UK 
+4. Full name of shareholder(s) (if different from 3.)v: 
+ 
+Svelland Global Trading Master Fund, LEI: 213800AEMG78NTJSGR10 
+Compass Offshore HTV PCC Limited, LEI: K4RPB4GFEGVL1V93O265 
+Compass HTV LLC, LEI: IFT36E6OYSSCSNO04891 
+ 
+5. Date on which the threshold was crossed or reachedvi: 
+ 
+06/11/2026 
+ 
+6. Total positions of person(s) subject to the notification obligation: 
+ 
+% of voting rights at-
+tached to shares (to-
+tal of 7.A) 
+% of voting rights 
+through financial instru-
+ments  
+(total of 7.B.1 + 7.B.2) 
+Total of both in % 
+(7.A + 7.B) 
+Total number of 
+voting rights of is-
+suervii 
+Resulting situation 
+on the date on which 
+threshold was 
+crossed or reached 
+12.83 % 0.0 % 12.83 % 125,078,199.0 
+Position of previous 
+notification (if appli-
+cable) 
+19.99% 0.0 % 19.99% 125,078,199.0 
+ 
+ 
+Date:22 October 2015 
+ESMA/2015/1597 
+ 
+ 
+    
+ 
+ 2 
+ 
+7. Notified details of the resulting situation on the date on which the threshold was crossed or 
+reachedviii: 
+A: Voting rights attached to shares 
+Class/type of 
+shares 
+ISIN code (if possi-
+ble) 
+Number of voting rightsix % of voting rights 
+Direct 
+(Art 9 of Directive 
+2004/109/EC) 
+Indirect 
+(Art 10 of Directive 
+2004/109/EC) 
+Direct 
+(Art 9 of Directive 
+2004/109/EC) 
+Indirect 
+(Art 10 of Directive 
+2004/109/EC) 
+NO0013162693  16,057,411 
+ 
+ 12.83 % 
+     
+     
+SUBTOTAL A    12.83 % 
+ 
+ 
+B 1: Financial Instruments according to Art. 13(1)(a) of Directive 2004/109/EC 
+Type of financial in-
+strument 
+Expiration 
+datex 
+Exercise/  
+Conversion Periodxi 
+Numbe
