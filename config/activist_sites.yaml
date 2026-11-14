@@ -1,0 +1,74 @@
+# Aktivisten-eigene Websites für Signalklasse C (öffentliche Kampagne OHNE Stimmrechtsmitteilung).
+# Verifiziert 2026-11-14 per Live-Abruf (robots.txt + Indexseite). Regeln: robots.txt je Host, >= 1 s Abstand (Crawl-delay wird beachtet),
+# UA "activist-smallcap research contact@example.org"; Seiten auf eqs-news.com / eqs.com / dgap.de / ots.at werden nie abgerufen (skip_hosts).
+# kind: index = HTML-Liste (Ankertext + Datum), feed = RSS/Atom, pages = feste Kampagnenseiten (Datum aus der Seite).
+# index.href_re: Regex für Item-Links; date_from: url | after | before (Datum im HTML nach/vor dem Link); page_param/page_step/page_path: Blättern.
+# type: activist | association (Aktionärsvereinigung; Kampagnen = Gegenanträge/Klagen) | holding (Beteiligungsgesellschaft mit News).
+skip_hosts: [eqs-news.com, eqs.com, dgap.de, ots.at]
+sites:
+  - name: SdK Schutzgemeinschaft der Kapitalanleger
+    activist: SdK
+    type: association
+    host: sdk.org
+    robots: "ok (Allow /, Disallow /admin/ /assets/)"
+    kind: index
+    url: https://sdk.org/veroeffentlichungen/pressemitteilungen/
+    href_re: '^/veroeffentlichungen/pressemitteilungen/[a-z0-9\-]+/$'
+    date_from: after
+    page_param: start          # ?start=0,15,30,...
+    page_step: 15
+    max_pages: 40
+    require_demand: true       # (Default true für alle Sites) Anlegerforen/Anleihe-Abstimmungen ohne Forderung sind kein Kampagnen-Signal
+  - name: Scherzer & Co. AG
+    activist: Scherzer & Co.
+    type: holding
+    host: www.scherzer-ag.de
+    robots: "ok (Disallow /wp-admin/)"
+    kind: index
+    url: https://www.scherzer-ag.de/aktuelles/
+    href_re: '/\d{4}/\d{2}/\d{2}/[a-z0-9\-]+/$'
+    date_from: url
+    page_path: page/{n}/       # /aktuelles/page/2/
+    max_pages: 12
+    exclude_title_re: '(?i)net asset value|tageswert|halbjahres|finanzbericht|geschäftsbericht|hauptversammlung|aktienrückkauf|rückkaufangebot|directors|stimmrecht|unternehmenspräsentation|podcast|interview'
+  - name: Deutsche Balaton AG
+    activist: Deutsche Balaton
+    type: holding
+    host: www.deutsche-balaton.de      # nur http (https-Handshake schlägt fehl)
+    robots: "ok (Disallow /wp-admin/)"
+    kind: feed
+    url: http://www.deutsche-balaton.de/feed/
+    exclude_title_re: '(?i)aktienrückkauf|rückkaufangebot|erwerb eigener aktien|prognose|konzern|eigenkapital|freiverkehr|hauptversammlung|stimmrecht'
+  - name: Elliott (elliottletters.com)
+    activist: Elliott Investment Management
+    type: activist
+    host: elliottletters.com
+    robots: "pruefen (Abruf per Live-Test, Crawl-delay des Hauptsitzes elliottmgmt.com: 10 s)"
+    kind: index
+    url: https://elliottletters.com/
+    href_re: '^(?:https://elliottletters\.com)?/[a-z0-9\-]+/?$'
+    date_from: page
+    exclude_hrefs: [/terms/, /contact/]
+    crawl_delay: 10
+  - name: Petrus Advisers (Iveco-Seite)
+    activist: Petrus Advisers
+    type: activist
+    host: www.petrusadvisers.com
+    robots: "ok (leere robots.txt)"
+    kind: pages
+    pages: [https://www.petrusadvisers.com/Iveco]
+    date_from: page
+# Geprüft, aber ohne abrufbare Veröffentlichungsliste (nicht aktiv). Grund steht dabei.
+inactive:
+  - {activist: Active Ownership Capital, url: "https://www.activeownershipcapital.com", reason: "Host antwortet nicht (Verbindungsfehler)"}
+  - {activist: Enkraft Capital, url: "https://enkraft.de", reason: "Einseiter ohne News (enkraft.com liefert 403)"}
+  - {activist: Teleios Capital, url: "https://www.teleioscapital.com", reason: "Einseiter; robots.txt: Disallow /documents/"}
+  - {activist: Cevian Capital, url: "https://cevian.com", reason: "keine Pressebereich/Briefe (nur Portfolio-Logos)"}
+  - {activist: Elliott Investment Management, url: "https://www.elliottmgmt.com", reason: "kein News-Bereich; Briefe via elliottletters.com (aktiv)"}
+  - {activist: Bluebell Capital, url: "https://www.bluebellcapital.com", reason: "Squarespace-Visitenkarte ohne News (Briefe laufen über Medien/Businesswire)"}
+  - {activist: Sherborne Investors, url: "https://www.sherborneinvestors.com", reason: "Visitenkarte ohne News"}
+  - {activist: Amber Capital, url: "https://www.amber-capital.com", reason: "Parking-Page"}
+  - {activist: Harwood Capital, url: "https://www.harwoodcapital.co.uk", reason: "keine News"}
+  - {activist: Shareholder Value Management AG, url: "https://www.shareholdervalue.de", reason: "Medien-/Infoseite, keine Kampagnen"}
+  - {activist: Palliser Capital, reason: "Veröffentlichungen nur über Businesswire (kein eigener Newsbereich auffindbar)"}
+  - {activist: Stuttgarter Börse / Düsseldorf / Hamburg, reason: "nur Universum, nicht Kampagnen"}

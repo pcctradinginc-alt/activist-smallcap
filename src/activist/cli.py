@@ -98,6 +98,9 @@ def cmd_backfill_eu(a):
         from .sources import eu_oslo, eu_pdf
         evs = eu_oslo.fetch_events(start, end)
         evs = [eu_pdf.enrich_oslo(e) for e in evs] if a.enrich else evs
+    elif a.source == "activist_sites":
+        from .sources import campaigns_c
+        evs = campaigns_c.fetch_events(start, end)
     elif a.source == "six":
         from .sources import eu_ch
         evs = eu_ch.fetch_events(start, end)
@@ -148,7 +151,7 @@ def main(argv=None):
     b.add_argument("--quarter", type=int); b.add_argument("--limit", type=int); b.set_defaults(fn=cmd_backfill)
     bj = sp.add_parser("backfill-jp"); bj.add_argument("--start", required=True); bj.add_argument("--end", required=True)
     bj.set_defaults(fn=cmd_backfill_jp)
-    be = sp.add_parser("backfill-eu"); be.add_argument("--source", required=True, choices=["nsm", "nasdaq_nordic", "oslo", "amf", "six", "de_ir"])
+    be = sp.add_parser("backfill-eu"); be.add_argument("--source", required=True, choices=["nsm", "nasdaq_nordic", "oslo", "amf", "six", "activist_sites", "de_ir"])
     be.add_argument("--start", required=True); be.add_argument("--end", required=True)
     be.add_argument("--enrich", action="store_true"); be.set_defaults(fn=cmd_backfill_eu)
     pp = sp.add_parser("paper"); pp.set_defaults(fn=cmd_paper)

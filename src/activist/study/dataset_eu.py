@@ -64,7 +64,7 @@ def eu_campaigns(events: list[dict], funnel: Counter | None = None) -> list[dict
     names = activist_names()
     by: dict[tuple, list] = {}
     for e in sorted(events, key=lambda e: e["published"]):
-        if e.get("region") not in EU_REGIONS or e.get("form") != "MajorHolding":
+        if e.get("region") not in EU_REGIONS or e.get("form") not in ("MajorHolding", "PublicCampaign"):
             continue
         funnel["EU Ereignisse"] += 1
         if not e.get("filer_name"):
@@ -72,17 +72,21 @@ def eu_campaigns(events: list[dict], funnel: Counter | None = None) -> list[dict
         iss = _issuer_key(e) or e.get("issuer_id") or e.get("issuer_name")
         if not iss:
             continue
-        by.setdefault((_norm_name(e["filer_name"]), str(iss)), []).append(e)
+        # Klasse C (öffentliche Kampagne) bildet eigene Kampagnen – Klassen werden nie zusammengerechnet
+        kind = "C" if e.get("form") == "PublicCampaign" else "B"
+        by.setdefault((_norm_name(e["filer_name"]) + ("#C" if kind == "C" else ""), str(iss)), []).append(e)
     out = []
     for (f, iss), evs in by.items():
         first = evs[0]
         chain = _norm_name(first.get("chain_text") or "")   # Kontrollkette (DE/AT-Mitteilungen, TR-1 Abschnitt 9)
-        if not (_is_activist(f, first["published"][:10], names) or (chain and _is_activist(chain, first["published"][:10], names))):
+        is_c = first.get("form") == "PublicCampaign"     # Melder ist per Konstruktion der Aktivist (eigene Website)
+        if not is_c and not (_is_activist(f, first["published"][:10], names) or (chain and _is_activist(chain, first["published"][:10], names))):
             continue
         thr = EXIT_BELOW[first["region"]]
         if first.get("holding_ratio") is not None and first["holding_ratio"] < thr:
             funnel["EU erste Meldung unter Ausstiegsschwelle (kein Einstieg)"] += 1; continue
-        out.append(dict(first, campaign_key=f"{f}-{iss}", signal_class="B", event_type="eu_B", followups=evs[1:]))
+        cls = "C" if is_c else "B"
+        out.append(dict(first, campaign_key=f"{f}-{iss}", signal_class=cls, event_type=f"eu_{cls}", followups=evs[1:]))
     return out
 
 

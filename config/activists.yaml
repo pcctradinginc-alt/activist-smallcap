@@ -33,6 +33,8 @@ activists:
   - {name: Active Ownership Capital, since: 2015-01-01, region: EU}    # zu prüfen
   - {name: Enkraft Capital, since: 2015-01-01, region: EU}             # zu prüfen
 
+  - {name: Scherzer & Co., since: 2015-01-01, region: EU}   # deutsche Nebenwerte, zu prüfen
+  - {name: Deutsche Balaton, since: 2015-01-01, region: EU}  # zu prüfen
 # Aliase: Melder erscheinen in Stimmrechtsmitteilungen oft als oberste kontrollierende Person oder als Fondsgesellschaft.
 # Abgleich gegen Meldepflichtigen UND jede Zeile der Kontrollkette (chain_text). Namen aus dem Gedächtnis – zu prüfen.
 aliases:
