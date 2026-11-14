@@ -1,0 +1,208 @@
+"""EDINET API v2 Dokumentabruf (type=5 CSV) + Parser fuer Grossbeteiligungsmeldungen (jplvh_cor).
+
+Die Element-IDs sind aus der oeffentlichen Taxonomie-Dokumentation abgeleitet und per Teilstring
+plus japanischem Label (項目名) als Fallback gematcht; Live-Validierung: scripts/jp_probe.py.
+"""
+from __future__ import annotations
+import csv
+import io
+import re
+import unicodedata
+import zipfile
+from pathlib import Path
+import requests
+
+DOC_API = "https://api.edinet-fsa.go.jp/api/v2/documents/{doc_id}"
+CODE_LIST_URL = "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip"
+
+C_ELEM, C_LABEL, C_CTX, C_VAL = "要素ID", "項目名", "コンテキストID", "値"
+
+
+def fetch_csv(doc_id: str, key: str, timeout: int = 60) -> bytes:
+    r = requests.get(DOC_API.format(doc_id=doc_id), params={"type": 5, "Subscription-Key": key}, timeout=timeout)
+    ctype = (r.headers.get("content-type") or "").lower()
+    if "json" in ctype:
+        try:
+            meta = r.json()
+        except ValueError:
+            meta = r.text[:200]
+        raise RuntimeError(f"EDINET {doc_id}: JSON-Fehlerantwort (HTTP {r.status_code}): {_scrub(str(meta), key)}")
+    r.raise_for_status()
+    if not r.content.startswith(b"PK"):
+        raise RuntimeError(f"EDINET {doc_id}: keine ZIP-Antwort (content-type={ctype!r})")
+    return r.content
+
+
+def _scrub(s: str, key: str) -> str:
+    return s.replace(key, "***") if key else s
+
+
+# ---------------------------------------------------------------- Normalisierung
+def _nfkc(s) -> str:
+    return unicodedata.normalize("NFKC", str(s if s is not None else "")).strip()
+
+
+def normalize_sec_code(v) -> str | None:
+    """'72030' -> '7203'; '130A0' -> '130A'; '7203' -> '7203'; sonst None."""
+    s = _nfkc(v).upper().replace(" ", "")
+    if not s or s in ("-", "－"):
+        return None
+    if len(s) == 5 and s.endswith("0"):
+        s = s[:4]
+    if len(s) == 4 and re.fullmatch(r"[0-9]{3}[0-9A-Z]|[0-9]{4}", s):
+        return s
+    return None
+
+
+def _num(v) -> float | None:
+    s = _nfkc(v).replace(",", "").replace("%", "").replace("％", "")
+    m = re.search(r"-?\d+(?:\.\d+)?", s)
+    return float(m.group()) if m else None
+
+
+def _ratio(v) -> float | None:
+    """Anteil als Bruch. Werte > 1 oder mit %-Zeichen gelten als Prozent (Bruchform 'x<=1' bleibt Bruch)."""
+    x = _num(v)
+    if x is None:
+        return None
+    pct = "%" in str(v) or "％" in str(v)
+    return x / 100.0 if (x > 1.0 or pct) else x
+
+
+# ---------------------------------------------------------------- Zeilen lesen
+def _decode(b: bytes) -> str:
+    if b[:2] in (b"\xff\xfe", b"\xfe\xff"):
+        return b.decode("utf-16")
+    for enc in ("utf-16-le", "utf-8-sig", "cp932"):
+        try:
+            t = b.decode(enc)
+        except UnicodeDecodeError:
+            continue
+        if C_ELEM in t[:400]:
+            return t
+    return b.decode("utf-16-le", errors="replace")
+
+
+def _rows_from_text(text: str) -> list[dict]:
+    rd = csv.DictReader(io.StringIO(text), delimiter="\t", quotechar='"')
+    return [{(k or "").strip(): (v or "") for k, v in r.items()} for r in rd]
+
+
+def read_zip_rows(zip_bytes: bytes) -> list[dict]:
+    rows: list[dict] = []
+    with zipfile.ZipFile(io.BytesIO(zip_bytes)) as z:
+        for n in sorted(z.namelist()):
+            if n.lower().endswith(".csv"):
+                rows += _rows_from_text(_decode(z.read(n)))
+    return rows
+
+
+# ---------------------------------------------------------------- Extraktion
+def _match(row, elems=(), labels=(), not_elems=(), not_labels=()) -> bool:
+    e, l = row.get(C_ELEM, ""), _nfkc(row.get(C_LABEL, ""))
+    el = e.lower()
+    if any(x.lower() in el for x in not_elems) or any(x in l for x in not_labels):
+        return False
+    return any(x.lower() in el for x in elems) or any(x in l for x in labels)
+
+
+def _pick(rows, **kw):
+    return [r for r in rows if _match(r, **kw) and _nfkc(r.get(C_VAL)) not in ("", "－", "-")]
+
+
+_PREV = ("Last", "Previous", "Prior", "Preceding")
+_NEG = re.compile(r"(目的としていない|目的としない|行わない|行いません|行わず|予定はない|予定はありません|予定がない|"
+                  r"考えていない|考えておりません|ありません|いたしません|しない|していない|ことはない|目的ではない|目的としておりません)")
+
+
+def important_proposal(text: str) -> tuple[bool, str | None]:
+    """True, wenn ein Satz 重要提案行為 enthaelt und nicht verneint ist. Evidenz = der (erste positive, sonst verneinte) Satz."""
+    t = _nfkc(text)
+    sents = [s.strip() for s in re.split(r"[。\n]", t) if s.strip()]
+    hits = [s for s in sents if "重要提案行為" in s]
+    if not hits:
+        return False, None
+    for s in hits:
+        if not _NEG.search(s):
+            return True, s
+    return False, hits[0]
+
+
+def parse_rows(rows: list[dict]) -> dict:
+    out: dict = {"issuer_sec_code": None, "issuer_name": None, "purpose_text": None, "important_proposal": False,
+                 "important_proposal_evidence": None, "holding_ratio": None, "previous_holding_ratio": None,
+                 "total_shares_outstanding": None, "filer_name": None, "filer_names": [], "n_rows": len(rows)}
+    # Sec-Code des Emittenten (nicht den des Meldenden)
+    for r in _pick(rows, elems=("SecurityCodeOfIssuer", "IssuerSecurityCode"), labels=("発行者の証券コード",)) \
+            + _pick(rows, labels=("証券コード",), not_labels=("提出者",)):
+        c = normalize_sec_code(r[C_VAL])
+        if c:
+            out["issuer_sec_code"] = c
+            break
+    for r in _pick(rows, elems=("NameOfIssuer", "IssuerName", "NameOfIssuerOfStock"), labels=("発行者の名称", "発行者名")):
+        out["issuer_name"] = _nfkc(r[C_VAL])
+        break
+    purp = _pick(rows, elems=("PurposeOfHolding",), labels=("保有目的",))
+    if purp:
+        out["purpose_text"] = max((r[C_VAL].strip() for r in purp), key=len)
+        out["important_proposal"], out["important_proposal_evidence"] = important_proposal(out["purpose_text"])
+    # Quote
+    prev = _pick(rows, elems=("RatioOfShareCertificatesEtc",), labels=("株券等保有割合",)) 
+    prev = [r for r in prev if any(p.lower() in r[C_ELEM].lower() for p in _PREV) or re.search("直前|前回", r.get(C_LABEL, ""))]
+    cur = _pick(rows, elems=("HoldingRatioOfShareCertificatesEtc",), labels=("株券等保有割合",),
+                not_elems=_PREV + ("Increase", "Decrease"), not_labels=("直前", "前回", "増減"))
+    out["holding_ratio"] = _choose_ratio(cur)
+    out["previous_holding_ratio"] = _choose_ratio(prev)
+    tot = _pick(rows, elems=("TotalNumberOfStocksEtcIssued", "TotalNumberOfIssuedShares"), labels=("発行済株式総数", "発行済株式等総数"))
+    for r in tot:
+        n = _num(r[C_VAL])
+        if n is not None:
+            out["total_shares_outstanding"] = n
+            break
+    names = []
+    for r in _pick(rows, elems=("FilerNameInJapanese", "NameOfFiler", "FilerName"), labels=("提出者氏名又は名称", "提出者 氏名又は名称", "氏名又は名称", "提出者名")):
+        nm = _nfkc(r[C_VAL])
+        if nm and nm not in names:
+            names.append(nm)
+    out["filer_names"] = names
+    out["filer_name"] = names[0] if names else None
+    return out
+
+
+def _choose_ratio(cands: list[dict]) -> float | None:
+    vals = [(r, _ratio(r[C_VAL])) for r in cands]
+    vals = [(r, v) for r, v in vals if v is not None]
+    if not vals:
+        return None
+    tag = re.compile(r"Total|Joint|Aggregate|Combined|Sum|合計|共同|合算")
+    totals = [v for r, v in vals if tag.search(r.get(C_CTX, "") + r.get(C_ELEM, "") + r.get(C_LABEL, ""))]
+    return max(totals) if totals else max(v for _, v in vals)
+
+
+def parse_large_holding_zip(zip_bytes: bytes) -> dict:
+    return parse_rows(read_zip_rows(zip_bytes))
+
+
+# ---------------------------------------------------------------- EDINET-Code-Liste
+def edinet_code_map(path_or_bytes) -> dict[str, dict]:
+    """EdinetcodeDlInfo.csv (cp932; Zeile 1 Metadaten, Zeile 2 Header) -> {edinet_code: {name, sec_code}}."""
+    b = path_or_bytes if isinstance(path_or_bytes, (bytes, bytearray)) else Path(path_or_bytes).read_bytes()
+    if b[:2] == b"PK":
+        with zipfile.ZipFile(io.BytesIO(b)) as z:
+            b = z.read(next(n for n in z.namelist() if n.lower().endswith(".csv")))
+    text = b.decode("cp932", errors="replace")
+    lines = text.splitlines()
+    rd = csv.DictReader(io.StringIO("\n".join(lines[1:])))
+    out = {}
+    for r in rd:
+        code = _nfkc(r.get("ＥＤＩＮＥＴコード") or r.get("EDINETコード"))
+        if not code:
+            continue
+        out[code] = {"name": (r.get("提出者名") or "").strip(), "sec_code": normalize_sec_code(r.get("証券コード"))}
+    return out
+
+
+def download_code_map(timeout: int = 120) -> dict[str, dict]:
+    r = requests.get(CODE_LIST_URL, timeout=timeout)
+    r.raise_for_status()
+    return edinet_code_map(r.content)

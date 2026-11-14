@@ -64,12 +64,17 @@ def run(ds: pd.DataFrame, price_loader, bench_loader, variants: bool = True) -> 
                 d = pd.to_datetime(g.published, utc=True)
                 years = max((d.max() - d.min()).days / 365.25, 1.0)
                 res["combos"].setdefault(key, {})[f"{label}:{n}"] = verdict(done, years, p)
+                if n == "main" and label == "qualifiziert":   # Erkundung: neue 13D-Fristen ab 2024
+                    late = done[pd.to_datetime(done.published, utc=True) >= pd.Timestamp("2024-01-01", tz="UTC")]
+                    if len(late):
+                        res["combos"][key]["erkundung:main_ab2024"] = verdict(
+                            late, max((pd.Timestamp.now(tz="UTC") - pd.Timestamp("2024-01-01", tz="UTC")).days / 365.25, 1.0), p)
     return res, t
 
 
 def hypotheses(trades: pd.DataFrame) -> list[str]:
     """H2 (Forderungsart) und H3 (Stabilität der Aktivisten) – Erkundung auf qualifizierten Haupttrades."""
-    t = trades[(trades.variant == "main") & (trades.executed == True) & (trades.complete == True)]
+    t = trades[(trades.variant == "main") & (trades.qualified == True) & (trades.executed == True) & (trades.complete == True)]
     if t.empty:
         return []
     L = ["## H2: Nettoüberrendite nach Forderung (Erkundung)", "", "| Forderung | n | Ø netto | positiv |", "|---|---|---|---|"]
