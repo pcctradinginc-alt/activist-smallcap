@@ -41,3 +41,10 @@ Jede spätere Änderung steht mit Begründung in `PROTOCOL_CHANGES.md` und im Co
 ## Entscheidung 2026-11-14: Deutschland und Österreich ausgeschlossen
 Keine kostenlose zulässige Quelle (EQS-Nutzungsbedingungen, BaFin/Unternehmensregister robots.txt, APA-OTS TDM-Vorbehalt).
 Region DACH umfasst daher nur die Schweiz (SIX). Parser für WpHG/BörseG-Mitteilungen bleiben im Code, ungenutzt.
+
+## Änderung 2026-11-14: Deutschland wieder aufgenommen, SDAX im Universum
+- Deutschland kommt über die IR-Seiten der Emittenten (Stimmrechtsmitteilungen, robots-konform, ohne EQS-Hosts)
+  und über öffentliche Kampagnen auf den Websites der Aktivisten (Klasse C, getrennt ausgewertet) zurück.
+- DACH-Obergrenze Marktkapitalisierung 2 Mrd. -> 8 Mrd. EUR, damit SDAX-Werte im Universum sind (Wunsch Nutzer).
+  Bewusst Größengrenze statt Indexmitgliedschaft: die heutige SDAX-Zusammensetzung rückwirkend zu verwenden wäre
+  ein Look-ahead-Fehler. Effekt auf die Ergebnisse wird im Bericht getrennt nach <= 2 Mrd. und 2–8 Mrd. ausgewiesen.

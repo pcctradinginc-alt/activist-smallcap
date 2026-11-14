@@ -46,6 +46,7 @@ def run(ds: pd.DataFrame, price_loader, bench_loader, variants: bool = True) -> 
             r = run_campaign(c, px, bench, p, stop, md, ex if not md else ())
             trades.append({**{k: c[k] for k in ("campaign_key", "activist", "filer_id", "region", "signal_class",
                                                  "status", "ticker", "published", "demand")},
+                           "mcap": c.get("mcap"),
                            "variant": n, "qualified": c["status"] == "qualifiziert", **r})
     t = pd.DataFrame(trades)
     res = {"combos": {}, "execution": {}}
@@ -65,6 +66,10 @@ def run(ds: pd.DataFrame, price_loader, bench_loader, variants: bool = True) -> 
                 d = pd.to_datetime(g.published, utc=True)
                 years = max((d.max() - d.min()).days / 365.25, 1.0)
                 res["combos"].setdefault(key, {})[f"{label}:{n}"] = verdict(done, years, p)
+                if n == "main" and label == "qualifiziert" and "mcap" in done:   # Erkundung: Größenklassen
+                    for nm, msk in (("bis_2Mrd", done.mcap <= 2e9), ("2_bis_8Mrd", done.mcap > 2e9)):
+                        if msk.sum():
+                            res["combos"][key][f"erkundung:main_{nm}"] = verdict(done[msk], years, p)
                 if n == "main" and label == "qualifiziert":   # Erkundung: neue 13D-Fristen ab 2024
                     late = done[pd.to_datetime(done.published, utc=True) >= pd.Timestamp("2024-01-01", tz="UTC")]
                     if len(late):
