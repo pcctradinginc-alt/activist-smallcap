@@ -123,3 +123,11 @@ def test_cost_uk_levy_buy_only():
     assert uk_b - us_b == pytest.approx(0.005)
     assert cost_one_side(0.0, COSTS, "UK", "sell") == cost_one_side(0.0, COSTS, "US", "sell")
     assert uk_b + cost_one_side(0.0, COSTS, "UK", "sell") >= 0.015 + 0.005 - 1e-12
+
+
+def test_fixed_fee_per_order_scales_with_position():
+    from activist.paper.execution import cost_one_side
+    cfg = {"min_half_spread": 0.005, "fx_and_fees": 0.0025, "default_half_spread": 0.01, "fixed_fee_eur_per_order": 15.0}
+    assert cost_one_side(0.0, cfg, "US", "buy", 500) == pytest.approx(0.0375)
+    assert cost_one_side(0.0, cfg, "US", "buy", 3000) == pytest.approx(0.0125)
+    assert cost_one_side(0.0, cfg, "US", "buy") == pytest.approx(0.0075)

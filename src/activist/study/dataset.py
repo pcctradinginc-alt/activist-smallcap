@@ -135,3 +135,90 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
         funnel["verworfen (Schattenportfolio)" if reasons else "qualifiziert"] += 1
         rows.append(row)
     return pd.DataFrame(rows), funnel
+
+
+# ------------------------------------------------------------------ Japan
+JP_FORMS = {"LargeHolding", "LargeHoldingChange"}
+
+
+def _norm_name(s: str) -> str:
+    import unicodedata, re as _re
+    return _re.sub(r"[\W_]", "", unicodedata.normalize("NFKC", s or "").lower())
+
+
+def jp_campaigns(events: list[dict]) -> list[dict]:
+    """Kampagne = (Melder, Emittent). Klasse A = Haltezweck 'wichtige Vorschläge' (重要提案行為等);
+    Klasse B = bekannter Aktivist (Liste oder >= 3 frühere A-Meldungen bei verschiedenen Emittenten) ohne diesen Zweck."""
+    from ..common import load_yaml
+    names = [(_norm_name(a["name"])[:8], str(a.get("since", "1900"))) for a in load_yaml("activists.yaml")["activists"]
+             if a.get("region") == "JP"]
+    jp = sorted([e for e in events if e.get("source") == "EDINET" and e.get("form") in JP_FORMS and e.get("doc_parsed")],
+                key=lambda e: e["published"])
+    prior_a: dict[str, list[str]] = {}
+    by: dict[tuple, list] = {}
+    for e in jp:
+        by.setdefault((e.get("filer_id"), e.get("issuer_sec_code")), []).append(e)
+    out = []
+    for (f, sec), evs in by.items():
+        if not f or not sec:
+            continue
+        for idx, e in enumerate(evs):
+            nm = _norm_name(e.get("filer_name"))
+            listed = any(k and k in nm and since <= e["published"][:10] for k, since in names)
+            behav = len({x for x in prior_a.get(f, []) if x < e["published"]}) >= 3
+            cls = "A" if e.get("important_proposal") else ("B" if (listed or behav) else None)
+            if cls:
+                out.append(dict(e, campaign_key=f"{f}-{sec}", signal_class=cls, event_type="jp_" + cls,
+                                followups=evs[idx + 1:], ticker=sec))
+                break
+        for e in evs:
+            if e.get("important_proposal"):
+                prior_a.setdefault(f, []).append(e["published"])
+    return out
+
+
+def build_jp(events: list[dict], end: date | None = None) -> tuple[pd.DataFrame, Counter]:
+    p, lim = params(), risk_limits()["candidate"]
+    cfg, funnel, rows = p["universe"]["JP"], Counter(), []
+    end = end or date.today()
+    try:
+        fx = prices.yahoo("EURJPY=X", date(2015, 1, 1), end)["close"]
+    except Exception:
+        fx = None
+    for c in jp_campaigns(events):
+        funnel["JP kampagnen"] += 1
+        row = {k: c.get(k) for k in ("event_id", "campaign_key", "published", "form", "signal_class", "event_type",
+                                     "filer_id", "filer_name", "issuer_name", "url", "region", "ticker")}
+        row.update(activist=c.get("filer_name"), demand="capital_or_proposal" if c.get("important_proposal") else "none",
+                   demand_evidence=c.get("important_proposal_evidence"), stake=c.get("holding_ratio"))
+        d0 = date.fromisoformat(c["published"][:10])
+        try:
+            px, chk = prices.load(c["ticker"], "JP", d0 - timedelta(days=45), min(d0 + timedelta(days=420), end))
+        except Exception:
+            funnel["JP keine Kurse (delistet/Survivorship)"] += 1; row["status"] = "keine Kurse"; rows.append(row); continue
+        pf = price_features(px, c["published"])
+        uv = universe_check(cfg, pf, c.get("total_shares_outstanding"), None, False)
+        row.update({k: pf.get(k) for k in ("price", "adv", "runup_20d", "half_spread")})
+        if uv:
+            for v in uv:
+                funnel[f"JP Universum: {v}"] += 1
+            row["status"] = "außerhalb Universum: " + "; ".join(uv); rows.append(row); continue
+        funnel["JP im Universum"] += 1
+        eurjpy = float(fx.asof(pd.Timestamp(d0))) if fx is not None else 160.0
+        pos_jpy = p["order"]["position_eur"] * eurjpy
+        reasons = []
+        if cfg.get("lot_size", 100) * pf["price"] > pos_jpy:
+            reasons.append("Mindestorder (100 Stück) > Position")
+        if 2 * (row["half_spread"] or 0) > lim["max_spread"]:
+            reasons.append("Spread")
+        if row["runup_20d"] > lim["max_runup_20d"]:
+            reasons.append("Anstieg 20T")
+        if pos_jpy > lim["max_position_share_of_adv"] * row["adv"]:
+            reasons.append("Liquidität")
+        row["exit_events"] = [fu["published"] for fu in c["followups"]
+                              if fu.get("holding_ratio") is not None and fu["holding_ratio"] < 0.05][:1]
+        # Konzept: Handelbarkeit über deutschen Broker ungeprüft -> Japan vorerst nur Schattenportfolio
+        row["status"] = ("verworfen: " + "; ".join(reasons)) if reasons else "qualifiziert"
+        funnel["JP verworfen" if reasons else "JP qualifiziert"] += 1
+        rows.append(row)
+    return pd.DataFrame(rows), funnel

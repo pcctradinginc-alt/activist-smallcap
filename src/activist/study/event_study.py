@@ -20,7 +20,8 @@ def run_campaign(c: dict, px: pd.DataFrame, bench: pd.DataFrame, p: dict, stop=T
     gross = xp / fill.price - 1
     b = bench["close"]; b0, b1 = b.asof(fill.fill_date), b.asof(xd)
     bret = float(b1 / b0 - 1) if pd.notna(b0) and pd.notna(b1) else 0.0
-    cost = sum(cost_one_side(c.get("half_spread"), p["costs"], c["region"], s) for s in ("buy", "sell"))
+    cost = sum(cost_one_side(c.get("half_spread"), p["costs"], c["region"], s,
+                             p["order"]["position_eur"] * fill.fill_ratio) for s in ("buy", "sell"))
     return {"executed": True, "complete": why not in OPEN, "fill_ratio": fill.fill_ratio,
             "entry_date": fill.fill_date, "entry": fill.price, "exit_date": xd, "exit": xp, "exit_reason": why,
             "gross": gross, "bench": bret, "cost": cost, "net_excess": gross - bret - cost}

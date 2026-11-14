@@ -14,7 +14,7 @@ order:
   limit_above_last_close: 0.03
   max_fill_days: 3
   max_share_of_daily_volume: 0.05
-  position_eur: 500
+  position_eur: 1000           # Angabe Nutzer 2026-11-14 (vorher 500)
 
 exit:
   max_holding_days: 252      # 12 Monate
@@ -25,15 +25,15 @@ costs:
   fx_and_fees: 0.0025        # je Seite
   default_half_spread: 0.01
   levies_buy: {UK: 0.005}    # Stempelsteuer Main Market
-  fixed_fee_eur_per_order: 0.0   # wird in Phase 0 je Handelsplatz erhoben
+  fixed_fee_eur_per_order: 10.0  # Broker-Mindestgebühr alle Handelsplätze (Angabe Nutzer 2026-11-14)
 
 study:
   min_campaigns: 100
   ci_level: 0.90
   bootstrap_reps: 2000
   pass_min_mean: 0.03
-  econ_portfolio_eur: 10000
-  econ_min_excess_eur: 300
+  econ_portfolio_eur: 20000     # 1.000 € = 5 % Basisposition
+  econ_min_excess_eur: 600      # 3 Prozentpunkte p. a.
   explore_holding_days: [21, 63, 126, 252]
 
 data_quality:

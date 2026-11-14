@@ -58,7 +58,9 @@ def test_run_variants_main_uses_stop_and_trades(ds):
     main = t[t.variant == "main"].set_index("campaign_key")
     assert bool(main.loc["k1", "complete"]) and not main.loc["k4", "complete"]
     assert main.loc["k4", "exit_reason"] == "offen (Datenende)"
-    cost = 2 * (0.005 + 0.0025)
+    from activist.common import params as _p
+    fee = _p()["costs"]["fixed_fee_eur_per_order"] / _p()["order"]["position_eur"]
+    cost = 2 * (0.005 + 0.0025 + fee)
     assert crash.loc["main", "net_excess"] == pytest.approx(-0.4 - cost)
 
 

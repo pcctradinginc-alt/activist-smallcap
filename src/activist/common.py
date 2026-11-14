@@ -65,7 +65,8 @@ class EventStore:
         for ev in events:
             if ev["event_id"] in known:
                 continue
-            path = self.root / f"{ev['published'][:7]}.jsonl"
+            month = ev["published"][:7]   # eigene Dateien je Quelle -> keine Git-Konflikte zwischen parallelen Abrufen
+            path = self.root / (f"{month}.jsonl" if ev.get("source", "EDGAR") == "EDGAR" else f"{ev['source'].lower()}_{month}.jsonl")
             with open(path, "a", encoding="utf-8") as f:
                 f.write(json.dumps(ev, ensure_ascii=False, sort_keys=True) + "\n")
             known.add(ev["event_id"]); n += 1

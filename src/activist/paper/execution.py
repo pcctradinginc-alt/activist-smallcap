@@ -14,9 +14,13 @@ class Fill:
     reason: str = ""
 
 
-def cost_one_side(half_spread: float | None, cfg: dict, region: str, side: str) -> float:
+def cost_one_side(half_spread: float | None, cfg: dict, region: str, side: str,
+                  position_eur: float | None = None) -> float:
+    """Kosten je Seite als Anteil: halbe Spanne (min. 0,5 %) + 0,25 % + Abgaben + feste Ordergebühr / Positionswert."""
     c = max(half_spread if half_spread is not None else cfg["default_half_spread"], cfg["min_half_spread"])
     c += cfg["fx_and_fees"]
+    if position_eur:
+        c += cfg.get("fixed_fee_eur_per_order", 0.0) / position_eur
     if side == "buy":
         c += cfg.get("levies_buy", {}).get(region, 0.0)
     return c
