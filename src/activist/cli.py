@@ -15,13 +15,19 @@ def cmd_fetch(a):
     for d in days:
         evs = []
         if a.source in ("edgar", "all"):
-            evs += edgar.fetch_events(d, with_headers=not a.no_headers, limit=a.limit)
+            try:
+                evs += edgar.fetch_events(d, with_headers=not a.no_headers, limit=a.limit)
+            except Exception as e:     # ein Quellenfehler darf den Tageslauf (und das Papierdepot) nicht stoppen
+                print(f"::warning::EDGAR {d}: {e}")
         n = store.append(evs)
         if a.source in ("edinet", "all"):
             import os
             from .sources.edinet_backfill import fetch_day
             if os.environ.get("EDINET_API_KEY"):
-                r = fetch_day(d, os.environ["EDINET_API_KEY"], store); n += r["new"]; evs += [None] * r["docs"]
+                try:
+                    r = fetch_day(d, os.environ["EDINET_API_KEY"], store); n += r["new"]; evs += [None] * r["docs"]
+                except Exception as e:
+                    print(f"::warning::EDINET {d}: {e}")
             else:
                 print("EDINET übersprungen: EDINET_API_KEY fehlt")
         total += n

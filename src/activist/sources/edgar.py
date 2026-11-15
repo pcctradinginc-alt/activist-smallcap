@@ -22,13 +22,20 @@ def _get(url: str) -> requests.Response:
 
 
 def daily_index(d: date) -> list[dict]:
+    if d.weekday() >= 5:              # Wochenende: kein Index (SEC antwortet teils mit 403 statt 404)
+        return []
     q = (d.month - 1) // 3 + 1
     url = f"https://www.sec.gov/Archives/edgar/daily-index/{d.year}/QTR{q}/form.{d:%Y%m%d}.idx"
-    r = _S.get(url, timeout=30)
-    if r.status_code == 404:          # Wochenende/Feiertag
-        return []
-    r.raise_for_status()
-    return parse_form_index(r.text)
+    for i in range(4):
+        r = _S.get(url, timeout=30)
+        if r.status_code == 404:      # Feiertag / Index noch nicht erstellt
+            return []
+        if r.status_code in (403, 429, 503):
+            time.sleep(2 ** i); continue
+        r.raise_for_status()
+        return parse_form_index(r.text)
+    print(f"::warning::EDGAR-Index {d} nicht abrufbar (HTTP {r.status_code}) – Feiertag oder Sperre, wird beim nächsten Lauf nachgeholt")
+    return []
 
 
 def parse_form_index(text: str) -> list[dict]:
