@@ -1,6 +1,7 @@
 name: study
 on:
-  schedule: [{cron: "0 6 1-7 * 6"}]   # erster Samstag im Monat
+  # kein Zeitplan: die volle Studie dauert Stunden und läuft lokal (python -m activist.cli study);
+  # manuell auslösbar, wenn Actions-Minuten verfügbar sind
   workflow_dispatch:
 permissions:
   contents: write
