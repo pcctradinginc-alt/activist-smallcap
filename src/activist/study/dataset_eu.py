@@ -6,7 +6,7 @@ Konventionen (wie build/build_jp): eine Zeile je Kampagne, Spalte `status` ('qua
 Signalklasse: EU-Stimmrechtsmitteilungen (TR-1, AMF-Franchissement, Flagging) haben KEIN Absichtsfeld (anders als 13D Item 4 / EDINET
 Haltezweck). Deshalb nur Klasse B = Melder steht im Aktivisten-Register (activists.yaml, region EU; Namensabgleich normalisiert,
 Teilstring, ab `since`). Klasse A ist in Europa nicht ableitbar.
-Kampagne = erstes Ereignis je (normierter Melder, Emittent-ISIN). Ohne Uhrzeit (has_time False) kein Signal (Regel 1: sonst Look-ahead-Gefahr).
+Kampagne = erstes Ereignis je (normierter Melder, Emittent-ISIN). Ohne Uhrzeit: Entscheidung frühestens am Folgetag (konservativ, kein Look-ahead).
 Erste Meldung mit Anteil unter der Ausstiegsschwelle gilt als Ausstieg, nicht als Einstieg (Historienbeginn) und wird nicht gezählt.
 
 Kurse: Yahoo (voller Ticker aus OpenFIGI-Primärlisting), ohne Zweitquelle (chk ok=None, ungeprüft). '.L'-Kurse sind in Pence (GBp) -> /100.
@@ -22,12 +22,12 @@ import pandas as pd
 from ..common import DATA, load_yaml, params, risk_limits
 from ..features.universe import price_features, universe_check
 from ..sources import openfigi, prices
+from ..risk.rules import candidate_reasons
 
 EU_REGIONS = {"UK", "NORDIC", "BENELUX_FR", "DACH"}
 ISIN_RE = re.compile(r"^[A-Z]{2}[A-Z0-9]{9}\d$")
 EXIT_BELOW = {"UK": 0.03, "NORDIC": 0.05, "BENELUX_FR": 0.05, "DACH": 0.03}
 SUFFIX_FX = {".L": "GBPEUR=X", ".OL": "NOKEUR=X", ".ST": "SEKEUR=X", ".CO": "DKKEUR=X", ".SW": "CHFEUR=X"}      # EUR-Länder: kein FX
-FX_FALLBACK = {"GBPEUR=X": 1.15, "NOKEUR=X": 0.085, "SEKEUR=X": 0.09, "DKKEUR=X": 0.134, "CHFEUR=X": 1.05}
 PENCE_SUFFIX = (".L",)
 
 
@@ -138,8 +138,9 @@ def build_eu(events: list[dict], end: date | None = None, use_network_figi: bool
         row = {k: c.get(k) for k in ("event_id", "campaign_key", "published", "form", "signal_class", "event_type",
                                      "filer_id", "filer_name", "issuer_id", "issuer_name", "url", "region")}
         row.update(activist=c.get("filer_name"), isin=isin, demand="none", demand_evidence=None, stake=c.get("holding_ratio"))
-        if not c.get("has_time"):
-            funnel["EU ohne Uhrzeit (kein Signal)"] += 1; row["status"] = "keine Uhrzeit"; rows.append(row); continue
+        if not c.get("published"):
+            funnel["EU ohne Datum (kein Signal)"] += 1; row["status"] = "kein Datum"; rows.append(row); continue
+        # Ohne Uhrzeit (z. B. SIX): published ist bereits konservativ der Folgetag 00:00 UTC (effective_decision_time)
         if not isin:
             funnel["EU ohne ISIN"] += 1; row["status"] = "keine ISIN"; rows.append(row); continue
         try:
@@ -168,17 +169,13 @@ def build_eu(events: list[dict], end: date | None = None, use_network_figi: bool
                 fx = float(s.asof(pd.Timestamp(d0))) if s is not None else float("nan")
             except Exception:
                 fx = float("nan")
-            if pd.isna(fx):
-                fx = FX_FALLBACK[pair]; funnel["EU FX-Fallback (Näherungskurs)"] += 1
+            if pd.isna(fx):                       # kein stiller Fallback auf einen Näherungskurs
+                funnel["EU Wechselkurs fehlt"] += 1; row["status"] = "gesperrt: Wechselkurs fehlt"; rows.append(row); continue
         pf_eur = dict(pf, price=pf["price"] * fx, adv=pf["adv"] * fx) if pf.get("ok") else pf
         shares = c.get("total_voting_rights")
         if not shares and c.get("voting_rights_held") and c.get("holding_ratio"):
             shares = c["voting_rights_held"] / c["holding_ratio"]   # Gesamtzahl aus der Meldung selbst
         uv = universe_check(p["universe"][reg], pf_eur, shares, None, False)
-        if not shares:
-            uv = [v for v in uv if v != "Aktienzahl unbekannt"]
-            if pf.get("ok"):
-                funnel["EU Marktkapitalisierung ungeprüft"] += 1
         row.update(price=pf_eur.get("price"), adv=pf_eur.get("adv"), runup_20d=pf.get("runup_20d"),
                    half_spread=pf.get("half_spread"),
                    mcap=(shares * pf_eur["price"]) if shares and pf_eur.get("price") else None, fx=fx)
@@ -187,17 +184,14 @@ def build_eu(events: list[dict], end: date | None = None, use_network_figi: bool
                 funnel[f"EU Universum: {v}"] += 1
             row["status"] = "außerhalb Universum: " + "; ".join(uv); rows.append(row); continue
         funnel["EU im Universum"] += 1
-        reasons = []
-        if 2 * (row["half_spread"] or 0) > lim["max_spread"]:
-            reasons.append("Spread")
-        if row["runup_20d"] is not None and row["runup_20d"] > lim["max_runup_20d"]:
-            reasons.append("Anstieg 20T")
-        if p["order"]["position_eur"] > lim["max_position_share_of_adv"] * row["adv"]:
-            reasons.append("Liquidität")
+        reasons = candidate_reasons(row, p["order"]["position_eur"], lim)      # row["adv"] ist bereits in EUR
         thr = EXIT_BELOW[reg]
         row["exit_events"] = [fu["published"] for fu in c["followups"]
                               if fu.get("holding_ratio") is not None and fu["holding_ratio"] < thr][:1]
         row["status"] = ("verworfen: " + "; ".join(reasons)) if reasons else "qualifiziert"
         funnel["EU verworfen" if reasons else "EU qualifiziert"] += 1
+        from .dataset import data_quality
+        row["price_check"] = None                 # keine zweite kostenlose Kursquelle für Europa -> ungeprüft
+        row.update(data_quality(row, ticker_certain=bool(isin), activist_evidence=True))
         rows.append(row)
     return pd.DataFrame(rows), funnel

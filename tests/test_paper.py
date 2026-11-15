@@ -282,7 +282,7 @@ def test_holding_period_252_days_exit():
 # ------------------------------------------------------------------ 7. Limits
 def test_max_positions_16th_candidate_to_shadow():
     px = flat()
-    cs = [cand(f"K{i}", ticker=f"T{i}", activist=f"ACT{i}") for i in range(16)]
+    cs = [cand(f"K{i}", ticker=f"T{i}", activist=f"ACT{i}", sector=f"S{i}") for i in range(16)]   # Branchen verteilt (25-%-Grenze)
     res = run(D0, px, rows_of(*cs))
     assert res["orders"] == 15
     (s,) = shadow()
@@ -374,3 +374,14 @@ def test_weekly_validated_position_has_no_flag_and_empty_state_ok():
     pf.save_state(st)
     _, body = report.weekly(D1)
     assert "AAA" in body and not [l for l in body.splitlines() if l.startswith("- AAA") and "[nicht nachgewiesen]" in l]
+
+
+def test_limit_touch_only_does_not_fill():
+    import pandas as pd
+    from activist.paper.execution import simulate_entry
+    idx = pd.bdate_range("2025-01-01", periods=6)
+    px = pd.DataFrame({"open": [10, 10, 11, 11, 11, 11], "high": 11.0, "low": [10, 10, 10.3, 10.3, 10.3, 10.3],
+                       "close": 10.0, "volume": 1e7}, index=idx)
+    cfg = {"limit_above_last_close": 0.03, "max_fill_days": 3, "max_share_of_daily_volume": 0.05}
+    f = simulate_entry(px, pd.Timestamp("2025-01-02 22:00", tz="UTC"), cfg, 1000.0)
+    assert not f.filled

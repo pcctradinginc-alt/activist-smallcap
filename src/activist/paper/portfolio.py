@@ -14,8 +14,8 @@ from __future__ import annotations
 import csv, hashlib, json
 from datetime import date, datetime, timedelta, timezone
 import pandas as pd
-from ..common import EventStore, JOURNAL, file_hash, params, risk_limits
-from ..risk.rules import portfolio_size_factor
+from ..common import EventStore, JOURNAL, atomic_write_text, file_hash, params
+from ..risk.rules import check_portfolio, portfolio_size_factor
 from .execution import cost_one_side, simulate_entry
 
 STATE = JOURNAL / "portfolio.json"
@@ -68,8 +68,7 @@ def load_state() -> dict:
 
 
 def save_state(st: dict):
-    STATE.parent.mkdir(parents=True, exist_ok=True)
-    STATE.write_text(json.dumps(st, indent=1, default=str, ensure_ascii=False))
+    atomic_write_text(STATE, json.dumps(st, indent=1, default=str, ensure_ascii=False))
 
 
 def _append(path, cols, row):
@@ -96,8 +95,9 @@ def validated_combos() -> set[str]:
     files = sorted(REPORTS.glob("event_study_*.json"))
     if not files:
         return set()
-    res = json.loads(files[-1].read_text()).get("result", {}).get("combos", {})
-    return {k for k, v in res.items() if v.get("qualifiziert:main", {}).get("status") == "bestanden"}
+    # nur der bestätigende Holdout-Test bei eingefrorenem Protokoll zählt (keine Entwicklungsergebnisse)
+    a = json.loads(files[-1].read_text()).get("alpha") or {}
+    return set(a.get("passed") or []) if a.get("frozen") else set()
 
 
 # ------------------------------------------------------------------ Bausteine
@@ -107,19 +107,6 @@ def portfolio_value(st: dict, day: date, quotes: dict | None = None) -> float:
         q = (quotes or {}).get(pid) or pos.get("last_eur") or pos["entry_eur"]
         v += pos["qty"] * q
     return v
-
-
-def check_limits(st: dict, cand: dict) -> str | None:
-    """Portfoliogrenzen (nur manuell änderbar, config/risk_limits.yaml)."""
-    P = risk_limits()["portfolio"]
-    pos = list(st["positions"].values()) + list(st["orders"].values())
-    if len(pos) >= P["max_positions"]:
-        return "max. Positionen erreicht"
-    if sum(1 for x in pos if x.get("activist") == cand.get("activist")) >= P["max_per_activist"]:
-        return "max. Positionen je Aktivist"
-    if any(x.get("ticker") == cand.get("ticker") for x in pos):
-        return "Titel bereits im Depot/Orderbuch"
-    return None
 
 
 def process_orders(st: dict, today: date, p: dict, loader=load_prices, fx=eur_per_unit):
@@ -220,7 +207,7 @@ def process_exits(st: dict, today: date, p: dict, events: list[dict], loader=loa
         b0 = pos.get("bench_entry")
         bret = (b1 / b0 - 1) if b1 and b0 else None
         st["closed"].append({**{k: pos.get(k) for k in ("ticker", "region", "activist", "entry_date", "signal_class",
-                                                        "validated")},
+                                                        "validated", "challenger_score", "challenger_selected")},
                              "exit_date": str(xd.date()), "reason": why, "gross": gross, "bench": bret or 0.0,
                              "bench_missing": bret is None,
                              "net_excess": gross - (bret or 0.0) - pos["buy_cost"] - cost})
@@ -259,6 +246,31 @@ def _activist_reduced(pos: dict, events: list[dict]) -> str | None:
     return None
 
 
+def challenger_view(r: dict, today: date, fx_rate: float | None) -> dict:
+    """Score des Challengers zum Entscheidungszeitpunkt (Schattenmodus: handelt nicht, ändert keine Regel).
+    Aktivisten-Bilanz nur aus Kampagnen, deren Ausstieg vor heute lag (point-in-time)."""
+    from ..common import REPORTS
+    from ..confidence.basic import shrink_to_mean
+    from ..learn import ranker
+    sc = REPORTS / "scorecard.json"
+    if not sc.exists():
+        return {"challenger_score": None, "challenger_selected": None}
+    card = json.loads(sc.read_text())["card"]
+    prior = None
+    oc = REPORTS / "campaign_outcomes.csv"
+    if oc.exists():
+        o = pd.read_csv(oc)
+        o = o[pd.to_datetime(o.exit_date) < pd.Timestamp(today)]
+        if len(o):
+            own = o[o.activist == r.get("activist")]
+            prior = shrink_to_mean(own.net_excess.mean() if len(own) else o.net_excess.mean(), len(own), o.net_excess.mean())
+    feat = pd.DataFrame([{"activist_prior_mean": prior, "demand": r.get("demand"), "stake": r.get("stake"),
+                          "runup_20d": r.get("runup_20d"),
+                          "adv_eur": (r.get("adv") * fx_rate) if r.get("adv") and fx_rate else None}])
+    sco = float(ranker.score(feat, card).iloc[0])
+    return {"challenger_score": sco, "challenger_selected": bool(sco >= card["threshold"])}
+
+
 def new_signals(st: dict, today: date, p: dict, events: list[dict], since: str, rows: pd.DataFrame | None = None,
                 fx=None):
     """Neue Kampagnen seit 'since' bewerten. rows: vorbereiteter Datensatz (Tests); sonst aus den Buildern."""
@@ -283,29 +295,37 @@ def new_signals(st: dict, today: date, p: dict, events: list[dict], since: str, 
             book_shadow({"candidate_id": oid, "event_id": r.get("event_id"), "ticker": r.get("ticker"),
                          "region": r.get("region"), "reason": r.get("status"), "date": str(today)})
             continue
-        why = check_limits(st, r) or ("Verlustbremse: keine neuen Trades" if factor == 0 else None)
+        pos_eur = p["order"]["position_eur"] * factor
+        buy_cost = cost_one_side(r.get("half_spread"), p["costs"], r["region"], "buy", pos_eur)
+        cash_free = st["cash"] - sum(o["position_eur"] * (1 + o.get("buy_cost_est", 0)) for o in st["orders"].values())
+        why = "Verlustbremse: keine neuen Trades" if factor == 0 else check_portfolio(
+            list(st["positions"].values()) + list(st["orders"].values()), {**r, "position_eur": pos_eur, "buy_cost": buy_cost},
+            portfolio_value(st, today), cash_free, regions_passed=len({c.split("/")[0] for c in ok}))
         if why:
             book_shadow({"candidate_id": oid, "event_id": r.get("event_id"), "ticker": r.get("ticker"),
                          "region": r.get("region"), "reason": why, "date": str(today)}); continue
-        pos_eur = p["order"]["position_eur"] * factor
         try:
             local = pos_eur / (fx or eur_per_unit)(r["ticker"], r["region"], today)
-        except Exception:
-            local = pos_eur
+        except Exception:                         # kein stiller Fallback
+            book_shadow({"candidate_id": oid, "event_id": r.get("event_id"), "ticker": r.get("ticker"),
+                         "region": r.get("region"), "reason": "gesperrt: Wechselkurs fehlt", "date": str(today)}); continue
         combo = f"{r['region']}/{r.get('signal_class')}"
+        try:
+            chal = challenger_view(r, today, pos_eur / local if local else None)
+        except Exception as e:
+            chal = {"challenger_score": None, "challenger_selected": None, "challenger_error": str(e)[:120]}
         st["orders"][oid] = {"event_id": r.get("event_id"), "campaign_key": cid, "ticker": r["ticker"],
                              "region": r["region"], "signal_class": r.get("signal_class"), "activist": r.get("activist"),
+                             "sector": r.get("sector") if isinstance(r.get("sector"), str) else None, "buy_cost_est": buy_cost,
                              "filer_id": r.get("filer_id"), "filer_name": r.get("filer_name"),
                              "issuer_id": r.get("issuer_id") or r.get("isin"), "published": r["published"],
                              "order_date": str(today), "position_eur": pos_eur, "position_eur_local": local,
                              "half_spread": r.get("half_spread"), "limit_hint": (r.get("price") or 0) * 1.03,
                              "validated": combo in ok, "demand": r.get("demand"), "url": r.get("url"),
                              "exit_events": [str(x) for x in (r.get("exit_events") or [])
-                                             if isinstance(r.get("exit_events"), list)]}
-        (JOURNAL / "decisions").mkdir(parents=True, exist_ok=True)
-        (JOURNAL / "decisions" / f"{oid}.json").write_text(json.dumps({**r, "decision": "order", "combo": combo,
-                                                                         "validated": combo in ok}, default=str,
-                                                                        ensure_ascii=False, indent=1))
+                                             if isinstance(r.get("exit_events"), list)], **chal}
+        atomic_write_text(JOURNAL / "decisions" / f"{oid}.json", json.dumps(
+            {**r, "decision": "order", "combo": combo, "validated": combo in ok}, default=str, ensure_ascii=False, indent=1))
 
 
 def run_day(today: date | None = None, events: list[dict] | None = None, rows: pd.DataFrame | None = None,

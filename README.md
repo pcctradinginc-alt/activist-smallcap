@@ -16,11 +16,12 @@ Es wird **kein Echtgeld** gehandelt; Papierhandel und Journal dienen nur der Pr�
 config/     params.yaml (Protokollparameter), activists.yaml, risk_limits.yaml (nur manuell)
 src/activist/
   sources/  edgar.py, edinet.py, prices.py   Datenquellen
-  parse/    campaigns.py                     Ereignis -> Kampagne + Signalklasse (A/B/C)
+  parse/    campaigns.py                     Aktivistenliste, Ereignisübersicht
   paper/    execution.py                     Orderausführung, Kostenmodell
   study/    event_study.py, stats.py         Ereignisstudie, Bootstrap, Nachweiskriterien
-  risk/     rules.py                         Risikotor
-  confidence/ basic.py                       Konfidenzfaktor, Positionsgröße
+  risk/     rules.py                         ein Regelwerk: Kandidatenregeln + Portfolio-Risikotor (Studie und Papierdepot)
+  learn/    ranker.py                        Challenger (Schattenmodus, handelt nicht)
+  health.py                                  Systemstatus, Quellen-Überwachung
   notify/   mail.py                          E-Mail (SMTP)
   cli.py                                     Kommandozeile
 data/       events (append-only JSONL), prices
@@ -29,6 +30,20 @@ reports/    Studienberichte
 tests/      Offline-Tests (pytest)
 .github/workflows/  ci, daily, weekly_status
 ```
+
+## Alpha-Protokoll
+
+- Zeitfenster: Training bis 2019, Validierung 2020–2022, Holdout ab 2023 (bleibt versiegelt, bis das Protokoll eingefroren ist – `PROTOCOL_FREEZE.json`).
+- Der Holdout ab 2023 ist durch frühere Berichte vorbelastet (siehe `PROTOCOL.md`); unabhängig ist erst der Vorwärtstest nach dem Einfrieren.
+- Mehrfachtests werden mit Holm korrigiert; Alpha gilt je Region/Klasse nur bei bestandenem Holdout.
+- Es zählen nur geprüfte (verifizierte) Daten.
+- Lernstufe bleibt inaktiv, bis 200 abgeschlossene Kampagnen vorliegen.
+
+## Systemstatus
+
+Wochenbericht und HTML-Mail beginnen mit dem Block „Systemstatus“ (`health.py`): Datenqualität, gültige Ereignisse/Kampagnen, Alpha-Nachweis (JA/NEIN je Region/Klasse), ungeklärte Fehler (fehlgeschlagene oder seit mehr als 4 Tagen nicht gelaufene Quellen aus `reports/health_*.json`, fehlendes Einfrieren) und Lernfortschritt (x / 200).
+
+`python -m activist.cli health --core EDGAR,EDINET` bzw. `--pool six,nsm,amf` beendet einen Workflow mit Fehler, wenn eine Kernquelle ausfällt oder weniger als die Hälfte der aktiven Quellen liefert – ein grüner Lauf bedeutet damit vollständige Daten.
 
 ## Einrichtung
 
@@ -43,7 +58,11 @@ python3 -m pytest -q        # Tests laufen offline
 ```bash
 python -m activist.cli fetch --source edgar --days 3 [--date YYYY-MM-DD] [--limit N] [--no-headers]
 python -m activist.cli status [--mail]      # Ereignis-/Kampagnenübersicht, optional per E-Mail
-python -m activist.cli study [--main-only]  # Ereignisstudie, schreibt Bericht
+python -m activist.cli study [--main-only]  # Stufe 1: Kurse laden (Cache), simulieren, Bericht schreiben – dauert lange
+python -m activist.cli study --reuse        # Stufe 2: Statistik nur aus gespeicherten Trades neu rechnen – ohne Netz, Sekunden
+python -m activist.cli health               # Systemstatus; Exit-Code 1 bei Ausfall (siehe Systemstatus)
+python -m activist.cli paper                # Papierdepot-Tageslauf
+python -m activist.cli freeze --note "..."  # Protokoll einfrieren (Prüfsummen aller ergebnisrelevanten Dateien)
 ```
 
 `fetch --source edinet` bzw. `all` benötigt `EDINET_API_KEY`; ohne Schlüssel wird EDINET übersprungen.
@@ -54,6 +73,7 @@ python -m activist.cli study [--main-only]  # Ereignisstudie, schreibt Bericht
 |---|---|
 | `SEC_USER_AGENT` | User-Agent mit Kontakt für SEC EDGAR |
 | `EDINET_API_KEY` | EDINET-API (Japan) |
+| `TIINGO_API_KEY` | Zweite Kursquelle USA (Kursabgleich, delistete Titel) |
 | `SMTP_HOST`, `SMTP_USER`, `SMTP_PASSWORD` | Mailversand |
 | `MAIL_TO` | Empfänger |
 

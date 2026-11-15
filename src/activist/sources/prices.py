@@ -1,14 +1,19 @@
 """Tageskurse aus zwei kostenlosen Quellen (Yahoo, Stooq) mit Abgleich (Regel: >2 % Abweichung => gesperrt)."""
 from __future__ import annotations
-import io
-from datetime import date
+import io, json, re
+from datetime import date, timedelta
 import pandas as pd
 import requests
-from ..common import DATA
+from ..common import DATA, atomic_write_text
 
 HDR = {"User-Agent": "Mozilla/5.0 (research)"}
-STOOQ_SUFFIX = {"US": ".us", "JP": ".jp", "UK": ".uk", "DACH": ".de"}
 YAHOO_SUFFIX = {"US": "", "JP": ".T", "UK": ".L", "DACH": ".DE"}
+MIN_OVERLAP_DAYS, MIN_OVERLAP_SHARE = 20, 0.8   # verbindliche Mindestabdeckung des Quellenabgleichs
+
+
+def _scrub(msg) -> str:
+    """API-Schlüssel aus Fehlertexten entfernen (requests-Fehler enthalten die komplette URL inkl. token=...)."""
+    return re.sub(r"token=[^&\s]+", "token=***", str(msg))
 
 
 def yahoo(ticker: str, start: date, end: date) -> pd.DataFrame:
@@ -40,16 +45,6 @@ def yahoo(ticker: str, start: date, end: date) -> pd.DataFrame:
     return df.dropna(subset=["close"])
 
 
-def stooq(ticker: str, start: date, end: date) -> pd.DataFrame:
-    r = requests.get("https://stooq.com/q/d/l/", params={"s": ticker.lower(), "i": "d",
-                     "d1": f"{start:%Y%m%d}", "d2": f"{end:%Y%m%d}"}, headers=HDR, timeout=30)
-    r.raise_for_status()
-    if not r.text.startswith("Date"):
-        raise ValueError(f"Stooq: keine Daten für {ticker}")
-    df = pd.read_csv(io.StringIO(r.text), parse_dates=["Date"]).set_index("Date")
-    return df.rename(columns=str.lower)[["open", "high", "low", "close", "volume"]]
-
-
 def nasdaq(ticker: str, start: date, end: date) -> pd.DataFrame:
     for cls in ("stocks", "etf"):
         try:
@@ -74,37 +69,94 @@ def _nasdaq(ticker: str, start: date, end: date, assetclass: str) -> pd.DataFram
     return df.set_index("date").sort_index()
 
 
-SECOND_SOURCE = {"US": lambda t, s, e: nasdaq(t, s, e)}
+def tiingo_cached(ticker: str, start: date, end: date) -> pd.DataFrame:
+    """Tiingo-Rohkurse mit Datei-Cache (Gratis-Tarif: begrenzte Zahl Symbole/Monat -> jede Reihe nur einmal laden).
+    Sidecar <TICKER>.meta.json: Abrufdatum + Fehler (unbekannter Ticker wird 30 Tage negativ gecacht: spart >= 75 s je Anfrage)."""
+    path = DATA / "cache" / "tiingo" / f"{ticker.upper()}.csv"
+    meta_path, today = path.with_suffix(".meta.json"), date.today()
+    meta = json.loads(meta_path.read_text()) if meta_path.exists() else None
+    if meta and meta.get("error") and date.fromisoformat(meta["fetched"]) >= today - timedelta(days=30):
+        raise ValueError(meta["error"])
+    if path.exists():
+        df = pd.read_csv(path, index_col=0, parse_dates=True)
+        if meta and not meta.get("error"):
+            fetched = date.fromisoformat(meta["fetched"])
+            hit = start >= date(2014, 1, 1) and (fetched >= end or fetched >= today - timedelta(days=7))
+        else:
+            hit = df.index.min().date() <= start and df.index.max().date() >= min(end, today - timedelta(days=7))
+        if hit:
+            return df.loc[str(start):str(end)]
+    try:
+        df = tiingo(ticker, min(start, date(2014, 1, 1)), today)
+    except ValueError as e:
+        if "unbekannt" in str(e) or "keine Daten" in str(e):
+            atomic_write_text(meta_path, json.dumps({"fetched": today.isoformat(), "error": str(e)}))
+        raise
+    atomic_write_text(path, df.to_csv()); atomic_write_text(meta_path, json.dumps({"fetched": today.isoformat(), "error": None}))
+    return df.loc[str(start):str(end)]
+
+
+def _second_us(t: str, s: date, e: date) -> pd.DataFrame:
+    """Zweite unabhängige Quelle USA: Nasdaq (nur ca. letzte 12 Monate), sonst Tiingo (Historie, inkl. delisteter Titel).
+    Verglichen werden unbereinigte Schlusskurse."""
+    if s >= date.today() - timedelta(days=330):
+        try:
+            return nasdaq(t, s, e)
+        except ValueError:
+            pass
+    df = tiingo_cached(t, s, e)
+    return df.assign(close=df["close_raw"])
+
+
+SECOND_SOURCE = {"US": _second_us}
 
 
 def cross_check(a: pd.DataFrame, b: pd.DataFrame, max_dev: float = 0.02) -> dict:
-    """Vergleicht unbereinigte Schlusskurse beider Quellen."""
-    a = a.assign(close=a["close_raw"]) if "close_raw" in a else a
-    j = a[["close"]].join(b[["close"]], how="inner", lsuffix="_a", rsuffix="_b")
-    if j.empty:
-        return {"ok": False, "overlap": 0, "max_dev": None}
+    """Vergleicht unbereinigte Schlusskurse beider Quellen. Zu geringe Überlappung = ungeprüft (ok=None), nie ok=True."""
+    a = a.assign(close=a["close_unadj"]) if "close_unadj" in a else (a.assign(close=a["close_raw"]) if "close_raw" in a else a)
+    j = a[["close"]].rename(columns={"close": "close_a"}).join(b[["close"]].rename(columns={"close": "close_b"}), how="inner")
+    n = len(j)
     dev = (j.close_a / j.close_b - 1).abs()
-    return {"ok": bool(dev.max() <= max_dev), "overlap": len(j), "max_dev": float(dev.max())}
+    md = float(dev.max()) if n else None
+    if n < max(MIN_OVERLAP_DAYS, MIN_OVERLAP_SHARE * len(a)):
+        return {"ok": None, "overlap": n, "max_dev": md, "error": f"zu wenig Überlappung ({n} von {len(a)} Tagen)"}
+    return {"ok": bool(md <= max_dev), "overlap": n, "max_dev": md}
 
 
 def load(ticker: str, region: str, start: date, end: date, cache: bool = True) -> tuple[pd.DataFrame, dict]:
-    """Primärquelle Yahoo, Zweitquelle je Region (USA: Nasdaq). Gibt Kurse und Abgleichsergebnis zurück.
-    ok=None heißt: keine Zweitquelle verfügbar -> Ereignis gilt als ungeprüft (Datenqualität)."""
+    """Primärquelle Yahoo, Zweitquelle je Region (USA: Nasdaq/Tiingo). Gibt Kurse und Abgleichsergebnis zurück.
+    ok=True: beide Quellen stimmen überein · ok=False: Abweichung > 2 % (gesperrt) · ok=None: ungeprüft.
+    Das Prüfergebnis wird mit den Kursen gespeichert – ein Cache-Treffer gilt nie stillschweigend als geprüft."""
     path = DATA / "prices" / f"{region}_{ticker}.csv"
-    if cache and path.exists():
+    chk_path = path.with_suffix(".check.json")
+    if cache and path.exists() and chk_path.exists():
         df = pd.read_csv(path, index_col=0, parse_dates=True)
-        if df.index.min().date() <= start and df.index.max().date() >= end:
-            return df.loc[str(start):str(end)], {"ok": True, "cached": True}
+        chk = json.loads(chk_path.read_text())
+        today = date.today()
+        if chk.get("req_start"):   # Abdeckung nach angefragtem Zeitraum (delistete/junge Ticker haben nie Daten bis end)
+            covered = date.fromisoformat(chk["req_start"]) <= start and \
+                (date.fromisoformat(chk["req_end"]) >= end or date.fromisoformat(chk["req_end"]) >= today - timedelta(days=7))
+        else:
+            covered = df.index.min().date() <= start and df.index.max().date() >= min(end, today - timedelta(days=7))
+        if chk.get("ok") and (chk.get("overlap") or 0) < MIN_OVERLAP_DAYS:   # alte Prüfdatei mit zu kleiner Überlappung = ungeprüft
+            chk = {**chk, "ok": None}
+        if covered and (chk.get("ok") is not None or region not in SECOND_SOURCE):   # ungeprüft + Zweitquelle vorhanden -> neu prüfen
+            return df.loc[str(start):str(end)], {**chk, "cached": True}
     a = yahoo(ticker + YAHOO_SUFFIX.get(region, ""), start, end)
     try:
         if region not in SECOND_SOURCE:
             raise ValueError(f"keine Zweitquelle für Region {region}")
         chk = cross_check(a, SECOND_SOURCE[region](ticker, start, end))
     except Exception as e:
-        chk = {"ok": None, "error": str(e)}   # Zweitquelle nicht verfügbar => als ungeprüft markieren
+        chk = {"ok": None, "error": _scrub(e)[:200]}   # Zweitquelle nicht verfügbar => ungeprüft (zählt nicht als Nachweis)
     if cache and len(a):
-        path.parent.mkdir(parents=True, exist_ok=True); a.to_csv(path)
+        atomic_write_text(path, a.to_csv())
+        atomic_write_text(chk_path, json.dumps({**chk, "req_start": start.isoformat(), "req_end": end.isoformat()}))
     return a, chk
+
+
+TIINGO_MIN_GAP_S, TIINGO_RETRIES, TIINGO_429_WAIT_S = 75.0, 4, 900.0
+_TIINGO_LAST = [0.0]
 
 
 def tiingo(ticker: str, start: date, end: date, key: str | None = None) -> pd.DataFrame:
@@ -114,11 +166,24 @@ def tiingo(ticker: str, start: date, end: date, key: str | None = None) -> pd.Da
     key = key or os.environ.get("TIINGO_API_KEY")
     if not key:
         raise ValueError("TIINGO_API_KEY fehlt")
-    r = requests.get(f"https://api.tiingo.com/tiingo/daily/{ticker.lower()}/prices",
-                     params={"startDate": f"{start}", "endDate": f"{end}", "token": key}, headers=HDR, timeout=30)
+    import time
+    for attempt in range(TIINGO_RETRIES + 1):   # Gratis-Tarif: ca. 50 Abrufe/Stunde -> Abstand halten, bei 429 warten
+        wait = _TIINGO_LAST[0] + TIINGO_MIN_GAP_S - time.monotonic()
+        if wait > 0:
+            time.sleep(wait)
+        try:
+            r = requests.get(f"https://api.tiingo.com/tiingo/daily/{ticker.lower()}/prices",
+                             params={"startDate": f"{start}", "endDate": f"{end}", "token": key}, headers=HDR, timeout=30)
+        except requests.RequestException:     # Fehlertext enthält die URL samt token=... -> nie weiterreichen
+            raise ValueError(f"Tiingo: Verbindungsfehler für {ticker}") from None
+        _TIINGO_LAST[0] = time.monotonic()
+        if r.status_code != 429 or attempt == TIINGO_RETRIES:
+            break
+        time.sleep(TIINGO_429_WAIT_S)
     if r.status_code == 404:
         raise ValueError(f"Tiingo: {ticker} unbekannt")
-    r.raise_for_status()
+    if r.status_code >= 400:      # nie r.raise_for_status(): der requests-Fehlertext enthält die URL samt token=...
+        raise ValueError(f"Tiingo: HTTP {r.status_code} für {ticker}")
     rows = r.json()
     if not rows:
         raise ValueError(f"Tiingo: keine Daten für {ticker}")
@@ -135,6 +200,6 @@ def validate_against(px: pd.DataFrame, ref_date, ref_price: float | None, tol: f
     (z. B. Ø-Kaufkurs des Aktivisten laut 13D Item 5c) liegen. Ohne Referenz: nicht validierbar -> False."""
     if not ref_price or px.empty:
         return False
-    col = "close_raw" if "close_raw" in px else "close"
+    col = next(c for c in ("close_unadj", "close_raw", "close") if c in px)   # tatsächlich gehandelter Kurs bevorzugt
     v = px[col].asof(pd.Timestamp(ref_date).tz_localize(None) if pd.Timestamp(ref_date).tzinfo else pd.Timestamp(ref_date))
     return bool(pd.notna(v) and abs(v / ref_price - 1) <= tol)

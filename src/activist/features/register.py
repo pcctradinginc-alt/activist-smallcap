@@ -46,7 +46,7 @@ class Register:
             return {"n_closed": 0, "mean_net": None, "hit_rate": None, "prior_campaigns": self.prior_campaigns(filer, asof)}
         ts = pd.Timestamp(asof)
         ts = ts.tz_convert("UTC") if ts.tzinfo else ts.tz_localize("UTC")
-        closed = r[pd.to_datetime(r.exit_date, utc=True) < ts]
+        closed = r[pd.to_datetime(r.exit_date, utc=True, format="ISO8601") < ts]
         if closed.empty:
             return {"n_closed": 0, "mean_net": None, "hit_rate": None, "prior_campaigns": self.prior_campaigns(filer, asof)}
         g_mean, g_hit = closed.net_excess.mean(), (closed.net_excess > 0).mean()

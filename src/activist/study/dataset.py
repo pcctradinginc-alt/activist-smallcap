@@ -13,6 +13,7 @@ from ..common import DATA, params, risk_limits
 from ..features.register import Register
 from ..features.universe import price_features, universe_check
 from ..parse import filing13d
+from ..risk.rules import candidate_reasons
 from ..sources import delisting, hist_ticker, prices, secmeta
 
 INITIAL = {"SC 13D", "SCHEDULE 13D"}
@@ -39,6 +40,36 @@ def _parse(url: str, cache: dict) -> dict:
         with open(CACHE, "a") as f:
             f.write(json.dumps(r) + "\n")
     return cache[url]
+
+
+def data_quality(row: dict, ticker_certain: bool, activist_evidence: bool) -> dict:
+    """Verbindliche Datenqualität je Kampagne. Nur 'verified' fließt in den bestätigenden Alpha-Test.
+    Kriterien: zwei unabhängige Kursquellen stimmen überein (Abweichung <= 2 %), Ticker eindeutig der damaligen Firma
+    zugeordnet, Marktkapitalisierung aus point-in-time Aktienzahl bekannt, Aktivisten-Einstufung belegt."""
+    checks = {"Kurse doppelt geprüft": row.get("price_check") is True, "Ticker eindeutig": bool(ticker_certain),
+              "Marktkapitalisierung bekannt": row.get("mcap") is not None and row.get("mcap") == row.get("mcap"),
+              "Aktivist belegt": bool(activist_evidence)}
+    return {"verified": all(checks.values()), "dq_missing": "; ".join(k for k, v in checks.items() if not v)}
+
+
+def _ticker_certain(row: dict, px, d0: date, issuer_id: str, current: str | None) -> bool:
+    """Ist der Ticker der damaligen Firma sicher zugeordnet? secmeta.ticker_asof liefert nur den HEUTIGEN Ticker, daher:
+    Survivorship-Pfad (historischer Ticker + Tiingo-Kurs am Einstand validiert) · Kurs am Entscheidungstag passt zum
+    Einstand des Aktivisten · oder der historische Ticker aus den SEC-Meldungen gleicht dem heutigen."""
+    row["ticker_check"] = None
+    if str(row.get("ticker_source") or "").startswith("hist:") and row.get("price_source") == "tiingo":
+        row["ticker_check"] = "hist+einstand"
+    elif prices.validate_against(px, d0, row.get("activist_cost")):
+        row["ticker_check"] = "einstand"
+    else:
+        try:
+            h = (hist_ticker.ticker_hist(issuer_id, d0) or {}).get("ticker")
+        except Exception:
+            h = None
+        norm = lambda x: str(x).upper().replace(".", "-")
+        if h and current and norm(h) == norm(current):
+            row["ticker_check"] = "hist"
+    return row["ticker_check"] is not None
 
 
 def campaigns(events: list[dict], reg: Register) -> list[dict]:
@@ -114,12 +145,14 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
             co = secmeta.company(c["issuer_id"])
         except Exception:
             co = {}
+        row["sector"] = str(co.get("sic"))[:2] if co.get("sic") else None   # SIC-Hauptgruppe für das Portfoliorisiko
         px, row["price_source"] = None, None
         if t:
             row["ticker"] = t["ticker"]
             try:
                 px, chk = prices.load(t["ticker"], "US", d0 - timedelta(days=45), min(d0 + timedelta(days=420), end))
                 row["price_source"] = "yahoo"
+                row["price_check"] = chk.get("ok"); row["price_check_note"] = prices._scrub(chk.get("error")) if chk.get("error") else (f"Abweichung {chk.get('max_dev')}" if chk.get("ok") is False else None)
             except Exception:
                 px = None
             if px is not None and chk.get("ok") is False:
@@ -135,7 +168,7 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
             if h.get("ticker"):
                 row["ticker"], row["ticker_source"] = h["ticker"], "hist:" + str(h.get("source"))
                 try:
-                    tp = prices.tiingo(h["ticker"], d0 - timedelta(days=45), min(d0 + timedelta(days=420), end))
+                    tp = prices.tiingo_cached(h["ticker"], d0 - timedelta(days=45), min(d0 + timedelta(days=420), end))
                     # Ticker-Wiederverwendung ausschließen: Kurs muss zum Einstand des Aktivisten passen
                     if prices.validate_against(tp, d0, row["activist_cost"]):
                         px, row["price_source"] = tp, "tiingo"
@@ -176,20 +209,12 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
                 and (ft.get("demand") in (None, "none") or not ft.get("demand_evidence")):
             funnel["kein Aktivist (keine Forderung in Item 4)"] += 1
             row["status"] = "kein Aktivist: keine Forderung"; rows.append(row); continue
-        reasons = []
-        if 2 * (row["half_spread"] or 0) > lim["max_spread"]:
-            reasons.append("Spread")
-        if row["runup_20d"] is not None and row["runup_20d"] > lim["max_runup_20d"]:
-            reasons.append("Anstieg 20T")
-        if row["activist_cost"] and row["price"] > row["activist_cost"] * (1 + lim["max_premium_over_activist_cost"]):
-            reasons.append("Kurs über Aktivisten-Einstand")
         try:
             from ..paper.portfolio import eur_per_unit
             pos_usd = p["order"]["position_eur"] / eur_per_unit(row["ticker"], "US", d0)
         except Exception:
-            pos_usd = p["order"]["position_eur"] * 1.1
-        if pos_usd > lim["max_position_share_of_adv"] * row["adv"]:      # ADV in USD
-            reasons.append("Liquidität")
+            pos_usd = None                        # kein stiller Fallback: ohne Wechselkurs keine Liquiditätsprüfung
+        reasons = candidate_reasons(row, pos_usd, lim)      # ADV in USD
         # Ausstiege: spätere Meldungen dieser Kampagne mit Anteil < 5 % oder Exit-Formulierung
         exits = []
         if parse_filings:
@@ -199,6 +224,7 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
         row["exit_events"] = exits
         row["status"] = ("verworfen: " + "; ".join(reasons)) if reasons else "qualifiziert"
         funnel["verworfen (Schattenportfolio)" if reasons else "qualifiziert"] += 1
+        row.update(data_quality(row, ticker_certain=_ticker_certain(row, px, d0, c["issuer_id"], row.get("ticker")), activist_evidence=bool(c.get("listed_activist") or ft.get("demand_evidence"))))
         rows.append(row)
     return pd.DataFrame(rows), funnel
 
@@ -272,21 +298,20 @@ def build_jp(events: list[dict], end: date | None = None, since: str | None = No
                 funnel[f"JP Universum: {v}"] += 1
             row["status"] = "außerhalb Universum: " + "; ".join(uv); rows.append(row); continue
         funnel["JP im Universum"] += 1
-        eurjpy = float(fx.asof(pd.Timestamp(d0))) if fx is not None else 160.0
+        eurjpy = float(fx.asof(pd.Timestamp(d0))) if fx is not None else float("nan")
+        if pd.isna(eurjpy):                       # kein stiller Fallback auf einen Näherungskurs
+            funnel["JP Wechselkurs fehlt"] += 1; row["status"] = "gesperrt: Wechselkurs fehlt"; rows.append(row); continue
         pos_jpy = p["order"]["position_eur"] * eurjpy
-        reasons = []
+        reasons = candidate_reasons(row, pos_jpy, lim)
         if cfg.get("lot_size", 100) * pf["price"] > pos_jpy:
-            reasons.append("Mindestorder (100 Stück) > Position")
-        if 2 * (row["half_spread"] or 0) > lim["max_spread"]:
-            reasons.append("Spread")
-        if row["runup_20d"] > lim["max_runup_20d"]:
-            reasons.append("Anstieg 20T")
-        if pos_jpy > lim["max_position_share_of_adv"] * row["adv"]:
-            reasons.append("Liquidität")
+            reasons.insert(0, "Mindestorder (100 Stück) > Position")
         row["exit_events"] = [fu["published"] for fu in c["followups"]
                               if fu.get("holding_ratio") is not None and fu["holding_ratio"] < 0.05][:1]
         # Konzept: Handelbarkeit über deutschen Broker ungeprüft -> Japan vorerst nur Schattenportfolio
         row["status"] = ("verworfen: " + "; ".join(reasons)) if reasons else "qualifiziert"
         funnel["JP verworfen" if reasons else "JP qualifiziert"] += 1
+        row["price_check"] = chk.get("ok")
+        row["mcap"] = c.get("total_shares_outstanding") * pf["price"] if c.get("total_shares_outstanding") else None
+        row.update(data_quality(row, ticker_certain=True, activist_evidence=True))
         rows.append(row)
     return pd.DataFrame(rows), funnel

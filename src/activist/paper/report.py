@@ -3,12 +3,78 @@ from __future__ import annotations
 import csv, re
 from datetime import date, timedelta
 from ..common import JOURNAL, REPORTS, file_hash
+from .. import health
 from .portfolio import SHADOW, TRADES, load_state, portfolio_value
 
 
 def _de(s: str) -> str:
     """Englische Zahlenformate -> deutsche (1,234.5 -> 1.234,5)."""
     return re.sub(r"\d[\d,]*\.?\d*", lambda m: m.group(0).replace(",", "\x00").replace(".", ",").replace("\x00", "."), s)
+
+
+def _status_parts() -> dict:
+    st = health.status()
+    dq, al, lr = st["data_quality"], st["alpha"], st["learning"]
+    share = "–" if dq.get("verified_share") is None else f"{dq['verified_share']:.0%}"
+    n = lambda v: "–" if v is None else str(v)
+    combos = [f"{c}: {v.get('status', '?')}" + (f" (Ø {v['mean']:+.1%}, p {v['p_holm']:.3f}, n={v.get('n')})"
+                                                if v.get("mean") is not None and v.get("p_holm") is not None else "")
+              for c, v in sorted(al["per_combo"].items())]
+    return {"st": st, "share": share, "n": n, "combos": combos,
+            "yes": al["status"] == "nachgewiesen", "learn": f"{lr['closed_campaigns']} / {lr['needed']}"}
+
+
+def _champion_challenger() -> str:
+    """Champion (Basisstrategie) vs. Challenger (Alpha-Score): Validierung, Holdout, prospektiv im Papierdepot."""
+    lr = health.status()["learning"]
+    parts = []
+    ev = lr.get("evaluation")
+    if ev and ev.get("diff") is not None:
+        parts.append(f"Validierung: Challenger {ev['mean_selected']:+.1%} vs. Champion {ev['mean_all']:+.1%} "
+                     f"(Δ {ev['diff']:+.1%}, p {ev['p_value']:.3f})")
+    else:
+        parts.append(f"Validierung: {lr.get('status')}")
+    if lr.get("holdout"):
+        parts.append(f"Holdout: {lr['holdout']}")
+    closed = [c for c in load_state()["closed"] if c.get("challenger_selected") is not None]
+    if closed:
+        sel = [c["net_excess"] for c in closed if c["challenger_selected"]]
+        allv = [c["net_excess"] for c in closed]
+        parts.append(f"prospektiv: {len(allv)} abgeschlossen, Champion Ø {sum(allv) / len(allv):+.1%}"
+                     + (f", Challenger Ø {sum(sel) / len(sel):+.1%} (n={len(sel)})" if sel else ", Challenger n=0"))
+    else:
+        parts.append("prospektiv: noch keine abgeschlossenen Schatten-Trades")
+    return " | ".join(parts)
+
+
+def _status_text() -> list[str]:
+    p = _status_parts()
+    st, dq, al, lr = p["st"], p["st"]["data_quality"], p["st"]["alpha"], p["st"]["learning"]
+    return ["SYSTEMSTATUS",
+            f"Datenqualität: geprüfter Anteil {p['share']}",
+            f"Gültige Ereignisse/Kampagnen: {p['n'](dq.get('n_events'))} Ereignisse | {p['n'](dq.get('n_campaigns_valid'))} gültige Kampagnen"
+            f" | {p['n'](dq.get('n_campaigns_unverified'))} ungeprüft",
+            f"Alpha-Nachweis: {'JA' if p['yes'] else 'NEIN'} ({al['status']})" + (" | " + "; ".join(p["combos"]) if p["combos"] else ""),
+            "Ungeklärte Fehler: " + ("; ".join(st["errors"]) if st["errors"] else "keine"),
+            f"Champion vs. Challenger: {_champion_challenger()}",
+            f"Lernstatus: {p['learn']} abgeschlossene Kampagnen | {lr['status']} | aktiv: NEIN (Basisstrategie handelt)"
+            + (f" | belastbare Merkmale: {', '.join(lr['robust_features'])}" if lr.get("robust_features") else ""), ""]
+
+
+def _status_card(H) -> str:
+    p = _status_parts()
+    st, dq, al, lr = p["st"], p["st"]["data_quality"], p["st"]["alpha"], p["st"]["learning"]
+    inner = H.kpis([("Geprüfter Anteil", p["share"]), ("Gültige Kampagnen", p["n"](dq.get("n_campaigns_valid"))),
+                    ("Ereignisse", p["n"](dq.get("n_events")))])
+    inner += '<div style="height:14px"></div>' + H.pill("Alpha: " + ("JA" if p["yes"] else "NEIN"), H.GREEN if p["yes"] else H.RED)
+    inner += " " + H.pill(al["status"])
+    if p["combos"]:
+        inner += H.text(H.e("; ".join(p["combos"])), 13, H.SUB)
+    inner += '<div style="height:10px"></div>' + H.text("Ungeklärte Fehler: " + (H.e("; ".join(st["errors"])) if st["errors"] else "keine"), 14)
+    inner += H.text("Champion vs. Challenger: " + H.e(_champion_challenger()), 14)
+    inner += H.text(f"Lernstatus: {p['learn']} abgeschlossene Kampagnen · {H.e(lr['status'])} · aktiv: NEIN"
+                    + (" · belastbar: " + H.e(", ".join(lr["robust_features"])) if lr.get("robust_features") else ""), 14)
+    return H.card("Systemstatus", inner)
 
 
 def weekly(today: date | None = None) -> tuple[str, str]:
@@ -19,6 +85,7 @@ def weekly(today: date | None = None) -> tuple[str, str]:
     perf = val / st["start_value"] - 1
     L = [f"WOCHENBERICHT PAPIERDEPOT – KW {today:%G-%V} (Stand {today})",
          "Schattenmodus: Regionen ohne bestandenen Nachweis sind mit [nicht nachgewiesen] markiert. Kein echtes Geld.", "",
+         *_status_text(),
          "DEPOT",
          f"Depotwert: {val:,.0f} € | Start {st['start_value']:,.0f} € am {st['start_date']} | Entwicklung {perf:+.2%}",
          f"Cash: {st['cash']:,.0f} € ({st['cash'] / val:.0%}) | Höchststand {st['peak_value']:,.0f} € | Rückgang {dd:.1%}",
@@ -73,7 +140,7 @@ def weekly_html(today: date | None = None) -> str:
     perf = val / st["start_value"] - 1
     week = [h for h in st["history"] if h["date"] >= str(today - timedelta(days=7))]
     wk = (week[-1]["value"] / week[0]["value"] - 1) if len(week) >= 2 else None
-    cards = [H.card(None, H.kpis([("Depotwert", H.eur(val)), ("Seit Start", H.signed(perf)), ("Diese Woche", H.signed(wk))])
+    cards = [_status_card(H), H.card(None, H.kpis([("Depotwert", H.eur(val)), ("Seit Start", H.signed(perf)), ("Diese Woche", H.signed(wk))])
                     + '<div style="height:18px"></div>'
                     + H.kpis([("Cash", f'{H.eur(st["cash"])} <span style="font-size:13px;color:#86868b">'
                                        f'{st["cash"] / val:.0%}</span>'.replace(".", ",")),
