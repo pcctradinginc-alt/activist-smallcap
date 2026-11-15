@@ -48,3 +48,9 @@ Region DACH umfasst daher nur die Schweiz (SIX). Parser für WpHG/BörseG-Mittei
 - DACH-Obergrenze Marktkapitalisierung 2 Mrd. -> 8 Mrd. EUR, damit SDAX-Werte im Universum sind (Wunsch Nutzer).
   Bewusst Größengrenze statt Indexmitgliedschaft: die heutige SDAX-Zusammensetzung rückwirkend zu verwenden wäre
   ein Look-ahead-Fehler. Effekt auf die Ergebnisse wird im Bericht getrennt nach <= 2 Mrd. und 2–8 Mrd. ausgewiesen.
+
+## Korrektur 2026-11-15: Aktivisten-Erkennung verschärft, Papierdepot zurückgesetzt
+Der erste Tageslauf (2026-11-14) hat große Institutionen (Staatsfonds, Banken, Vermögensverwalter) als Aktivisten
+gewertet, weil die Verhaltensregel (>= 3 frühere 13D) allein genügte. Neu: Klasse B nur für kuratierte Aktivisten;
+Klasse A über die Verhaltensregel nur mit konkreter Forderung samt Textbeleg in Item 4. Zu diesem Zeitpunkt war keine
+Order ausgeführt (0 Positionen, trades.csv leer); portfolio.json und shadow.csv wurden zurückgesetzt.

@@ -31,6 +31,10 @@ class Register:
     def prior_campaigns(self, filer: str, asof: str) -> int:
         return bisect.bisect_left(self.first13d.get(str(filer).lstrip("0"), []), asof)
 
+    def is_listed(self, filer: str, asof: str) -> bool:
+        """Im kuratierten Register (config/activists.yaml) zum Stichtag."""
+        return str(filer or "").lstrip("0") in known_activists(asof)
+
     def is_activist(self, filer: str, asof: str) -> bool:
         f = str(filer or "").lstrip("0")
         return f in known_activists(asof) or self.prior_campaigns(f, asof) >= MIN_ISSUERS

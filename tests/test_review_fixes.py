@@ -65,3 +65,17 @@ def test_wolf_pack_same_issuer_within_30_days_counts_once():
     evs = [ev(1, "SC 13D", "2023-01-05T10:00:00-05:00", "1517137"),
            ev(2, "SC 13D", "2023-01-20T10:00:00-05:00", "1791786")]     # Elliott, gleicher Emittent
     assert len(dataset.campaigns(evs, Register(evs))) == 1
+
+
+def test_class_b_only_for_listed_activists():
+    """Große Institutionen mit vielen 13D (z. B. Bank, Staatsfonds) werden über 13G nicht zum Aktivisten."""
+    evs = [ev(i, "SC 13D", f"2022-0{i}-01T10:00:00-05:00", "886982", str(200 + i)) for i in range(1, 5)]
+    evs.append(ev(9, "SC 13G", "2023-03-01T10:00:00-05:00", "886982", "999"))
+    out = dataset.campaigns(evs, Register(evs))
+    assert not any(c["signal_class"] == "B" for c in out)
+
+
+def test_listed_activist_13g_is_class_b():
+    evs = [ev(1, "SC 13G", "2023-03-01T10:00:00-05:00", "1517137", "999")]     # Starboard (Liste)
+    out = dataset.campaigns(evs, Register(evs))
+    assert out and out[0]["signal_class"] == "B" and out[0]["listed_activist"]

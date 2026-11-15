@@ -65,13 +65,16 @@ def campaigns(events: list[dict], reg: Register) -> list[dict]:
                     passive_before = True      # 13G/A ohne Erstmeldung = bestehende Position, kein Einstieg
                     continue
                 passive_before = True
-                cls, etype = ("B" if act else None), "passive"
+                # Klasse B nur für kuratierte Aktivisten: große Institutionen (Banken, Staatsfonds, Vermögensverwalter)
+                # geben ebenfalls 13D ab und würden die Verhaltensregel sonst erfüllen
+                cls, etype = ("B" if reg.is_listed(f, e["published"]) else None), "passive"
                 if cls is None:
                     continue
             else:
                 continue
             if cls:
                 out.append(dict(e, campaign_key=f"{f}-{i}", signal_class=cls, event_type=etype,
+                                listed_activist=reg.is_listed(f, e["published"]),
                                 followups=[x for x in evs[idx + 1:]]))
             break
     # Wolfsrudel / mehrere Vehikel einer Gruppe: je Emittent zählt nur die erste Kampagne innerhalb von 30 Tagen
@@ -167,6 +170,11 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
         ft = _parse(c["url"], cache) if parse_filings and c["form"] in INITIAL | AMEND else {}
         row.update(demand=ft.get("demand"), demand_evidence=ft.get("demand_evidence"),
                    stake=ft.get("percent_of_class"), activist_cost=ft.get("avg_purchase_price"))
+        # Verhaltensregel allein reicht nicht: ohne kuratierten Eintrag braucht der 13D eine konkrete Forderung (Item 4)
+        if c["signal_class"] == "A" and not c.get("listed_activist") and parse_filings \
+                and (ft.get("demand") in (None, "none") or not ft.get("demand_evidence")):
+            funnel["kein Aktivist (keine Forderung in Item 4)"] += 1
+            row["status"] = "kein Aktivist: keine Forderung"; rows.append(row); continue
         reasons = []
         if 2 * (row["half_spread"] or 0) > lim["max_spread"]:
             reasons.append("Spread")
