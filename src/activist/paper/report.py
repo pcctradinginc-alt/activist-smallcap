@@ -24,6 +24,29 @@ def _status_parts() -> dict:
             "yes": al["status"] == "nachgewiesen", "learn": f"{lr['closed_campaigns']} / {lr['needed']}"}
 
 
+def _champion_challenger() -> str:
+    """Champion (Basisstrategie) vs. Challenger (Alpha-Score): Validierung, Holdout, prospektiv im Papierdepot."""
+    lr = health.status()["learning"]
+    parts = []
+    ev = lr.get("evaluation")
+    if ev and ev.get("diff") is not None:
+        parts.append(f"Validierung: Challenger {ev['mean_selected']:+.1%} vs. Champion {ev['mean_all']:+.1%} "
+                     f"(Δ {ev['diff']:+.1%}, p {ev['p_value']:.3f})")
+    else:
+        parts.append(f"Validierung: {lr.get('status')}")
+    if lr.get("holdout"):
+        parts.append(f"Holdout: {lr['holdout']}")
+    closed = [c for c in load_state()["closed"] if c.get("challenger_selected") is not None]
+    if closed:
+        sel = [c["net_excess"] for c in closed if c["challenger_selected"]]
+        allv = [c["net_excess"] for c in closed]
+        parts.append(f"prospektiv: {len(allv)} abgeschlossen, Champion Ø {sum(allv) / len(allv):+.1%}"
+                     + (f", Challenger Ø {sum(sel) / len(sel):+.1%} (n={len(sel)})" if sel else ", Challenger n=0"))
+    else:
+        parts.append("prospektiv: noch keine abgeschlossenen Schatten-Trades")
+    return " | ".join(parts)
+
+
 def _status_text() -> list[str]:
     p = _status_parts()
     st, dq, al, lr = p["st"], p["st"]["data_quality"], p["st"]["alpha"], p["st"]["learning"]
@@ -33,7 +56,9 @@ def _status_text() -> list[str]:
             f" | {p['n'](dq.get('n_campaigns_unverified'))} ungeprüft",
             f"Alpha-Nachweis: {'JA' if p['yes'] else 'NEIN'} ({al['status']})" + (" | " + "; ".join(p["combos"]) if p["combos"] else ""),
             "Ungeklärte Fehler: " + ("; ".join(st["errors"]) if st["errors"] else "keine"),
-            f"Lernfortschritt: {p['learn']} abgeschlossene Kampagnen | {lr['status']}", ""]
+            f"Champion vs. Challenger: {_champion_challenger()}",
+            f"Lernstatus: {p['learn']} abgeschlossene Kampagnen | {lr['status']} | aktiv: NEIN (Basisstrategie handelt)"
+            + (f" | belastbare Merkmale: {', '.join(lr['robust_features'])}" if lr.get("robust_features") else ""), ""]
 
 
 def _status_card(H) -> str:
@@ -46,7 +71,9 @@ def _status_card(H) -> str:
     if p["combos"]:
         inner += H.text(H.e("; ".join(p["combos"])), 13, H.SUB)
     inner += '<div style="height:10px"></div>' + H.text("Ungeklärte Fehler: " + (H.e("; ".join(st["errors"])) if st["errors"] else "keine"), 14)
-    inner += H.text(f"Lernfortschritt: {p['learn']} abgeschlossene Kampagnen · {H.e(lr['status'])}", 14)
+    inner += H.text("Champion vs. Challenger: " + H.e(_champion_challenger()), 14)
+    inner += H.text(f"Lernstatus: {p['learn']} abgeschlossene Kampagnen · {H.e(lr['status'])} · aktiv: NEIN"
+                    + (" · belastbar: " + H.e(", ".join(lr["robust_features"])) if lr.get("robust_features") else ""), 14)
     return H.card("Systemstatus", inner)
 
 

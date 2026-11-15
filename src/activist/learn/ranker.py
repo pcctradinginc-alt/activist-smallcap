@@ -193,3 +193,62 @@ def decide(train_df: pd.DataFrame, valid_df: pd.DataFrame, min_campaigns: int = 
     p, d = ev["p_value"], ev["diff"]
     better = d is not None and p is not None and d > 0 and p < 0.10
     return _clean({**base, "status": ST_CHALLENGER if better else ST_BASE, "evaluation": ev, "card": _summary(card)})
+
+
+# ------------------------------------------------------------------ automatische Merkmalsanalyse (feste Regeln)
+MIN_BUCKET_N = 30          # Mindestumfang je Bucket, sonst "zu wenig Daten"
+
+
+def feature_analysis(df: pd.DataFrame, reps: int = 1000, seed: int = 5) -> dict:
+    """Welche vorab festgelegten Merkmale hängen mit positivem Nettoergebnis zusammen?
+    Je Merkmal: Buckets (Terzile bzw. Kategorien) mit n, Ø Nettoüberrendite, Trefferquote; Zusammenhang =
+    oberster minus unterster Bucket mit gebündeltem 90-%-Bootstrap-Bereich (nach Aktivist). 'belastbar' nur,
+    wenn jeder verglichene Bucket >= MIN_BUCKET_N Kampagnen hat und der Bereich die Null nicht enthält."""
+    out = {}
+    rng = np.random.default_rng(seed)
+    for f in FEATURES:
+        if f not in df or df[f].notna().sum() < 2 * MIN_BUCKET_N:
+            out[f] = {"status": "zu wenig Daten", "n": int(df[f].notna().sum()) if f in df else 0}
+            continue
+        d = df[df[f].notna()].copy()
+        if f == "demand":                       # vorab festgelegt: konkrete Forderung vs. keine Forderung
+            d["b"] = np.where(d[f].astype(str).isin(["none", "nan", "None", ""]), "keine", "Forderung")
+        else:
+            d["b"] = pd.qcut(pd.to_numeric(d[f], errors="coerce").rank(method="first"), 3, labels=["niedrig", "mittel", "hoch"]).astype(str)
+        g = d.groupby("b")["net_excess"]
+        buckets = {k: {"n": int(len(v)), "mean": float(v.mean()), "hit": float((v > 0).mean())} for k, v in g}
+        big = {k: v for k, v in buckets.items() if v["n"] >= MIN_BUCKET_N}
+        if len(big) < 2:
+            out[f] = {"status": "zu wenig Daten", "buckets": buckets}; continue
+        hi, lo = ("Forderung", "keine") if f == "demand" else ("hoch", "niedrig")   # feste Richtung, nie nach Ergebnis
+        if hi not in big or lo not in big:
+            out[f] = {"status": "zu wenig Daten", "buckets": buckets}; continue
+        clusters = d["activist"].astype(str).unique()
+        idx = {c: d.index[d["activist"].astype(str) == c] for c in clusters}
+        sims = []
+        for _ in range(reps):
+            pick = rng.choice(clusters, len(clusters))
+            s = d.loc[np.concatenate([idx[c] for c in pick])]
+            a, b = s[s.b == hi].net_excess, s[s.b == lo].net_excess
+            if len(a) and len(b):
+                sims.append(a.mean() - b.mean())
+        diff = big[hi]["mean"] - big[lo]["mean"]
+        lo90, hi90 = (float(np.quantile(sims, 0.05)), float(np.quantile(sims, 0.95))) if sims else (float("nan"),) * 2
+        robust = bool(sims) and (lo90 > 0 or hi90 < 0)
+        out[f] = {"status": "belastbar" if robust else "nicht belastbar", "compare": f"{hi} − {lo}", "diff": float(diff),
+                  "ci90": [lo90, hi90], "buckets": buckets}
+    return _clean(out)
+
+
+def card_full(train_df: pd.DataFrame, quantile: float = 0.5) -> dict:
+    """Vollständige Scorecard (für Schattenbewertung im Papierdepot)."""
+    return _clean(fit_scorecard(train_df, quantile=quantile))
+
+
+def challenger_holdout(card: dict, holdout_df: pd.DataFrame, reps: int = 2000, seed: int = 7) -> dict:
+    """Bestätigung des Herausforderers auf dem unangetasteten Holdout (nur bei eingefrorenem Protokoll aufrufen)."""
+    if len(holdout_df) < 50:
+        return {"status": ST_INSUFFICIENT, "n": int(len(holdout_df))}
+    ev = evaluate(holdout_df, select(holdout_df, card), reps=reps, seed=seed)
+    ok = ev["diff"] is not None and ev["p_value"] is not None and ev["diff"] > 0 and ev["p_value"] < 0.10
+    return _clean({"status": "Herausforderer auf Holdout bestätigt" if ok else "nicht bestätigt", "evaluation": ev})

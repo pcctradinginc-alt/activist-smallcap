@@ -98,3 +98,31 @@ def test_missing_feature_is_neutral():
                        "published": pd.date_range("2015-01-01", periods=n, freq="7D").astype(str)})
     card = ranker.fit_scorecard(df)
     assert ranker.score(pd.DataFrame({"stake": [np.nan]}), card).iloc[0] == 0.0
+
+
+def _fa_df(effect, n=240, seed=2):
+    import numpy as np, pandas as pd
+    rng = np.random.default_rng(seed)
+    stake = rng.uniform(0.05, 0.25, n)
+    return pd.DataFrame({"stake": stake, "net_excess": effect * (stake - 0.15) * 10 + rng.normal(0, 0.05, n),
+                         "activist": [f"a{i % 40}" for i in range(n)],
+                         "demand": rng.choice(["none", "sale"], n)})
+
+
+def test_feature_analysis_detects_real_effect_only():
+    from activist.learn import ranker
+    assert ranker.feature_analysis(_fa_df(0.3))["stake"]["status"] == "belastbar"
+    assert ranker.feature_analysis(_fa_df(0.0))["stake"]["status"] == "nicht belastbar"
+
+
+def test_feature_analysis_small_sample_and_fixed_demand_contrast():
+    from activist.learn import ranker
+    r = ranker.feature_analysis(_fa_df(0.3, n=40))
+    assert r["stake"]["status"] == "zu wenig Daten"
+    r2 = ranker.feature_analysis(_fa_df(0.0))
+    assert r2["demand"].get("compare") in ("Forderung − keine", None)
+
+
+def test_challenger_holdout_needs_min_sample():
+    from activist.learn import ranker
+    assert ranker.challenger_holdout({}, _fa_df(0.0, n=10))["status"] == ranker.ST_INSUFFICIENT

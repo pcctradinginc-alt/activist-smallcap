@@ -68,6 +68,9 @@ def status(path=None, study_json_glob=None, freeze_path=None, min_campaigns_lear
         lr = study.get("learning") or {}
         learning["closed_campaigns"] = int(lr.get("closed_campaigns") or dq.get("n_campaigns_valid") or 0)
         learning["status"] = lr.get("status") or learning["status"]
+        learning["evaluation"] = lr.get("evaluation")
+        learning["holdout"] = (lr.get("holdout") or {}).get("status")
+        learning["robust_features"] = [f for f, v in (lr.get("features") or {}).items() if v.get("status") == "belastbar"]
     errors = []
     runs = _load(path)
     last: dict[str, dict] = {}
@@ -77,6 +80,11 @@ def status(path=None, study_json_glob=None, freeze_path=None, min_campaigns_lear
     for k, v in sorted(last.items()):
         if not v.get("ok"):
             errors.append(f"{k}: {v.get('error') or 'Lauf fehlgeschlagen'}")
-    if not freeze.exists():
+    if freeze_path is None:                       # Standard: eingefroren UND unverändert (Prüfsummen)
+        from .study.alpha import freeze_state
+        fs = freeze_state()
+        if not fs["frozen"]:
+            errors.append(fs["reason"])
+    elif not freeze.exists():
         errors.append("Protokoll nicht eingefroren")
     return {"data_quality": dq, "alpha": alpha, "errors": errors, "learning": learning}

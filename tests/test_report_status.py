@@ -35,3 +35,11 @@ def test_status_in_text_and_html():
     html = report.weekly_html(date(2024, 3, 1))
     assert "Systemstatus" in html and html.index("Systemstatus") < html.index("Depotwert")
     assert "HTTP 500" in html and "7 / 200" in html
+
+
+def test_weekly_has_three_required_items():
+    _, body = report.weekly(date(2026, 1, 3))
+    for label in ("Alpha-Nachweis:", "Champion vs. Challenger:", "Lernstatus:"):
+        assert label in body
+    html = report.weekly_html(date(2026, 1, 3))
+    assert "Champion vs. Challenger" in html and "Lernstatus" in html

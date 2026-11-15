@@ -89,10 +89,19 @@ def run(ds: pd.DataFrame, price_loader, bench_loader, variants: bool = True, fx_
     mt = main_trades(t)
     if len(mt):
         mt = ranker.pit_activist_record(mt)
-        res["learning"] = ranker.decide(mt[mt.split == "train"], mt[mt.split == "valid"])
+        tr, va, ho = mt[mt.split == "train"], mt[mt.split == "valid"], mt[mt.split == "holdout"]
+        res["learning"] = ranker.decide(tr, va)
+        # Merkmalsanalyse nur auf Trainingsdaten (Validierung und Holdout bleiben unangetastet)
+        res["learning"]["features"] = ranker.feature_analysis(tr) if len(tr) else {}
+        if res["learning"]["status"] != ranker.ST_INSUFFICIENT:
+            res["learning"]["card_full"] = ranker.card_full(tr)
+            if res["alpha"]["frozen"] and res["learning"]["status"] == ranker.ST_CHALLENGER:
+                res["learning"]["holdout"] = ranker.challenger_holdout(res["learning"]["card_full"], ho)
+        res["outcomes"] = mt
     else:
         res["learning"] = {"status": ranker.ST_INSUFFICIENT, "active": False, "n_train": 0, "n_valid": 0}
     res["learning"]["closed_campaigns"] = int(len(mt))
+    res["learning"]["active"] = False          # nie automatisch aktiv: Änderung der Handelsregeln nur manuell
     for n in names:
         tv = t[t.variant == n]
         if "executed" not in tv:
@@ -163,6 +172,26 @@ def survivorship(ds: pd.DataFrame, trades: pd.DataFrame, bench_loader, p: dict) 
     L += [f"- Manski-Spannweite des Haupttests: **{lo:+.1%} bis {hi:+.1%}** (offene Fälle alle Totalverlust bzw. alle bester Fall)",
           f"- Urteil robust gegen Survivorship nur, wenn beide Grenzen auf derselben Seite der 3 %-Schwelle liegen.", ""]
     return L
+
+
+def learning_section(res: dict) -> list[str]:
+    lr = res.get("learning") or {}
+    L = ["## Champion vs. Challenger und Merkmalsanalyse (Training ≤ 2019, feste Regeln)", ""]
+    ev = lr.get("evaluation")
+    if ev:
+        L.append(f"- Validierung 2020–2022: Challenger Ø {ev['mean_selected']:+.1%} (n={ev['n_selected']}) vs. Champion "
+                 f"Ø {ev['mean_all']:+.1%} (n={ev['n_all']}), Differenz {ev['diff']:+.1%}, p={ev['p_value']:.3f} → {lr['status']}")
+    else:
+        L.append(f"- {lr.get('status')} (n Training {lr.get('n_train', 0)}, Validierung {lr.get('n_valid', 0)}; "
+                 f"Mindestumfang {lr.get('min_campaigns', 200)})")
+    if lr.get("holdout"):
+        L.append(f"- Holdout: {lr['holdout']['status']}")
+    for f, v in (lr.get("features") or {}).items():
+        if v.get("diff") is not None:
+            L.append(f"- {f}: {v['compare']} = {v['diff']:+.1%} (90 %: {v['ci90'][0]:+.1%} … {v['ci90'][1]:+.1%}) → {v['status']}")
+        else:
+            L.append(f"- {f}: {v['status']}")
+    return L + ["", "Die Basisstrategie bleibt aktiv; der Challenger handelt nicht und ändert keine Regeln.", ""]
 
 
 def alpha_section(res: dict) -> list[str]:
@@ -237,10 +266,21 @@ def write_report(res: dict, funnel, ds: pd.DataFrame, trades: pd.DataFrame, path
     if bench_loader is not None and not trades.empty:
         L += survivorship(ds, trades, bench_loader, params())
     L += alpha_section(res)
+    L += learning_section(res)
     L += hypotheses(trades) if not trades.empty else []
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(L), encoding="utf-8")
     ds.to_csv(path.with_name(path.stem + "_dataset.csv"), index=False)
+    out = res.pop("outcomes", None)
+    if out is not None and len(out):
+        cols = [c for c in ("campaign_key", "published", "entry_date", "exit_date", "exit_reason", "region", "signal_class",
+                            "activist", "demand", "stake", "runup_20d", "adv_eur", "activist_prior_n", "activist_prior_mean",
+                            "gross", "bench", "cost", "net_excess", "split", "verified") if c in out]
+        out[cols].to_csv(REPORTS / "campaign_outcomes.csv", index=False)      # Ergebnis je abgeschlossener Kampagne
+    card = (res.get("learning") or {}).get("card_full")
+    if card:
+        (REPORTS / "scorecard.json").write_text(json.dumps({"status": res["learning"]["status"], "card": card},
+                                                           default=str, indent=1, ensure_ascii=False))
     trades.to_csv(path.with_name(path.stem + "_trades.csv"), index=False)
     path.with_suffix(".json").write_text(json.dumps({"result": res, "funnel": dict(funnel), "alpha": res.get("alpha"),
                                                      "data_quality": res.get("data_quality"), "learning": res.get("learning")},

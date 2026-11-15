@@ -221,7 +221,7 @@ def process_exits(st: dict, today: date, p: dict, events: list[dict], loader=loa
         b0 = pos.get("bench_entry")
         bret = (b1 / b0 - 1) if b1 and b0 else None
         st["closed"].append({**{k: pos.get(k) for k in ("ticker", "region", "activist", "entry_date", "signal_class",
-                                                        "validated")},
+                                                        "validated", "challenger_score", "challenger_selected")},
                              "exit_date": str(xd.date()), "reason": why, "gross": gross, "bench": bret or 0.0,
                              "bench_missing": bret is None,
                              "net_excess": gross - (bret or 0.0) - pos["buy_cost"] - cost})
@@ -260,6 +260,31 @@ def _activist_reduced(pos: dict, events: list[dict]) -> str | None:
     return None
 
 
+def challenger_view(r: dict, today: date, fx_rate: float | None) -> dict:
+    """Score des Challengers zum Entscheidungszeitpunkt (Schattenmodus: handelt nicht, ändert keine Regel).
+    Aktivisten-Bilanz nur aus Kampagnen, deren Ausstieg vor heute lag (point-in-time)."""
+    from ..common import REPORTS
+    from ..confidence.basic import shrink_to_mean
+    from ..learn import ranker
+    sc = REPORTS / "scorecard.json"
+    if not sc.exists():
+        return {"challenger_score": None, "challenger_selected": None}
+    card = json.loads(sc.read_text())["card"]
+    prior = None
+    oc = REPORTS / "campaign_outcomes.csv"
+    if oc.exists():
+        o = pd.read_csv(oc)
+        o = o[pd.to_datetime(o.exit_date) < pd.Timestamp(today)]
+        if len(o):
+            own = o[o.activist == r.get("activist")]
+            prior = shrink_to_mean(own.net_excess.mean() if len(own) else o.net_excess.mean(), len(own), o.net_excess.mean())
+    feat = pd.DataFrame([{"activist_prior_mean": prior, "demand": r.get("demand"), "stake": r.get("stake"),
+                          "runup_20d": r.get("runup_20d"),
+                          "adv_eur": (r.get("adv") * fx_rate) if r.get("adv") and fx_rate else None}])
+    sco = float(ranker.score(feat, card).iloc[0])
+    return {"challenger_score": sco, "challenger_selected": bool(sco >= card["threshold"])}
+
+
 def new_signals(st: dict, today: date, p: dict, events: list[dict], since: str, rows: pd.DataFrame | None = None,
                 fx=None):
     """Neue Kampagnen seit 'since' bewerten. rows: vorbereiteter Datensatz (Tests); sonst aus den Buildern."""
@@ -295,6 +320,10 @@ def new_signals(st: dict, today: date, p: dict, events: list[dict], since: str, 
             book_shadow({"candidate_id": oid, "event_id": r.get("event_id"), "ticker": r.get("ticker"),
                          "region": r.get("region"), "reason": "gesperrt: Wechselkurs fehlt", "date": str(today)}); continue
         combo = f"{r['region']}/{r.get('signal_class')}"
+        try:
+            chal = challenger_view(r, today, pos_eur / local if local else None)
+        except Exception as e:
+            chal = {"challenger_score": None, "challenger_selected": None, "challenger_error": str(e)[:120]}
         st["orders"][oid] = {"event_id": r.get("event_id"), "campaign_key": cid, "ticker": r["ticker"],
                              "region": r["region"], "signal_class": r.get("signal_class"), "activist": r.get("activist"),
                              "filer_id": r.get("filer_id"), "filer_name": r.get("filer_name"),
@@ -303,7 +332,7 @@ def new_signals(st: dict, today: date, p: dict, events: list[dict], since: str, 
                              "half_spread": r.get("half_spread"), "limit_hint": (r.get("price") or 0) * 1.03,
                              "validated": combo in ok, "demand": r.get("demand"), "url": r.get("url"),
                              "exit_events": [str(x) for x in (r.get("exit_events") or [])
-                                             if isinstance(r.get("exit_events"), list)]}
+                                             if isinstance(r.get("exit_events"), list)], **chal}
         (JOURNAL / "decisions").mkdir(parents=True, exist_ok=True)
         (JOURNAL / "decisions" / f"{oid}.json").write_text(json.dumps({**r, "decision": "order", "combo": combo,
                                                                          "validated": combo in ok}, default=str,
