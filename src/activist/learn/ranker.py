@@ -34,7 +34,7 @@ def _clean(o):
 
 
 def _dt(s: pd.Series) -> pd.Series:
-    return pd.to_datetime(s, utc=True, errors="coerce")
+    return pd.to_datetime(s, utc=True, errors="coerce", format="ISO8601")
 
 
 def pit_activist_record(trades: pd.DataFrame) -> pd.DataFrame:

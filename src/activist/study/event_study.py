@@ -115,7 +115,7 @@ def run(ds: pd.DataFrame, price_loader, bench_loader, variants: bool = True, fx_
                                              "offen": int(((g.executed == True) & (g.complete == False)).sum())}
                 if done.empty:
                     continue
-                d = pd.to_datetime(g.published, utc=True)
+                d = pd.to_datetime(g.published, utc=True, format="ISO8601")
                 years = max((d.max() - d.min()).days / 365.25, 1.0)
                 res["combos"].setdefault(key, {})[f"{label}:{n}"] = verdict(done, years, p)
                 if n == "main" and label == "qualifiziert" and "mcap" in done:   # Erkundung: Größenklassen
@@ -123,7 +123,7 @@ def run(ds: pd.DataFrame, price_loader, bench_loader, variants: bool = True, fx_
                         if msk.sum():
                             res["combos"][key][f"erkundung:main_{nm}"] = verdict(done[msk], years, p)
                 if n == "main" and label == "qualifiziert":   # Erkundung: neue 13D-Fristen ab 2024
-                    late = done[pd.to_datetime(done.published, utc=True) >= pd.Timestamp("2024-01-01", tz="UTC")]
+                    late = done[pd.to_datetime(done.published, utc=True, format="ISO8601") >= pd.Timestamp("2024-01-01", tz="UTC")]
                     if len(late):
                         res["combos"][key]["erkundung:main_ab2024"] = verdict(
                             late, max((pd.Timestamp.now(tz="UTC") - pd.Timestamp("2024-01-01", tz="UTC")).days / 365.25, 1.0), p)
@@ -227,7 +227,7 @@ def hypotheses(trades: pd.DataFrame) -> list[str]:
     L = ["## H2: Nettoüberrendite nach Forderung (Erkundung)", "", "| Forderung | n | Ø netto | positiv |", "|---|---|---|---|"]
     for dm, g in t.groupby(t.demand.fillna("unbekannt")):
         L.append(f"| {dm} | {len(g)} | {g.net_excess.mean():+.1%} | {(g.net_excess > 0).mean():.0%} |")
-    d = pd.to_datetime(t.published, utc=True); mid = d.sort_values().iloc[len(d) // 2]
+    d = pd.to_datetime(t.published, utc=True, format="ISO8601"); mid = d.sort_values().iloc[len(d) // 2]
     a = t.assign(h=(d >= mid).astype(int)).groupby(["activist", "h"]).net_excess.mean().unstack()
     a = a.dropna()
     L += ["", "## H3: Stabilität der Aktivisten (Rangkorrelation erste vs. zweite Zeithälfte)", ""]
