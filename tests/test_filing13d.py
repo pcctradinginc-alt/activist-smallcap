@@ -179,3 +179,19 @@ def test_fetch_and_parse_uses_edgar_get(monkeypatch):
     r = f.fetch_and_parse("https://www.sec.gov/Archives/edgar/data/1/x.txt")
     assert calls == ["https://www.sec.gov/Archives/edgar/data/1/x.txt"]
     assert r["percent_of_class"] == 7.0
+
+
+def test_item4_standard_list_item_alone_is_not_a_demand():
+    from activist.parse.filing13d import classify_demand
+    txt = ("The Reporting Persons acquired the shares for investment purposes. "
+           "(b) An extraordinary corporate transaction, such as a merger, reorganization or liquidation, "
+           "involving the Issuer or any of its subsidiaries; "
+           "(d) Any change in the present board of directors or management of the Issuer.")
+    assert classify_demand(txt)[0] == "none"
+
+
+def test_real_demand_still_detected_next_to_list():
+    from activist.parse.filing13d import classify_demand
+    txt = ("(b) An extraordinary corporate transaction, such as a merger. "
+           "The Reporting Persons believe the Board should immediately explore a sale of the Company.")
+    assert classify_demand(txt)[0] == "sale"

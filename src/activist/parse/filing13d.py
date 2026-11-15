@@ -155,12 +155,26 @@ def _sentences(text: str) -> list[str]:
     return out
 
 
+PARSER_VERSION = 2   # erhöhen bei jeder Änderung der Klassifikation -> Cache wird neu aufgebaut
+
+_ITEM4_LIST = [
+    r"acquisition by any person of additional securities", r"extraordinary corporate transaction",
+    r"sale or transfer of a material amount of assets", r"change in the present board of directors",
+    r"material change in the present capitalization", r"any other material change in the issuer",
+    r"changes in the issuer.s charter", r"class of securities of the issuer to be delisted",
+    r"class of equity securities of the issuer becoming eligible for termination", r"any action similar to any of those",
+]
+
+
 def _is_boilerplate(s: str) -> bool:
     if _NEGATION.search(s):
         return True
     if sum(bool(re.search(p, s, re.I)) for p in _LIST_PHRASES) >= 2:
         return True
     if len(re.findall(r"\(\s*[a-j]\s*\)", s)) >= 3:      # eingebettete (a)-(j)-Liste
+        return True
+    # einzelner Punkt der SEC-Standardliste (Item 4 (a)-(j)), oft ohne Negationssatz kopiert
+    if re.match(r"^\s*\(?\s*[a-j]\s*\)\s", s) and any(re.search(p, s, re.I) for p in _ITEM4_LIST):
         return True
     return bool(_RESERVATION.search(s))
 

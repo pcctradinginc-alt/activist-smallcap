@@ -24,7 +24,8 @@ CACHE = DATA / "cache" / "parsed13d.jsonl"
 def _parsed_cache() -> dict:
     if not CACHE.exists():
         return {}
-    return {j["url"]: j for j in map(json.loads, CACHE.read_text().splitlines()) if j}
+    v = filing13d.PARSER_VERSION
+    return {j["url"]: j for j in map(json.loads, CACHE.read_text().splitlines()) if j and j.get("v") == v}
 
 
 def _parse(url: str, cache: dict) -> dict:
@@ -33,7 +34,7 @@ def _parse(url: str, cache: dict) -> dict:
             r = filing13d.fetch_and_parse(url)
         except Exception as e:
             r = {"error": str(e)}
-        r["url"] = url; cache[url] = r
+        r["url"] = url; r["v"] = filing13d.PARSER_VERSION; cache[url] = r
         CACHE.parent.mkdir(parents=True, exist_ok=True)
         with open(CACHE, "a") as f:
             f.write(json.dumps(r) + "\n")

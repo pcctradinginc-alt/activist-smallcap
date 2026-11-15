@@ -4,29 +4,7 @@
  "cash": 20000,
  "peak_value": 20000,
  "positions": {},
- "orders": {
-  "20261115-eab6ff": {
-   "event_id": "EDGAR:0001072613-26-000890",
-   "campaign_key": "1452907-1651562",
-   "ticker": "COUR",
-   "region": "US",
-   "signal_class": "A",
-   "activist": "NEW ENTERPRISE ASSOCIATES 13 LP",
-   "filer_id": "0001452907",
-   "filer_name": "NEW ENTERPRISE ASSOCIATES 13 LP",
-   "issuer_id": "0001651562",
-   "published": "2026-11-13T16:20:15-05:00",
-   "order_date": "2026-11-15",
-   "position_eur": 1000.0,
-   "position_eur_local": 1105.0212383270264,
-   "half_spread": 0.0027604760272158775,
-   "limit_hint": 3.6152999901771548,
-   "validated": false,
-   "demand": "sale",
-   "url": "https://www.sec.gov/Archives/edgar/data/1651562/0001072613-26-000890.txt",
-   "exit_events": []
-  }
- },
+ "orders": {},
  "closed": [],
  "seen_campaigns": [
   "928785-1161863",
