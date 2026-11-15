@@ -12,33 +12,32 @@ Haupttest: **qualifiziert:main** (Orderregeln, Ausstieg inkl. −30 %-Stopp, Kos
 - JP verworfen: 586
 - JP qualifiziert: 510
 - JP keine Kurse (delistet/Survivorship): 507
-- Survivorship: Endwert cash_merger: 494
+- Survivorship: Endwert cash_merger: 495
 - JP Universum: Marktkapitalisierung außerhalb: 461
 - EU kampagnen: 358
 - Survivorship: Endwert deregistered: 303
-- im Universum: 264
+- im Universum: 263
 - Universum: Marktkapitalisierung außerhalb: 256
-- Universum: Aktienzahl unbekannt: 251
+- Universum: Aktienzahl unbekannt: 252
 - JP Universum: Tagesumsatz zu gering: 199
-- Universum: zu wenig Kurshistorie: 140
+- Universum: zu wenig Kurshistorie: 142
 - EU Universum: Marktkapitalisierung außerhalb: 130
 - qualifiziert: 126
-- Universum: Tagesumsatz zu gering: 120
+- Universum: Tagesumsatz zu gering: 121
 - EU ohne Ticker (Survivorship-Lücke): 96
 - Survivorship: Endwert unknown: 84
-- kein Aktivist (keine Forderung in Item 4): 80
+- kein Aktivist (keine Forderung in Item 4): 79
 - Survivorship: Endwert bankruptcy: 74
 - EU ohne ISIN: 71
 - Survivorship: Endwert going_private: 63
 - EU Universum: Tagesumsatz zu gering: 59
 - verworfen (Schattenportfolio): 58
 - Survivorship: Endwert mixed: 52
-- Survivorship: Tiingo-Kurs nicht plausibel: 40
 - Universum: Banken: 38
 - JP Universum: zu wenig Kurshistorie: 34
-- Universum: Kurs unter Mindestkurs: 31
-- Kursquellen weichen ab: 26
-- Survivorship: Endwert stock_merger: 26
+- Universum: Kurs unter Mindestkurs: 32
+- Survivorship: Endwert stock_merger: 27
+- Kursquellen weichen ab: 21
 - EU Marktkapitalisierung ungeprüft: 20
 - EU keine Kurse (delistet/Survivorship): 18
 - EU ohne Uhrzeit (kein Signal): 16
@@ -50,7 +49,7 @@ Haupttest: **qualifiziert:main** (Orderregeln, Ausstieg inkl. −30 %-Stopp, Kos
 - EU verworfen: 1
 - EU Universum: zu wenig Kurshistorie: 1
 
-**Survivorship: 2 verschwundene Titel über historischen Ticker + Tiingo zurückgeholt; 52% der Kampagnen weiterhin ohne Kursreihe** (nur Endwert, siehe Spannweite unten).
+**Survivorship: 0 verschwundene Titel über historischen Ticker + Tiingo zurückgeholt; 52% der Kampagnen weiterhin ohne Kursreihe** (nur Endwert, siehe Spannweite unten).
 
 ## Ausführung
 
@@ -149,9 +148,9 @@ Haupttest: **qualifiziert:main** (Orderregeln, Ausstieg inkl. −30 %-Stopp, Kos
 
 ## Survivorship (Sensitivität, kein Nachweis)
 
-- Kampagnen nur mit Endwert: 1096; davon nach Universumsquote erwartet handelbar: 81
-- Endwert-Typen: cash_merger 494, deregistered 303, unknown 84, bankruptcy 74, going_private 63, mixed 52, stock_merger 26
-- Imputiert aus Endwert: 683 Fälle, Ø -56.6% → kombiniert Ø +nan%
+- Kampagnen nur mit Endwert: 1098; davon nach Universumsquote erwartet handelbar: 81
+- Endwert-Typen: cash_merger 495, deregistered 303, unknown 84, bankruptcy 74, going_private 63, mixed 52, stock_merger 27
+- Imputiert aus Endwert: 684 Fälle, Ø -56.4% → kombiniert Ø +nan%
 - Manski-Spannweite des Haupttests: **+nan% bis +nan%** (offene Fälle alle Totalverlust bzw. alle bester Fall)
 - Urteil robust gegen Survivorship nur, wenn beide Grenzen auf derselben Seite der 3 %-Schwelle liegen.
 
@@ -159,16 +158,16 @@ Haupttest: **qualifiziert:main** (Orderregeln, Ausstieg inkl. −30 %-Stopp, Kos
 
 **Ergebnis: NICHT BEURTEILBAR**
 
-- Geprüfte Kampagnen: 8 | ungeprüft (zählen nicht): 531 | Anteil geprüft 1%
+- Geprüfte Kampagnen: 7 | ungeprüft (zählen nicht): 532 | Anteil geprüft 1%
 - Protokoll: Protokoll nicht eingefroren
 
 Holdout versiegelt: Protokoll nicht eingefroren
 
-**Lernstufe:** zu wenig Daten · aktiv: NEIN · abgeschlossene geprüfte Kampagnen 8 / 200
+**Lernstufe:** zu wenig Daten · aktiv: NEIN · abgeschlossene geprüfte Kampagnen 7 / 200
 
 ## Champion vs. Challenger und Merkmalsanalyse (Training ≤ 2019, feste Regeln)
 
-- zu wenig Daten (n Training 4, Validierung 2; Mindestumfang 200)
+- zu wenig Daten (n Training 4, Validierung 1; Mindestumfang 200)
 - activist_prior_mean: zu wenig Daten
 - demand: zu wenig Daten
 - stake: zu wenig Daten
