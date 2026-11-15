@@ -3,9 +3,14 @@ on:
   # kein Zeitplan: die volle Studie dauert Stunden und läuft lokal (python -m activist.cli study);
   # manuell auslösbar, wenn Actions-Minuten verfügbar sind
   workflow_dispatch:
+    inputs:
+      reuse:
+        description: "nur Statistik aus den gespeicherten Trades neu berechnen, ohne Kursabruf"
+        type: boolean
+        default: false
 permissions:
   contents: write
-concurrency: data-write
+concurrency: study
 jobs:
   study:
     runs-on: ubuntu-latest
@@ -15,14 +20,17 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install -r requirements.txt
-      - uses: actions/cache@v4
+      - uses: actions/cache/restore@v4
         with: {path: "data/cache\ndata/prices", key: "study-cache-${{ github.run_id }}", restore-keys: "study-cache-"}
       - env:
           PYTHONPATH: src
           SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
           TIINGO_API_KEY: ${{ secrets.TIINGO_API_KEY }}
           EDINET_API_KEY: ${{ secrets.EDINET_API_KEY }}
-        run: python -m activist.cli study --since 2015-01-01
+        run: python -m activist.cli study --since 2015-01-01 ${{ inputs.reuse && '--reuse' || '' }}
+      - uses: actions/cache/save@v4
+        if: always()
+        with: {path: "data/cache\ndata/prices", key: "study-cache-${{ github.run_id }}"}
       - run: |
           git config user.name "activist-bot"; git config user.email "actions@users.noreply.github.com"
           git add reports && git diff --cached --quiet || (git commit -m "report: Ereignisstudie $(date -u +%F)" && ok=0; for i in 1 2 3 4 5 6 7 8; do git pull --rebase && git push && { ok=1; break; }; sleep $((RANDOM % 30 + 10)); done; [ $ok = 1 ])

@@ -79,5 +79,14 @@ class EventStore:
         return sorted(out, key=lambda e: e["published"])
 
 
+def atomic_write_text(path, text: str, encoding: str = "utf-8") -> None:
+    """Schreibt vollständig oder gar nicht (temporäre Datei + os.replace): ein Abbruch hinterlässt nie eine halbe Datei."""
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_text(text, encoding=encoding)
+    os.replace(tmp, path)
+
+
 def file_hash(path: Path) -> str:
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()[:16]

@@ -1,6 +1,6 @@
 # Ereignisstudie – Research Protocol v1
 
-Haupttest: **qualifiziert:main** (Orderregeln, Ausstieg inkl. −30 %-Stopp, Kosten, gegen Regionsindex). Alle anderen Zeilen sind Erkundung bzw. Schattenportfolio und zählen nicht als Nachweis.
+Haupttest: **qualifiziert:main** (Orderregeln, Ausstieg inkl. −30 %-Stopp, Kosten, gegen Regionsindex). Alle anderen Zeilen sind Erkundung bzw. Schattenportfolio und zählen nicht als Nachweis. Die Erkundungstabellen enthalten nur den Entwicklungszeitraum (Veröffentlichung bis 2022-12-31); der Zeitraum ab 2023 wird ausschließlich im versiegelten bestätigenden Test ausgewertet.
 
 ## Datentrichter
 
@@ -63,13 +63,6 @@ Haupttest: **qualifiziert:main** (Orderregeln, Ausstieg inkl. −30 %-Stopp, Kos
 
 | Variante | Urteil | n | Ø netto | 90 %-Bereich | schl. Viertel | schlechtester | positiv | Hälften |
 |---|---|---|---|---|---|---|---|---|
-| erkundung:main_ab2024 | nicht beurteilbar | 1 ⚠︎ dünn | -46.7% | +nan% … +nan% | -46.7% | -46.7% | 0% | +nan% / -46.7% |
-| qualifiziert:hold_126 | nicht beurteilbar | 1 ⚠︎ dünn | -25.2% | +nan% … +nan% | -25.2% | -25.2% | 0% | +nan% / -25.2% |
-| qualifiziert:hold_21 | nicht beurteilbar | 2 ⚠︎ dünn | -0.7% | -5.9% … +4.5% | -3.3% | -5.9% | 50% | +4.5% / -5.9% |
-| qualifiziert:hold_252 | nicht beurteilbar | 1 ⚠︎ dünn | -46.7% | +nan% … +nan% | -46.7% | -46.7% | 0% | +nan% / -46.7% |
-| qualifiziert:hold_63 | nicht beurteilbar | 2 ⚠︎ dünn | -5.5% | -8.5% … -2.5% | -7.0% | -8.5% | 0% | -2.5% / -8.5% |
-| qualifiziert:main | nicht beurteilbar | 1 ⚠︎ dünn | -46.7% | +nan% … +nan% | -46.7% | -46.7% | 0% | +nan% / -46.7% |
-| qualifiziert:no_stop | nicht beurteilbar | 1 ⚠︎ dünn | -46.7% | +nan% … +nan% | -46.7% | -46.7% | 0% | +nan% / -46.7% |
 | schatten:hold_126 | nicht beurteilbar | 1 ⚠︎ dünn | -1.0% | +nan% … +nan% | -1.0% | -1.0% | 0% | +nan% / -1.0% |
 | schatten:hold_21 | nicht beurteilbar | 1 ⚠︎ dünn | -11.5% | +nan% … +nan% | -11.5% | -11.5% | 0% | +nan% / -11.5% |
 | schatten:hold_252 | nicht beurteilbar | 1 ⚠︎ dünn | -22.5% | +nan% … +nan% | -22.5% | -22.5% | 0% | +nan% / -22.5% |
@@ -81,39 +74,37 @@ Haupttest: **qualifiziert:main** (Orderregeln, Ausstieg inkl. −30 %-Stopp, Kos
 
 | Variante | Urteil | n | Ø netto | 90 %-Bereich | schl. Viertel | schlechtester | positiv | Hälften |
 |---|---|---|---|---|---|---|---|---|
-| erkundung:main_2_bis_8Mrd | nicht bestanden | 139 | +8.5% | -1.0% … +19.2% | -23.8% | -57.5% | 46% | +15.1% / +1.9% |
-| erkundung:main_ab2024 | nicht beurteilbar | 53 | +2.2% | -16.8% … +28.1% | -31.7% | -57.5% | 26% | -7.3% / +11.5% |
-| qualifiziert:hold_126 | nicht bestanden | 151 | -1.6% | -6.8% … +4.2% | -19.7% | -62.3% | 38% | +5.6% / -8.7% |
-| qualifiziert:hold_21 | nicht bestanden | 167 | -1.3% | -3.8% … +1.3% | -8.9% | -35.8% | 35% | +2.3% / -4.9% |
-| qualifiziert:hold_252 | bestanden | 131 | +10.5% | +0.6% … +22.3% | -22.8% | -68.6% | 51% | +14.8% / +6.3% |
-| qualifiziert:hold_63 | nicht bestanden | 161 | +1.2% | -2.5% … +5.0% | -12.0% | -51.7% | 43% | +5.9% / -3.4% |
-| qualifiziert:main | nicht bestanden | 139 | +8.5% | -1.0% … +19.2% | -23.8% | -57.5% | 46% | +15.1% / +1.9% |
-| qualifiziert:no_stop | bestanden | 134 | +12.4% | +2.3% … +23.8% | -21.0% | -68.6% | 52% | +14.6% / +10.2% |
-| schatten:hold_126 | nicht bestanden | 172 | -0.8% | -5.7% … +3.6% | -19.0% | -58.2% | 40% | -1.3% / -0.4% |
-| schatten:hold_21 | nicht bestanden | 193 | -2.9% | -4.5% … -1.3% | -9.9% | -29.6% | 30% | -4.8% / -1.1% |
-| schatten:hold_252 | nicht bestanden | 133 | +3.1% | -4.9% … +10.1% | -20.3% | -82.5% | 44% | -2.4% / +8.5% |
-| schatten:hold_63 | nicht bestanden | 191 | -2.2% | -5.2% … +0.5% | -15.7% | -49.4% | 45% | -4.0% / -0.5% |
-| schatten:main | nicht bestanden | 150 | +2.3% | -3.4% … +7.6% | -19.9% | -62.6% | 43% | -1.1% / +5.7% |
-| schatten:no_stop | nicht bestanden | 144 | +3.9% | -1.7% … +9.0% | -14.8% | -82.5% | 47% | -0.2% / +7.9% |
+| erkundung:main_2_bis_8Mrd | nicht beurteilbar | 63 | +16.9% | +6.3% … +27.0% | -8.6% | -43.7% | 65% | +19.9% / +14.1% |
+| qualifiziert:hold_126 | nicht beurteilbar | 63 | +7.9% | +0.4% … +16.6% | -10.9% | -47.1% | 52% | +15.1% / +0.9% |
+| qualifiziert:hold_21 | nicht beurteilbar | 63 | +3.1% | -0.9% … +6.9% | -5.2% | -15.8% | 46% | +4.3% / +2.0% |
+| qualifiziert:hold_252 | nicht beurteilbar | 63 | +16.6% | +6.2% … +26.6% | -8.9% | -64.0% | 65% | +21.1% / +12.3% |
+| qualifiziert:hold_63 | nicht beurteilbar | 63 | +8.6% | +2.2% … +15.3% | -8.5% | -34.2% | 54% | +11.2% / +6.0% |
+| qualifiziert:main | nicht beurteilbar | 63 | +16.9% | +6.3% … +27.0% | -8.6% | -43.7% | 65% | +19.9% / +14.1% |
+| qualifiziert:no_stop | nicht beurteilbar | 63 | +17.3% | +6.8% … +27.4% | -7.9% | -64.0% | 67% | +21.3% / +13.4% |
+| schatten:hold_126 | nicht beurteilbar | 54 | +2.1% | -5.6% … +10.3% | -15.9% | -39.7% | 39% | +3.9% / +0.2% |
+| schatten:hold_21 | nicht beurteilbar | 54 | -3.5% | -6.3% … -0.8% | -11.4% | -29.6% | 33% | -4.4% / -2.5% |
+| schatten:hold_252 | nicht beurteilbar | 54 | +0.6% | -7.2% … +8.2% | -14.3% | -81.6% | 44% | +4.8% / -3.6% |
+| schatten:hold_63 | nicht beurteilbar | 54 | -2.1% | -6.9% … +3.2% | -16.6% | -28.1% | 44% | -2.3% / -1.8% |
+| schatten:main | nicht beurteilbar | 54 | +2.2% | -5.1% … +9.5% | -12.7% | -43.6% | 44% | +4.3% / +0.0% |
+| schatten:no_stop | nicht beurteilbar | 54 | +2.6% | -5.7% … +9.8% | -9.3% | -81.6% | 48% | +8.5% / -3.3% |
 
 ## JP/B
 
 | Variante | Urteil | n | Ø netto | 90 %-Bereich | schl. Viertel | schlechtester | positiv | Hälften |
 |---|---|---|---|---|---|---|---|---|
-| erkundung:main_2_bis_8Mrd | nicht bestanden | 279 | +2.8% | -9.6% … +6.3% | -19.1% | -75.1% | 44% | +5.2% / +0.5% |
-| erkundung:main_ab2024 | nicht bestanden | 112 | +1.2% | -9.9% … +6.9% | -18.2% | -75.1% | 42% | +6.1% / -3.6% |
-| qualifiziert:hold_126 | nicht bestanden | 290 | -1.7% | -4.7% … +0.4% | -15.4% | -52.4% | 37% | -0.3% / -3.1% |
-| qualifiziert:hold_21 | nicht bestanden | 302 | -3.4% | -4.4% … -2.3% | -8.0% | -49.5% | 29% | -2.4% / -4.4% |
-| qualifiziert:hold_252 | nicht bestanden | 275 | +4.7% | -2.4% … +8.2% | -19.8% | -97.8% | 48% | +8.0% / +1.4% |
-| qualifiziert:hold_63 | nicht bestanden | 300 | -1.5% | -3.7% … +1.3% | -14.2% | -49.7% | 37% | -1.8% / -1.1% |
-| qualifiziert:main | nicht bestanden | 279 | +2.8% | -9.6% … +6.3% | -19.1% | -75.1% | 44% | +5.2% / +0.5% |
-| qualifiziert:no_stop | nicht bestanden | 278 | +4.0% | -5.1% … +7.4% | -16.9% | -94.1% | 45% | +6.2% / +1.7% |
-| schatten:hold_126 | nicht bestanden | 311 | -12.6% | -27.0% … -0.9% | -18.2% | -1082.1% | 30% | -6.6% / -18.6% |
-| schatten:hold_21 | nicht bestanden | 338 | -9.1% | -21.1% … -2.5% | -8.9% | -943.0% | 27% | -4.0% / -14.3% |
-| schatten:hold_252 | nicht bestanden | 284 | -8.4% | -12.1% … -1.7% | -29.1% | -87.5% | 32% | -11.7% / -5.0% |
-| schatten:hold_63 | nicht bestanden | 327 | -11.2% | -24.8% … -3.5% | -14.2% | -1019.1% | 29% | -5.6% / -16.9% |
-| schatten:main | nicht bestanden | 296 | -13.8% | -28.5% … -4.1% | -25.3% | -971.9% | 28% | -8.3% / -19.3% |
-| schatten:no_stop | nicht bestanden | 292 | -13.4% | -28.5% … -2.0% | -24.8% | -971.9% | 32% | -8.4% / -18.3% |
+| erkundung:main_2_bis_8Mrd | nicht beurteilbar | 57 | +5.0% | -13.6% … +10.5% | -20.6% | -45.8% | 49% | +4.5% / +5.5% |
+| qualifiziert:hold_126 | nicht beurteilbar | 57 | -2.4% | -7.4% … +1.1% | -15.4% | -36.6% | 35% | -0.5% / -4.2% |
+| qualifiziert:hold_21 | nicht beurteilbar | 57 | -1.1% | -2.4% … +0.3% | -6.2% | -29.1% | 39% | -1.5% / -0.7% |
+| qualifiziert:hold_252 | nicht beurteilbar | 57 | +7.5% | -11.2% … +12.8% | -21.6% | -52.6% | 53% | +3.2% / +11.7% |
+| qualifiziert:hold_63 | nicht beurteilbar | 57 | -1.2% | -8.5% … +2.5% | -10.6% | -49.1% | 40% | -3.4% / +0.9% |
+| qualifiziert:main | nicht beurteilbar | 57 | +5.0% | -13.6% … +10.5% | -20.6% | -45.8% | 49% | +4.5% / +5.5% |
+| qualifiziert:no_stop | nicht beurteilbar | 57 | +7.6% | -10.7% … +11.5% | -14.4% | -45.8% | 51% | +5.9% / +9.2% |
+| schatten:hold_126 | nicht beurteilbar | 52 | -8.3% | -15.1% … -2.8% | -16.9% | -54.1% | 27% | -8.2% / -8.5% |
+| schatten:hold_21 | nicht beurteilbar | 52 | -2.9% | -6.4% … -1.2% | -7.9% | -23.4% | 27% | -4.0% / -1.8% |
+| schatten:hold_252 | nicht beurteilbar | 52 | -8.9% | -18.4% … +0.1% | -30.5% | -68.5% | 29% | -5.1% / -12.7% |
+| schatten:hold_63 | nicht beurteilbar | 52 | -5.9% | -13.5% … -3.5% | -12.4% | -34.4% | 19% | -8.4% / -3.4% |
+| schatten:main | nicht beurteilbar | 52 | -9.3% | -16.8% … -2.9% | -26.8% | -54.6% | 23% | -7.7% / -10.9% |
+| schatten:no_stop | nicht beurteilbar | 52 | -9.0% | -16.2% … -1.4% | -25.6% | -67.1% | 27% | -5.5% / -12.5% |
 
 ## UK/B
 
@@ -131,34 +122,60 @@ Haupttest: **qualifiziert:main** (Orderregeln, Ausstieg inkl. −30 %-Stopp, Kos
 
 | Variante | Urteil | n | Ø netto | 90 %-Bereich | schl. Viertel | schlechtester | positiv | Hälften |
 |---|---|---|---|---|---|---|---|---|
-| erkundung:main_ab2024 | nicht beurteilbar | 31 | -4.3% | -21.9% … +16.3% | -36.4% | -53.3% | 26% | +5.2% / -13.2% |
-| erkundung:main_bis_2Mrd | nicht bestanden | 117 | -3.5% | -11.0% … +4.6% | -34.4% | -63.6% | 34% | +6.8% / -13.7% |
-| qualifiziert:hold_126 | nicht bestanden | 120 | -1.4% | -8.2% … +5.9% | -30.0% | -72.1% | 38% | -0.8% / -2.0% |
-| qualifiziert:hold_21 | nicht bestanden | 120 | -1.2% | -3.8% … +1.8% | -9.0% | -48.0% | 38% | -2.5% / +0.0% |
-| qualifiziert:hold_252 | nicht bestanden | 116 | -0.6% | -9.5% … +10.0% | -39.1% | -98.6% | 37% | +2.2% / -3.4% |
-| qualifiziert:hold_63 | nicht bestanden | 120 | +0.6% | -6.0% … +9.2% | -16.7% | -75.0% | 42% | -0.0% / +1.2% |
-| qualifiziert:main | nicht bestanden | 117 | -3.5% | -11.0% … +4.6% | -34.4% | -63.6% | 34% | +6.8% / -13.7% |
-| qualifiziert:no_stop | nicht bestanden | 116 | +1.5% | -7.4% … +11.4% | -36.8% | -98.6% | 42% | +6.6% / -3.6% |
-| schatten:hold_126 | nicht beurteilbar | 56 | -10.2% | -21.5% … +2.1% | -45.8% | -89.7% | 29% | +0.2% / -20.5% |
-| schatten:hold_21 | nicht beurteilbar | 56 | -8.0% | -12.8% … -3.7% | -22.5% | -70.7% | 39% | -4.9% / -11.1% |
-| schatten:hold_252 | nicht beurteilbar | 54 | -24.8% | -37.0% … -10.8% | -56.3% | -110.3% | 24% | -17.6% / -32.1% |
-| schatten:hold_63 | nicht beurteilbar | 56 | -12.9% | -19.0% … -6.7% | -33.2% | -82.0% | 30% | -6.9% / -19.0% |
-| schatten:main | nicht beurteilbar | 55 | -18.4% | -27.1% … -8.8% | -38.7% | -57.5% | 18% | -1.8% / -34.5% |
-| schatten:no_stop | nicht beurteilbar | 54 | -16.2% | -30.0% … -1.3% | -49.3% | -110.3% | 30% | -0.3% / -32.1% |
+| erkundung:main_bis_2Mrd | nicht beurteilbar | 75 | +0.4% | -8.5% … +11.4% | -29.2% | -63.6% | 40% | +1.0% / -0.3% |
+| qualifiziert:hold_126 | nicht beurteilbar | 75 | -2.7% | -8.9% … +4.4% | -23.3% | -72.1% | 37% | -5.4% / -0.0% |
+| qualifiziert:hold_21 | nicht beurteilbar | 75 | -1.1% | -3.7% … +2.1% | -8.7% | -48.0% | 40% | -4.1% / +1.8% |
+| qualifiziert:hold_252 | nicht beurteilbar | 75 | -2.2% | -11.6% … +9.8% | -34.8% | -85.9% | 41% | -2.4% / -1.9% |
+| qualifiziert:hold_63 | nicht beurteilbar | 75 | -2.0% | -6.8% … +3.7% | -13.3% | -75.0% | 43% | -2.4% / -1.5% |
+| qualifiziert:main | nicht beurteilbar | 75 | +0.4% | -8.5% … +11.4% | -29.2% | -63.6% | 40% | +1.0% / -0.3% |
+| qualifiziert:no_stop | nicht beurteilbar | 75 | +1.2% | -7.5% … +12.6% | -31.7% | -85.7% | 45% | +1.9% / +0.4% |
+| schatten:hold_126 | nicht beurteilbar | 30 | +2.1% | -13.6% … +18.3% | -27.6% | -72.7% | 40% | +0.1% / +4.1% |
+| schatten:hold_21 | nicht beurteilbar | 30 | -3.4% | -8.1% … +1.3% | -19.4% | -30.7% | 50% | -4.3% / -2.6% |
+| schatten:hold_252 | nicht beurteilbar | 30 | -17.2% | -34.7% … +3.5% | -55.4% | -105.9% | 30% | -20.2% / -14.2% |
+| schatten:hold_63 | nicht beurteilbar | 30 | -5.4% | -12.4% … +1.8% | -25.7% | -55.4% | 47% | -8.6% / -2.2% |
+| schatten:main | nicht beurteilbar | 30 | -3.2% | -17.0% … +12.5% | -32.2% | -51.5% | 33% | +0.6% / -7.1% |
+| schatten:no_stop | nicht beurteilbar | 30 | -1.6% | -21.5% … +20.7% | -45.3% | -105.9% | 40% | +4.9% / -8.1% |
+
+## Extremwerte (zur Prüfung der Kursdaten)
+
+Wegen unplausiblem Vergleichsindex ausgeschlossen: 0
+
+| Ticker | Region | veröffentlicht | brutto | Index | netto |
+|---|---|---|---|---|---|
+| 4369 | JP | 2026-03-30 | +28.0% | +996.4% | -971.9% |
+| 7826 | JP | 2026-03-30 | +25.5% | +980.3% | -958.3% |
+| 3103 | JP | 2025-04-30 | +737.6% | +46.7% | +687.4% |
+| 6997 | JP | 2026-01-07 | +265.7% | +17.9% | +244.3% |
+| 4310 | JP | 2021-11-30 | +223.4% | +4.7% | +215.2% |
+| 4310 | JP | 2021-11-30 | +223.4% | +4.7% | +215.2% |
+| AHCO | US | 2019-11-18 | +225.5% | +12.2% | +209.8% |
+| REAL | US | 2024-11-01 | +217.7% | +5.0% | +209.2% |
+| 5803 | JP | 2023-04-21 | +236.8% | +37.6% | +195.8% |
+| 4417 | JP | 2026-05-11 | +191.2% | +2.8% | +184.7% |
+| NN | US | 2024-03-08 | +179.5% | -2.7% | +178.7% |
+| CRMD | US | 2020-08-10 | +217.4% | +42.8% | +169.9% |
+| TTSH | US | 2020-09-10 | +211.8% | +47.6% | +159.7% |
+| 6814 | JP | 2024-07-29 | +163.3% | +14.4% | +145.5% |
+| 8337 | JP | 2022-11-17 | +167.7% | +23.5% | +140.7% |
+| 7220 | JP | 2026-03-26 | +144.5% | +8.7% | +132.3% |
+| ADMA | US | 2022-02-04 | +126.2% | -9.0% | +131.7% |
+| 1980 | JP | 2024-01-05 | +147.7% | +14.6% | +129.6% |
+| NSLR | US | 2024-10-08 | +144.7% | +13.6% | +127.3% |
+| 3132 | JP | 2022-07-25 | +145.4% | +19.8% | +122.1% |
 
 ## Survivorship (Sensitivität, kein Nachweis)
 
-- Kampagnen nur mit Endwert: 1098; davon nach Universumsquote erwartet handelbar: 81
+- Kampagnen nur mit Endwert: 1098; davon nach Universumsquote erwartet handelbar: 71
 - Endwert-Typen: cash_merger 495, deregistered 303, unknown 84, bankruptcy 74, going_private 63, mixed 52, stock_merger 27
-- Imputiert aus Endwert: 684 Fälle, Ø -56.4% → kombiniert Ø +nan%
-- Manski-Spannweite des Haupttests: **+nan% bis +nan%** (offene Fälle alle Totalverlust bzw. alle bester Fall)
+- Imputiert aus Endwert: 123 Fälle, Ø -56.4% → kombiniert Ø +4.2%
+- Manski-Spannweite des Haupttests: **-23.2% bis +57.8%** (offene Fälle alle Totalverlust bzw. alle bester Fall)
 - Urteil robust gegen Survivorship nur, wenn beide Grenzen auf derselben Seite der 3 %-Schwelle liegen.
 
 ## Bestätigender Alpha-Test (Holdout ab 2023, nur geprüfte Daten, Holm-korrigiert)
 
 **Ergebnis: NICHT BEURTEILBAR**
 
-- Geprüfte Kampagnen: 7 | ungeprüft (zählen nicht): 532 | Anteil geprüft 1%
+- Geprüfte Kampagnen: 7 | ungeprüft (zählen nicht): 519 | Anteil geprüft 1%
 - Protokoll: Protokoll nicht eingefroren
 
 Holdout versiegelt: Protokoll nicht eingefroren
@@ -180,13 +197,13 @@ Die Basisstrategie bleibt aktiv; der Challenger handelt nicht und ändert keine 
 
 | Forderung | n | Ø netto | positiv |
 |---|---|---|---|
-| board | 4 | -28.2% | 0% |
-| capital_or_proposal | 139 | +8.5% | 46% |
-| capital_return | 24 | -11.2% | 29% |
-| none | 283 | +2.6% | 44% |
-| sale | 70 | -1.7% | 34% |
-| strategy | 19 | +4.5% | 47% |
+| board | 2 | -23.5% | 0% |
+| capital_or_proposal | 63 | +16.9% | 65% |
+| capital_return | 17 | -17.0% | 24% |
+| none | 60 | +4.5% | 48% |
+| sale | 40 | +9.9% | 45% |
+| strategy | 16 | -2.0% | 50% |
 
 ## H3: Stabilität der Aktivisten (Rangkorrelation erste vs. zweite Zeithälfte)
 
-Spearman ρ = -0.26 über 19 Aktivisten mit Trades in beiden Hälften.
+Spearman ρ = +0.35 über 13 Aktivisten mit Trades in beiden Hälften.

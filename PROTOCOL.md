@@ -61,3 +61,34 @@ Order ausgeführt (0 Positionen, trades.csv leer); portfolio.json und shadow.csv
 - Europa: Ohne bekannte Aktienzahl keine Qualifikation (Marktkapitalisierung muss prüfbar sein, gleiche Regel wie USA/Japan).
 - Meldungen ohne Uhrzeit (SIX): Entscheidung frühestens am Folgetag statt Ausschluss (kein Look-ahead).
 - Bewusst nicht übernommen: Faktormodell, Ridge-Regression, Portfolio-Simulator – zusätzliche Komplexität ohne Nutzen bei der aktuellen Fallzahl; die Bewertung gegen den regionalen Small-Cap-Index mit Kapazitätsgrenze bleibt.
+
+## Änderung 2026-11-15 (vor dem Einfrieren, nach kritischem Repository-Audit)
+Keine neuen Funktionen, Datenquellen oder Modelle – nur Korrekturen und Vereinfachungen.
+- **Datenqualität verschärft:** „Ticker eindeutig“ gilt nur noch, wenn der Kurs am Entscheidungstag zum Ø-Einstand des
+  Aktivisten passt (13D Item 5c) oder der Ticker aus damaligen SEC-Dokumenten des Emittenten bestätigt ist – der heutige
+  Ticker allein genügt nicht. Der Kursabgleich zählt nur bei mindestens 20 gemeinsamen Tagen und 80 % Überdeckung;
+  sonst gilt die Kampagne als ungeprüft.
+- **Ein Regelwerk:** Die historisch bestimmbaren Ausschlussregeln stehen einmal in `risk/rules.candidate_reasons`
+  (USA, Japan, Europa; Studie und Papierdepot). Das Papierdepot prüft jede Order über `risk/rules.check_portfolio`:
+  Positionszahl, Aktivist, Doppelung, Positionsgröße, Branche (unbekannte Branche = eigener Topf je Region), Region (sobald
+  3 Regionen bestanden haben) und Cash-Deckung inkl. Kosten und offener Orders.
+  Nicht erzwungen, weil keine Datenquelle vorhanden: `max_major_holder`, `earnings_blackout_days` (bekannte Abweichung).
+- **Holdout:** Berichte bis 2026-11-15 haben Ergebnisse ab 2023 offen gezeigt; nach diesen Berichten wurden Regeln
+  geändert. Der historische Holdout ab 2023 ist damit **vorbelastet**: Ein Bestehen ist ein Indiz, kein unabhängiger
+  Nachweis. Unabhängig ist erst der Vorwärtstest (Kampagnen nach dem Einfrieren, Grundregel 2). Ab jetzt zeigen
+  Erkundungstabellen nur den Entwicklungszeitraum (bis 2022); die Zeile „ab 2024“ entfällt.
+- **Einfrieren vollständig:** Die Prüfsummen umfassen jetzt auch `sources/prices.py`, `learn/ranker.py`,
+  `risk/rules.py`, `sources/secmeta.py`, `sources/hist_ticker.py`, `config/activists.yaml`.
+- **Plausibilität:** Trades mit unplausibler Vergleichsindex-Reihe (Tagessprung > 25 %) zählen nicht. Ursache der
+  Nettoüberrenditen unter −900 %: fehlerhafte Reihe des Japan-Index-ETF 1306, kein echter Verlust.
+  Survivorship-Sensitivität rechnet nicht mehr mit fehlenden Werten (zuvor NaN) und ohne stillen Index-Fallback.
+- **Abruf und Auswertung getrennt:** `study` lädt Kurse (mit dauerhaftem Cache, auch für unbekannte Ticker) und
+  simuliert; `study --reuse` rechnet die Statistik nur aus den gespeicherten Trades neu (ohne Netz, Sekunden).
+- **Betrieb:** Zustandsdateien werden atomar geschrieben. `cli health` setzt den Lauf auf Fehler, wenn EDGAR/EDINET
+  ausfallen oder veraltet sind bzw. weniger als die Hälfte der aktiven Europa-Quellen liefert.
+  Europa täglich nur noch SIX, FCA NSM, AMF; Nasdaq Nordic, Oslo, DE-IR-Seiten und Aktivisten-Websites sind
+  deaktiviert (Code bleibt), weil sie bisher praktisch keine auswertbaren Kampagnen geliefert haben.
+- **Sicherheit:** Fehlermeldungen der Kursquelle enthielten den Tiingo-Schlüssel und standen im Bericht
+  (`price_check_note`). Die Meldungen werden jetzt bereinigt; der alte Schlüssel ist zu ersetzen.
+- **Entwicklungsstopp:** Bis ein Studienlauf mit ausreichend geprüften Kampagnen vorliegt, keine neuen Datenquellen,
+  Modelle oder Merkmale.

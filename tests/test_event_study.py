@@ -4,19 +4,19 @@ import pandas as pd
 import pytest
 from activist.study import event_study as es
 
-PUB = "2023-03-01T10:00:00+00:00"
+PUB = "2022-03-01T10:00:00+00:00"
 
 
 def px_for(ticker, start, end):
     idx = pd.bdate_range(start, end)
     c = pd.Series(10.0, index=idx)
     if ticker == "CRASH":
-        c[idx >= "2023-03-10"] = 6.0
-        c[idx >= "2023-04-15"] = 13.0
+        c[idx >= "2022-03-10"] = 6.0
+        c[idx >= "2022-04-15"] = 13.0
     if ticker == "BOOM":
-        c[idx >= "2023-04-01"] = 12.0
+        c[idx >= "2022-04-01"] = 12.0
     if ticker == "SHORT":
-        c = c[c.index <= "2023-03-20"]
+        c = c[c.index <= "2022-03-20"]
     return pd.DataFrame({"open": c, "high": c * 1.003, "low": c * 0.997, "close": c, "volume": 100000.0})
 
 
@@ -84,7 +84,7 @@ def test_run_no_variants_and_empty(ds):
 
 
 def test_run_exit_events_used_for_main_not_hold_variants():
-    d = pd.DataFrame([row(1, "BOOM", exit_events=["2023-03-15T10:00:00+00:00"])])
+    d = pd.DataFrame([row(1, "BOOM", exit_events=["2022-03-15T10:00:00+00:00"])])
     res, t = es.run(d, price_loader, bench_loader)
     v = t.set_index("variant")
     assert v.loc["main", "exit_reason"] == "Aktivist reduziert"

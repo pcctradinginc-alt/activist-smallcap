@@ -64,19 +64,8 @@ def cmd_freeze(a):
 def cmd_study(a):
     from .common import params
     from .sources import prices
-    from .study.dataset import build
-    from .study.event_study import run, write_report
-    evs = [e for e in EventStore().all() if not a.since or e["published"] >= a.since]
+    from .study.event_study import evaluate, load_trades, simulate, write_report
     import pandas as pd
-    from .study.dataset import build_jp
-    ds, funnel = build(evs, parse_filings=not a.no_parse)
-    if any(e.get("source") == "EDINET" for e in evs):
-        dj, fj = build_jp(evs)
-        ds = pd.concat([ds, dj], ignore_index=True); funnel.update(fj)
-    if any(e.get("region") in ("UK", "NORDIC", "BENELUX_FR", "DACH") for e in evs):
-        from .study.dataset_eu import build_eu, load_px
-        de, fe = build_eu(evs)
-        ds = pd.concat([ds, de], ignore_index=True); funnel.update(fe)
     U = params()["universe"]
 
     def pl(t, r, s, e):
@@ -98,8 +87,31 @@ def cmd_study(a):
         if k not in fx_cache:
             fx_cache[k] = 1 / eur_per_unit(t, r, d)
         return fx_cache[k]
-    res, trades = run(ds, pl, bl, variants=not a.main_only, fx_loader=fxl)
-    print(write_report(res, funnel, ds, trades, bench_loader=bl))
+    if a.reuse:      # nur Statistik aus gespeicherten Trades: keine Datensatz-Erstellung, keine Simulation, kein Kursabruf
+        from .common import REPORTS
+        files = sorted(REPORTS.glob("event_study_*_trades.csv"))
+        if not files:
+            print("Keine gespeicherten Trades (reports/event_study_*_trades.csv) gefunden: zuerst die volle Studie ohne --reuse laufen lassen.")
+            raise SystemExit(1)
+        tf = files[-1]
+        base = tf.with_name(tf.name[:-len("_trades.csv")])
+        trades, ds = load_trades(tf), pd.read_csv(base.with_name(base.name + "_dataset.csv"), low_memory=False)
+        funnel = Counter(json.loads(base.with_suffix(".json").read_text(encoding="utf-8"))["funnel"])
+        print(f"Wiederverwendung: {tf.name}")
+        print(write_report(evaluate(trades), funnel, ds, trades, bench_loader=bl))
+        return
+    from .study.dataset import build, build_jp
+    evs = [e for e in EventStore().all() if not a.since or e["published"] >= a.since]
+    ds, funnel = build(evs, parse_filings=not a.no_parse)
+    if any(e.get("source") == "EDINET" for e in evs):
+        dj, fj = build_jp(evs)
+        ds = pd.concat([ds, dj], ignore_index=True); funnel.update(fj)
+    if any(e.get("region") in ("UK", "NORDIC", "BENELUX_FR", "DACH") for e in evs):
+        from .study.dataset_eu import build_eu, load_px
+        de, fe = build_eu(evs)
+        ds = pd.concat([ds, de], ignore_index=True); funnel.update(fe)
+    trades = simulate(ds, pl, bl, variants=not a.main_only, fx_loader=fxl)
+    print(write_report(evaluate(trades), funnel, ds, trades, bench_loader=bl))
 
 
 def cmd_backfill_jp(a):
@@ -172,6 +184,24 @@ def cmd_weekly(a):
         print(subj); print(body)
 
 
+def cmd_health(a):
+    from . import health
+    st = health.status()
+    print(f"Gesamtstatus: {st['overall']}")
+    for k, v in sorted(st["sources"].items()):
+        print(f"  {k}: {'ok' if v['ok'] else 'FEHLER'} (letzter Lauf {v['ts'][:16]}){'' if v['ok'] else ' - ' + str(v['error'])}")
+        if not v["ok"]:
+            print(f"::warning::{k}: {v['error']}")
+    print(f"Alpha-Nachweis: {st['alpha']['status']}")
+    for e in st["errors"]:
+        print(f"  Fehler: {e}")
+    problems = health.gate(st, [x for x in a.core.split(",") if x], [x for x in a.pool.split(",") if x])
+    for p in problems:
+        print(f"::error::{p}")
+    if problems:
+        raise SystemExit(1)
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="activist")
     sp = ap.add_subparsers(required=True)
@@ -180,7 +210,8 @@ def main(argv=None):
     f.add_argument("--no-headers", action="store_true"); f.set_defaults(fn=cmd_fetch)
     s = sp.add_parser("status"); s.add_argument("--mail", action="store_true"); s.set_defaults(fn=cmd_status)
     st = sp.add_parser("study"); st.add_argument("--main-only", action="store_true")
-    st.add_argument("--since"); st.add_argument("--no-parse", action="store_true"); st.set_defaults(fn=cmd_study)
+    st.add_argument("--since"); st.add_argument("--no-parse", action="store_true"); st.add_argument("--reuse", action="store_true")
+    st.set_defaults(fn=cmd_study)
     b = sp.add_parser("backfill"); b.add_argument("--start", type=int, default=2015); b.add_argument("--end", type=int, default=2015)
     b.add_argument("--quarter", type=int); b.add_argument("--limit", type=int); b.set_defaults(fn=cmd_backfill)
     bj = sp.add_parser("backfill-jp"); bj.add_argument("--start", required=True); bj.add_argument("--end", required=True)
@@ -191,6 +222,7 @@ def main(argv=None):
     pp = sp.add_parser("paper"); pp.set_defaults(fn=cmd_paper)
     fz = sp.add_parser("freeze"); fz.add_argument("--note", default=""); fz.set_defaults(fn=cmd_freeze)
     wk = sp.add_parser("weekly"); wk.add_argument("--mail", action="store_true"); wk.set_defaults(fn=cmd_weekly)
+    hp = sp.add_parser("health"); hp.add_argument("--core", default=""); hp.add_argument("--pool", default=""); hp.set_defaults(fn=cmd_health)
     a = ap.parse_args(argv); a.fn(a)
 
 

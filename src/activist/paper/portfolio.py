@@ -14,8 +14,8 @@ from __future__ import annotations
 import csv, hashlib, json
 from datetime import date, datetime, timedelta, timezone
 import pandas as pd
-from ..common import EventStore, JOURNAL, file_hash, params, risk_limits
-from ..risk.rules import portfolio_size_factor
+from ..common import EventStore, JOURNAL, atomic_write_text, file_hash, params
+from ..risk.rules import check_portfolio, portfolio_size_factor
 from .execution import cost_one_side, simulate_entry
 
 STATE = JOURNAL / "portfolio.json"
@@ -68,8 +68,7 @@ def load_state() -> dict:
 
 
 def save_state(st: dict):
-    STATE.parent.mkdir(parents=True, exist_ok=True)
-    STATE.write_text(json.dumps(st, indent=1, default=str, ensure_ascii=False))
+    atomic_write_text(STATE, json.dumps(st, indent=1, default=str, ensure_ascii=False))
 
 
 def _append(path, cols, row):
@@ -108,19 +107,6 @@ def portfolio_value(st: dict, day: date, quotes: dict | None = None) -> float:
         q = (quotes or {}).get(pid) or pos.get("last_eur") or pos["entry_eur"]
         v += pos["qty"] * q
     return v
-
-
-def check_limits(st: dict, cand: dict) -> str | None:
-    """Portfoliogrenzen (nur manuell änderbar, config/risk_limits.yaml)."""
-    P = risk_limits()["portfolio"]
-    pos = list(st["positions"].values()) + list(st["orders"].values())
-    if len(pos) >= P["max_positions"]:
-        return "max. Positionen erreicht"
-    if sum(1 for x in pos if x.get("activist") == cand.get("activist")) >= P["max_per_activist"]:
-        return "max. Positionen je Aktivist"
-    if any(x.get("ticker") == cand.get("ticker") for x in pos):
-        return "Titel bereits im Depot/Orderbuch"
-    return None
 
 
 def process_orders(st: dict, today: date, p: dict, loader=load_prices, fx=eur_per_unit):
@@ -309,11 +295,15 @@ def new_signals(st: dict, today: date, p: dict, events: list[dict], since: str, 
             book_shadow({"candidate_id": oid, "event_id": r.get("event_id"), "ticker": r.get("ticker"),
                          "region": r.get("region"), "reason": r.get("status"), "date": str(today)})
             continue
-        why = check_limits(st, r) or ("Verlustbremse: keine neuen Trades" if factor == 0 else None)
+        pos_eur = p["order"]["position_eur"] * factor
+        buy_cost = cost_one_side(r.get("half_spread"), p["costs"], r["region"], "buy", pos_eur)
+        cash_free = st["cash"] - sum(o["position_eur"] * (1 + o.get("buy_cost_est", 0)) for o in st["orders"].values())
+        why = "Verlustbremse: keine neuen Trades" if factor == 0 else check_portfolio(
+            list(st["positions"].values()) + list(st["orders"].values()), {**r, "position_eur": pos_eur, "buy_cost": buy_cost},
+            portfolio_value(st, today), cash_free, regions_passed=len({c.split("/")[0] for c in ok}))
         if why:
             book_shadow({"candidate_id": oid, "event_id": r.get("event_id"), "ticker": r.get("ticker"),
                          "region": r.get("region"), "reason": why, "date": str(today)}); continue
-        pos_eur = p["order"]["position_eur"] * factor
         try:
             local = pos_eur / (fx or eur_per_unit)(r["ticker"], r["region"], today)
         except Exception:                         # kein stiller Fallback
@@ -326,6 +316,7 @@ def new_signals(st: dict, today: date, p: dict, events: list[dict], since: str, 
             chal = {"challenger_score": None, "challenger_selected": None, "challenger_error": str(e)[:120]}
         st["orders"][oid] = {"event_id": r.get("event_id"), "campaign_key": cid, "ticker": r["ticker"],
                              "region": r["region"], "signal_class": r.get("signal_class"), "activist": r.get("activist"),
+                             "sector": r.get("sector") if isinstance(r.get("sector"), str) else None, "buy_cost_est": buy_cost,
                              "filer_id": r.get("filer_id"), "filer_name": r.get("filer_name"),
                              "issuer_id": r.get("issuer_id") or r.get("isin"), "published": r["published"],
                              "order_date": str(today), "position_eur": pos_eur, "position_eur_local": local,
@@ -333,10 +324,8 @@ def new_signals(st: dict, today: date, p: dict, events: list[dict], since: str, 
                              "validated": combo in ok, "demand": r.get("demand"), "url": r.get("url"),
                              "exit_events": [str(x) for x in (r.get("exit_events") or [])
                                              if isinstance(r.get("exit_events"), list)], **chal}
-        (JOURNAL / "decisions").mkdir(parents=True, exist_ok=True)
-        (JOURNAL / "decisions" / f"{oid}.json").write_text(json.dumps({**r, "decision": "order", "combo": combo,
-                                                                         "validated": combo in ok}, default=str,
-                                                                        ensure_ascii=False, indent=1))
+        atomic_write_text(JOURNAL / "decisions" / f"{oid}.json", json.dumps(
+            {**r, "decision": "order", "combo": combo, "validated": combo in ok}, default=str, ensure_ascii=False, indent=1))
 
 
 def run_day(today: date | None = None, events: list[dict] | None = None, rows: pd.DataFrame | None = None,

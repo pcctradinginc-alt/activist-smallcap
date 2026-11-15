@@ -282,7 +282,7 @@ def test_holding_period_252_days_exit():
 # ------------------------------------------------------------------ 7. Limits
 def test_max_positions_16th_candidate_to_shadow():
     px = flat()
-    cs = [cand(f"K{i}", ticker=f"T{i}", activist=f"ACT{i}") for i in range(16)]
+    cs = [cand(f"K{i}", ticker=f"T{i}", activist=f"ACT{i}", sector=f"S{i}") for i in range(16)]   # Branchen verteilt (25-%-Grenze)
     res = run(D0, px, rows_of(*cs))
     assert res["orders"] == 15
     (s,) = shadow()

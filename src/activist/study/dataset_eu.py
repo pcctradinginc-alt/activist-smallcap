@@ -22,6 +22,7 @@ import pandas as pd
 from ..common import DATA, load_yaml, params, risk_limits
 from ..features.universe import price_features, universe_check
 from ..sources import openfigi, prices
+from ..risk.rules import candidate_reasons
 
 EU_REGIONS = {"UK", "NORDIC", "BENELUX_FR", "DACH"}
 ISIN_RE = re.compile(r"^[A-Z]{2}[A-Z0-9]{9}\d$")
@@ -183,13 +184,7 @@ def build_eu(events: list[dict], end: date | None = None, use_network_figi: bool
                 funnel[f"EU Universum: {v}"] += 1
             row["status"] = "außerhalb Universum: " + "; ".join(uv); rows.append(row); continue
         funnel["EU im Universum"] += 1
-        reasons = []
-        if 2 * (row["half_spread"] or 0) > lim["max_spread"]:
-            reasons.append("Spread")
-        if row["runup_20d"] is not None and row["runup_20d"] > lim["max_runup_20d"]:
-            reasons.append("Anstieg 20T")
-        if p["order"]["position_eur"] > lim["max_position_share_of_adv"] * row["adv"]:
-            reasons.append("Liquidität")
+        reasons = candidate_reasons(row, p["order"]["position_eur"], lim)      # row["adv"] ist bereits in EUR
         thr = EXIT_BELOW[reg]
         row["exit_events"] = [fu["published"] for fu in c["followups"]
                               if fu.get("holding_ratio") is not None and fu["holding_ratio"] < thr][:1]

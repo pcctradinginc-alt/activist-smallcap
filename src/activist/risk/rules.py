@@ -1,37 +1,60 @@
-"""Risikoprüfung als Tor: Ja/Nein-Regeln. Ein Verstoß verwirft – kein Konfidenzwert gleicht ihn aus."""
+"""Risikoprüfung als Tor: Ja/Nein-Regeln. Ein Verstoß verwirft – kein Konfidenzwert gleicht ihn aus.
+Je eine Stelle: candidate_reasons (Kandidatenregeln, Studie und Papierdepot) und check_portfolio (Portfoliogrenzen + Cash)."""
 from __future__ import annotations
 from ..common import risk_limits
 
-VERWERFEN, VERKLEINERN, SPERREN, VERSCHIEBEN = "verwerfen", "verkleinern", "sperren", "verschieben"
+def candidate_reasons(row: dict, position_local: float | None, lim: dict | None = None) -> list[str]:
+    """Die historisch bestimmbaren Ausschlussregeln – EINE Stelle für Ereignisstudie und Papierdepot (alle Regionen).
+    row: half_spread, runup_20d, price, activist_cost, adv (Landeswährung); position_local: Positionsgröße in
+    Landeswährung (None = Wechselkurs fehlt -> kein stiller Fallback, sondern Ausschluss)."""
+    L = lim or risk_limits()["candidate"]
+    ok = lambda v: v is not None and v == v            # nicht None und nicht NaN
+    r = []
+    if 2 * (row.get("half_spread") or 0) > L["max_spread"]:
+        r.append("Spread")
+    if ok(row.get("runup_20d")) and row["runup_20d"] > L["max_runup_20d"]:
+        r.append("Anstieg 20T")
+    if ok(row.get("activist_cost")) and row["activist_cost"] and ok(row.get("price")) \
+            and row["price"] > row["activist_cost"] * (1 + L["max_premium_over_activist_cost"]):
+        r.append("Kurs über Aktivisten-Einstand")
+    if position_local is None:
+        r.append("Wechselkurs fehlt")
+    elif not ok(row.get("adv")) or position_local > L["max_position_share_of_adv"] * row["adv"]:
+        r.append("Liquidität")
+    return r
 
 
-def check_candidate(c: dict, lim: dict | None = None) -> list[tuple[str, str]]:
-    """c: dict mit position_eur, adv_eur, spread, price, activist_cost, runup_20d, capital_raise, going_concern,
-    major_holder, new_poison_pill, mapping_ok, prices_ok, days_to_earnings. Fehlende Felder => sperren."""
-    L = (lim or risk_limits())["candidate"]; v = []
-    def need(*keys):
-        return all(c.get(k) is not None for k in keys)
-    if not need("position_eur", "adv_eur") or c["position_eur"] > L["max_position_share_of_adv"] * c["adv_eur"]:
-        v.append(("Liquidität", VERKLEINERN))
-    if c.get("spread") is None or c["spread"] > L["max_spread"]:
-        v.append(("Spread", VERWERFEN))
-    if c.get("activist_cost") and c.get("price") and c["price"] > c["activist_cost"] * (1 + L["max_premium_over_activist_cost"]):
-        v.append(("Vorweggenommener Kurs", VERWERFEN))
-    if c.get("runup_20d") is not None and c["runup_20d"] > L["max_runup_20d"]:
-        v.append(("Vorweggenommener Kurs (20T)", VERWERFEN))
-    if c.get("capital_raise") or c.get("going_concern"):
-        v.append(("Verwässerung", VERWERFEN))
-    if (c.get("major_holder") or 0) >= L["max_major_holder"] or c.get("new_poison_pill"):
-        v.append(("Kontrolle", VERWERFEN))
-    if not (c.get("mapping_ok") and c.get("prices_ok")):
-        v.append(("Datenqualität", SPERREN))
-    if c.get("days_to_earnings") is not None and c["days_to_earnings"] <= L["earnings_blackout_days"]:
-        v.append(("Termin", VERSCHIEBEN))
-    return v
+def _sector(x: dict) -> str:
+    s = x.get("sector")
+    return s if isinstance(s, str) and s else f"unbekannt:{x.get('region')}"   # None/NaN/"" = eigener Topf je Region
 
 
-def passes(c: dict, lim: dict | None = None) -> bool:
-    return not check_candidate(c, lim)
+def check_portfolio(held: list[dict], cand: dict, value: float, cash_free: float, lim: dict | None = None,
+                    regions_passed: int = 0) -> str | None:
+    """Das EINE Portfoliotor. held: offene Positionen + offene Orders (ticker, activist, region, sector, position_eur,
+    optional fill_ratio); cand: ticker, activist, region, sector, position_eur, buy_cost (Kosten einer Seite inkl. Gebühren);
+    value: Depotwert EUR; cash_free: Cash abzüglich für offene Orders reservierten Cashs. Unbekannte Branche = eigener Topf
+    je Region (fail-closed). Regionsgrenze gilt erst, wenn mindestens 3 Regionen den Nachweis bestanden haben.
+    Gibt den ersten verletzten Grund zurück, sonst None."""
+    P = (lim or risk_limits())["portfolio"]
+    expo = lambda xs: sum(x.get("position_eur", 0) * x.get("fill_ratio", 1) for x in xs)
+    if len(held) >= P["max_positions"]:
+        return "max. Positionen erreicht"
+    if sum(1 for x in held if x.get("activist") == cand.get("activist")) >= P["max_per_activist"]:
+        return "max. Positionen je Aktivist"
+    if any(x.get("ticker") == cand.get("ticker") for x in held):
+        return "Titel bereits im Depot/Orderbuch"
+    pe = cand["position_eur"]
+    if pe > P["max_position"] * value:
+        return "Positionsgröße über Grenze"
+    if expo([x for x in held if _sector(x) == _sector(cand)]) + pe > P["max_sector"] * value:
+        return "Branchengrenze"
+    if regions_passed >= 3 and expo([x for x in held if x.get("region") == cand.get("region")]) + pe \
+            > P["max_region_once_3_regions_pass"] * value:
+        return "Regionsgrenze"
+    if pe * (1 + cand.get("buy_cost", 0)) > cash_free:
+        return "Cash reicht nicht"
+    return None
 
 
 def portfolio_size_factor(drawdown: float, lim: dict | None = None) -> float:

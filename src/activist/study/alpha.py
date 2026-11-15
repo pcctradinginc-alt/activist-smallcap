@@ -16,7 +16,7 @@ import hashlib, json, subprocess
 from datetime import datetime, timezone
 import numpy as np
 import pandas as pd
-from ..common import ROOT, params
+from ..common import ROOT, atomic_write_text, params
 from .stats import verdict
 
 SPLITS = {"train": (None, "2019-12-31"), "valid": ("2020-01-01", "2022-12-31"), "holdout": ("2023-01-01", None)}
@@ -24,7 +24,9 @@ FREEZE = ROOT / "PROTOCOL_FREEZE.json"
 PROTOCOL_FILES = ["config/params.yaml", "config/risk_limits.yaml", "PROTOCOL.md", "src/activist/study/alpha.py",
                   "src/activist/study/stats.py", "src/activist/study/event_study.py", "src/activist/study/dataset.py",
                   "src/activist/study/dataset_eu.py", "src/activist/paper/execution.py", "src/activist/features/universe.py",
-                  "src/activist/features/register.py", "src/activist/parse/filing13d.py"]
+                  "src/activist/features/register.py", "src/activist/parse/filing13d.py",
+                  "src/activist/sources/prices.py", "src/activist/learn/ranker.py", "src/activist/risk/rules.py",
+                  "src/activist/sources/secmeta.py", "src/activist/sources/hist_ticker.py", "config/activists.yaml"]
 FAMILY_ALPHA = 0.10
 COHORT_LAG_DAYS = 380
 
@@ -47,7 +49,7 @@ def freeze(note: str = "") -> dict:
         commit = None
     rec = {"frozen_at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "git_commit": commit,
            "splits": SPLITS, "family_alpha": FAMILY_ALPHA, "note": note, "hashes": _hashes()}
-    FREEZE.write_text(json.dumps(rec, indent=1, ensure_ascii=False))
+    atomic_write_text(FREEZE, json.dumps(rec, indent=1, ensure_ascii=False))
     return rec
 
 
@@ -70,6 +72,13 @@ def split_of(published: str) -> str:
     if d <= SPLITS["valid"][1]:
         return "valid"
     return "holdout"
+
+
+def dev_only(trades: pd.DataFrame) -> pd.DataFrame:
+    """Nur Entwicklungszeitraum (Veröffentlichung bis Ende Validierung); der Holdout bleibt der Erkundung verschlossen."""
+    if "published" not in trades:
+        return trades
+    return trades[trades.published.astype(str).str[:10] <= SPLITS["valid"][1]]
 
 
 def bootstrap_p(df: pd.DataFrame, col: str = "net_excess", reps: int = 2000, seed: int = 11) -> float:
