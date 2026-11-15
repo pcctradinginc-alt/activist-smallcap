@@ -125,6 +125,10 @@ def load(ticker: str, region: str, start: date, end: date, cache: bool = True) -
     return a, chk
 
 
+TIINGO_MIN_GAP_S, TIINGO_RETRIES, TIINGO_429_WAIT_S = 75.0, 4, 900.0
+_TIINGO_LAST = [0.0]
+
+
 def tiingo(ticker: str, start: date, end: date, key: str | None = None) -> pd.DataFrame:
     """Kostenloser Tiingo-Tarif (API-Schlüssel nötig) – enthält auch delistete US-Titel.
     Achtung Ticker-Wiederverwendung: Aufrufer muss das Ergebnis plausibilisieren (validate_against)."""
@@ -132,8 +136,17 @@ def tiingo(ticker: str, start: date, end: date, key: str | None = None) -> pd.Da
     key = key or os.environ.get("TIINGO_API_KEY")
     if not key:
         raise ValueError("TIINGO_API_KEY fehlt")
-    r = requests.get(f"https://api.tiingo.com/tiingo/daily/{ticker.lower()}/prices",
-                     params={"startDate": f"{start}", "endDate": f"{end}", "token": key}, headers=HDR, timeout=30)
+    import time
+    for attempt in range(TIINGO_RETRIES + 1):   # Gratis-Tarif: ca. 50 Abrufe/Stunde -> Abstand halten, bei 429 warten
+        wait = _TIINGO_LAST[0] + TIINGO_MIN_GAP_S - time.monotonic()
+        if wait > 0:
+            time.sleep(wait)
+        r = requests.get(f"https://api.tiingo.com/tiingo/daily/{ticker.lower()}/prices",
+                         params={"startDate": f"{start}", "endDate": f"{end}", "token": key}, headers=HDR, timeout=30)
+        _TIINGO_LAST[0] = time.monotonic()
+        if r.status_code != 429 or attempt == TIINGO_RETRIES:
+            break
+        time.sleep(TIINGO_429_WAIT_S)
     if r.status_code == 404:
         raise ValueError(f"Tiingo: {ticker} unbekannt")
     r.raise_for_status()
