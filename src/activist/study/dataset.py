@@ -130,7 +130,7 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
             try:
                 px, chk = prices.load(t["ticker"], "US", d0 - timedelta(days=45), min(d0 + timedelta(days=420), end))
                 row["price_source"] = "yahoo"
-                row["price_check"] = chk.get("ok")
+                row["price_check"] = chk.get("ok"); row["price_check_note"] = chk.get("error") or (f"Abweichung {chk.get('max_dev')}" if chk.get("ok") is False else None)
             except Exception:
                 px = None
             if px is not None and chk.get("ok") is False:
