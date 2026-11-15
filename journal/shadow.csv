@@ -1,1 +1,4 @@
 candidate_id,event_id,ticker,region,reason,date
+20261115-5492de,EDGAR:0000928785-26-000009,nan,US,nur Endwert,2026-11-15
+20261115-6312e4,EDGAR:0001193125-26-458677,MTRI,US,verworfen: Spread; Anstieg 20T,2026-11-15
+20261115-64ee1b,EDGAR:0001140361-26-043472,CDLR,US,gesperrt: Kursabweichung,2026-11-15
