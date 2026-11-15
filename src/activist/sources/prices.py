@@ -109,8 +109,10 @@ def load(ticker: str, region: str, start: date, end: date, cache: bool = True) -
     chk_path = path.with_suffix(".check.json")
     if cache and path.exists() and chk_path.exists():
         df = pd.read_csv(path, index_col=0, parse_dates=True)
-        if df.index.min().date() <= start and df.index.max().date() >= min(end, date.today() - timedelta(days=7)):
-            return df.loc[str(start):str(end)], {**json.loads(chk_path.read_text()), "cached": True}
+        chk = json.loads(chk_path.read_text())
+        covered = df.index.min().date() <= start and df.index.max().date() >= min(end, date.today() - timedelta(days=7))
+        if covered and (chk.get("ok") is not None or region not in SECOND_SOURCE):   # ungeprüft + Zweitquelle vorhanden -> neu prüfen
+            return df.loc[str(start):str(end)], {**chk, "cached": True}
     a = yahoo(ticker + YAHOO_SUFFIX.get(region, ""), start, end)
     try:
         if region not in SECOND_SOURCE:
@@ -121,3 +123,36 @@ def load(ticker: str, region: str, start: date, end: date, cache: bool = True) -
     if cache and len(a):
         path.parent.mkdir(parents=True, exist_ok=True); a.to_csv(path); chk_path.write_text(json.dumps(chk))
     return a, chk
+
+
+def tiingo(ticker: str, start: date, end: date, key: str | None = None) -> pd.DataFrame:
+    """Kostenloser Tiingo-Tarif (API-Schlüssel nötig) – enthält auch delistete US-Titel.
+    Achtung Ticker-Wiederverwendung: Aufrufer muss das Ergebnis plausibilisieren (validate_against)."""
+    import os
+    key = key or os.environ.get("TIINGO_API_KEY")
+    if not key:
+        raise ValueError("TIINGO_API_KEY fehlt")
+    r = requests.get(f"https://api.tiingo.com/tiingo/daily/{ticker.lower()}/prices",
+                     params={"startDate": f"{start}", "endDate": f"{end}", "token": key}, headers=HDR, timeout=30)
+    if r.status_code == 404:
+        raise ValueError(f"Tiingo: {ticker} unbekannt")
+    r.raise_for_status()
+    rows = r.json()
+    if not rows:
+        raise ValueError(f"Tiingo: keine Daten für {ticker}")
+    df = pd.DataFrame(rows)
+    df.index = pd.to_datetime(df["date"]).dt.tz_localize(None).dt.normalize()
+    out = df[["adjOpen", "adjHigh", "adjLow", "adjClose", "adjVolume"]].copy()
+    out.columns = ["open", "high", "low", "close", "volume"]
+    out["close_raw"] = df["close"].values
+    return out
+
+
+def validate_against(px: pd.DataFrame, ref_date, ref_price: float | None, tol: float = 0.35) -> bool:
+    """Ticker-Wiederverwendung erkennen: unbereinigter Kurs am Stichtag muss nahe an einem Referenzkurs
+    (z. B. Ø-Kaufkurs des Aktivisten laut 13D Item 5c) liegen. Ohne Referenz: nicht validierbar -> False."""
+    if not ref_price or px.empty:
+        return False
+    col = "close_raw" if "close_raw" in px else "close"
+    v = px[col].asof(pd.Timestamp(ref_date).tz_localize(None) if pd.Timestamp(ref_date).tzinfo else pd.Timestamp(ref_date))
+    return bool(pd.notna(v) and abs(v / ref_price - 1) <= tol)
