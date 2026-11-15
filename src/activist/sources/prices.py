@@ -1,7 +1,7 @@
 """Tageskurse aus zwei kostenlosen Quellen (Yahoo, Stooq) mit Abgleich (Regel: >2 % Abweichung => gesperrt)."""
 from __future__ import annotations
 import io
-from datetime import date
+from datetime import date, timedelta
 import pandas as pd
 import requests
 from ..common import DATA
@@ -63,12 +63,36 @@ def _nasdaq(ticker: str, start: date, end: date, assetclass: str) -> pd.DataFram
     return df.set_index("date").sort_index()
 
 
-SECOND_SOURCE = {"US": lambda t, s, e: nasdaq(t, s, e)}
+def tiingo_cached(ticker: str, start: date, end: date) -> pd.DataFrame:
+    """Tiingo-Rohkurse mit Datei-Cache (Gratis-Tarif: begrenzte Zahl Symbole/Monat -> jede Reihe nur einmal laden)."""
+    path = DATA / "cache" / "tiingo" / f"{ticker.upper()}.csv"
+    if path.exists():
+        df = pd.read_csv(path, index_col=0, parse_dates=True)
+        if df.index.min().date() <= start and df.index.max().date() >= min(end, date.today() - timedelta(days=7)):
+            return df.loc[str(start):str(end)]
+    df = tiingo(ticker, min(start, date(2014, 1, 1)), date.today())
+    path.parent.mkdir(parents=True, exist_ok=True); df.to_csv(path)
+    return df.loc[str(start):str(end)]
+
+
+def _second_us(t: str, s: date, e: date) -> pd.DataFrame:
+    """Zweite unabhängige Quelle USA: Nasdaq (nur ca. letzte 12 Monate), sonst Tiingo (Historie, inkl. delisteter Titel).
+    Verglichen werden unbereinigte Schlusskurse."""
+    if s >= date.today() - timedelta(days=330):
+        try:
+            return nasdaq(t, s, e)
+        except ValueError:
+            pass
+    df = tiingo_cached(t, s, e)
+    return df.assign(close=df["close_raw"])
+
+
+SECOND_SOURCE = {"US": _second_us}
 
 
 def cross_check(a: pd.DataFrame, b: pd.DataFrame, max_dev: float = 0.02) -> dict:
     """Vergleicht unbereinigte Schlusskurse beider Quellen."""
-    a = a.assign(close=a["close_raw"]) if "close_raw" in a else a
+    a = a.assign(close=a["close_unadj"]) if "close_unadj" in a else (a.assign(close=a["close_raw"]) if "close_raw" in a else a)
     j = a[["close"]].join(b[["close"]], how="inner", lsuffix="_a", rsuffix="_b")
     if j.empty:
         return {"ok": False, "overlap": 0, "max_dev": None}
@@ -77,53 +101,23 @@ def cross_check(a: pd.DataFrame, b: pd.DataFrame, max_dev: float = 0.02) -> dict
 
 
 def load(ticker: str, region: str, start: date, end: date, cache: bool = True) -> tuple[pd.DataFrame, dict]:
-    """Primärquelle Yahoo, Zweitquelle je Region (USA: Nasdaq). Gibt Kurse und Abgleichsergebnis zurück.
-    ok=None heißt: keine Zweitquelle verfügbar -> Ereignis gilt als ungeprüft (Datenqualität)."""
+    """Primärquelle Yahoo, Zweitquelle je Region (USA: Nasdaq/Tiingo). Gibt Kurse und Abgleichsergebnis zurück.
+    ok=True: beide Quellen stimmen überein · ok=False: Abweichung > 2 % (gesperrt) · ok=None: ungeprüft.
+    Das Prüfergebnis wird mit den Kursen gespeichert – ein Cache-Treffer gilt nie stillschweigend als geprüft."""
+    import json
     path = DATA / "prices" / f"{region}_{ticker}.csv"
-    if cache and path.exists():
+    chk_path = path.with_suffix(".check.json")
+    if cache and path.exists() and chk_path.exists():
         df = pd.read_csv(path, index_col=0, parse_dates=True)
-        if df.index.min().date() <= start and df.index.max().date() >= end:
-            return df.loc[str(start):str(end)], {"ok": True, "cached": True}
+        if df.index.min().date() <= start and df.index.max().date() >= min(end, date.today() - timedelta(days=7)):
+            return df.loc[str(start):str(end)], {**json.loads(chk_path.read_text()), "cached": True}
     a = yahoo(ticker + YAHOO_SUFFIX.get(region, ""), start, end)
     try:
         if region not in SECOND_SOURCE:
             raise ValueError(f"keine Zweitquelle für Region {region}")
         chk = cross_check(a, SECOND_SOURCE[region](ticker, start, end))
     except Exception as e:
-        chk = {"ok": None, "error": str(e)}   # Zweitquelle nicht verfügbar => als ungeprüft markieren
+        chk = {"ok": None, "error": str(e)[:200]}   # Zweitquelle nicht verfügbar => ungeprüft (zählt nicht als Nachweis)
     if cache and len(a):
-        path.parent.mkdir(parents=True, exist_ok=True); a.to_csv(path)
+        path.parent.mkdir(parents=True, exist_ok=True); a.to_csv(path); chk_path.write_text(json.dumps(chk))
     return a, chk
-
-
-def tiingo(ticker: str, start: date, end: date, key: str | None = None) -> pd.DataFrame:
-    """Kostenloser Tiingo-Tarif (API-Schlüssel nötig) – enthält auch delistete US-Titel.
-    Achtung Ticker-Wiederverwendung: Aufrufer muss das Ergebnis plausibilisieren (validate_against)."""
-    import os
-    key = key or os.environ.get("TIINGO_API_KEY")
-    if not key:
-        raise ValueError("TIINGO_API_KEY fehlt")
-    r = requests.get(f"https://api.tiingo.com/tiingo/daily/{ticker.lower()}/prices",
-                     params={"startDate": f"{start}", "endDate": f"{end}", "token": key}, headers=HDR, timeout=30)
-    if r.status_code == 404:
-        raise ValueError(f"Tiingo: {ticker} unbekannt")
-    r.raise_for_status()
-    rows = r.json()
-    if not rows:
-        raise ValueError(f"Tiingo: keine Daten für {ticker}")
-    df = pd.DataFrame(rows)
-    df.index = pd.to_datetime(df["date"]).dt.tz_localize(None).dt.normalize()
-    out = df[["adjOpen", "adjHigh", "adjLow", "adjClose", "adjVolume"]].copy()
-    out.columns = ["open", "high", "low", "close", "volume"]
-    out["close_raw"] = df["close"].values
-    return out
-
-
-def validate_against(px: pd.DataFrame, ref_date, ref_price: float | None, tol: float = 0.35) -> bool:
-    """Ticker-Wiederverwendung erkennen: unbereinigter Kurs am Stichtag muss nahe an einem Referenzkurs
-    (z. B. Ø-Kaufkurs des Aktivisten laut 13D Item 5c) liegen. Ohne Referenz: nicht validierbar -> False."""
-    if not ref_price or px.empty:
-        return False
-    col = "close_raw" if "close_raw" in px else "close"
-    v = px[col].asof(pd.Timestamp(ref_date).tz_localize(None) if pd.Timestamp(ref_date).tzinfo else pd.Timestamp(ref_date))
-    return bool(pd.notna(v) and abs(v / ref_price - 1) <= tol)

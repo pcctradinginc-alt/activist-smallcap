@@ -16,13 +16,13 @@ jobs:
         with: {python-version: "3.12"}
       - run: pip install -r requirements.txt
       - uses: actions/cache@v4
-        with: {path: data/cache, key: "sec-cache-${{ github.run_id }}", restore-keys: "sec-cache-"}
+        with: {path: "data/cache\ndata/prices", key: "study-cache-${{ github.run_id }}", restore-keys: "study-cache-"}
       - env:
           PYTHONPATH: src
           SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
           TIINGO_API_KEY: ${{ secrets.TIINGO_API_KEY }}
           EDINET_API_KEY: ${{ secrets.EDINET_API_KEY }}
-        run: python -m activist.cli study
+        run: python -m activist.cli study --since 2015-01-01
       - run: |
           git config user.name "activist-bot"; git config user.email "actions@users.noreply.github.com"
           git add reports && git diff --cached --quiet || (git commit -m "report: Ereignisstudie $(date -u +%F)" && ok=0; for i in 1 2 3 4 5 6 7 8; do git pull --rebase && git push && { ok=1; break; }; sleep $((RANDOM % 30 + 10)); done; [ $ok = 1 ])

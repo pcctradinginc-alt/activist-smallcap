@@ -79,3 +79,15 @@ def test_listed_activist_13g_is_class_b():
     evs = [ev(1, "SC 13G", "2023-03-01T10:00:00-05:00", "1517137", "999")]     # Starboard (Liste)
     out = dataset.campaigns(evs, Register(evs))
     assert out and out[0]["signal_class"] == "B" and out[0]["listed_activist"]
+
+
+def test_price_cache_never_claims_unchecked_ok(tmp_path, monkeypatch):
+    from activist.sources import prices
+    monkeypatch.setattr(prices, "DATA", tmp_path)
+    idx = pd.bdate_range("2020-01-01", "2020-03-01")
+    df = pd.DataFrame({"open": 1.0, "high": 1.0, "low": 1.0, "close": 1.0, "volume": 1.0, "close_raw": 1.0, "close_unadj": 1.0}, index=idx)
+    monkeypatch.setattr(prices, "yahoo", lambda *a, **k: df)
+    monkeypatch.setattr(prices, "SECOND_SOURCE", {})                 # keine Zweitquelle
+    _, c1 = prices.load("X", "ZZ", idx[0].date(), idx[-1].date())
+    _, c2 = prices.load("X", "ZZ", idx[0].date(), idx[-1].date())      # Cache-Treffer
+    assert c1["ok"] is None and c2["ok"] is None and c2["cached"]
