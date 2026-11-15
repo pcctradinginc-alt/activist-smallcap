@@ -935,13 +935,21 @@ def resolve(issuers: list[dict], client: Client, sites: dict) -> dict[str, str |
     return {i["isin"]: web.get(i["isin"]) for i in issuers}
 
 
-def run(start: date, end: date, issuers: list[dict] | None = None, workers: int = 4, client: Client | None = None) -> tuple[list[dict], list[dict]]:
-    """-> (Events, Datensaetze je Emittent)."""
+def run(start: date, end: date, issuers: list[dict] | None = None, workers: int = 4, client: Client | None = None,
+        curated_only: bool = False) -> tuple[list[dict], list[dict]]:
+    """-> (Events, Datensaetze je Emittent). curated_only: nur kuratierte, lesbare Seiten (Tagesbetrieb, keine Suche)."""
     from concurrent.futures import ThreadPoolExecutor
     client = client or Client()
     issuers = issuers if issuers is not None else load_universe(client)
     sites = _load_json("sites.json")
     curated = load_curated()
+    if curated_only:
+        ok = {k for k, v in curated.items() if v.get("voting_rights_url") and v.get("status") in ("ok", "js_only")}
+        issuers = [i for i in issuers if i["isin"] in ok]
+        with ThreadPoolExecutor(max_workers=workers) as ex:
+            recs = list(ex.map(lambda i: _curated_only(i, curated[i["isin"]], client, start, end), issuers))
+        evs = sorted((e for r in recs for e in r["events"] if in_range(e, start, end)), key=lambda e: e["published"])
+        return evs, recs
     web = resolve([i for i in issuers if not (curated.get(i["isin"]) or {}).get("voting_rights_url")], client, sites)
     web = {**{i["isin"]: (curated.get(i["isin"]) or {}).get("website") for i in issuers}, **web}
     _save_json("sites.json", sites)
@@ -952,7 +960,19 @@ def run(start: date, end: date, issuers: list[dict] | None = None, workers: int 
     return evs, recs
 
 
-def fetch_events(start_date: date, end_date: date, issuers: list[dict] | None = None, workers: int = 4) -> list[dict]:
-    evs, recs = run(start_date, end_date, issuers, workers)
+def _curated_only(issuer: dict, cur: dict, client: Client, start: date, end: date) -> dict:
+    rec = {"isin": issuer["isin"], "name": issuer["name"], "status": cur["status"], "robots_ok": True,
+           "ir_urls": [cur["voting_rights_url"]], "eqs_widget": False, "events": [], "website": cur.get("website")}
+    try:
+        rec["events"] = extract_events(issuer, rec["ir_urls"], client, start, end, render=cur["status"] == "js_only")
+    except Exception as e:
+        rec["error"] = repr(e)[:120]
+    return rec
+
+
+def fetch_events(start_date: date, end_date: date, issuers: list[dict] | None = None, workers: int = 4,
+                 curated_only: bool = True) -> list[dict]:
+    """Standard (Tagesbetrieb): nur kuratierte Seiten. Volle Suche/Kuratierung: curated_only=False bzw. curate()."""
+    evs, recs = run(start_date, end_date, issuers, workers, curated_only=curated_only)
     print("Abdeckung DE_IR:", json.dumps(coverage(recs), ensure_ascii=False))
     return evs

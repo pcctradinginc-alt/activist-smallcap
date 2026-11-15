@@ -96,8 +96,9 @@ def validated_combos() -> set[str]:
     files = sorted(REPORTS.glob("event_study_*.json"))
     if not files:
         return set()
-    res = json.loads(files[-1].read_text()).get("result", {}).get("combos", {})
-    return {k for k, v in res.items() if v.get("qualifiziert:main", {}).get("status") == "bestanden"}
+    # nur der bestätigende Holdout-Test bei eingefrorenem Protokoll zählt (keine Entwicklungsergebnisse)
+    a = json.loads(files[-1].read_text()).get("alpha") or {}
+    return set(a.get("passed") or []) if a.get("frozen") else set()
 
 
 # ------------------------------------------------------------------ Bausteine
@@ -290,8 +291,9 @@ def new_signals(st: dict, today: date, p: dict, events: list[dict], since: str, 
         pos_eur = p["order"]["position_eur"] * factor
         try:
             local = pos_eur / (fx or eur_per_unit)(r["ticker"], r["region"], today)
-        except Exception:
-            local = pos_eur
+        except Exception:                         # kein stiller Fallback
+            book_shadow({"candidate_id": oid, "event_id": r.get("event_id"), "ticker": r.get("ticker"),
+                         "region": r.get("region"), "reason": "gesperrt: Wechselkurs fehlt", "date": str(today)}); continue
         combo = f"{r['region']}/{r.get('signal_class')}"
         st["orders"][oid] = {"event_id": r.get("event_id"), "campaign_key": cid, "ticker": r["ticker"],
                              "region": r["region"], "signal_class": r.get("signal_class"), "activist": r.get("activist"),

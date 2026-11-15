@@ -60,8 +60,11 @@ def run(ds: pd.DataFrame, price_loader, bench_loader, variants: bool = True, fx_
             continue
         try:
             fxl = fx_loader(c["ticker"], c["region"], d0) if fx_loader else 1.0
-        except Exception:
-            fxl = 1.0
+        except Exception:                         # kein stiller Fallback: ohne Wechselkurs keine Volumengrenze
+            trades.append({"campaign_key": c.get("campaign_key"), "region": c.get("region"), "signal_class": c.get("signal_class"),
+                           "variant": "main", "qualified": c["status"] == "qualifiziert", "executed": False,
+                           "reason": "Wechselkurs fehlt", "published": c.get("published")})
+            continue
         ex = [pd.Timestamp(x) for x in (c.get("exit_events") or [])]
         for n in names:
             stop = n == "main"
@@ -69,12 +72,27 @@ def run(ds: pd.DataFrame, price_loader, bench_loader, variants: bool = True, fx_
             r = run_campaign(c, px, bench, p, stop, md, ex if not md else (), fxl)
             trades.append({**{k: c[k] for k in ("campaign_key", "activist", "filer_id", "region", "signal_class",
                                                  "status", "ticker", "published", "demand")},
-                           "mcap": c.get("mcap"),
+                           "mcap": c.get("mcap"), "verified": bool(c.get("verified")), "dq_missing": c.get("dq_missing"),
+                           "stake": c.get("stake"), "runup_20d": c.get("runup_20d"),
+                           "adv_eur": (c.get("adv") / fxl) if c.get("adv") and fxl else None,
+                           "price_source": c.get("price_source"),
                            "variant": n, "qualified": c["status"] == "qualifiziert", **r})
     t = pd.DataFrame(trades)
     res = {"combos": {}, "execution": {}}
     if t.empty:
         return res, t
+    # Bestätigender Test (Train/Validierung/Holdout, nur geprüfte Daten, Holm) + Lernstatus
+    from .alpha import main_trades, run_alpha
+    from ..learn import ranker
+    res["alpha"] = run_alpha(t)
+    res["data_quality"] = res["alpha"]["data_quality"]
+    mt = main_trades(t)
+    if len(mt):
+        mt = ranker.pit_activist_record(mt)
+        res["learning"] = ranker.decide(mt[mt.split == "train"], mt[mt.split == "valid"])
+    else:
+        res["learning"] = {"status": ranker.ST_INSUFFICIENT, "active": False, "n_train": 0, "n_valid": 0}
+    res["learning"]["closed_campaigns"] = int(len(mt))
     for n in names:
         tv = t[t.variant == n]
         if "executed" not in tv:
@@ -147,6 +165,31 @@ def survivorship(ds: pd.DataFrame, trades: pd.DataFrame, bench_loader, p: dict) 
     return L
 
 
+def alpha_section(res: dict) -> list[str]:
+    a = res.get("alpha")
+    if not a:
+        return []
+    dq = a["data_quality"]
+    L = ["## Bestätigender Alpha-Test (Holdout ab 2023, nur geprüfte Daten, Holm-korrigiert)", "",
+         f"**Ergebnis: {a['status'].upper()}**", "",
+         f"- Geprüfte Kampagnen: {dq['n_campaigns_valid']} | ungeprüft (zählen nicht): {dq['n_campaigns_unverified']} "
+         f"| Anteil geprüft {dq['verified_share']:.0%}",
+         f"- Protokoll: {'eingefroren am ' + str(a['freeze'].get('frozen_at')) if a['frozen'] else a['freeze']['reason']}", ""]
+    if a.get("holdout"):
+        L += ["| Region/Klasse | Urteil | n | Ø netto | 90 %-Bereich | p (roh) | p (Holm) |", "|---|---|---|---|---|---|---|"]
+        for k, v in sorted(a["holdout"].items()):
+            if v.get("n"):
+                fmt = lambda x: "–" if x is None or x != x else f"{x:.3f}"
+                L.append(f"| {k} | {v['status']} | {v['n']} | {v['mean']:+.1%} | {v['ci_low']:+.1%} … {v['ci_high']:+.1%} | "
+                         f"{fmt(v.get('p_raw'))} | {fmt(v.get('p_holm'))} |")
+    else:
+        L.append(a.get("holdout_note", ""))
+    lr = res.get("learning", {})
+    L += ["", f"**Lernstufe:** {lr.get('status')} · aktiv: {'JA' if lr.get('active') else 'NEIN'} · "
+              f"abgeschlossene geprüfte Kampagnen {lr.get('closed_campaigns', 0)} / 200", ""]
+    return L
+
+
 def hypotheses(trades: pd.DataFrame) -> list[str]:
     """H2 (Forderungsart) und H3 (Stabilität der Aktivisten) – Erkundung auf qualifizierten Haupttrades."""
     t = trades[(trades.variant == "main") & (trades.qualified == True) & (trades.executed == True) & (trades.complete == True)]
@@ -193,10 +236,13 @@ def write_report(res: dict, funnel, ds: pd.DataFrame, trades: pd.DataFrame, path
         L.append("")
     if bench_loader is not None and not trades.empty:
         L += survivorship(ds, trades, bench_loader, params())
+    L += alpha_section(res)
     L += hypotheses(trades) if not trades.empty else []
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(L), encoding="utf-8")
     ds.to_csv(path.with_name(path.stem + "_dataset.csv"), index=False)
     trades.to_csv(path.with_name(path.stem + "_trades.csv"), index=False)
-    path.with_suffix(".json").write_text(json.dumps({"result": res, "funnel": dict(funnel)}, default=str, indent=1))
+    path.with_suffix(".json").write_text(json.dumps({"result": res, "funnel": dict(funnel), "alpha": res.get("alpha"),
+                                                     "data_quality": res.get("data_quality"), "learning": res.get("learning")},
+                                                    default=str, indent=1))
     return str(path)

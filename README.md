@@ -16,7 +16,7 @@ Es wird **kein Echtgeld** gehandelt; Papierhandel und Journal dienen nur der Pr�
 config/     params.yaml (Protokollparameter), activists.yaml, risk_limits.yaml (nur manuell)
 src/activist/
   sources/  edgar.py, edinet.py, prices.py   Datenquellen
-  parse/    campaigns.py                     Ereignis -> Kampagne + Signalklasse (A/B/C)
+  parse/    campaigns.py                     Aktivistenliste, Ereignisübersicht
   paper/    execution.py                     Orderausführung, Kostenmodell
   study/    event_study.py, stats.py         Ereignisstudie, Bootstrap, Nachweiskriterien
   risk/     rules.py                         Risikotor
@@ -29,6 +29,17 @@ reports/    Studienberichte
 tests/      Offline-Tests (pytest)
 .github/workflows/  ci, daily, weekly_status
 ```
+
+## Alpha-Protokoll
+
+- Zeitfenster: Training bis 2019, Validierung 2020–2022, Holdout ab 2023 (bleibt versiegelt, bis das Protokoll eingefroren ist – `PROTOCOL_FREEZE.json`).
+- Mehrfachtests werden mit Holm korrigiert; Alpha gilt je Region/Klasse nur bei bestandenem Holdout.
+- Es zählen nur geprüfte (verifizierte) Daten.
+- Lernstufe bleibt inaktiv, bis 200 abgeschlossene Kampagnen vorliegen.
+
+## Systemstatus
+
+Wochenbericht und HTML-Mail beginnen mit dem Block „Systemstatus“ (`health.py`): Datenqualität, gültige Ereignisse/Kampagnen, Alpha-Nachweis (JA/NEIN je Region/Klasse), ungeklärte Fehler (zuletzt fehlgeschlagene Quellen aus `reports/health.json`, fehlendes Einfrieren) und Lernfortschritt (x / 200).
 
 ## Einrichtung
 

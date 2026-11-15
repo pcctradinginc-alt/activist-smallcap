@@ -7,7 +7,6 @@ import requests
 from ..common import DATA
 
 HDR = {"User-Agent": "Mozilla/5.0 (research)"}
-STOOQ_SUFFIX = {"US": ".us", "JP": ".jp", "UK": ".uk", "DACH": ".de"}
 YAHOO_SUFFIX = {"US": "", "JP": ".T", "UK": ".L", "DACH": ".DE"}
 
 
@@ -38,16 +37,6 @@ def yahoo(ticker: str, start: date, end: date) -> pd.DataFrame:
         for c in ("open", "high", "low", "close"):
             df[c] = df[c] * f
     return df.dropna(subset=["close"])
-
-
-def stooq(ticker: str, start: date, end: date) -> pd.DataFrame:
-    r = requests.get("https://stooq.com/q/d/l/", params={"s": ticker.lower(), "i": "d",
-                     "d1": f"{start:%Y%m%d}", "d2": f"{end:%Y%m%d}"}, headers=HDR, timeout=30)
-    r.raise_for_status()
-    if not r.text.startswith("Date"):
-        raise ValueError(f"Stooq: keine Daten für {ticker}")
-    df = pd.read_csv(io.StringIO(r.text), parse_dates=["Date"]).set_index("Date")
-    return df.rename(columns=str.lower)[["open", "high", "low", "close", "volume"]]
 
 
 def nasdaq(ticker: str, start: date, end: date) -> pd.DataFrame:

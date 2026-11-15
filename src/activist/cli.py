@@ -11,7 +11,7 @@ def cmd_fetch(a):
     from .sources import edgar, edinet
     days = [date.fromisoformat(a.date) - timedelta(days=i) for i in range(a.days)] if a.date else \
            [date.today() - timedelta(days=i) for i in range(1, a.days + 1)]
-    store, total = EventStore(), 0
+    store, total, health_src = EventStore(), 0, {}
     for d in days:
         evs = []
         if a.source in ("edgar", "all"):
@@ -19,6 +19,7 @@ def cmd_fetch(a):
                 evs += edgar.fetch_events(d, with_headers=not a.no_headers, limit=a.limit)
             except Exception as e:     # ein Quellenfehler darf den Tageslauf (und das Papierdepot) nicht stoppen
                 print(f"::warning::EDGAR {d}: {e}")
+                health_src["EDGAR"] = {"ok": False, "n_new": 0, "error": str(e)[:200]}
         n = store.append(evs)
         if a.source in ("edinet", "all"):
             import os
@@ -28,29 +29,37 @@ def cmd_fetch(a):
                     r = fetch_day(d, os.environ["EDINET_API_KEY"], store); n += r["new"]; evs += [None] * r["docs"]
                 except Exception as e:
                     print(f"::warning::EDINET {d}: {e}")
+                    health_src["EDINET"] = {"ok": False, "n_new": 0, "error": str(e)[:200]}
             else:
                 print("EDINET übersprungen: EDINET_API_KEY fehlt")
         total += n
+        health_src.setdefault("tage", {"ok": True, "n_new": 0, "error": None})["n_new"] += n
         print(f"{d}: {len(evs)} Meldungen, {n} neu")
     print(f"gesamt neu: {total}")
+    from .health import record_run
+    for k in ("EDGAR", "EDINET"):
+        health_src.setdefault(k, {"ok": True, "n_new": 0, "error": None})
+    record_run("fetch", health_src)
 
 
 def cmd_status(a):
-    from .parse.campaigns import assign
-    evs = assign(EventStore().all())
-    by = Counter((e["region"], e.get("signal_class") or "-", e["event_type"]) for e in evs)
-    lines = [f"Ereignisse gesamt: {len(evs)}",
-             f"Kampagnen (erstes Ereignis mit Klasse): {sum(1 for e in evs if e.get('is_first_event'))}",
-             f"Ohne Uhrzeit (Folgetag-Regel): {sum(1 for e in evs if not e.get('has_time'))}", ""]
-    lines += [f"{r} | Klasse {c} | {t}: {n}" for (r, c, t), n in sorted(by.items())]
-    lines += ["", f"Journal-Prüfwert: {file_hash(JOURNAL / 'trades.csv')}",
-              "Forschungssystem, Phase 0/1. Keine Anlageberatung."]
+    from .parse.campaigns import summary
+    sm = summary(EventStore().all())
+    lines = [f"Ereignisse gesamt: {sm['n']}", f"Ohne Uhrzeit (Folgetag-Regel): {sm['no_time']}", "",
+             "Nach Region: " + ", ".join(f"{k} {v}" for k, v in sorted(sm["by_region"].items())),
+             "Nach Quelle: " + ", ".join(f"{k} {v}" for k, v in sorted(sm["by_source"].items())), "",
+             f"Journal-Prüfwert: {file_hash(JOURNAL / 'trades.csv')}", "Forschungssystem. Keine Anlageberatung."]
     body = "\n".join(lines)
     if a.mail:
-        send(f"[Status] Ereignisstudie – Woche {date.today():%G-W%V}", body)
+        send(f"[Status] Ereignisse – Woche {date.today():%G-W%V}", body)
     else:
         print(body)
 
+
+def cmd_freeze(a):
+    from .study.alpha import freeze
+    rec = freeze(a.note)
+    print(f"Protokoll eingefroren am {rec['frozen_at']} (Commit {rec['git_commit']}); {len(rec['hashes'])} Dateien gesichert")
 
 def cmd_study(a):
     from .common import params
@@ -99,6 +108,15 @@ def cmd_backfill_jp(a):
 
 
 def cmd_backfill_eu(a):
+    try:
+        _backfill_eu(a)
+    except Exception as e:
+        from .health import record_run
+        record_run("backfill-eu", {a.source: {"ok": False, "n_new": 0, "error": str(e)[:200]}})
+        raise
+
+
+def _backfill_eu(a):
     """EU-Ereignisse einer Quelle abrufen und append-only in den EventStore schreiben (--enrich: TR-1/PDF/Text je Meldung lesen,
     1 Request je Meldung, >= 1 s Abstand -> langsam)."""
     start, end = date.fromisoformat(a.start), date.fromisoformat(a.end)
@@ -127,6 +145,8 @@ def cmd_backfill_eu(a):
         evs = [eu_pdf.enrich_amf(e) for e in evs] if a.enrich else evs
     n = EventStore().append(evs)
     print(f"{a.source} {start}..{end}: {len(evs)} Meldungen, {n} neu")
+    from .health import record_run
+    record_run("backfill-eu", {a.source: {"ok": True, "n_new": n, "error": None}})
 
 
 def cmd_backfill(a):
@@ -169,6 +189,7 @@ def main(argv=None):
     be.add_argument("--start", required=True); be.add_argument("--end", required=True)
     be.add_argument("--enrich", action="store_true"); be.set_defaults(fn=cmd_backfill_eu)
     pp = sp.add_parser("paper"); pp.set_defaults(fn=cmd_paper)
+    fz = sp.add_parser("freeze"); fz.add_argument("--note", default=""); fz.set_defaults(fn=cmd_freeze)
     wk = sp.add_parser("weekly"); wk.add_argument("--mail", action="store_true"); wk.set_defaults(fn=cmd_weekly)
     a = ap.parse_args(argv); a.fn(a)
 

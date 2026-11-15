@@ -41,6 +41,16 @@ def _parse(url: str, cache: dict) -> dict:
     return cache[url]
 
 
+def data_quality(row: dict, ticker_certain: bool, activist_evidence: bool) -> dict:
+    """Verbindliche Datenqualität je Kampagne. Nur 'verified' fließt in den bestätigenden Alpha-Test.
+    Kriterien: zwei unabhängige Kursquellen stimmen überein (Abweichung <= 2 %), Ticker eindeutig der damaligen Firma
+    zugeordnet, Marktkapitalisierung aus point-in-time Aktienzahl bekannt, Aktivisten-Einstufung belegt."""
+    checks = {"Kurse doppelt geprüft": row.get("price_check") is True, "Ticker eindeutig": bool(ticker_certain),
+              "Marktkapitalisierung bekannt": row.get("mcap") is not None and row.get("mcap") == row.get("mcap"),
+              "Aktivist belegt": bool(activist_evidence)}
+    return {"verified": all(checks.values()), "dq_missing": "; ".join(k for k, v in checks.items() if not v)}
+
+
 def campaigns(events: list[dict], reg: Register) -> list[dict]:
     """Erstes Ereignis je Kampagne + spätere Ereignisse derselben Kampagne (für Ausstiege)."""
     by: dict[tuple, list] = {}
@@ -120,6 +130,7 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
             try:
                 px, chk = prices.load(t["ticker"], "US", d0 - timedelta(days=45), min(d0 + timedelta(days=420), end))
                 row["price_source"] = "yahoo"
+                row["price_check"] = chk.get("ok")
             except Exception:
                 px = None
             if px is not None and chk.get("ok") is False:
@@ -187,8 +198,10 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
             from ..paper.portfolio import eur_per_unit
             pos_usd = p["order"]["position_eur"] / eur_per_unit(row["ticker"], "US", d0)
         except Exception:
-            pos_usd = p["order"]["position_eur"] * 1.1
-        if pos_usd > lim["max_position_share_of_adv"] * row["adv"]:      # ADV in USD
+            pos_usd = None
+        if pos_usd is None:                       # kein stiller Fallback: ohne Wechselkurs keine Liquiditätsprüfung
+            reasons.append("Wechselkurs fehlt")
+        elif pos_usd > lim["max_position_share_of_adv"] * row["adv"]:      # ADV in USD
             reasons.append("Liquidität")
         # Ausstiege: spätere Meldungen dieser Kampagne mit Anteil < 5 % oder Exit-Formulierung
         exits = []
@@ -199,6 +212,7 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
         row["exit_events"] = exits
         row["status"] = ("verworfen: " + "; ".join(reasons)) if reasons else "qualifiziert"
         funnel["verworfen (Schattenportfolio)" if reasons else "qualifiziert"] += 1
+        row.update(data_quality(row, ticker_certain=bool(t), activist_evidence=bool(c.get("listed_activist") or ft.get("demand_evidence"))))
         rows.append(row)
     return pd.DataFrame(rows), funnel
 
@@ -272,7 +286,9 @@ def build_jp(events: list[dict], end: date | None = None, since: str | None = No
                 funnel[f"JP Universum: {v}"] += 1
             row["status"] = "außerhalb Universum: " + "; ".join(uv); rows.append(row); continue
         funnel["JP im Universum"] += 1
-        eurjpy = float(fx.asof(pd.Timestamp(d0))) if fx is not None else 160.0
+        eurjpy = float(fx.asof(pd.Timestamp(d0))) if fx is not None else float("nan")
+        if pd.isna(eurjpy):                       # kein stiller Fallback auf einen Näherungskurs
+            funnel["JP Wechselkurs fehlt"] += 1; row["status"] = "gesperrt: Wechselkurs fehlt"; rows.append(row); continue
         pos_jpy = p["order"]["position_eur"] * eurjpy
         reasons = []
         if cfg.get("lot_size", 100) * pf["price"] > pos_jpy:
@@ -288,5 +304,8 @@ def build_jp(events: list[dict], end: date | None = None, since: str | None = No
         # Konzept: Handelbarkeit über deutschen Broker ungeprüft -> Japan vorerst nur Schattenportfolio
         row["status"] = ("verworfen: " + "; ".join(reasons)) if reasons else "qualifiziert"
         funnel["JP verworfen" if reasons else "JP qualifiziert"] += 1
+        row["price_check"] = chk.get("ok")
+        row["mcap"] = c.get("total_shares_outstanding") * pf["price"] if c.get("total_shares_outstanding") else None
+        row.update(data_quality(row, ticker_certain=True, activist_evidence=True))
         rows.append(row)
     return pd.DataFrame(rows), funnel

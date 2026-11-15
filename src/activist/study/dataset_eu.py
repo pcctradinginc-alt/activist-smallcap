@@ -27,7 +27,6 @@ EU_REGIONS = {"UK", "NORDIC", "BENELUX_FR", "DACH"}
 ISIN_RE = re.compile(r"^[A-Z]{2}[A-Z0-9]{9}\d$")
 EXIT_BELOW = {"UK": 0.03, "NORDIC": 0.05, "BENELUX_FR": 0.05, "DACH": 0.03}
 SUFFIX_FX = {".L": "GBPEUR=X", ".OL": "NOKEUR=X", ".ST": "SEKEUR=X", ".CO": "DKKEUR=X", ".SW": "CHFEUR=X"}      # EUR-Länder: kein FX
-FX_FALLBACK = {"GBPEUR=X": 1.15, "NOKEUR=X": 0.085, "SEKEUR=X": 0.09, "DKKEUR=X": 0.134, "CHFEUR=X": 1.05}
 PENCE_SUFFIX = (".L",)
 
 
@@ -168,8 +167,8 @@ def build_eu(events: list[dict], end: date | None = None, use_network_figi: bool
                 fx = float(s.asof(pd.Timestamp(d0))) if s is not None else float("nan")
             except Exception:
                 fx = float("nan")
-            if pd.isna(fx):
-                fx = FX_FALLBACK[pair]; funnel["EU FX-Fallback (Näherungskurs)"] += 1
+            if pd.isna(fx):                       # kein stiller Fallback auf einen Näherungskurs
+                funnel["EU Wechselkurs fehlt"] += 1; row["status"] = "gesperrt: Wechselkurs fehlt"; rows.append(row); continue
         pf_eur = dict(pf, price=pf["price"] * fx, adv=pf["adv"] * fx) if pf.get("ok") else pf
         shares = c.get("total_voting_rights")
         if not shares and c.get("voting_rights_held") and c.get("holding_ratio"):
@@ -199,5 +198,8 @@ def build_eu(events: list[dict], end: date | None = None, use_network_figi: bool
                               if fu.get("holding_ratio") is not None and fu["holding_ratio"] < thr][:1]
         row["status"] = ("verworfen: " + "; ".join(reasons)) if reasons else "qualifiziert"
         funnel["EU verworfen" if reasons else "EU qualifiziert"] += 1
+        from .dataset import data_quality
+        row["price_check"] = None                 # keine zweite kostenlose Kursquelle für Europa -> ungeprüft
+        row.update(data_quality(row, ticker_certain=bool(isin), activist_evidence=True))
         rows.append(row)
     return pd.DataFrame(rows), funnel
