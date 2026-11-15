@@ -41,7 +41,7 @@ def simulate_entry(px: pd.DataFrame, decision_time: pd.Timestamp, order_cfg: dic
     for ts, row in after.head(order_cfg["max_fill_days"]).iterrows():
         if row.open <= limit:
             p = float(row.open)
-        elif row.low <= limit:
+        elif row.low < limit:          # konservativ: Limit muss durchhandelt werden, Berührung reicht nicht
             p = limit
         else:
             continue

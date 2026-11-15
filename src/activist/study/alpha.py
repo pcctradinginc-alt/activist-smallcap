@@ -26,6 +26,7 @@ PROTOCOL_FILES = ["config/params.yaml", "config/risk_limits.yaml", "PROTOCOL.md"
                   "src/activist/study/dataset_eu.py", "src/activist/paper/execution.py", "src/activist/features/universe.py",
                   "src/activist/features/register.py", "src/activist/parse/filing13d.py"]
 FAMILY_ALPHA = 0.10
+COHORT_LAG_DAYS = 380
 
 
 # ------------------------------------------------------------------ Einfrieren
@@ -106,6 +107,9 @@ def holm(pvals: dict[str, float]) -> dict[str, float]:
 def main_trades(trades: pd.DataFrame, verified_only: bool = True) -> pd.DataFrame:
     if trades.empty or "executed" not in trades:
         return trades.iloc[0:0]
+    # Rechtszensierung vermeiden: nur Kohorten, deren volle Haltedauer (252 Handelstage + Einstiegsfenster) beobachtbar ist
+    cutoff = (pd.Timestamp.now(tz="UTC") - pd.Timedelta(days=COHORT_LAG_DAYS)).strftime("%Y-%m-%d")
+    trades = trades[trades.published.astype(str).str[:10] <= cutoff]
     t = trades[(trades.variant == "main") & (trades.qualified == True) & (trades.executed == True) & (trades.complete == True)]
     if verified_only:
         t = t[t.get("verified", pd.Series(False, index=t.index)) == True]

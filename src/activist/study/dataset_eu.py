@@ -6,7 +6,7 @@ Konventionen (wie build/build_jp): eine Zeile je Kampagne, Spalte `status` ('qua
 Signalklasse: EU-Stimmrechtsmitteilungen (TR-1, AMF-Franchissement, Flagging) haben KEIN Absichtsfeld (anders als 13D Item 4 / EDINET
 Haltezweck). Deshalb nur Klasse B = Melder steht im Aktivisten-Register (activists.yaml, region EU; Namensabgleich normalisiert,
 Teilstring, ab `since`). Klasse A ist in Europa nicht ableitbar.
-Kampagne = erstes Ereignis je (normierter Melder, Emittent-ISIN). Ohne Uhrzeit (has_time False) kein Signal (Regel 1: sonst Look-ahead-Gefahr).
+Kampagne = erstes Ereignis je (normierter Melder, Emittent-ISIN). Ohne Uhrzeit: Entscheidung frühestens am Folgetag (konservativ, kein Look-ahead).
 Erste Meldung mit Anteil unter der Ausstiegsschwelle gilt als Ausstieg, nicht als Einstieg (Historienbeginn) und wird nicht gezählt.
 
 Kurse: Yahoo (voller Ticker aus OpenFIGI-Primärlisting), ohne Zweitquelle (chk ok=None, ungeprüft). '.L'-Kurse sind in Pence (GBp) -> /100.
@@ -137,8 +137,9 @@ def build_eu(events: list[dict], end: date | None = None, use_network_figi: bool
         row = {k: c.get(k) for k in ("event_id", "campaign_key", "published", "form", "signal_class", "event_type",
                                      "filer_id", "filer_name", "issuer_id", "issuer_name", "url", "region")}
         row.update(activist=c.get("filer_name"), isin=isin, demand="none", demand_evidence=None, stake=c.get("holding_ratio"))
-        if not c.get("has_time"):
-            funnel["EU ohne Uhrzeit (kein Signal)"] += 1; row["status"] = "keine Uhrzeit"; rows.append(row); continue
+        if not c.get("published"):
+            funnel["EU ohne Datum (kein Signal)"] += 1; row["status"] = "kein Datum"; rows.append(row); continue
+        # Ohne Uhrzeit (z. B. SIX): published ist bereits konservativ der Folgetag 00:00 UTC (effective_decision_time)
         if not isin:
             funnel["EU ohne ISIN"] += 1; row["status"] = "keine ISIN"; rows.append(row); continue
         try:
@@ -174,10 +175,6 @@ def build_eu(events: list[dict], end: date | None = None, use_network_figi: bool
         if not shares and c.get("voting_rights_held") and c.get("holding_ratio"):
             shares = c["voting_rights_held"] / c["holding_ratio"]   # Gesamtzahl aus der Meldung selbst
         uv = universe_check(p["universe"][reg], pf_eur, shares, None, False)
-        if not shares:
-            uv = [v for v in uv if v != "Aktienzahl unbekannt"]
-            if pf.get("ok"):
-                funnel["EU Marktkapitalisierung ungeprüft"] += 1
         row.update(price=pf_eur.get("price"), adv=pf_eur.get("adv"), runup_20d=pf.get("runup_20d"),
                    half_spread=pf.get("half_spread"),
                    mcap=(shares * pf_eur["price"]) if shares and pf_eur.get("price") else None, fx=fx)

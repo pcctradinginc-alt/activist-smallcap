@@ -54,3 +54,10 @@ Der erste Tageslauf (2026-11-14) hat große Institutionen (Staatsfonds, Banken, 
 gewertet, weil die Verhaltensregel (>= 3 frühere 13D) allein genügte. Neu: Klasse B nur für kuratierte Aktivisten;
 Klasse A über die Verhaltensregel nur mit konkreter Forderung samt Textbeleg in Item 4. Zu diesem Zeitpunkt war keine
 Order ausgeführt (0 Positionen, trades.csv leer); portfolio.json und shadow.csv wurden zurückgesetzt.
+
+## Änderung 2026-11-15 (vor dem Einfrieren, nach externer Code-Prüfung)
+- Limit-Ausführung konservativ: Ausführung zum Limit nur, wenn das Tagestief das Limit unterschreitet (bloße Berührung reicht nicht).
+- Rechtszensierung: Der Alpha-Test wertet nur Kohorten, deren volle Haltedauer beobachtbar ist (Veröffentlichung ≥ 380 Tage vor Auswertung).
+- Europa: Ohne bekannte Aktienzahl keine Qualifikation (Marktkapitalisierung muss prüfbar sein, gleiche Regel wie USA/Japan).
+- Meldungen ohne Uhrzeit (SIX): Entscheidung frühestens am Folgetag statt Ausschluss (kein Look-ahead).
+- Bewusst nicht übernommen: Faktormodell, Ridge-Regression, Portfolio-Simulator – zusätzliche Komplexität ohne Nutzen bei der aktuellen Fallzahl; die Bewertung gegen den regionalen Small-Cap-Index mit Kapazitätsgrenze bleibt.

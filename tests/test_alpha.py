@@ -66,3 +66,12 @@ def test_noise_not_proven(root):
 def test_holm_adjustment():
     adj = alpha.holm({"a": 0.01, "b": 0.04, "c": 0.03})
     assert adj["a"] == pytest.approx(0.03) and adj["c"] == pytest.approx(0.06) and adj["b"] == pytest.approx(0.06)
+
+
+def test_censored_recent_cohorts_excluded():
+    import pandas as pd
+    from activist.study import alpha
+    today = pd.Timestamp.now(tz="UTC")
+    t = pd.DataFrame({"variant": "main", "qualified": True, "executed": True, "complete": True, "verified": True,
+                      "published": [(today - pd.Timedelta(days=d)).strftime("%Y-%m-%d") for d in (30, 500)]})
+    assert len(alpha.main_trades(t)) == 1
