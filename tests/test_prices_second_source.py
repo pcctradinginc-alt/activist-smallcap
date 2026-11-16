@@ -184,3 +184,16 @@ def test_tiingo_blocks_rest_of_run_after_limit(monkeypatch):
     with pytest.raises(ValueError):
         prices.tiingo("B", date(2018, 1, 1), date(2018, 1, 5), key="k")
     assert not calls
+
+
+def test_second_source_deferred(tmp_path, monkeypatch):
+    monkeypatch.setattr(prices, "DATA", tmp_path)
+    idx = pd.date_range("2018-01-01", "2018-03-01", freq="B")
+    df = pd.DataFrame({"open": 1.0, "high": 1.0, "low": 1.0, "close": 1.0, "close_unadj": 1.0, "volume": 1}, index=idx)
+    calls = []
+    monkeypatch.setattr(prices, "yahoo", lambda *a, **k: df)
+    monkeypatch.setitem(prices.SECOND_SOURCE, "US", lambda t, s, e: calls.append(1) or df[["close"]])
+    _, chk = prices.load("ABC", "US", date(2018, 1, 2), date(2018, 2, 20), second=False)
+    assert chk["ok"] is None and not calls
+    _, chk = prices.load("ABC", "US", date(2018, 1, 2), date(2018, 2, 20))
+    assert chk["ok"] is True and calls == [1]

@@ -150,7 +150,7 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
         if t:
             row["ticker"] = t["ticker"]
             try:
-                px, chk = prices.load(t["ticker"], "US", d0 - timedelta(days=45), min(d0 + timedelta(days=420), end))
+                px, chk = prices.load(t["ticker"], "US", d0 - timedelta(days=45), min(d0 + timedelta(days=420), end), second=False)
                 row["price_source"] = "yahoo"
                 row["price_check"] = chk.get("ok"); row["price_check_note"] = prices._scrub(chk.get("error")) if chk.get("error") else (f"Abweichung {chk.get('max_dev')}" if chk.get("ok") is False else None)
             except Exception:
@@ -224,6 +224,16 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
         row["exit_events"] = exits
         row["status"] = ("verworfen: " + "; ".join(reasons)) if reasons else "qualifiziert"
         funnel["verworfen (Schattenportfolio)" if reasons else "qualifiziert"] += 1
+        if not reasons and row.get("price_source") == "yahoo" and row.get("price_check") is None:
+            try:            # Zweitquelle nur für qualifizierte Kampagnen (Tiingo-Kontingent)
+                _, chk = prices.load(row["ticker"], "US", d0 - timedelta(days=45), min(d0 + timedelta(days=420), end))
+                row["price_check"] = chk.get("ok")
+                row["price_check_note"] = prices._scrub(chk.get("error")) if chk.get("error") else (f"Abweichung {chk.get('max_dev')}" if chk.get("ok") is False else None)
+                if chk.get("ok") is False:
+                    funnel["qualifiziert"] -= 1; funnel["Kursquellen weichen ab"] += 1
+                    row["status"] = "gesperrt: Kursabweichung"; rows.append(row); continue
+            except Exception as e:
+                row["price_check_note"] = prices._scrub(e)[:200]
         row.update(data_quality(row, ticker_certain=_ticker_certain(row, px, d0, c["issuer_id"], row.get("ticker")), activist_evidence=bool(c.get("listed_activist") or ft.get("demand_evidence"))))
         rows.append(row)
     return pd.DataFrame(rows), funnel

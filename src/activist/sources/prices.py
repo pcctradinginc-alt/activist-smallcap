@@ -123,7 +123,7 @@ def cross_check(a: pd.DataFrame, b: pd.DataFrame, max_dev: float = 0.02) -> dict
     return {"ok": bool(md <= max_dev), "overlap": n, "max_dev": md}
 
 
-def load(ticker: str, region: str, start: date, end: date, cache: bool = True) -> tuple[pd.DataFrame, dict]:
+def load(ticker: str, region: str, start: date, end: date, cache: bool = True, second: bool = True) -> tuple[pd.DataFrame, dict]:
     """Primärquelle Yahoo, Zweitquelle je Region (USA: Nasdaq/Tiingo). Gibt Kurse und Abgleichsergebnis zurück.
     ok=True: beide Quellen stimmen überein · ok=False: Abweichung > 2 % (gesperrt) · ok=None: ungeprüft.
     Das Prüfergebnis wird mit den Kursen gespeichert – ein Cache-Treffer gilt nie stillschweigend als geprüft."""
@@ -140,12 +140,14 @@ def load(ticker: str, region: str, start: date, end: date, cache: bool = True) -
             covered = df.index.min().date() <= start and df.index.max().date() >= min(end, today - timedelta(days=7))
         if chk.get("ok") and (chk.get("overlap") or 0) < MIN_OVERLAP_DAYS:   # alte Prüfdatei mit zu kleiner Überlappung = ungeprüft
             chk = {**chk, "ok": None}
-        if covered and (chk.get("ok") is not None or region not in SECOND_SOURCE):   # ungeprüft + Zweitquelle vorhanden -> neu prüfen
+        if covered and (chk.get("ok") is not None or region not in SECOND_SOURCE or not second):   # ungeprüft + Zweitquelle vorhanden -> neu prüfen
             return df.loc[str(start):str(end)], {**chk, "cached": True}
     a = yahoo(ticker + YAHOO_SUFFIX.get(region, ""), start, end)
     try:
         if region not in SECOND_SOURCE:
             raise ValueError(f"keine Zweitquelle für Region {region}")
+        if not second:      # Zweitquelle (knappes Tiingo-Kontingent) erst für qualifizierte Kampagnen
+            raise ValueError("Zweitprüfung zurückgestellt")
         chk = cross_check(a, SECOND_SOURCE[region](ticker, start, end))
     except Exception as e:
         chk = {"ok": None, "error": _scrub(e)[:200]}   # Zweitquelle nicht verfügbar => ungeprüft (zählt nicht als Nachweis)
