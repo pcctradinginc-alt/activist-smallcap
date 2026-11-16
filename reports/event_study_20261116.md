@@ -12,43 +12,43 @@ Haupttest: **qualifiziert:main** (Orderregeln, Ausstieg inkl. −30 %-Stopp, Kos
 - JP verworfen: 586
 - JP qualifiziert: 510
 - JP keine Kurse (delistet/Survivorship): 507
-- Survivorship: Endwert cash_merger: 493
+- Survivorship: Endwert cash_merger: 492
 - JP Universum: Marktkapitalisierung außerhalb: 461
 - EU kampagnen: 358
-- Survivorship: Endwert deregistered: 303
-- im Universum: 265
-- Universum: Marktkapitalisierung außerhalb: 256
+- Survivorship: Endwert deregistered: 304
+- im Universum: 268
+- Universum: Marktkapitalisierung außerhalb: 262
 - Universum: Aktienzahl unbekannt: 252
 - JP Universum: Tagesumsatz zu gering: 199
 - Universum: zu wenig Kurshistorie: 142
 - EU Universum: Marktkapitalisierung außerhalb: 130
 - qualifiziert: 127
-- Universum: Tagesumsatz zu gering: 121
+- Universum: Tagesumsatz zu gering: 126
 - EU ohne Ticker (Survivorship-Lücke): 98
-- Survivorship: Endwert unknown: 83
-- kein Aktivist (keine Forderung in Item 4): 80
+- Survivorship: Endwert unknown: 84
+- kein Aktivist (keine Forderung in Item 4): 83
 - EU ohne ISIN: 79
+- Survivorship: Tiingo-Kurs nicht plausibel: 77
 - Survivorship: Endwert bankruptcy: 74
 - Survivorship: Endwert going_private: 63
 - EU Universum: Tagesumsatz zu gering: 59
 - verworfen (Schattenportfolio): 58
 - Survivorship: Endwert mixed: 52
-- Survivorship: Tiingo-Kurs nicht plausibel: 39
-- Universum: Banken: 38
+- Universum: Banken: 40
 - JP Universum: zu wenig Kurshistorie: 34
 - Universum: Kurs unter Mindestkurs: 32
-- Survivorship: Endwert stock_merger: 26
 - EU Universum: Aktienzahl unbekannt: 26
-- Kursquellen weichen ab: 23
+- Survivorship: Endwert stock_merger: 25
 - EU keine Kurse (delistet/Survivorship): 18
 - JP Universum: Kurs unter Mindestkurs: 15
+- Kursquellen weichen ab: 13
 - Universum: Versicherer: 11
 - EU erste Meldung unter Ausstiegsschwelle (kein Einstieg): 6
 - EU im Universum: 1
 - EU qualifiziert: 1
 - EU Universum: zu wenig Kurshistorie: 1
 
-**Survivorship: 4 verschwundene Titel über historischen Ticker + Tiingo zurückgeholt; 52% der Kampagnen weiterhin ohne Kursreihe** (nur Endwert, siehe Spannweite unten).
+**Survivorship: 7 verschwundene Titel über historischen Ticker + Tiingo zurückgeholt; 52% der Kampagnen weiterhin ohne Kursreihe** (nur Endwert, siehe Spannweite unten).
 
 ## Ausführung
 
@@ -153,25 +153,25 @@ Wegen unplausiblem Vergleichsindex ausgeschlossen: 76
 ## Survivorship (Sensitivität, kein Nachweis)
 
 - Kampagnen nur mit Endwert: 1094; davon nach Universumsquote erwartet handelbar: 70
-- Endwert-Typen: cash_merger 493, deregistered 303, unknown 83, bankruptcy 74, going_private 63, mixed 52, stock_merger 26
-- Imputiert aus Endwert: 121 Fälle, Ø -56.9% → kombiniert Ø +4.2%
-- Manski-Spannweite des Haupttests: **-23.1% bis +57.7%** (offene Fälle alle Totalverlust bzw. alle bester Fall)
+- Endwert-Typen: cash_merger 492, deregistered 304, unknown 84, bankruptcy 74, going_private 63, mixed 52, stock_merger 25
+- Imputiert aus Endwert: 120 Fälle, Ø -57.1% → kombiniert Ø +4.2%
+- Manski-Spannweite des Haupttests: **-23.1% bis +57.6%** (offene Fälle alle Totalverlust bzw. alle bester Fall)
 - Urteil robust gegen Survivorship nur, wenn beide Grenzen auf derselben Seite der 3 %-Schwelle liegen.
 
 ## Bestätigender Alpha-Test (Holdout ab 2023, nur geprüfte Daten, Holm-korrigiert)
 
 **Ergebnis: NICHT BEURTEILBAR**
 
-- Geprüfte Kampagnen: 4 | ungeprüft (zählen nicht): 498 | Anteil geprüft 1%
+- Geprüfte Kampagnen: 7 | ungeprüft (zählen nicht): 495 | Anteil geprüft 1%
 - Protokoll: Protokoll nicht eingefroren
 
 Holdout versiegelt: Protokoll nicht eingefroren
 
-**Lernstufe:** zu wenig Daten · aktiv: NEIN · abgeschlossene geprüfte Kampagnen 4 / 200
+**Lernstufe:** zu wenig Daten · aktiv: NEIN · abgeschlossene geprüfte Kampagnen 7 / 200
 
 ## Champion vs. Challenger und Merkmalsanalyse (Training ≤ 2019, feste Regeln)
 
-- zu wenig Daten (n Training 3, Validierung 0; Mindestumfang 200)
+- zu wenig Daten (n Training 6, Validierung 0; Mindestumfang 200)
 - activist_prior_mean: zu wenig Daten
 - demand: zu wenig Daten
 - stake: zu wenig Daten
