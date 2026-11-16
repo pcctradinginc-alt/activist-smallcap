@@ -19,8 +19,18 @@ def _ds():
     return pd.DataFrame(r)
 
 
-def _j(x):
-    return json.dumps(x, default=str, sort_keys=True)
+def _round(x):
+    if isinstance(x, float):
+        return round(x, 9)
+    if isinstance(x, dict):
+        return {k: _round(v) for k, v in x.items()}
+    if isinstance(x, (list, tuple)):
+        return [_round(v) for v in x]
+    return x
+
+
+def _j(x):                     # CSV-Rundreise ändert die letzte Gleitkommastelle -> auf 9 Stellen vergleichen
+    return json.dumps(_round(x), default=str, sort_keys=True)
 
 
 def test_csv_roundtrip_same_evaluation(tmp_path):

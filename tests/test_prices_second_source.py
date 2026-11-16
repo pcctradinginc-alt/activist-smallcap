@@ -47,6 +47,8 @@ def test_tiingo_retries_on_429(monkeypatch):
     monkeypatch.setattr(prices.requests, "get", get)
     monkeypatch.setattr(prices, "TIINGO_MIN_GAP_S", 0.0)
     monkeypatch.setattr(prices, "TIINGO_429_WAIT_S", 0.0)
+    monkeypatch.setitem(prices._TIINGO_STATE, "calls", 0)
+    monkeypatch.setitem(prices._TIINGO_STATE, "blocked", False)
     df = prices.tiingo("ABC", date(2018, 1, 1), date(2018, 1, 5), key="k")
     assert len(calls) == 2 and len(df) == 1
 
@@ -74,6 +76,7 @@ def test_tiingo_http_errors_never_leak_key(monkeypatch):
         def raise_for_status(self): raise RuntimeError("https://api.tiingo.com/x?token=SECRET")
     for code in (429, 500):
         monkeypatch.setattr(prices.requests, "get", lambda *a, code=code, **k: R(code))
+        prices._TIINGO_STATE.update(calls=0, blocked=False)
         try:
             prices.tiingo("ABC", date(2018, 1, 1), date(2018, 1, 5), key="SECRET")
         except ValueError as e:
@@ -83,6 +86,7 @@ def test_tiingo_http_errors_never_leak_key(monkeypatch):
 
     def boom(*a, **k): raise prices.requests.ConnectionError("GET https://api.tiingo.com/x?startDate=1&token=SECRET failed")
     monkeypatch.setattr(prices.requests, "get", boom)
+    prices._TIINGO_STATE.update(calls=0, blocked=False)
     try:
         prices.tiingo("ABC", date(2018, 1, 1), date(2018, 1, 5), key="SECRET")
     except ValueError as e:
@@ -161,3 +165,22 @@ def test_tiingo_cached_missing_key_not_negative_cached(tmp_path, monkeypatch):
         except ValueError as e:
             assert "TIINGO_API_KEY" in str(e)
     assert not (tmp_path / "cache" / "tiingo" / "ABC.meta.json").exists()
+
+
+def test_tiingo_blocks_rest_of_run_after_limit(monkeypatch):
+    import pytest
+
+    class R:
+        status_code = 429
+    monkeypatch.setattr(prices.requests, "get", lambda *a, **k: R())
+    for k, v in (("TIINGO_MIN_GAP_S", 0.0), ("TIINGO_429_WAIT_S", 0.0)):
+        monkeypatch.setattr(prices, k, v)
+    monkeypatch.setitem(prices._TIINGO_STATE, "calls", 0)
+    monkeypatch.setitem(prices._TIINGO_STATE, "blocked", False)
+    with pytest.raises(ValueError):
+        prices.tiingo("A", date(2018, 1, 1), date(2018, 1, 5), key="k")
+    calls = []
+    monkeypatch.setattr(prices.requests, "get", lambda *a, **k: calls.append(1))
+    with pytest.raises(ValueError):
+        prices.tiingo("B", date(2018, 1, 1), date(2018, 1, 5), key="k")
+    assert not calls
