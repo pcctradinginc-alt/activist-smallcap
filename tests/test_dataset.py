@@ -103,7 +103,7 @@ def env(monkeypatch, tmp_path):
     monkeypatch.setattr(dataset.secmeta, "excluded_industry", lambda sic: None)
     calls = []
 
-    def load(ticker, region, start, end):
+    def load(ticker, region, start, end, second=True):
         calls.append((ticker, start, end))
         return mkpx(start, end, "runup" if ticker == "RUN" else "flat"), {"ok": True}
     monkeypatch.setattr(dataset.prices, "load", load)
@@ -181,12 +181,12 @@ def test_build_parse_filings_false(env):
 
 
 def test_build_price_failures(env, monkeypatch):
-    def boom(*a):
+    def boom(*a, **k):
         raise RuntimeError("net")
     monkeypatch.setattr(dataset.prices, "load", boom)
     df, f = dataset.build(events()[:1], end=date(2025, 1, 1))
     assert df.status.tolist() == ["nur Endwert"] and f["Survivorship: Endwert unknown"] == 1
-    monkeypatch.setattr(dataset.prices, "load", lambda *a: (pd.DataFrame(), {"ok": False}))
+    monkeypatch.setattr(dataset.prices, "load", lambda *a, **k: (pd.DataFrame(), {"ok": False}))
     df, f = dataset.build(events()[:1], end=date(2025, 1, 1))
     assert df.status.tolist() == ["gesperrt: Kursabweichung"]
 

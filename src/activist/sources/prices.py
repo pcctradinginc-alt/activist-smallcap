@@ -123,7 +123,7 @@ def cross_check(a: pd.DataFrame, b: pd.DataFrame, max_dev: float = 0.02) -> dict
     return {"ok": bool(md <= max_dev), "overlap": n, "max_dev": md}
 
 
-def load(ticker: str, region: str, start: date, end: date, cache: bool = True) -> tuple[pd.DataFrame, dict]:
+def load(ticker: str, region: str, start: date, end: date, cache: bool = True, second: bool = True) -> tuple[pd.DataFrame, dict]:
     """Primärquelle Yahoo, Zweitquelle je Region (USA: Nasdaq/Tiingo). Gibt Kurse und Abgleichsergebnis zurück.
     ok=True: beide Quellen stimmen überein · ok=False: Abweichung > 2 % (gesperrt) · ok=None: ungeprüft.
     Das Prüfergebnis wird mit den Kursen gespeichert – ein Cache-Treffer gilt nie stillschweigend als geprüft."""
@@ -140,12 +140,14 @@ def load(ticker: str, region: str, start: date, end: date, cache: bool = True) -
             covered = df.index.min().date() <= start and df.index.max().date() >= min(end, today - timedelta(days=7))
         if chk.get("ok") and (chk.get("overlap") or 0) < MIN_OVERLAP_DAYS:   # alte Prüfdatei mit zu kleiner Überlappung = ungeprüft
             chk = {**chk, "ok": None}
-        if covered and (chk.get("ok") is not None or region not in SECOND_SOURCE):   # ungeprüft + Zweitquelle vorhanden -> neu prüfen
+        if covered and (chk.get("ok") is not None or region not in SECOND_SOURCE or not second):   # ungeprüft + Zweitquelle vorhanden -> neu prüfen
             return df.loc[str(start):str(end)], {**chk, "cached": True}
     a = yahoo(ticker + YAHOO_SUFFIX.get(region, ""), start, end)
     try:
         if region not in SECOND_SOURCE:
             raise ValueError(f"keine Zweitquelle für Region {region}")
+        if not second:      # Zweitquelle (knappes Tiingo-Kontingent) erst für qualifizierte Kampagnen
+            raise ValueError("Zweitprüfung zurückgestellt")
         chk = cross_check(a, SECOND_SOURCE[region](ticker, start, end))
     except Exception as e:
         chk = {"ok": None, "error": _scrub(e)[:200]}   # Zweitquelle nicht verfügbar => ungeprüft (zählt nicht als Nachweis)
@@ -155,8 +157,10 @@ def load(ticker: str, region: str, start: date, end: date, cache: bool = True) -
     return a, chk
 
 
-TIINGO_MIN_GAP_S, TIINGO_RETRIES, TIINGO_429_WAIT_S = 75.0, 4, 900.0
+TIINGO_MIN_GAP_S, TIINGO_RETRIES, TIINGO_429_WAIT_S = 75.0, 1, 90.0
+TIINGO_MAX_CALLS = 45            # Gratis-Tarif: ~50/Stunde; je Lauf begrenzt, Rest im nächsten Lauf (Cache)
 _TIINGO_LAST = [0.0]
+_TIINGO_STATE = {"calls": 0, "blocked": False}
 
 
 def tiingo(ticker: str, start: date, end: date, key: str | None = None) -> pd.DataFrame:
@@ -167,6 +171,9 @@ def tiingo(ticker: str, start: date, end: date, key: str | None = None) -> pd.Da
     if not key:
         raise ValueError("TIINGO_API_KEY fehlt")
     import time
+    if _TIINGO_STATE["blocked"] or _TIINGO_STATE["calls"] >= TIINGO_MAX_CALLS:
+        raise ValueError("Tiingo-Kontingent für diesen Lauf erschöpft (nächster Lauf setzt fort)")
+    _TIINGO_STATE["calls"] += 1
     for attempt in range(TIINGO_RETRIES + 1):   # Gratis-Tarif: ca. 50 Abrufe/Stunde -> Abstand halten, bei 429 warten
         wait = _TIINGO_LAST[0] + TIINGO_MIN_GAP_S - time.monotonic()
         if wait > 0:
@@ -177,8 +184,11 @@ def tiingo(ticker: str, start: date, end: date, key: str | None = None) -> pd.Da
         except requests.RequestException:     # Fehlertext enthält die URL samt token=... -> nie weiterreichen
             raise ValueError(f"Tiingo: Verbindungsfehler für {ticker}") from None
         _TIINGO_LAST[0] = time.monotonic()
-        if r.status_code != 429 or attempt == TIINGO_RETRIES:
+        if r.status_code != 429:
             break
+        if attempt == TIINGO_RETRIES:
+            _TIINGO_STATE["blocked"] = True       # Limit erreicht: Rest des Laufs ohne Tiingo statt stundenlang warten
+            raise ValueError("Tiingo 429: Abruflimit erreicht")
         time.sleep(TIINGO_429_WAIT_S)
     if r.status_code == 404:
         raise ValueError(f"Tiingo: {ticker} unbekannt")
