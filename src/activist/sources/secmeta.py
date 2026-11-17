@@ -58,6 +58,15 @@ def _submissions(cik) -> dict:
     return _cached("submissions", f"https://data.sec.gov/submissions/CIK{c}.json", c)
 
 
+def earnings_dates(cik) -> list[date]:
+    """Meldedaten (filingDate) der 8-K mit Item 2.02 (Quartalszahlen), aufsteigend. Nur der Block 'recent' der submissions;
+    ältere Seiten werden ignoriert (bei sehr aktiven Emittenten fehlt dann die frühe Historie)."""
+    rec = (_submissions(cik).get("filings") or {}).get("recent") or {}
+    out = [_d(d) for f, it, d in zip(rec.get("form") or [], rec.get("items") or [], rec.get("filingDate") or [])
+           if f == "8-K" and "2.02" in [x.strip() for x in str(it).split(",")]]
+    return sorted(out)
+
+
 def _facts(cik) -> dict:
     c = _cik10(cik)
     return _cached("companyfacts", f"https://data.sec.gov/api/xbrl/companyfacts/CIK{c}.json", c)

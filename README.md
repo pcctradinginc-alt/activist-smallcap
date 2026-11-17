@@ -19,7 +19,7 @@ src/activist/
   parse/    campaigns.py                     Aktivistenliste, Ereignisübersicht
   paper/    execution.py                     Orderausführung, Kostenmodell
   study/    event_study.py, stats.py         Ereignisstudie, Bootstrap, Nachweiskriterien
-  risk/     rules.py                         ein Regelwerk: Kandidatenregeln + Portfolio-Risikotor (Studie und Papierdepot)
+  risk/     rules.py                         ein Regelwerk: Kandidatenregeln (inkl. Großaktionär, Quartalszahlen-Sperre) + Portfolio-Risikotor (Studie und Papierdepot)
   learn/    ranker.py                        Challenger (Schattenmodus, handelt nicht)
   health.py                                  Systemstatus, Quellen-Überwachung
   notify/   mail.py                          E-Mail (SMTP)

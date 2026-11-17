@@ -238,6 +238,8 @@ def alpha_section(res: dict) -> list[str]:
          f"**Ergebnis: {a['status'].upper()}**", "",
          f"- Geprüfte Kampagnen: {dq['n_campaigns_valid']} | ungeprüft (zählen nicht): {dq['n_campaigns_unverified']} "
          f"| Anteil geprüft {dq['verified_share']:.0%}",
+         "- Kursprüfung: USA zweite Kursreihe (Tiingo); Japan nur Kursniveau gegen EDINET-Preisangaben des Meldenden "
+         "(schwächer, eigene Zeilen JP/…)",
          f"- Protokoll: {'eingefroren am ' + str(a['freeze'].get('frozen_at')) if a['frozen'] else a['freeze']['reason']}", ""]
     if a.get("holdout"):
         L += ["| Region/Klasse | Urteil | n | Ø netto | 90 %-Bereich | p (roh) | p (Holm) |", "|---|---|---|---|---|---|---|"]

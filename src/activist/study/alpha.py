@@ -26,7 +26,8 @@ PROTOCOL_FILES = ["config/params.yaml", "config/risk_limits.yaml", "PROTOCOL.md"
                   "src/activist/study/dataset_eu.py", "src/activist/paper/execution.py", "src/activist/features/universe.py",
                   "src/activist/features/register.py", "src/activist/parse/filing13d.py",
                   "src/activist/sources/prices.py", "src/activist/learn/ranker.py", "src/activist/risk/rules.py",
-                  "src/activist/sources/secmeta.py", "src/activist/sources/hist_ticker.py", "config/activists.yaml"]
+                  "src/activist/sources/secmeta.py", "src/activist/sources/sector.py",
+                  "src/activist/study/holders.py", "src/activist/sources/hist_ticker.py", "config/activists.yaml"]
 FAMILY_ALPHA = 0.10
 COHORT_LAG_DAYS = 380
 
