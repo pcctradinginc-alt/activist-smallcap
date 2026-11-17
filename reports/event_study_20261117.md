@@ -16,18 +16,18 @@ Haupttest: **qualifiziert:main** (Orderregeln, Ausstieg inkl. −30 %-Stopp, Kos
 - JP Universum: Marktkapitalisierung außerhalb: 461
 - EU kampagnen: 358
 - Survivorship: Endwert deregistered: 302
-- im Universum: 270
+- im Universum: 269
 - Universum: Marktkapitalisierung außerhalb: 265
-- Universum: Aktienzahl unbekannt: 253
+- Universum: Aktienzahl unbekannt: 255
 - JP Universum: Tagesumsatz zu gering: 199
+- Survivorship: Tiingo-Kurs nicht plausibel: 164
 - Universum: zu wenig Kurshistorie: 142
 - EU Universum: Marktkapitalisierung außerhalb: 130
 - qualifiziert: 127
 - Universum: Tagesumsatz zu gering: 127
-- Survivorship: Tiingo-Kurs nicht plausibel: 113
 - EU ohne Ticker (Survivorship-Lücke): 98
 - kein Aktivist (keine Forderung in Item 4): 84
-- Survivorship: Endwert unknown: 83
+- Survivorship: Endwert unknown: 81
 - EU ohne ISIN: 79
 - Survivorship: Endwert bankruptcy: 74
 - Survivorship: Endwert going_private: 63
@@ -55,7 +55,7 @@ Haupttest: **qualifiziert:main** (Orderregeln, Ausstieg inkl. −30 %-Stopp, Kos
 - JP/A: {'signale': 200, 'ausgeführt': 172, 'offen': 50}
 - JP/B: {'signale': 310, 'ausgeführt': 304, 'offen': 36}
 - UK/B: {'signale': 1, 'ausgeführt': 1, 'offen': 0}
-- US/A: {'signale': 127, 'ausgeführt': 121, 'offen': 3}
+- US/A: {'signale': 127, 'ausgeführt': 121, 'offen': 2}
 
 ## JP/A
 
@@ -152,26 +152,26 @@ Wegen unplausiblem Vergleichsindex ausgeschlossen: 76
 
 ## Survivorship (Sensitivität, kein Nachweis)
 
-- Kampagnen nur mit Endwert: 1088; davon nach Universumsquote erwartet handelbar: 69
-- Endwert-Typen: cash_merger 489, deregistered 302, unknown 83, bankruptcy 74, going_private 63, mixed 52, stock_merger 25
+- Kampagnen nur mit Endwert: 1086; davon nach Universumsquote erwartet handelbar: 69
+- Endwert-Typen: cash_merger 489, deregistered 302, unknown 81, bankruptcy 74, going_private 63, mixed 52, stock_merger 25
 - Imputiert aus Endwert: 118 Fälle, Ø -58.9% → kombiniert Ø +3.9%
-- Manski-Spannweite des Haupttests: **-23.2% bis +57.2%** (offene Fälle alle Totalverlust bzw. alle bester Fall)
+- Manski-Spannweite des Haupttests: **-23.2% bis +57.1%** (offene Fälle alle Totalverlust bzw. alle bester Fall)
 - Urteil robust gegen Survivorship nur, wenn beide Grenzen auf derselben Seite der 3 %-Schwelle liegen.
 
 ## Bestätigender Alpha-Test (Holdout ab 2023, nur geprüfte Daten, Holm-korrigiert)
 
 **Ergebnis: NICHT BEURTEILBAR**
 
-- Geprüfte Kampagnen: 8 | ungeprüft (zählen nicht): 494 | Anteil geprüft 2%
+- Geprüfte Kampagnen: 11 | ungeprüft (zählen nicht): 491 | Anteil geprüft 2%
 - Protokoll: Protokoll nicht eingefroren
 
 Holdout versiegelt: Protokoll nicht eingefroren
 
-**Lernstufe:** zu wenig Daten · aktiv: NEIN · abgeschlossene geprüfte Kampagnen 8 / 200
+**Lernstufe:** zu wenig Daten · aktiv: NEIN · abgeschlossene geprüfte Kampagnen 11 / 200
 
 ## Champion vs. Challenger und Merkmalsanalyse (Training ≤ 2019, feste Regeln)
 
-- zu wenig Daten (n Training 7, Validierung 0; Mindestumfang 200)
+- zu wenig Daten (n Training 10, Validierung 0; Mindestumfang 200)
 - activist_prior_mean: zu wenig Daten
 - demand: zu wenig Daten
 - stake: zu wenig Daten
