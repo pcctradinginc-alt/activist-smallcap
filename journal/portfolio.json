@@ -4,13 +4,74 @@
  "cash": 20000,
  "peak_value": 20000,
  "positions": {},
- "orders": {},
+ "orders": {
+  "20261117-0869d3": {
+   "event_id": "EDINET:S100ZEWY",
+   "campaign_key": "E03606-290A",
+   "ticker": "290A",
+   "region": "JP",
+   "signal_class": "B",
+   "activist": "株式会社三菱ＵＦＪフィナンシャル・グループ",
+   "sector": null,
+   "buy_cost_est": 0.0175,
+   "filer_id": "E03606",
+   "filer_name": "株式会社三菱ＵＦＪフィナンシャル・グループ",
+   "issuer_id": null,
+   "published": "2026-11-16T11:17:00+09:00",
+   "order_date": "2026-11-17",
+   "position_eur": 1000.0,
+   "position_eur_local": 175261.00158691406,
+   "half_spread": 0.0,
+   "limit_hint": 1141.24,
+   "validated": false,
+   "demand": "none",
+   "url": "https://disclosure2.edinet-fsa.go.jp/WZEK0040.aspx?S100ZEWY",
+   "exit_events": [],
+   "challenger_score": null,
+   "challenger_selected": null
+  },
+  "20261117-e1b30f": {
+   "event_id": "EDINET:S100ZEXD",
+   "campaign_key": "E03606-6366",
+   "ticker": "6366",
+   "region": "JP",
+   "signal_class": "B",
+   "activist": "株式会社三菱ＵＦＪフィナンシャル・グループ",
+   "sector": null,
+   "buy_cost_est": 0.0175,
+   "filer_id": "E03606",
+   "filer_name": "株式会社三菱ＵＦＪフィナンシャル・グループ",
+   "issuer_id": null,
+   "published": "2026-11-16T11:56:00+09:00",
+   "order_date": "2026-11-17",
+   "position_eur": 1000.0,
+   "position_eur_local": 175261.00158691406,
+   "half_spread": 0.0011986192306265215,
+   "limit_hint": 713.79,
+   "validated": false,
+   "demand": "none",
+   "url": "https://disclosure2.edinet-fsa.go.jp/WZEK0040.aspx?S100ZEXD",
+   "exit_events": [],
+   "challenger_score": null,
+   "challenger_selected": null
+  }
+ },
  "closed": [],
  "seen_campaigns": [
   "928785-1161863",
   "1802528-1728328",
   "1646142-2063345",
-  "1452907-1651562"
+  "1452907-1651562",
+  "E01225-5986",
+  "E03606-2805",
+  "E03606-290A",
+  "E03606-4966",
+  "E03606-6366",
+  "E42224-7133",
+  "E11852-6490",
+  "E11852-6941",
+  "E01084-6036",
+  "E11852-6855"
  ],
  "history": [
   {
@@ -24,7 +85,13 @@
    "value": 20000,
    "cash": 20000,
    "positions": 0
+  },
+  {
+   "date": "2026-11-17",
+   "value": 20000,
+   "cash": 20000,
+   "positions": 0
   }
  ],
- "last_run": "2026-11-16"
+ "last_run": "2026-11-17"
 }
