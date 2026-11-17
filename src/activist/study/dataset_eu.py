@@ -21,7 +21,8 @@ from datetime import date, timedelta
 import pandas as pd
 from ..common import DATA, load_yaml, params, risk_limits
 from ..features.universe import price_features, universe_check
-from ..sources import openfigi, prices
+from ..sources import openfigi, prices, sector
+from . import holders
 from ..risk.rules import candidate_reasons
 
 EU_REGIONS = {"UK", "NORDIC", "BENELUX_FR", "DACH"}
@@ -128,6 +129,7 @@ def build_eu(events: list[dict], end: date | None = None, use_network_figi: bool
              since: str | None = None) -> tuple[pd.DataFrame, Counter]:
     p, lim = params(), risk_limits()["candidate"]
     funnel, rows, fxc = Counter(), [], {}
+    idx = holders.build_index(events)
     end = end or date.today()
     for c in eu_campaigns(events, funnel):
         if since and c["published"] < since:
@@ -184,6 +186,10 @@ def build_eu(events: list[dict], end: date | None = None, use_network_figi: bool
                 funnel[f"EU Universum: {v}"] += 1
             row["status"] = "außerhalb Universum: " + "; ".join(uv); rows.append(row); continue
         funnel["EU im Universum"] += 1
+        row["sector"] = sector.yahoo(ticker)
+        from .dataset import _major
+        row["major_holder"] = _major(idx, (reg, isin), c["published"], row.get("stake"))
+        row["days_to_earnings"], row["earnings_check"] = None, "unbekannt (keine Datenquelle)"
         reasons = candidate_reasons(row, p["order"]["position_eur"], lim)      # row["adv"] ist bereits in EUR
         thr = EXIT_BELOW[reg]
         row["exit_events"] = [fu["published"] for fu in c["followups"]

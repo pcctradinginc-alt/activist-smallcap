@@ -6,11 +6,14 @@ plus japanischem Label (項目名) als Fallback gematcht; Live-Validierung: scri
 from __future__ import annotations
 import csv
 import io
+import json
 import re
+import time
 import unicodedata
 import zipfile
 from pathlib import Path
 import requests
+from ..common import DATA
 
 DOC_API = "https://api.edinet-fsa.go.jp/api/v2/documents/{doc_id}"
 CODE_LIST_URL = "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip"
@@ -206,3 +209,81 @@ def download_code_map(timeout: int = 120) -> dict[str, dict]:
     r = requests.get(CODE_LIST_URL, timeout=timeout)
     r.raise_for_status()
     return edinet_code_map(r.content)
+
+
+# ---------------------------------------------------------------- Eigene Kurse des Meldenden (Preis-Referenz)
+_DATE = re.compile(r"(令和|平成)(元|\d+)年(\d+)月(\d+)日|(\d{4})年(\d+)月(\d+)日")
+_TRADE = re.compile(r"市場外\s*(取得|処分)\s*([\d,]+(?:\.\d+)?)")
+_ERA = {"令和": 2018, "平成": 1988}
+
+
+def _iso(m) -> str:
+    if m.group(1):
+        y, mo, d = _ERA[m.group(1)] + (1 if m.group(2) == "元" else int(m.group(2))), m.group(3), m.group(4)
+    else:
+        y, mo, d = m.group(5), m.group(6), m.group(7)
+    return f"{int(y):04d}-{int(mo):02d}-{int(d):02d}"
+
+
+def _parse_trades(text: str) -> list[tuple]:
+    """Textblock 'Erwerb/Veraeusserung der letzten 60 Tage' -> [(iso, Preis, '取得'|'処分')]; nur Aktien, ausserboerslich (nur dort Preis)."""
+    t, out = _nfkc(text), []
+    ms = list(_DATE.finditer(t))
+    for i, m in enumerate(ms):
+        seg = t[m.end(): ms[i + 1].start() if i + 1 < len(ms) else len(t)]
+        if "市場外" not in seg or "新株予約権" in seg or not ("株券" in seg or "普通株式" in seg):
+            continue
+        k = _TRADE.search(seg)
+        if k and _num(k.group(2)):
+            out.append((_iso(m), float(k.group(2).replace(",", "")), k.group(1)))
+    return out
+
+
+def parse_price_refs(rows: list[dict]) -> dict:
+    """Preis-Referenzen des Meldenden: Stueckpreise (60-Tage-Tabelle), Ø-Einstand (Summe ueber Melder-Kontexte) und dessen Basisdatum."""
+    trades, texts, fund, held, base = [], set(), 0.0, 0.0, None
+    for r in rows:
+        e, ctx, v = r.get(C_ELEM, ""), r.get(C_CTX, ""), r.get(C_VAL, "")
+        if "DetailsOfAcquisitionsAndDisposalsOfStocksEtcIssuedByIssuerOfSaidStocks" in e and _nfkc(v) not in ("", "－", "-"):
+            if v not in texts:
+                texts.add(v)
+                trades += [x for x in _parse_trades(v) if x not in trades]
+        elif ctx.endswith("Member") and e.endswith(":TotalAmountOfFundingForAcquisition"):
+            fund += _num(v) or 0.0
+        elif ctx.endswith("Member") and e.endswith(":TotalNumberOfStocksEtcHeld"):
+            held += _num(v) or 0.0
+        elif e.endswith(":BaseDate") and base is None and re.fullmatch(r"\d{4}-\d{2}-\d{2}", _nfkc(v)):
+            base = _nfkc(v)
+    return {"trades": trades, "avg_cost": fund / held if fund > 0 and held > 0 else None, "base_date": base}
+
+
+_REF_CACHE: dict | None = None
+_REF_FILE = DATA / "cache" / "edinet_price_refs.jsonl"
+_last_req = [0.0]
+
+
+def price_refs(doc_id: str, key: str) -> dict:
+    """parse_price_refs fuer ein EDINET-Dokument; jsonl-Cache je doc_id (inkl. Fehler), Live-Abrufe >= 1 s Abstand. Key nie gespeichert."""
+    global _REF_CACHE
+    if _REF_CACHE is None:
+        _REF_CACHE = {}
+        if _REF_FILE.exists():
+            for ln in _REF_FILE.read_text(encoding="utf-8").splitlines():
+                try:
+                    d = json.loads(ln)
+                    _REF_CACHE[d["doc_id"]] = {k: v for k, v in d.items() if k != "doc_id"}
+                except (ValueError, KeyError):
+                    pass
+    if doc_id in _REF_CACHE:
+        return _REF_CACHE[doc_id]
+    time.sleep(max(0.0, 1.0 - (time.monotonic() - _last_req[0])))
+    try:
+        res = parse_price_refs(read_zip_rows(fetch_csv(doc_id, key)))
+    except Exception as e:   # noqa: BLE001 - Fehler werden zwischengespeichert
+        res = {"error": _scrub(f"{type(e).__name__}: {e}", key)}
+    _last_req[0] = time.monotonic()
+    _REF_CACHE[doc_id] = res
+    _REF_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with _REF_FILE.open("a", encoding="utf-8") as f:
+        f.write(json.dumps({"doc_id": doc_id, **res}, ensure_ascii=False) + "\n")
+    return res

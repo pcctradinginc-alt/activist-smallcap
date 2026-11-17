@@ -213,3 +213,33 @@ def validate_against(px: pd.DataFrame, ref_date, ref_price: float | None, tol: f
     col = next(c for c in ("close_unadj", "close_raw", "close") if c in px)   # tatsächlich gehandelter Kurs bevorzugt
     v = px[col].asof(pd.Timestamp(ref_date).tz_localize(None) if pd.Timestamp(ref_date).tzinfo else pd.Timestamp(ref_date))
     return bool(pd.notna(v) and abs(v / ref_price - 1) <= tol)
+
+
+def reference_check(px: pd.DataFrame, refs: dict, tol: float = 0.15) -> tuple[bool | None, str]:
+    """Kursniveau gegen eigene Preisangaben des Meldenden (EDINET) prüfen. False nur bei unplausibler Kursreihe, sonst True/None
+    (Block-Trades können verhandelt sein, Ø-Einstand ist unzuverlässig -> beides darf nur bestätigen, nie widerlegen)."""
+    if "error" in refs:
+        return None, "EDINET: " + str(refs["error"])[:150]
+    if px.empty:
+        return None, "keine Kursdaten"
+    r = px[next(c for c in ("close_raw", "close") if c in px)].dropna()   # split-bereinigt: ein Split ist kein Datenfehler
+    jump = r.pct_change().add(1).pipe(lambda q: q[(q > 3) | (q < 1 / 3)])
+    if len(jump):
+        return False, f"Kursreihe unplausibel (Tagessprung > Faktor 3) am {pd.Timestamp(jump.index[0]).date()}"
+    col = next(c for c in ("close_unadj", "close_raw", "close") if c in px)
+
+    def at(d):
+        t = pd.Timestamp(d)
+        v = px[col].asof(t.tz_localize(None) if t.tzinfo else t)
+        return float(v) if pd.notna(v) else None
+    cmp_ = [(at(d), p) for d, p, _ in refs.get("trades") or [] if p > 0]
+    cmp_ = [(c, p) for c, p in cmp_ if c]
+    ok = sum(abs(c / p - 1) <= tol for c, p in cmp_)
+    if cmp_ and ok * 2 >= len(cmp_):
+        return True, f"EDINET-Einstand: {ok}/{len(cmp_)} Stückpreise passen"
+    avg, bd = refs.get("avg_cost"), refs.get("base_date")
+    c = at(bd) if avg and bd else None
+    if c and abs(c / avg - 1) <= 0.35:
+        return True, "EDINET-Einstand: Ø-Kaufkurs passt"
+    why = f"{ok}/{len(cmp_)} Stückpreise passen" if cmp_ else ("Ø-Kaufkurs weicht ab" if c else "keine EDINET-Preisangaben")
+    return None, "EDINET-Einstand nicht bestätigt: " + why if (cmp_ or c) else "keine EDINET-Preisangaben"

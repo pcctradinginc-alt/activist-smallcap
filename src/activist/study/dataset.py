@@ -6,6 +6,7 @@ gezählt (Trichter), damit Abdeckung und Survivorship-Lücke im Bericht sichtbar
 """
 from __future__ import annotations
 import json
+import os
 from collections import Counter
 from datetime import date, timedelta
 import pandas as pd
@@ -13,8 +14,9 @@ from ..common import DATA, params, risk_limits
 from ..features.register import Register
 from ..features.universe import price_features, universe_check
 from ..parse import filing13d
-from ..risk.rules import candidate_reasons
-from ..sources import delisting, hist_ticker, prices, secmeta
+from ..risk.rules import candidate_reasons, next_earnings
+from ..sources import delisting, hist_ticker, prices, secmeta, sector
+from . import holders
 
 INITIAL = {"SC 13D", "SCHEDULE 13D"}
 AMEND = {"SC 13D/A", "SCHEDULE 13D/A"}
@@ -127,6 +129,10 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
     p, lim = params(), risk_limits()["candidate"]
     reg = Register(events)
     funnel, rows, cache = Counter(), [], _parsed_cache()
+    by_issuer: dict[str, list] = {}
+    for e in events:
+        if e.get("region") == "US" and e.get("issuer_id"):
+            by_issuer.setdefault(str(e["issuer_id"]).lstrip("0"), []).append(e)
     cfg = p["universe"]["US"]
     end = end or date.today()
     for c in campaigns(events, reg):
@@ -145,7 +151,7 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
             co = secmeta.company(c["issuer_id"])
         except Exception:
             co = {}
-        row["sector"] = str(co.get("sic"))[:2] if co.get("sic") else None   # SIC-Hauptgruppe für das Portfoliorisiko
+        row["sector"] = sector.from_sic(co.get("sic"))   # Yahoo-Sektorname (aus SIC) für das Portfoliorisiko
         px, row["price_source"] = None, None
         if t:
             row["ticker"] = t["ticker"]
@@ -209,6 +215,22 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
                 and (ft.get("demand") in (None, "none") or not ft.get("demand_evidence")):
             funnel["kein Aktivist (keine Forderung in Item 4)"] += 1
             row["status"] = "kein Aktivist: keine Forderung"; rows.append(row); continue
+        # Großaktionär (13D/13G-Parse, Anteil in % -> Bruchteil) und Quartalszahlen-Sperre; fehlende Daten = kein Ausschluss
+        mh = None
+        if parse_filings:
+            try:
+                mh = holders.major_holder_us(by_issuer, c["issuer_id"], c["published"], lambda u: _parse(u, cache))
+            except Exception:
+                mh = None
+        st = _major(None, None, None, row["stake"] / 100) if isinstance(row.get("stake"), (int, float)) else None
+        row["major_holder"] = max((x for x in (mh, st) if x is not None), default=None)
+        try:
+            ed = secmeta.earnings_dates(c["issuer_id"])
+            ne = next_earnings(ed, d0)
+        except Exception:
+            ed, ne = [], None
+        row["days_to_earnings"] = (ne - d0).days if ne else None
+        row["earnings_check"] = "8-K 2.02" if ed else "unbekannt"
         try:
             from ..paper.portfolio import eur_per_unit
             pos_usd = p["order"]["position_eur"] / eur_per_unit(row["ticker"], "US", d0)
@@ -279,9 +301,17 @@ def jp_campaigns(events: list[dict]) -> list[dict]:
     return out
 
 
+def _major(idx: dict, key, before: str, stake) -> float | None:
+    """Größter bekannter Aktionär (Ereignisindex) und eigener Anteil des Aktivisten (Bruchteil)."""
+    st = stake if isinstance(stake, (int, float)) and 0 < stake <= 0.99 else None      # 1.0 = Lesefehler
+    mh = holders.major_holder(idx, key, before) if idx is not None else None
+    return max((x for x in (mh, st) if x is not None), default=None)
+
+
 def build_jp(events: list[dict], end: date | None = None, since: str | None = None) -> tuple[pd.DataFrame, Counter]:
     p, lim = params(), risk_limits()["candidate"]
     cfg, funnel, rows = p["universe"]["JP"], Counter(), []
+    jp_idx = holders.build_index(events)
     end = end or date.today()
     try:
         fx = prices.yahoo("EURJPY=X", date(2015, 1, 1), end)["close"]
@@ -312,6 +342,9 @@ def build_jp(events: list[dict], end: date | None = None, since: str | None = No
         if pd.isna(eurjpy):                       # kein stiller Fallback auf einen Näherungskurs
             funnel["JP Wechselkurs fehlt"] += 1; row["status"] = "gesperrt: Wechselkurs fehlt"; rows.append(row); continue
         pos_jpy = p["order"]["position_eur"] * eurjpy
+        row["sector"] = sector.yahoo(c["ticker"] + prices.YAHOO_SUFFIX["JP"])
+        row["major_holder"] = _major(jp_idx, ("JP", c.get("issuer_sec_code") or c["ticker"]), c["published"], row.get("stake"))
+        row["days_to_earnings"], row["earnings_check"] = None, "unbekannt (keine Datenquelle)"
         reasons = candidate_reasons(row, pos_jpy, lim)
         if cfg.get("lot_size", 100) * pf["price"] > pos_jpy:
             reasons.insert(0, "Mindestorder (100 Stück) > Position")
@@ -321,6 +354,15 @@ def build_jp(events: list[dict], end: date | None = None, since: str | None = No
         row["status"] = ("verworfen: " + "; ".join(reasons)) if reasons else "qualifiziert"
         funnel["JP verworfen" if reasons else "JP qualifiziert"] += 1
         row["price_check"] = chk.get("ok")
+        if not reasons and os.environ.get("EDINET_API_KEY"):
+            # keine zweite freie Kursreihe für Japan: Kursniveau gegen die eigenen Preisangaben des Meldenden (EDINET) prüfen
+            from ..sources import edinet_docs
+            refs = edinet_docs.price_refs(str(c["event_id"]).split(":", 1)[-1], os.environ["EDINET_API_KEY"])
+            row["price_check"], row["price_check_note"] = prices.reference_check(px, refs)
+            row["price_check_kind"] = "EDINET-Einstand"
+            if row["price_check"] is False:
+                funnel["JP qualifiziert"] -= 1; funnel["JP Kursreihe unplausibel"] += 1
+                row["status"] = "gesperrt: Kursabweichung"; rows.append(row); continue
         row["mcap"] = c.get("total_shares_outstanding") * pf["price"] if c.get("total_shares_outstanding") else None
         row.update(data_quality(row, ticker_certain=True, activist_evidence=True))
         rows.append(row)
