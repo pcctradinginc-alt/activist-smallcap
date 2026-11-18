@@ -12,50 +12,51 @@ Haupttest: **qualifiziert:main** (Orderregeln, Ausstieg inkl. −30 %-Stopp, Kos
 - JP verworfen: 586
 - JP qualifiziert: 510
 - JP keine Kurse (delistet/Survivorship): 507
-- Survivorship: Endwert cash_merger: 485
+- Survivorship: Endwert cash_merger: 481
 - JP Universum: Marktkapitalisierung außerhalb: 461
 - EU kampagnen: 358
+- Survivorship: Tiingo-Kurs nicht plausibel: 316
 - Survivorship: Endwert deregistered: 301
-- Survivorship: Tiingo-Kurs nicht plausibel: 271
-- im Universum: 271
-- Universum: Marktkapitalisierung außerhalb: 266
-- Universum: Aktienzahl unbekannt: 255
+- Universum: Marktkapitalisierung außerhalb: 267
+- im Universum: 265
+- Universum: Aktienzahl unbekannt: 253
 - JP Universum: Tagesumsatz zu gering: 199
 - Universum: zu wenig Kurshistorie: 143
 - EU Universum: Marktkapitalisierung außerhalb: 130
 - Universum: Tagesumsatz zu gering: 128
-- qualifiziert: 127
+- qualifiziert: 123
 - EU ohne Ticker (Survivorship-Lücke): 98
-- kein Aktivist (keine Forderung in Item 4): 84
-- Survivorship: Endwert unknown: 81
+- Survivorship: Endwert unknown: 83
 - EU ohne ISIN: 79
+- kein Aktivist (keine Forderung in Item 4): 76
 - Survivorship: Endwert bankruptcy: 74
 - Survivorship: Endwert going_private: 62
-- verworfen (Schattenportfolio): 59
+- verworfen (Schattenportfolio): 61
 - EU Universum: Tagesumsatz zu gering: 59
 - Survivorship: Endwert mixed: 52
-- Universum: Banken: 40
+- Universum: Banken: 36
 - JP Universum: zu wenig Kurshistorie: 34
 - Universum: Kurs unter Mindestkurs: 33
+- Kursquellen weichen ab: 27
 - EU Universum: Aktienzahl unbekannt: 26
-- Survivorship: Endwert stock_merger: 25
+- Survivorship: Endwert stock_merger: 24
 - EU keine Kurse (delistet/Survivorship): 18
-- Kursquellen weichen ab: 15
 - JP Universum: Kurs unter Mindestkurs: 15
 - Universum: Versicherer: 12
+- Universum: Maentel (Blank-Check/Shell): 8
 - EU erste Meldung unter Ausstiegsschwelle (kein Einstieg): 6
 - EU im Universum: 1
 - EU qualifiziert: 1
 - EU Universum: zu wenig Kurshistorie: 1
 
-**Survivorship: 16 verschwundene Titel über historischen Ticker + Tiingo zurückgeholt; 51% der Kampagnen weiterhin ohne Kursreihe** (nur Endwert, siehe Spannweite unten).
+**Survivorship: 21 verschwundene Titel über historischen Ticker + Tiingo zurückgeholt; 51% der Kampagnen weiterhin ohne Kursreihe** (nur Endwert, siehe Spannweite unten).
 
 ## Ausführung
 
 - JP/A: {'signale': 200, 'ausgeführt': 172, 'offen': 50}
 - JP/B: {'signale': 310, 'ausgeführt': 304, 'offen': 36}
 - UK/B: {'signale': 1, 'ausgeführt': 1, 'offen': 0}
-- US/A: {'signale': 127, 'ausgeführt': 121, 'offen': 3}
+- US/A: {'signale': 123, 'ausgeführt': 118, 'offen': 3}
 
 ## JP/A
 
@@ -109,35 +110,33 @@ Haupttest: **qualifiziert:main** (Orderregeln, Ausstieg inkl. −30 %-Stopp, Kos
 
 | Variante | Urteil | n | Ø netto | 90 %-Bereich | schl. Viertel | schlechtester | positiv | Hälften |
 |---|---|---|---|---|---|---|---|---|
-| erkundung:main_bis_2Mrd | nicht beurteilbar | 76 | -1.2% | -9.7% … +9.4% | -29.1% | -63.6% | 38% | -2.2% / -0.3% |
-| qualifiziert:hold_126 | nicht beurteilbar | 76 | -2.6% | -8.5% … +4.1% | -20.8% | -63.7% | 36% | -5.2% / -0.0% |
-| qualifiziert:hold_21 | nicht beurteilbar | 76 | -1.2% | -3.8% … +1.9% | -8.5% | -48.0% | 38% | -4.2% / +1.8% |
-| qualifiziert:hold_252 | nicht beurteilbar | 76 | -3.9% | -12.9% … +7.7% | -35.6% | -85.9% | 39% | -5.8% / -1.9% |
-| qualifiziert:hold_63 | nicht beurteilbar | 76 | -1.4% | -5.9% … +4.1% | -13.1% | -75.0% | 42% | -1.3% / -1.5% |
-| qualifiziert:main | nicht beurteilbar | 76 | -1.2% | -9.7% … +9.4% | -29.1% | -63.6% | 38% | -2.2% / -0.3% |
-| qualifiziert:no_stop | nicht beurteilbar | 76 | -0.6% | -8.9% … +10.0% | -32.1% | -85.7% | 43% | -1.6% / +0.4% |
-| schatten:hold_126 | nicht beurteilbar | 31 | +0.9% | -14.6% … +16.9% | -30.1% | -72.7% | 39% | -14.5% / +15.3% |
-| schatten:hold_21 | nicht beurteilbar | 31 | -3.5% | -8.1% … +1.2% | -18.0% | -30.7% | 48% | -5.1% / -2.0% |
-| schatten:hold_252 | nicht beurteilbar | 31 | -18.0% | -35.1% … +1.8% | -53.4% | -105.9% | 29% | -22.6% / -13.8% |
-| schatten:hold_63 | nicht beurteilbar | 31 | -5.6% | -12.4% … +1.4% | -24.4% | -55.4% | 45% | -10.5% / -1.0% |
-| schatten:main | nicht beurteilbar | 31 | -4.3% | -17.4% … +10.7% | -32.4% | -51.5% | 32% | -13.1% / +4.0% |
-| schatten:no_stop | nicht beurteilbar | 31 | -3.0% | -22.5% … +18.4% | -45.1% | -105.9% | 39% | -9.3% / +3.0% |
+| erkundung:main_bis_2Mrd | nicht beurteilbar | 70 | -7.2% | -13.9% … +0.7% | -28.9% | -63.6% | 36% | -1.4% / -12.9% |
+| qualifiziert:hold_126 | nicht beurteilbar | 70 | -7.3% | -12.3% … -2.6% | -22.3% | -63.7% | 33% | -3.1% / -11.5% |
+| qualifiziert:hold_21 | nicht beurteilbar | 70 | -3.3% | -5.7% … -0.8% | -9.9% | -48.0% | 31% | -4.2% / -2.4% |
+| qualifiziert:hold_252 | nicht beurteilbar | 70 | -8.9% | -16.6% … -0.9% | -36.3% | -85.9% | 40% | -6.0% / -11.8% |
+| qualifiziert:hold_63 | nicht beurteilbar | 70 | -4.5% | -8.7% … -0.5% | -12.9% | -75.0% | 37% | -1.6% / -7.3% |
+| qualifiziert:main | nicht beurteilbar | 70 | -7.2% | -13.9% … +0.7% | -28.9% | -63.6% | 36% | -1.4% / -12.9% |
+| qualifiziert:no_stop | nicht beurteilbar | 70 | -5.6% | -12.7% … +1.9% | -31.8% | -85.7% | 43% | -0.7% / -10.5% |
+| schatten:hold_126 | nicht beurteilbar | 33 | -2.1% | -17.3% … +12.7% | -30.6% | -72.7% | 36% | -17.8% / +12.8% |
+| schatten:hold_21 | nicht beurteilbar | 33 | -2.9% | -7.4% … +1.5% | -15.2% | -30.7% | 52% | -4.2% / -1.7% |
+| schatten:hold_252 | nicht beurteilbar | 33 | -22.0% | -36.1% … -6.3% | -52.7% | -105.9% | 27% | -31.6% / -13.0% |
+| schatten:hold_63 | nicht beurteilbar | 33 | -6.5% | -13.8% … +0.6% | -27.0% | -55.4% | 42% | -9.9% / -3.2% |
+| schatten:main | nicht beurteilbar | 33 | -3.3% | -16.4% … +11.9% | -32.3% | -51.5% | 30% | -9.3% / +2.4% |
+| schatten:no_stop | nicht beurteilbar | 33 | -7.9% | -24.6% … +9.7% | -45.6% | -105.9% | 36% | -19.2% / +2.8% |
 
 ## Extremwerte (zur Prüfung der Kursdaten)
 
-Wegen unplausiblem Vergleichsindex ausgeschlossen: 109
+Wegen unplausiblem Vergleichsindex ausgeschlossen: 132
 
 | Ticker | Region | veröffentlicht | brutto | Index | netto |
 |---|---|---|---|---|---|
 | 4310 | JP | 2021-11-30 | +223.4% | +4.7% | +215.2% |
 | 4310 | JP | 2021-11-30 | +223.4% | +4.7% | +215.2% |
-| AHCO | US | 2019-11-18 | +225.5% | +12.2% | +209.8% |
 | REAL | US | 2024-11-01 | +217.7% | +5.0% | +209.2% |
 | 5803 | JP | 2023-04-21 | +236.8% | +37.6% | +195.8% |
 | 4417 | JP | 2026-05-11 | +191.2% | +2.8% | +184.7% |
 | NN | US | 2024-03-08 | +179.5% | -2.7% | +178.7% |
 | CRMD | US | 2020-08-10 | +217.4% | +42.8% | +169.9% |
-| TTSH | US | 2020-09-10 | +211.8% | +47.6% | +159.7% |
 | 6814 | JP | 2024-07-29 | +163.3% | +14.4% | +145.5% |
 | 8337 | JP | 2022-11-17 | +167.7% | +23.5% | +140.7% |
 | ADMA | US | 2022-02-04 | +126.2% | -9.0% | +131.7% |
@@ -149,29 +148,31 @@ Wegen unplausiblem Vergleichsindex ausgeschlossen: 109
 | 6507 | JP | 2024-02-22 | +125.0% | +3.3% | +118.2% |
 | 4914 | JP | 2024-07-29 | +135.6% | +14.4% | +117.7% |
 | 6315 | JP | 2023-09-19 | +120.5% | +10.0% | +106.9% |
+| 4046 | JP | 2023-01-06 | +141.4% | +35.0% | +102.9% |
+| 6736 | JP | 2024-03-26 | +95.3% | -10.2% | +102.0% |
 
 ## Survivorship (Sensitivität, kein Nachweis)
 
-- Kampagnen nur mit Endwert: 1080; davon nach Universumsquote erwartet handelbar: 69
-- Endwert-Typen: cash_merger 485, deregistered 301, unknown 81, bankruptcy 74, going_private 62, mixed 52, stock_merger 25
-- Imputiert aus Endwert: 113 Fälle, Ø -63.3% → kombiniert Ø +3.6%
-- Manski-Spannweite des Haupttests: **-23.3% bis +56.8%** (offene Fälle alle Totalverlust bzw. alle bester Fall)
+- Kampagnen nur mit Endwert: 1077; davon nach Universumsquote erwartet handelbar: 67
+- Endwert-Typen: cash_merger 481, deregistered 301, unknown 83, bankruptcy 74, going_private 62, mixed 52, stock_merger 24
+- Imputiert aus Endwert: 111 Fälle, Ø -65.2% → kombiniert Ø +1.7%
+- Manski-Spannweite des Haupttests: **-24.8% bis +55.4%** (offene Fälle alle Totalverlust bzw. alle bester Fall)
 - Urteil robust gegen Survivorship nur, wenn beide Grenzen auf derselben Seite der 3 %-Schwelle liegen.
 
 ## Bestätigender Alpha-Test (Holdout ab 2023, nur geprüfte Daten, Holm-korrigiert)
 
 **Ergebnis: NICHT BEURTEILBAR**
 
-- Geprüfte Kampagnen: 31 | ungeprüft (zählen nicht): 472 | Anteil geprüft 6%
+- Geprüfte Kampagnen: 81 | ungeprüft (zählen nicht): 418 | Anteil geprüft 16%
 - Protokoll: Protokoll nicht eingefroren
 
 Holdout versiegelt: Protokoll nicht eingefroren
 
-**Lernstufe:** zu wenig Daten · aktiv: NEIN · abgeschlossene geprüfte Kampagnen 31 / 200
+**Lernstufe:** zu wenig Daten · aktiv: NEIN · abgeschlossene geprüfte Kampagnen 81 / 200
 
 ## Champion vs. Challenger und Merkmalsanalyse (Training ≤ 2019, feste Regeln)
 
-- zu wenig Daten (n Training 28, Validierung 1; Mindestumfang 200)
+- zu wenig Daten (n Training 31, Validierung 16; Mindestumfang 200)
 - activist_prior_mean: zu wenig Daten
 - demand: zu wenig Daten
 - stake: zu wenig Daten
@@ -186,11 +187,11 @@ Die Basisstrategie bleibt aktiv; der Challenger handelt nicht und ändert keine 
 |---|---|---|---|
 | board | 3 | -21.4% | 0% |
 | capital_or_proposal | 63 | +16.9% | 65% |
-| capital_return | 17 | -17.0% | 24% |
+| capital_return | 16 | -15.9% | 25% |
 | none | 58 | +4.8% | 48% |
-| sale | 39 | +8.4% | 44% |
-| strategy | 17 | -4.0% | 47% |
+| sale | 34 | -3.0% | 38% |
+| strategy | 17 | -4.9% | 47% |
 
 ## H3: Stabilität der Aktivisten (Rangkorrelation erste vs. zweite Zeithälfte)
 
-Spearman ρ = +0.35 über 13 Aktivisten mit Trades in beiden Hälften.
+Spearman ρ = +0.55 über 11 Aktivisten mit Trades in beiden Hälften.
