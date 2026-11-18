@@ -64,5 +64,60 @@
     "error": null
    }
   }
+ },
+ {
+  "ts": "2026-11-18T17:15:01+00:00",
+  "name": "backfill-eu",
+  "sources": {
+   "six": {
+    "ok": true,
+    "n_new": 8,
+    "error": null
+   }
+  }
+ },
+ {
+  "ts": "2026-11-18T17:17:27+00:00",
+  "name": "backfill-eu",
+  "sources": {
+   "nsm": {
+    "ok": true,
+    "n_new": 41,
+    "error": null
+   }
+  }
+ },
+ {
+  "ts": "2026-11-18T17:17:41+00:00",
+  "name": "backfill-eu",
+  "sources": {
+   "amf": {
+    "ok": true,
+    "n_new": 0,
+    "error": null
+   }
+  }
+ },
+ {
+  "ts": "2026-11-18T17:17:47+00:00",
+  "name": "backfill-eu",
+  "sources": {
+   "nasdaq_nordic": {
+    "ok": true,
+    "n_new": 4,
+    "error": null
+   }
+  }
+ },
+ {
+  "ts": "2026-11-18T17:18:10+00:00",
+  "name": "backfill-eu",
+  "sources": {
+   "oslo": {
+    "ok": true,
+    "n_new": 12,
+    "error": null
+   }
+  }
  }
 ]
