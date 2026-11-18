@@ -3,3 +3,12 @@ candidate_id,event_id,ticker,region,reason,date
 20261115-6312e4,EDGAR:0001193125-26-458677,MTRI,US,verworfen: Spread; Anstieg 20T,2026-11-15
 20261115-64ee1b,EDGAR:0001140361-26-043472,CDLR,US,gesperrt: Kursabweichung,2026-11-15
 20261115-eab6ff,EDGAR:0001072613-26-000890,COUR,US,Korrektur: Forderung war SEC-Standardliste (kein Aktivist),2026-11-15
+20261117-894b23,EDINET:S100ZCC0,5986,JP,außerhalb Universum: Marktkapitalisierung außerhalb,2026-11-17
+20261117-55749b,EDINET:S100ZEWT,2805,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-17
+20261117-101bff,EDINET:S100ZEXC,4966,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-17
+20261117-7f6bf2,EDINET:S100ZEH0,7133,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-17
+20261117-ca9be8,EDINET:S100ZE2P,6490,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-17
+20261117-b15350,EDINET:S100ZECP,6941,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-17
+20261117-86b2fc,EDINET:S100ZI0R,6036,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-17
+20261117-8d3269,EDINET:S100ZEGN,6855,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-17
+20261118-c41b2a,EDINET:S100ZGQR,256A,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-18
