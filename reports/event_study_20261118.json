@@ -1091,10 +1091,11 @@
    }
   },
   "alpha": {
-   "frozen": false,
+   "frozen": true,
    "freeze": {
-    "frozen": false,
-    "reason": "Protokoll nicht eingefroren"
+    "frozen": true,
+    "frozen_at": "2026-11-18T20:17:13+00:00",
+    "git_commit": "c5001d76ee51695daa56535cf8945433d2b4b39a"
    },
    "data_quality": {
     "n_campaigns_valid": 81,
@@ -1127,9 +1128,36 @@
      "note": "Entwicklung (Training+Validierung), kein Nachweis"
     }
    },
-   "holdout": {},
+   "holdout": {
+    "US/A": {
+     "status": "nicht beurteilbar",
+     "n": 34,
+     "mean": -0.1195416144142795,
+     "ci_low": -0.2649460046826353,
+     "ci_high": 0.06990065425696382,
+     "worst_quartile": -0.363808012340197,
+     "worst": -0.6125958927330502,
+     "p_positive": 0.23529411764705882,
+     "thin_data": false,
+     "half1": -0.17827552862987012,
+     "half2": -0.06080770019868888,
+     "trades_per_year": 13.12737843551797,
+     "trades_used_per_year": 13.12737843551797,
+     "expected_eur_per_year": -1569.268011209017,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false,
+      "Holm p<0.1": false
+     },
+     "p_raw": null,
+     "p_holm": null
+    }
+   },
    "status": "nicht beurteilbar",
-   "holdout_note": "Holdout versiegelt: Protokoll nicht eingefroren"
+   "passed": []
   },
   "data_quality": {
    "n_campaigns_valid": 81,
@@ -1214,10 +1242,11 @@
   "EU Universum: zu wenig Kurshistorie": 1
  },
  "alpha": {
-  "frozen": false,
+  "frozen": true,
   "freeze": {
-   "frozen": false,
-   "reason": "Protokoll nicht eingefroren"
+   "frozen": true,
+   "frozen_at": "2026-11-18T20:17:13+00:00",
+   "git_commit": "c5001d76ee51695daa56535cf8945433d2b4b39a"
   },
   "data_quality": {
    "n_campaigns_valid": 81,
@@ -1250,9 +1279,36 @@
     "note": "Entwicklung (Training+Validierung), kein Nachweis"
    }
   },
-  "holdout": {},
+  "holdout": {
+   "US/A": {
+    "status": "nicht beurteilbar",
+    "n": 34,
+    "mean": -0.1195416144142795,
+    "ci_low": -0.2649460046826353,
+    "ci_high": 0.06990065425696382,
+    "worst_quartile": -0.363808012340197,
+    "worst": -0.6125958927330502,
+    "p_positive": 0.23529411764705882,
+    "thin_data": false,
+    "half1": -0.17827552862987012,
+    "half2": -0.06080770019868888,
+    "trades_per_year": 13.12737843551797,
+    "trades_used_per_year": 13.12737843551797,
+    "expected_eur_per_year": -1569.268011209017,
+    "checks": {
+     "n>=min_campaigns": false,
+     "mean>=3%": false,
+     "ci_low>0": false,
+     "both_halves_positive": false,
+     "economics": false,
+     "Holm p<0.1": false
+    },
+    "p_raw": null,
+    "p_holm": null
+   }
+  },
   "status": "nicht beurteilbar",
-  "holdout_note": "Holdout versiegelt: Protokoll nicht eingefroren"
+  "passed": []
  },
  "data_quality": {
   "n_campaigns_valid": 81,

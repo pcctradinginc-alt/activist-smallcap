@@ -164,9 +164,11 @@ Wegen unplausiblem Vergleichsindex ausgeschlossen: 132
 **Ergebnis: NICHT BEURTEILBAR**
 
 - Geprüfte Kampagnen: 81 | ungeprüft (zählen nicht): 418 | Anteil geprüft 16%
-- Protokoll: Protokoll nicht eingefroren
+- Protokoll: eingefroren am 2026-11-18T20:17:13+00:00
 
-Holdout versiegelt: Protokoll nicht eingefroren
+| Region/Klasse | Urteil | n | Ø netto | 90 %-Bereich | p (roh) | p (Holm) |
+|---|---|---|---|---|---|---|
+| US/A | nicht beurteilbar | 34 | -12.0% | -26.5% … +7.0% | – | – |
 
 **Lernstufe:** zu wenig Daten · aktiv: NEIN · abgeschlossene geprüfte Kampagnen 81 / 200
 
