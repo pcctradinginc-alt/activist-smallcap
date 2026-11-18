@@ -1,10 +1,9 @@
 {
  "start_date": "2026-11-15",
  "start_value": 20000,
- "cash": 20000,
+ "cash": 17965.0,
  "peak_value": 20000,
- "positions": {},
- "orders": {
+ "positions": {
   "20261117-0869d3": {
    "event_id": "EDINET:S100ZEWY",
    "campaign_key": "E03606-290A",
@@ -28,7 +27,18 @@
    "url": "https://disclosure2.edinet-fsa.go.jp/WZEK0040.aspx?S100ZEWY",
    "exit_events": [],
    "challenger_score": null,
-   "challenger_selected": null
+   "challenger_selected": null,
+   "entry_date": "2026-11-17",
+   "entry_local": 1082.0,
+   "ref_close": 1038.0,
+   "entry_rate": 0.005700051985489986,
+   "entry_eur": 6.167456248300165,
+   "qty": 162.14140153415983,
+   "buy_cost": 0.0175,
+   "fill_ratio": 1.0,
+   "last_eur": 5.634687510807201,
+   "bench_entry": 408.0,
+   "last_date": "2026-11-18"
   },
   "20261117-e1b30f": {
    "event_id": "EDINET:S100ZEXD",
@@ -53,9 +63,21 @@
    "url": "https://disclosure2.edinet-fsa.go.jp/WZEK0040.aspx?S100ZEXD",
    "exit_events": [],
    "challenger_score": null,
-   "challenger_selected": null
+   "challenger_selected": null,
+   "entry_date": "2026-11-17",
+   "entry_local": 690.0,
+   "ref_close": 668.0,
+   "entry_rate": 0.005700051985489986,
+   "entry_eur": 3.9330358699880903,
+   "qty": 254.25651660863903,
+   "buy_cost": 0.0175,
+   "fill_ratio": 1.0,
+   "last_eur": 3.6936604047540627,
+   "bench_entry": 408.0,
+   "last_date": "2026-11-18"
   }
  },
+ "orders": {},
  "closed": [],
  "seen_campaigns": [
   "928785-1161863",
@@ -71,7 +93,8 @@
   "E11852-6490",
   "E11852-6941",
   "E01084-6036",
-  "E11852-6855"
+  "E11852-6855",
+  "E34595-256A"
  ],
  "history": [
   {
@@ -91,7 +114,13 @@
    "value": 20000,
    "cash": 20000,
    "positions": 0
+  },
+  {
+   "date": "2026-11-18",
+   "value": 19817.75,
+   "cash": 17965.0,
+   "positions": 2
   }
  ],
- "last_run": "2026-11-17"
+ "last_run": "2026-11-18"
 }
