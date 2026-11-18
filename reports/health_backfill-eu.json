@@ -31,5 +31,38 @@
     "error": null
    }
   }
+ },
+ {
+  "ts": "2026-11-18T01:24:33+00:00",
+  "name": "backfill-eu",
+  "sources": {
+   "six": {
+    "ok": true,
+    "n_new": 8,
+    "error": null
+   }
+  }
+ },
+ {
+  "ts": "2026-11-18T01:26:18+00:00",
+  "name": "backfill-eu",
+  "sources": {
+   "nsm": {
+    "ok": true,
+    "n_new": 43,
+    "error": null
+   }
+  }
+ },
+ {
+  "ts": "2026-11-18T01:26:31+00:00",
+  "name": "backfill-eu",
+  "sources": {
+   "amf": {
+    "ok": true,
+    "n_new": 6,
+    "error": null
+   }
+  }
  }
 ]
