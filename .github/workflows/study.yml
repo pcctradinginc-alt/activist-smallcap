@@ -8,6 +8,10 @@ on:
         description: "nur Statistik aus den gespeicherten Trades neu berechnen, ohne Kursabruf"
         type: boolean
         default: false
+      fill:
+        description: "nur Tiingo-Kurs-Cache für qualifizierte US-Kampagnen nachladen (kein Bericht)"
+        type: boolean
+        default: false
 permissions:
   contents: write
 concurrency: study
@@ -28,7 +32,7 @@ jobs:
           TIINGO_API_KEY: ${{ secrets.TIINGO_API_KEY }}
           EDINET_API_KEY: ${{ secrets.EDINET_API_KEY }}
         timeout-minutes: 300           # danach wird der Cache trotzdem gespeichert
-        run: python -m activist.cli study --since 2015-01-01 ${{ inputs.reuse && '--reuse' || '' }}
+        run: ${{ inputs.fill && 'python -m activist.cli fill-prices' || format('python -m activist.cli study --since 2015-01-01 {0}', inputs.reuse && '--reuse' || '') }}
       - uses: actions/cache/save@v4
         if: always()
         with: {path: "data/cache\ndata/prices", key: "study-cache-${{ github.run_id }}"}
