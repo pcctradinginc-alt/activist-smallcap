@@ -1,0 +1,1387 @@
+{
+ "result": {
+  "combos": {
+   "JP/A": {
+    "qualifiziert:main": {
+     "status": "nicht beurteilbar",
+     "n": 61,
+     "mean": 0.18709935478644066,
+     "ci_low": 0.08096361069880341,
+     "ci_high": 0.28570201351668056,
+     "worst_quartile": -0.07525919660609268,
+     "worst": -0.36635893614478066,
+     "p_positive": 0.6721311475409836,
+     "thin_data": false,
+     "half1": 0.21567153084684332,
+     "half2": 0.15944886182476073,
+     "trades_per_year": 55.98052763819096,
+     "trades_used_per_year": 18.0662853561075,
+     "expected_eur_per_year": 3380.190333515435,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": true,
+      "ci_low>0": true,
+      "both_halves_positive": true,
+      "economics": true
+     }
+    },
+    "erkundung:main_2_bis_8Mrd": {
+     "status": "nicht beurteilbar",
+     "n": 61,
+     "mean": 0.18709935478644066,
+     "ci_low": 0.08096361069880341,
+     "ci_high": 0.28570201351668056,
+     "worst_quartile": -0.07525919660609268,
+     "worst": -0.36635893614478066,
+     "p_positive": 0.6721311475409836,
+     "thin_data": false,
+     "half1": 0.21567153084684332,
+     "half2": 0.15944886182476073,
+     "trades_per_year": 55.98052763819096,
+     "trades_used_per_year": 18.0662853561075,
+     "expected_eur_per_year": 3380.190333515435,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": true,
+      "ci_low>0": true,
+      "both_halves_positive": true,
+      "economics": true
+     }
+    },
+    "schatten:main": {
+     "status": "nicht beurteilbar",
+     "n": 56,
+     "mean": 0.007483288952250485,
+     "ci_low": -0.06584912402029125,
+     "ci_high": 0.08477959963217713,
+     "worst_quartile": -0.17682526384310884,
+     "worst": -0.436536043246742,
+     "p_positive": 0.42857142857142855,
+     "thin_data": false,
+     "half1": 0.04572309827655128,
+     "half2": -0.030756520372050296,
+     "trades_per_year": 50.50370370370371,
+     "trades_used_per_year": 20.163840731567916,
+     "expected_eur_per_year": 150.89184658148054,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "qualifiziert:no_stop": {
+     "status": "nicht beurteilbar",
+     "n": 61,
+     "mean": 0.1900857381984173,
+     "ci_low": 0.08805575875647972,
+     "ci_high": 0.28910553058866273,
+     "worst_quartile": -0.06001530585423673,
+     "worst": -0.6403473908081565,
+     "p_positive": 0.6885245901639344,
+     "thin_data": false,
+     "half1": 0.22943804501725407,
+     "half2": 0.15200286063180107,
+     "trades_per_year": 55.98052763819096,
+     "trades_used_per_year": 17.147319104633002,
+     "expected_eur_per_year": 3259.460810127988,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": true,
+      "ci_low>0": true,
+      "both_halves_positive": true,
+      "economics": true
+     }
+    },
+    "schatten:no_stop": {
+     "status": "nicht beurteilbar",
+     "n": 56,
+     "mean": 0.012362443276277486,
+     "ci_low": -0.07026286201978285,
+     "ci_high": 0.08765126489560018,
+     "worst_quartile": -0.11476641756885517,
+     "worst": -0.815617788164631,
+     "p_positive": 0.4642857142857143,
+     "thin_data": false,
+     "half1": 0.08652478057330551,
+     "half2": -0.0617998940207505,
+     "trades_per_year": 50.50370370370371,
+     "trades_used_per_year": 18.061433447098977,
+     "expected_eur_per_year": 223.28344647802206,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "qualifiziert:hold_21": {
+     "status": "nicht beurteilbar",
+     "n": 61,
+     "mean": 0.03392113900561324,
+     "ci_low": -0.007922370046806437,
+     "ci_high": 0.07113513354434377,
+     "worst_quartile": -0.051265096409177285,
+     "worst": -0.15762250694357602,
+     "p_positive": 0.47540983606557374,
+     "thin_data": false,
+     "half1": 0.04693153238671954,
+     "half2": 0.021330435733574907,
+     "trades_per_year": 55.98052763819096,
+     "trades_used_per_year": 55.98052763819096,
+     "expected_eur_per_year": 1898.9232596226493,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": true,
+      "ci_low>0": false,
+      "both_halves_positive": true,
+      "economics": true
+     }
+    },
+    "schatten:hold_21": {
+     "status": "nicht beurteilbar",
+     "n": 56,
+     "mean": -0.03526343054550241,
+     "ci_low": -0.06167626599448318,
+     "ci_high": -0.009095445201579493,
+     "worst_quartile": -0.10414134354698776,
+     "worst": -0.29556898980215507,
+     "p_positive": 0.32142857142857145,
+     "thin_data": false,
+     "half1": -0.04562736327185407,
+     "half2": -0.02489949781915074,
+     "trades_per_year": 50.50370370370371,
+     "trades_used_per_year": 50.50370370370371,
+     "expected_eur_per_year": -1780.9338478461887,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "qualifiziert:hold_63": {
+     "status": "nicht beurteilbar",
+     "n": 61,
+     "mean": 0.08118448687824777,
+     "ci_low": 0.01569474173972759,
+     "ci_high": 0.14702114400500962,
+     "worst_quartile": -0.08539045437308188,
+     "worst": -0.34156699367677723,
+     "p_positive": 0.5245901639344263,
+     "thin_data": false,
+     "half1": 0.10147707654166958,
+     "half2": 0.06154649688138798,
+     "trades_per_year": 55.98052763819096,
+     "trades_used_per_year": 55.98052763819096,
+     "expected_eur_per_year": 4544.7504114801,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": true,
+      "ci_low>0": true,
+      "both_halves_positive": true,
+      "economics": true
+     }
+    },
+    "schatten:hold_63": {
+     "status": "nicht beurteilbar",
+     "n": 56,
+     "mean": -0.012317081125566723,
+     "ci_low": -0.06121102074196903,
+     "ci_high": 0.040348134630856874,
+     "worst_quartile": -0.16505697573002276,
+     "worst": -0.28128357731490305,
+     "p_positive": 0.4642857142857143,
+     "thin_data": false,
+     "half1": -0.027178304835068775,
+     "half2": 0.002544142583935337,
+     "trades_per_year": 50.50370370370371,
+     "trades_used_per_year": 50.50370370370371,
+     "expected_eur_per_year": -622.0582156601031,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "qualifiziert:hold_126": {
+     "status": "nicht beurteilbar",
+     "n": 61,
+     "mean": 0.08349699020430622,
+     "ci_low": 0.006385738572354207,
+     "ci_high": 0.1700183671764922,
+     "worst_quartile": -0.10943698190130688,
+     "worst": -0.4713713222274143,
+     "p_positive": 0.5245901639344263,
+     "thin_data": false,
+     "half1": 0.1535939125495328,
+     "half2": 0.015661258902474048,
+     "trades_per_year": 55.98052763819096,
+     "trades_used_per_year": 30.0,
+     "expected_eur_per_year": 2504.9097061291864,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": true,
+      "ci_low>0": true,
+      "both_halves_positive": true,
+      "economics": true
+     }
+    },
+    "schatten:hold_126": {
+     "status": "nicht beurteilbar",
+     "n": 56,
+     "mean": 0.017649185360796286,
+     "ci_low": -0.05359670610519111,
+     "ci_high": 0.0971311315034077,
+     "worst_quartile": -0.16044581950007752,
+     "worst": -0.39704909973316793,
+     "p_positive": 0.39285714285714285,
+     "thin_data": false,
+     "half1": 0.03452245070608607,
+     "half2": 0.0007759200155065081,
+     "trades_per_year": 50.50370370370371,
+     "trades_used_per_year": 30.0,
+     "expected_eur_per_year": 529.4755608238886,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": true,
+      "economics": false
+     }
+    },
+    "qualifiziert:hold_252": {
+     "status": "nicht beurteilbar",
+     "n": 61,
+     "mean": 0.1835813080014872,
+     "ci_low": 0.0833855522055464,
+     "ci_high": 0.281911297846464,
+     "worst_quartile": -0.0832415257457467,
+     "worst": -0.6403473908081565,
+     "p_positive": 0.6721311475409836,
+     "thin_data": false,
+     "half1": 0.2274834792700757,
+     "half2": 0.14109533580607903,
+     "trades_per_year": 55.98052763819096,
+     "trades_used_per_year": 15.0,
+     "expected_eur_per_year": 2753.719620022308,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": true,
+      "ci_low>0": true,
+      "both_halves_positive": true,
+      "economics": true
+     }
+    },
+    "schatten:hold_252": {
+     "status": "nicht beurteilbar",
+     "n": 56,
+     "mean": -0.007406684167724799,
+     "ci_low": -0.08283494886120973,
+     "ci_high": 0.06219181276875358,
+     "worst_quartile": -0.16298468199732882,
+     "worst": -0.815617788164631,
+     "p_positive": 0.42857142857142855,
+     "thin_data": false,
+     "half1": 0.050214847973743315,
+     "half2": -0.06502821630919292,
+     "trades_per_year": 50.50370370370371,
+     "trades_used_per_year": 15.0,
+     "expected_eur_per_year": -111.10026251587198,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    }
+   },
+   "JP/B": {
+    "qualifiziert:main": {
+     "status": "nicht beurteilbar",
+     "n": 57,
+     "mean": 0.0500531077174192,
+     "ci_low": -0.1364229512016973,
+     "ci_high": 0.10461161876951608,
+     "worst_quartile": -0.2056853517369833,
+     "worst": -0.45776284242270004,
+     "p_positive": 0.49122807017543857,
+     "thin_data": false,
+     "half1": 0.044991307469548956,
+     "half2": 0.054940363129156004,
+     "trades_per_year": 54.64370078740158,
+     "trades_used_per_year": 17.736252881132696,
+     "expected_eur_per_year": 887.7545759627214,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": true,
+      "ci_low>0": false,
+      "both_halves_positive": true,
+      "economics": true
+     }
+    },
+    "erkundung:main_2_bis_8Mrd": {
+     "status": "nicht beurteilbar",
+     "n": 57,
+     "mean": 0.0500531077174192,
+     "ci_low": -0.1364229512016973,
+     "ci_high": 0.10461161876951608,
+     "worst_quartile": -0.2056853517369833,
+     "worst": -0.45776284242270004,
+     "p_positive": 0.49122807017543857,
+     "thin_data": false,
+     "half1": 0.044991307469548956,
+     "half2": 0.054940363129156004,
+     "trades_per_year": 54.64370078740158,
+     "trades_used_per_year": 17.736252881132696,
+     "expected_eur_per_year": 887.7545759627214,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": true,
+      "ci_low>0": false,
+      "both_halves_positive": true,
+      "economics": true
+     }
+    },
+    "schatten:main": {
+     "status": "nicht beurteilbar",
+     "n": 52,
+     "mean": -0.09331173770552488,
+     "ci_low": -0.16797003153679438,
+     "ci_high": -0.029105758688263844,
+     "worst_quartile": -0.268341176321941,
+     "worst": -0.5455837124990467,
+     "p_positive": 0.23076923076923078,
+     "thin_data": false,
+     "half1": -0.07722225552022849,
+     "half2": -0.10940121989082122,
+     "trades_per_year": 50.11345646437995,
+     "trades_used_per_year": 18.650725875320237,
+     "expected_eur_per_year": -1740.331640895528,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "qualifiziert:no_stop": {
+     "status": "nicht beurteilbar",
+     "n": 57,
+     "mean": 0.07569719901074028,
+     "ci_low": -0.10651330351972207,
+     "ci_high": 0.11500974652357951,
+     "worst_quartile": -0.14406765024770926,
+     "worst": -0.45776284242270004,
+     "p_positive": 0.5087719298245614,
+     "thin_data": false,
+     "half1": 0.059190561405079875,
+     "half2": 0.09163464221620554,
+     "trades_per_year": 54.64370078740158,
+     "trades_used_per_year": 16.954674220963174,
+     "expected_eur_per_year": 1283.4213486665171,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": true,
+      "ci_low>0": false,
+      "both_halves_positive": true,
+      "economics": true
+     }
+    },
+    "schatten:no_stop": {
+     "status": "nicht beurteilbar",
+     "n": 52,
+     "mean": -0.0900858213601791,
+     "ci_low": -0.16177033347876918,
+     "ci_high": -0.014100759229857002,
+     "worst_quartile": -0.25593271896398684,
+     "worst": -0.670540401067847,
+     "p_positive": 0.2692307692307692,
+     "thin_data": false,
+     "half1": -0.054897605312955795,
+     "half2": -0.12527403740740237,
+     "trades_per_year": 50.11345646437995,
+     "trades_used_per_year": 17.305863708399364,
+     "expected_eur_per_year": -1559.0129465184718,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "qualifiziert:hold_21": {
+     "status": "nicht beurteilbar",
+     "n": 57,
+     "mean": -0.011173854781526897,
+     "ci_low": -0.024414820220884054,
+     "ci_high": 0.002856656296496386,
+     "worst_quartile": -0.061603138064447366,
+     "worst": -0.2912960492200116,
+     "p_positive": 0.38596491228070173,
+     "thin_data": false,
+     "half1": -0.015149033696232423,
+     "half2": -0.0073357510018112184,
+     "trades_per_year": 54.64370078740158,
+     "trades_used_per_year": 54.64370078740158,
+     "expected_eur_per_year": -610.5807773236322,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "schatten:hold_21": {
+     "status": "nicht beurteilbar",
+     "n": 52,
+     "mean": -0.028595994146687658,
+     "ci_low": -0.06418373520714242,
+     "ci_high": -0.011558700997781156,
+     "worst_quartile": -0.0791746906517295,
+     "worst": -0.2341310191035186,
+     "p_positive": 0.2692307692307692,
+     "thin_data": false,
+     "half1": -0.039668564308662245,
+     "half2": -0.017523423984713075,
+     "trades_per_year": 50.11345646437995,
+     "trades_used_per_year": 50.11345646437995,
+     "expected_eur_per_year": -1433.044107725696,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "qualifiziert:hold_63": {
+     "status": "nicht beurteilbar",
+     "n": 57,
+     "mean": -0.011956399154743147,
+     "ci_low": -0.08538497010114789,
+     "ci_high": 0.024986344946639587,
+     "worst_quartile": -0.10569931537915464,
+     "worst": -0.49092371460383166,
+     "p_positive": 0.40350877192982454,
+     "thin_data": false,
+     "half1": -0.03361170580389732,
+     "half2": 0.00895217278237124,
+     "trades_per_year": 54.64370078740158,
+     "trades_used_per_year": 54.64370078740158,
+     "expected_eur_per_year": -653.3418979065257,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "schatten:hold_63": {
+     "status": "nicht beurteilbar",
+     "n": 52,
+     "mean": -0.05898404838736922,
+     "ci_low": -0.13457176127140577,
+     "ci_high": -0.034661765867193474,
+     "worst_quartile": -0.12404565022708258,
+     "worst": -0.34355102362659873,
+     "p_positive": 0.19230769230769232,
+     "thin_data": false,
+     "half1": -0.08384517393356698,
+     "half2": -0.03412292284117141,
+     "trades_per_year": 50.11345646437995,
+     "trades_used_per_year": 50.11345646437995,
+     "expected_eur_per_year": -2955.894540953308,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "qualifiziert:hold_126": {
+     "status": "nicht beurteilbar",
+     "n": 57,
+     "mean": -0.023723717365533845,
+     "ci_low": -0.07422558572257529,
+     "ci_high": 0.011035002585075053,
+     "worst_quartile": -0.15360075342580012,
+     "worst": -0.3662143776435166,
+     "p_positive": 0.3508771929824561,
+     "thin_data": false,
+     "half1": -0.005139379632340831,
+     "half2": -0.041667215866547785,
+     "trades_per_year": 54.64370078740158,
+     "trades_used_per_year": 30.0,
+     "expected_eur_per_year": -711.7115209660153,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "schatten:hold_126": {
+     "status": "nicht beurteilbar",
+     "n": 52,
+     "mean": -0.08325902483240855,
+     "ci_low": -0.15104016183084454,
+     "ci_high": -0.027503313697121622,
+     "worst_quartile": -0.1694625443402284,
+     "worst": -0.5410736070344367,
+     "p_positive": 0.2692307692307692,
+     "thin_data": false,
+     "half1": -0.08178488159454697,
+     "half2": -0.08473316807027009,
+     "trades_per_year": 50.11345646437995,
+     "trades_used_per_year": 30.0,
+     "expected_eur_per_year": -2497.7707449722566,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "qualifiziert:hold_252": {
+     "status": "nicht beurteilbar",
+     "n": 57,
+     "mean": 0.07477668049814683,
+     "ci_low": -0.11159971241458873,
+     "ci_high": 0.1275306235280128,
+     "worst_quartile": -0.2160813955656293,
+     "worst": -0.525626811133477,
+     "p_positive": 0.5263157894736842,
+     "thin_data": false,
+     "half1": 0.03154324949355292,
+     "half2": 0.1165193035370651,
+     "trades_per_year": 54.64370078740158,
+     "trades_used_per_year": 15.0,
+     "expected_eur_per_year": 1121.6502074722025,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": true,
+      "ci_low>0": false,
+      "both_halves_positive": true,
+      "economics": true
+     }
+    },
+    "schatten:hold_252": {
+     "status": "nicht beurteilbar",
+     "n": 52,
+     "mean": -0.08902962765410792,
+     "ci_low": -0.18378455847877878,
+     "ci_high": 0.0005813632704982081,
+     "worst_quartile": -0.3054286420015677,
+     "worst": -0.6846198783026688,
+     "p_positive": 0.28846153846153844,
+     "thin_data": false,
+     "half1": -0.05109880319369506,
+     "half2": -0.12696045211452078,
+     "trades_per_year": 50.11345646437995,
+     "trades_used_per_year": 15.0,
+     "expected_eur_per_year": -1335.4444148116188,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    }
+   },
+   "UK/B": {
+    "qualifiziert:main": {
+     "status": "nicht beurteilbar",
+     "n": 1,
+     "mean": -0.08177670128171285,
+     "ci_low": NaN,
+     "ci_high": NaN,
+     "worst_quartile": -0.08177670128171285,
+     "worst": -0.08177670128171285,
+     "p_positive": 0.0,
+     "thin_data": true,
+     "half1": NaN,
+     "half2": -0.08177670128171285,
+     "trades_per_year": 1.0,
+     "trades_used_per_year": 1.0,
+     "expected_eur_per_year": -81.77670128171286,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "erkundung:main_bis_2Mrd": {
+     "status": "nicht beurteilbar",
+     "n": 1,
+     "mean": -0.08177670128171285,
+     "ci_low": NaN,
+     "ci_high": NaN,
+     "worst_quartile": -0.08177670128171285,
+     "worst": -0.08177670128171285,
+     "p_positive": 0.0,
+     "thin_data": true,
+     "half1": NaN,
+     "half2": -0.08177670128171285,
+     "trades_per_year": 1.0,
+     "trades_used_per_year": 1.0,
+     "expected_eur_per_year": -81.77670128171286,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "qualifiziert:no_stop": {
+     "status": "nicht beurteilbar",
+     "n": 1,
+     "mean": -0.08177670128171285,
+     "ci_low": NaN,
+     "ci_high": NaN,
+     "worst_quartile": -0.08177670128171285,
+     "worst": -0.08177670128171285,
+     "p_positive": 0.0,
+     "thin_data": true,
+     "half1": NaN,
+     "half2": -0.08177670128171285,
+     "trades_per_year": 1.0,
+     "trades_used_per_year": 1.0,
+     "expected_eur_per_year": -81.77670128171286,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "qualifiziert:hold_21": {
+     "status": "nicht beurteilbar",
+     "n": 1,
+     "mean": -0.038151798222873595,
+     "ci_low": NaN,
+     "ci_high": NaN,
+     "worst_quartile": -0.038151798222873595,
+     "worst": -0.038151798222873595,
+     "p_positive": 0.0,
+     "thin_data": true,
+     "half1": NaN,
+     "half2": -0.038151798222873595,
+     "trades_per_year": 1.0,
+     "trades_used_per_year": 1.0,
+     "expected_eur_per_year": -38.151798222873595,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "qualifiziert:hold_63": {
+     "status": "nicht beurteilbar",
+     "n": 1,
+     "mean": -0.036078150987594676,
+     "ci_low": NaN,
+     "ci_high": NaN,
+     "worst_quartile": -0.036078150987594676,
+     "worst": -0.036078150987594676,
+     "p_positive": 0.0,
+     "thin_data": true,
+     "half1": NaN,
+     "half2": -0.036078150987594676,
+     "trades_per_year": 1.0,
+     "trades_used_per_year": 1.0,
+     "expected_eur_per_year": -36.078150987594675,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "qualifiziert:hold_126": {
+     "status": "nicht beurteilbar",
+     "n": 1,
+     "mean": -0.11938866426535696,
+     "ci_low": NaN,
+     "ci_high": NaN,
+     "worst_quartile": -0.11938866426535696,
+     "worst": -0.11938866426535696,
+     "p_positive": 0.0,
+     "thin_data": true,
+     "half1": NaN,
+     "half2": -0.11938866426535696,
+     "trades_per_year": 1.0,
+     "trades_used_per_year": 1.0,
+     "expected_eur_per_year": -119.38866426535697,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "qualifiziert:hold_252": {
+     "status": "nicht beurteilbar",
+     "n": 1,
+     "mean": -0.08177670128171285,
+     "ci_low": NaN,
+     "ci_high": NaN,
+     "worst_quartile": -0.08177670128171285,
+     "worst": -0.08177670128171285,
+     "p_positive": 0.0,
+     "thin_data": true,
+     "half1": NaN,
+     "half2": -0.08177670128171285,
+     "trades_per_year": 1.0,
+     "trades_used_per_year": 1.0,
+     "expected_eur_per_year": -81.77670128171286,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    }
+   },
+   "US/A": {
+    "qualifiziert:main": {
+     "status": "nicht beurteilbar",
+     "n": 69,
+     "mean": -0.0153700237937307,
+     "ci_low": -0.09570043517818203,
+     "ci_high": 0.08286097555121429,
+     "worst_quartile": -0.2899408951538872,
+     "worst": -0.6361829266861052,
+     "p_positive": 0.4057971014492754,
+     "thin_data": false,
+     "half1": 0.02444827834412976,
+     "half2": -0.05405066015622373,
+     "trades_per_year": 9.065557553956834,
+     "trades_used_per_year": 9.065557553956834,
+     "expected_eur_per_year": -139.33783530775162,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "erkundung:main_bis_2Mrd": {
+     "status": "nicht beurteilbar",
+     "n": 69,
+     "mean": -0.0153700237937307,
+     "ci_low": -0.09570043517818203,
+     "ci_high": 0.08286097555121429,
+     "worst_quartile": -0.2899408951538872,
+     "worst": -0.6361829266861052,
+     "p_positive": 0.4057971014492754,
+     "thin_data": false,
+     "half1": 0.02444827834412976,
+     "half2": -0.05405066015622373,
+     "trades_per_year": 9.065557553956834,
+     "trades_used_per_year": 9.065557553956834,
+     "expected_eur_per_year": -139.33783530775162,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "schatten:main": {
+     "status": "nicht beurteilbar",
+     "n": 42,
+     "mean": -0.016956421207069944,
+     "ci_low": -0.14681685741725986,
+     "ci_high": 0.13739055772800066,
+     "worst_quartile": -0.3175587768506932,
+     "worst": -0.5151408950371895,
+     "p_positive": 0.30952380952380953,
+     "thin_data": false,
+     "half1": 0.09167633480588135,
+     "half2": -0.12558917722002122,
+     "trades_per_year": 6.3051787916152895,
+     "trades_used_per_year": 6.3051787916152895,
+     "expected_eur_per_year": -106.91326737651315,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "qualifiziert:no_stop": {
+     "status": "nicht beurteilbar",
+     "n": 69,
+     "mean": -0.02199390307384447,
+     "ci_low": -0.10590430332813486,
+     "ci_high": 0.06894846334299157,
+     "worst_quartile": -0.31967542142337313,
+     "worst": -0.8574233454942409,
+     "p_positive": 0.43478260869565216,
+     "thin_data": false,
+     "half1": 0.04163353052911604,
+     "half2": -0.08380341000243467,
+     "trades_per_year": 9.065557553956834,
+     "trades_used_per_year": 9.065557553956834,
+     "expected_eur_per_year": -199.38699415208518,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "schatten:no_stop": {
+     "status": "nicht beurteilbar",
+     "n": 42,
+     "mean": 0.023742958662994813,
+     "ci_low": -0.14756840384984934,
+     "ci_high": 0.21067639456449266,
+     "worst_quartile": -0.4392435062942863,
+     "worst": -1.0589587253543387,
+     "p_positive": 0.42857142857142855,
+     "thin_data": false,
+     "half1": 0.13736807197953713,
+     "half2": -0.08988215465354746,
+     "trades_per_year": 6.3051787916152895,
+     "trades_used_per_year": 6.3051787916152895,
+     "expected_eur_per_year": 149.70359941211342,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "qualifiziert:hold_21": {
+     "status": "nicht beurteilbar",
+     "n": 69,
+     "mean": -0.006104780855065554,
+     "ci_low": -0.030195073659923886,
+     "ci_high": 0.023555649955579603,
+     "worst_quartile": -0.08086529622214364,
+     "worst": -0.19353812291607184,
+     "p_positive": 0.391304347826087,
+     "thin_data": false,
+     "half1": -0.03440527369637852,
+     "half2": 0.02138712647649562,
+     "trades_per_year": 9.065557553956834,
+     "trades_used_per_year": 9.065557553956834,
+     "expected_eur_per_year": -55.343242195890596,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "schatten:hold_21": {
+     "status": "nicht beurteilbar",
+     "n": 42,
+     "mean": -0.04154381942409495,
+     "ci_low": -0.08490550100835466,
+     "ci_high": -0.0004975014391470837,
+     "worst_quartile": -0.1747338192694761,
+     "worst": -0.47957757144073226,
+     "p_positive": 0.47619047619047616,
+     "thin_data": false,
+     "half1": -0.028478725270356716,
+     "half2": -0.054608913577833165,
+     "trades_per_year": 6.3051787916152895,
+     "trades_used_per_year": 6.3051787916152895,
+     "expected_eur_per_year": -261.9412091554988,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "qualifiziert:hold_63": {
+     "status": "nicht beurteilbar",
+     "n": 69,
+     "mean": -0.029414304016717005,
+     "ci_low": -0.07404451708237297,
+     "ci_high": 0.017639070071041624,
+     "worst_quartile": -0.13523231031362123,
+     "worst": -0.7501189690202624,
+     "p_positive": 0.4057971014492754,
+     "thin_data": false,
+     "half1": -0.014703963883753364,
+     "half2": -0.043704348717310236,
+     "trades_per_year": 9.065557553956834,
+     "trades_used_per_year": 9.065557553956834,
+     "expected_eur_per_year": -266.6570659731317,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "schatten:hold_63": {
+     "status": "nicht beurteilbar",
+     "n": 42,
+     "mean": -0.04016883349732864,
+     "ci_low": -0.11034823290665667,
+     "ci_high": 0.028118492313263722,
+     "worst_quartile": -0.21769872085314795,
+     "worst": -0.624689482872627,
+     "p_positive": 0.4523809523809524,
+     "thin_data": false,
+     "half1": -0.020099610032009517,
+     "half2": -0.06023805696264778,
+     "trades_per_year": 6.3051787916152895,
+     "trades_used_per_year": 6.3051787916152895,
+     "expected_eur_per_year": -253.27167705128235,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "qualifiziert:hold_126": {
+     "status": "nicht beurteilbar",
+     "n": 69,
+     "mean": -0.04525704535307882,
+     "ci_low": -0.10652341043613094,
+     "ci_high": 0.017894740680574485,
+     "worst_quartile": -0.18675838094532254,
+     "worst": -0.7206787075250851,
+     "p_positive": 0.37681159420289856,
+     "thin_data": false,
+     "half1": -0.02964832499921176,
+     "half2": -0.060419802268264,
+     "trades_per_year": 9.065557553956834,
+     "trades_used_per_year": 9.065557553956834,
+     "expected_eur_per_year": -410.28034937037074,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "schatten:hold_126": {
+     "status": "nicht beurteilbar",
+     "n": 42,
+     "mean": 0.019032826876363228,
+     "ci_low": -0.10731496287509723,
+     "ci_high": 0.15647281241884223,
+     "worst_quartile": -0.30343859393341854,
+     "worst": -0.7265845608171891,
+     "p_positive": 0.38095238095238093,
+     "thin_data": false,
+     "half1": 0.06422000252063081,
+     "half2": -0.026154348767904352,
+     "trades_per_year": 6.3051787916152895,
+     "trades_used_per_year": 6.3051787916152895,
+     "expected_eur_per_year": 120.0053763653309,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "qualifiziert:hold_252": {
+     "status": "nicht beurteilbar",
+     "n": 69,
+     "mean": -0.05747736557225568,
+     "ci_low": -0.142422840650931,
+     "ci_high": 0.0439628183553059,
+     "worst_quartile": -0.35302490555327304,
+     "worst": -0.8592215291173794,
+     "p_positive": 0.391304347826087,
+     "thin_data": false,
+     "half1": -0.004547156417501158,
+     "half2": -0.10889528303687435,
+     "trades_per_year": 9.065557553956834,
+     "trades_used_per_year": 9.065557553956834,
+     "expected_eur_per_year": -521.064365645101,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    },
+    "schatten:hold_252": {
+     "status": "nicht beurteilbar",
+     "n": 42,
+     "mean": -0.05499284003153561,
+     "ci_low": -0.22063018744206703,
+     "ci_high": 0.12316439376373621,
+     "worst_quartile": -0.4943912298313485,
+     "worst": -1.0589587253543387,
+     "p_positive": 0.38095238095238093,
+     "thin_data": false,
+     "half1": -0.04367723489442762,
+     "half2": -0.06630844516864362,
+     "trades_per_year": 6.3051787916152895,
+     "trades_used_per_year": 6.3051787916152895,
+     "expected_eur_per_year": -346.7396886575306,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     }
+    }
+   }
+  },
+  "execution": {
+   "JP/A": {
+    "signale": 183,
+    "ausgef\u00fchrt": 156,
+    "offen": 45
+   },
+   "JP/B": {
+    "signale": 308,
+    "ausgef\u00fchrt": 302,
+    "offen": 37
+   },
+   "UK/B": {
+    "signale": 1,
+    "ausgef\u00fchrt": 1,
+    "offen": 0
+   },
+   "US/A": {
+    "signale": 120,
+    "ausgef\u00fchrt": 114,
+    "offen": 2
+   }
+  },
+  "alpha": {
+   "frozen": false,
+   "freeze": {
+    "frozen": false,
+    "reason": "Protokoll nicht eingefroren"
+   },
+   "data_quality": {
+    "n_campaigns_valid": 65,
+    "n_campaigns_unverified": 418,
+    "verified_share": 0.13457556935817805
+   },
+   "development": {
+    "JP/A": {
+     "status": "nicht beurteilbar",
+     "n": 33,
+     "mean": 0.22114576944999323,
+     "ci_low": 0.03379500522836999,
+     "ci_high": 0.4208105900861429,
+     "worst_quartile": -0.08957013532516153,
+     "worst": -0.36635893614478066,
+     "p_positive": 0.6363636363636364,
+     "thin_data": false,
+     "half1": 0.3363290866165848,
+     "half2": 0.11273794152849528,
+     "trades_per_year": 31.307142857142857,
+     "trades_used_per_year": 17.19840066179512,
+     "expected_eur_per_year": 3803.3535476619545,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": true,
+      "ci_low>0": true,
+      "both_halves_positive": true,
+      "economics": true
+     },
+     "note": "Entwicklung (Training+Validierung), kein Nachweis"
+    },
+    "JP/B": {
+     "status": "nicht beurteilbar",
+     "n": 1,
+     "mean": -0.021558844938781435,
+     "ci_low": NaN,
+     "ci_high": NaN,
+     "worst_quartile": -0.021558844938781435,
+     "worst": -0.021558844938781435,
+     "p_positive": 0.0,
+     "thin_data": true,
+     "half1": NaN,
+     "half2": -0.021558844938781435,
+     "trades_per_year": 1.0,
+     "trades_used_per_year": 1.0,
+     "expected_eur_per_year": -21.558844938781434,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     },
+     "note": "Entwicklung (Training+Validierung), kein Nachweis"
+    },
+    "US/A": {
+     "status": "nicht beurteilbar",
+     "n": 1,
+     "mean": -0.2899408951538872,
+     "ci_low": NaN,
+     "ci_high": NaN,
+     "worst_quartile": -0.2899408951538872,
+     "worst": -0.2899408951538872,
+     "p_positive": 0.0,
+     "thin_data": true,
+     "half1": NaN,
+     "half2": -0.2899408951538872,
+     "trades_per_year": 1.0,
+     "trades_used_per_year": 1.0,
+     "expected_eur_per_year": -289.9408951538872,
+     "checks": {
+      "n>=min_campaigns": false,
+      "mean>=3%": false,
+      "ci_low>0": false,
+      "both_halves_positive": false,
+      "economics": false
+     },
+     "note": "Entwicklung (Training+Validierung), kein Nachweis"
+    }
+   },
+   "holdout": {},
+   "status": "nicht beurteilbar",
+   "holdout_note": "Holdout versiegelt: Protokoll nicht eingefroren"
+  },
+  "data_quality": {
+   "n_campaigns_valid": 65,
+   "n_campaigns_unverified": 418,
+   "verified_share": 0.13457556935817805
+  },
+  "learning": {
+   "active": false,
+   "n_train": 1,
+   "n_valid": 34,
+   "min_campaigns": 200,
+   "status": "zu wenig Daten",
+   "features": {
+    "activist_prior_mean": {
+     "status": "zu wenig Daten",
+     "n": 0
+    },
+    "demand": {
+     "status": "zu wenig Daten",
+     "n": 1
+    },
+    "stake": {
+     "status": "zu wenig Daten",
+     "n": 1
+    },
+    "runup_20d": {
+     "status": "zu wenig Daten",
+     "n": 1
+    },
+    "adv_eur": {
+     "status": "zu wenig Daten",
+     "n": 1
+    }
+   },
+   "closed_campaigns": 65
+  }
+ },
+ "funnel": {
+  "kampagnen": 2104,
+  "im Universum": 272,
+  "qualifiziert": 120,
+  "Kursquellen weichen ab": 1,
+  "Survivorship: Endwert deregistered": 304,
+  "Survivorship: Tiingo-Kurs nicht plausibel": 39,
+  "Survivorship: Endwert cash_merger": 492,
+  "Survivorship: Endwert bankruptcy": 74,
+  "Survivorship: Endwert mixed": 52,
+  "Universum: Aktienzahl unbekannt": 257,
+  "kein Aktivist (keine Forderung in Item 4)": 76,
+  "Universum: Tagesumsatz zu gering": 126,
+  "Universum: Marktkapitalisierung au\u00dferhalb": 266,
+  "Survivorship: Endwert stock_merger": 26,
+  "Universum: zu wenig Kurshistorie": 144,
+  "Survivorship: Endwert unknown": 82,
+  "Survivorship: Endwert going_private": 63,
+  "verworfen (Schattenportfolio)": 75,
+  "Universum: Banken": 38,
+  "Universum: Versicherer": 11,
+  "Universum: Kurs unter Mindestkurs": 32,
+  "JP kampagnen": 2192,
+  "JP keine Kurse (delistet/Survivorship)": 507,
+  "JP Universum: Marktkapitalisierung au\u00dferhalb": 462,
+  "JP im Universum": 1105,
+  "JP verworfen": 614,
+  "JP qualifiziert": 491,
+  "JP Universum: Tagesumsatz zu gering": 199,
+  "JP Universum: Kurs unter Mindestkurs": 15,
+  "JP Universum: zu wenig Kurshistorie": 34,
+  "EU Ereignisse": 115445,
+  "EU Ereignisse ohne Melder (PDF/Text n\u00f6tig)": 19638,
+  "EU erste Meldung unter Ausstiegsschwelle (kein Einstieg)": 6,
+  "EU kampagnen": 358,
+  "EU ohne Ticker (Survivorship-L\u00fccke)": 98,
+  "EU Universum: Marktkapitalisierung au\u00dferhalb": 130,
+  "EU Universum: Tagesumsatz zu gering": 59,
+  "EU Universum: Aktienzahl unbekannt": 26,
+  "EU keine Kurse (delistet/Survivorship)": 18,
+  "EU ohne ISIN": 79,
+  "EU im Universum": 1,
+  "EU qualifiziert": 1,
+  "EU Universum: zu wenig Kurshistorie": 1
+ },
+ "alpha": {
+  "frozen": false,
+  "freeze": {
+   "frozen": false,
+   "reason": "Protokoll nicht eingefroren"
+  },
+  "data_quality": {
+   "n_campaigns_valid": 65,
+   "n_campaigns_unverified": 418,
+   "verified_share": 0.13457556935817805
+  },
+  "development": {
+   "JP/A": {
+    "status": "nicht beurteilbar",
+    "n": 33,
+    "mean": 0.22114576944999323,
+    "ci_low": 0.03379500522836999,
+    "ci_high": 0.4208105900861429,
+    "worst_quartile": -0.08957013532516153,
+    "worst": -0.36635893614478066,
+    "p_positive": 0.6363636363636364,
+    "thin_data": false,
+    "half1": 0.3363290866165848,
+    "half2": 0.11273794152849528,
+    "trades_per_year": 31.307142857142857,
+    "trades_used_per_year": 17.19840066179512,
+    "expected_eur_per_year": 3803.3535476619545,
+    "checks": {
+     "n>=min_campaigns": false,
+     "mean>=3%": true,
+     "ci_low>0": true,
+     "both_halves_positive": true,
+     "economics": true
+    },
+    "note": "Entwicklung (Training+Validierung), kein Nachweis"
+   },
+   "JP/B": {
+    "status": "nicht beurteilbar",
+    "n": 1,
+    "mean": -0.021558844938781435,
+    "ci_low": NaN,
+    "ci_high": NaN,
+    "worst_quartile": -0.021558844938781435,
+    "worst": -0.021558844938781435,
+    "p_positive": 0.0,
+    "thin_data": true,
+    "half1": NaN,
+    "half2": -0.021558844938781435,
+    "trades_per_year": 1.0,
+    "trades_used_per_year": 1.0,
+    "expected_eur_per_year": -21.558844938781434,
+    "checks": {
+     "n>=min_campaigns": false,
+     "mean>=3%": false,
+     "ci_low>0": false,
+     "both_halves_positive": false,
+     "economics": false
+    },
+    "note": "Entwicklung (Training+Validierung), kein Nachweis"
+   },
+   "US/A": {
+    "status": "nicht beurteilbar",
+    "n": 1,
+    "mean": -0.2899408951538872,
+    "ci_low": NaN,
+    "ci_high": NaN,
+    "worst_quartile": -0.2899408951538872,
+    "worst": -0.2899408951538872,
+    "p_positive": 0.0,
+    "thin_data": true,
+    "half1": NaN,
+    "half2": -0.2899408951538872,
+    "trades_per_year": 1.0,
+    "trades_used_per_year": 1.0,
+    "expected_eur_per_year": -289.9408951538872,
+    "checks": {
+     "n>=min_campaigns": false,
+     "mean>=3%": false,
+     "ci_low>0": false,
+     "both_halves_positive": false,
+     "economics": false
+    },
+    "note": "Entwicklung (Training+Validierung), kein Nachweis"
+   }
+  },
+  "holdout": {},
+  "status": "nicht beurteilbar",
+  "holdout_note": "Holdout versiegelt: Protokoll nicht eingefroren"
+ },
+ "data_quality": {
+  "n_campaigns_valid": 65,
+  "n_campaigns_unverified": 418,
+  "verified_share": 0.13457556935817805
+ },
+ "learning": {
+  "active": false,
+  "n_train": 1,
+  "n_valid": 34,
+  "min_campaigns": 200,
+  "status": "zu wenig Daten",
+  "features": {
+   "activist_prior_mean": {
+    "status": "zu wenig Daten",
+    "n": 0
+   },
+   "demand": {
+    "status": "zu wenig Daten",
+    "n": 1
+   },
+   "stake": {
+    "status": "zu wenig Daten",
+    "n": 1
+   },
+   "runup_20d": {
+    "status": "zu wenig Daten",
+    "n": 1
+   },
+   "adv_eur": {
+    "status": "zu wenig Daten",
+    "n": 1
+   }
+  },
+  "closed_campaigns": 65
+ }
+}
