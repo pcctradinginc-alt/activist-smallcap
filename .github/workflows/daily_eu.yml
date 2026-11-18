@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     # Aktive Quellen. Deaktiviert (nicht gelöscht; zum Reaktivieren Namen ergänzen, Historie lässt sich mit dem backfill_eu-Workflow nachladen):
-    #   nasdaq_nordic oslo: 1 Kampagne im Studiendatensatz aus beiden Quellen
+    #   (nasdaq_nordic, oslo am 2026-11-18 auf Wunsch des Eigentümers wieder aktiviert)
     #   de_ir activist_sites: bisher keine gespeicherten Ereignisse; de_ir braucht zusätzlich Playwright/Chromium
     env:
-      EU_SOURCES: "six nsm amf"
+      EU_SOURCES: "six nsm amf nasdaq_nordic oslo"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
