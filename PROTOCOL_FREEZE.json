@@ -1,0 +1,40 @@
+{
+ "frozen_at": "2026-11-18T20:17:13+00:00",
+ "git_commit": "c5001d76ee51695daa56535cf8945433d2b4b39a",
+ "splits": {
+  "train": [
+   null,
+   "2019-12-31"
+  ],
+  "valid": [
+   "2020-01-01",
+   "2022-12-31"
+  ],
+  "holdout": [
+   "2023-01-01",
+   null
+  ]
+ },
+ "family_alpha": 0.1,
+ "note": "Final nach Tiingo-Nachladen, PIT-SIC, Review-Fixes (2026-11-18)",
+ "hashes": {
+  "config/params.yaml": "ce089f37cd469cf9e8aa846e3de03cdb893aacee34072d75fa79bb52939160de",
+  "config/risk_limits.yaml": "9a267ed25a7970e50e56eeeb925444bdd35d5595f0129197d5001254b2eaf4f3",
+  "PROTOCOL.md": "60d9901938273134561fe9a0430d93a1636bd874877738071cc73bba7b91236e",
+  "src/activist/study/alpha.py": "68e9be5687af23b605d7ef70c75d5df194f68a3d71bf954bf65ca192c7a24a00",
+  "src/activist/study/stats.py": "b72893f8f236032170c898eca60cbd6d7da5698a0ea25d01d849730f6da71d08",
+  "src/activist/study/event_study.py": "101b70e742dea02fc79d85f3001a93d02634cac7c409ae34cf2a8763733acf0f",
+  "src/activist/study/dataset.py": "7314fdd6db4bfdf135129c8699a0e36f2ddcb2d1272754e03bb95c9c5e4dbdb2",
+  "src/activist/study/dataset_eu.py": "28d47f26c76ef047af2994482a60eb4b504e0be8412c20a7df023faad4bd79b6",
+  "src/activist/paper/execution.py": "8ee2e4701b9a5a0d000b1eb299073ff0ad16d44123321783330030a325860d53",
+  "src/activist/features/universe.py": "d6b7b456b075d2b96ed43b374eec8b0b79f1cb51c7f679828483d4a1793e1e94",
+  "src/activist/features/register.py": "213e6cec9216236f9e0b9538b5c7983a6338199ecefa12cb95c5995c6f1c03d1",
+  "src/activist/parse/filing13d.py": "c6d00f177606cfd7f4e72257ce1d4c69af4eb9516d29414f7a53aa809db8c782",
+  "src/activist/sources/prices.py": "23b69c588a715f568394a83cfd5ab5cc4ba1a77683a52ff73bf56c86411a0ea1",
+  "src/activist/learn/ranker.py": "5b0df056f5fec074421b9ebda56b6c5fc05250d59b7eae7b106bdedec9f6c22f",
+  "src/activist/risk/rules.py": "fc6b5a66c606065e9eba1e66fe24c3e3a48e93c0e0091617822602929035ec7a",
+  "src/activist/sources/secmeta.py": "0157cc1367538caec60ea6af532f1e99108e76fb0de92eb66bb99c992c816f7b",
+  "src/activist/sources/hist_ticker.py": "9d65d586d051de8631fb3438454c24332bd298c122e9b8c252dbc3b86b331c60",
+  "config/activists.yaml": "4bb2addde0a01cc4fcc7814b04b95da1a8d2c4eff5ec4990cda2f1912c51c3d2"
+ }
+}
