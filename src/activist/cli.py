@@ -170,6 +170,32 @@ def cmd_backfill(a):
             print(backfill(y, q, limit=a.limit), flush=True)
 
 
+def cmd_fill_prices(a):
+    """Füllt den Kurs-Cache der Zweitquelle für qualifizierte US-Kampagnen ohne Prüfung (Tiingo-Kontingent je Lauf)."""
+    import glob
+    from datetime import date, timedelta
+    import pandas as pd
+    from .common import REPORTS
+    from .sources import prices
+    files = sorted(glob.glob(str(REPORTS / "event_study_*_dataset.csv")))
+    if not files:
+        print("kein Datensatz"); return
+    d = pd.read_csv(files[-1], low_memory=False)
+    q = d[(d.region == "US") & (d.status == "qualifiziert") & (d.price_check.astype(str) != "True")
+          & (d.price_check.astype(str) != "False") & d.ticker.notna()]
+    done = 0
+    for _, r in q.iterrows():
+        d0 = date.fromisoformat(str(r.published)[:10])
+        try:
+            _, chk = prices.load(r.ticker, "US", d0 - timedelta(days=45), min(d0 + timedelta(days=420), date.today()))
+            done += chk.get("ok") is not None
+        except Exception as e:
+            print(r.ticker, prices._scrub(e)[:80])
+        if prices._TIINGO_STATE["blocked"] or prices._TIINGO_STATE["calls"] >= prices.TIINGO_MAX_CALLS:
+            break
+    print(f"offen {len(q)}, jetzt geprüft {done}, Tiingo-Abrufe {prices._TIINGO_STATE['calls']}")
+
+
 def cmd_paper(a):
     from .paper.portfolio import run_day
     print(run_day())
@@ -219,6 +245,7 @@ def main(argv=None):
     be = sp.add_parser("backfill-eu"); be.add_argument("--source", required=True, choices=["nsm", "nasdaq_nordic", "oslo", "amf", "six", "activist_sites", "de_ir"])
     be.add_argument("--start", required=True); be.add_argument("--end", required=True)
     be.add_argument("--enrich", action="store_true"); be.set_defaults(fn=cmd_backfill_eu)
+    fp = sp.add_parser("fill-prices"); fp.set_defaults(fn=cmd_fill_prices)
     pp = sp.add_parser("paper"); pp.set_defaults(fn=cmd_paper)
     fz = sp.add_parser("freeze"); fz.add_argument("--note", default=""); fz.set_defaults(fn=cmd_freeze)
     wk = sp.add_parser("weekly"); wk.add_argument("--mail", action="store_true"); wk.set_defaults(fn=cmd_weekly)

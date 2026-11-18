@@ -141,11 +141,9 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
         except Exception:
             funnel["SEC-Stammdaten nicht abrufbar"] += 1; row["status"] = "keine Stammdaten"; rows.append(row); continue
         d0 = date.fromisoformat(c["published"][:10])
-        try:
-            co = secmeta.company(c["issuer_id"])
-        except Exception:
-            co = {}
-        row["sector"] = str(co.get("sic"))[:2] if co.get("sic") else None   # SIC-Hauptgruppe für das Portfoliorisiko
+        ft = _parse(c["url"], cache) if parse_filings and c["form"] in INITIAL | AMEND else {}
+        sic = ft.get("subject_sic")     # point-in-time: SIC aus dem Kopf der Meldung, nie die heutige Einstufung
+        row["sector"] = str(sic)[:2] if sic else None   # SIC-Hauptgruppe für das Portfoliorisiko (unbekannt = eigener Topf)
         px, row["price_source"] = None, None
         if t:
             row["ticker"] = t["ticker"]
@@ -191,7 +189,7 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
             so = secmeta.shares_outstanding_asof(c["issuer_id"], d0)
         except Exception:
             so = None
-        uv = universe_check(cfg, pf, so[0] if so else None, secmeta.excluded_industry(co.get("sic")),
+        uv = universe_check(cfg, pf, so[0] if so else None, secmeta.excluded_industry(sic),
                             bool(t and t["otc"]) if since else False)   # OTC-Status nur heute bekannt -> nur im Live-Betrieb
         row.update({k: pf.get(k) for k in ("price", "adv", "runup_20d", "half_spread")})
         row["mcap"] = so[0] * pf["price"] if so and pf.get("ok") else None
@@ -201,7 +199,6 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
             row["status"] = "außerhalb Universum: " + "; ".join(uv); rows.append(row); continue
         funnel["im Universum"] += 1
         # Ausschlussregeln, soweit historisch aus öffentlichen Daten bestimmbar
-        ft = _parse(c["url"], cache) if parse_filings and c["form"] in INITIAL | AMEND else {}
         row.update(demand=ft.get("demand"), demand_evidence=ft.get("demand_evidence"),
                    stake=ft.get("percent_of_class"), activist_cost=ft.get("avg_purchase_price"))
         # Verhaltensregel allein reicht nicht: ohne kuratierten Eintrag braucht der 13D eine konkrete Forderung (Item 4)

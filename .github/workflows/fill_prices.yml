@@ -1,0 +1,26 @@
+name: fill-prices
+# Füllt stündlich den Tiingo-Kurs-Cache für qualifizierte US-Kampagnen (Gratis-Tarif ~50 Abrufe/Stunde).
+# Schreibt nur in den Actions-Cache, nicht ins Repo. Ist nichts mehr offen, endet der Lauf nach Sekunden.
+on:
+  schedule: [{cron: "17 * * * *"}]
+  workflow_dispatch:
+concurrency: study
+jobs:
+  fill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -r requirements.txt
+      - uses: actions/cache/restore@v4
+        with: {path: "data/cache\ndata/prices", key: "study-cache-${{ github.run_id }}", restore-keys: "study-cache-"}
+      - env:
+          PYTHONPATH: src
+          TIINGO_API_KEY: ${{ secrets.TIINGO_API_KEY }}
+        timeout-minutes: 65
+        run: python -m activist.cli fill-prices
+      - uses: actions/cache/save@v4
+        if: always()
+        with: {path: "data/cache\ndata/prices", key: "study-cache-${{ github.run_id }}"}

@@ -155,7 +155,7 @@ def _sentences(text: str) -> list[str]:
     return out
 
 
-PARSER_VERSION = 2   # erhöhen bei jeder Änderung der Klassifikation -> Cache wird neu aufgebaut
+PARSER_VERSION = 3   # erhöhen bei jeder Änderung der Klassifikation -> Cache wird neu aufgebaut
 
 _ITEM4_LIST = [
     r"acquisition by any person of additional securities", r"extraordinary corporate transaction",
@@ -232,6 +232,13 @@ def avg_purchase_price(item5: str, ref_date: datetime | None = None) -> float | 
 _EXIT_TEXT = re.compile(r"(?i)ceased\s+to\s+be\s+(?:the\s+)?beneficial\s+owner\s+of\s+more\s+than\s+(?:five|5)\s*(?:percent|per\s*cent|%)")
 
 
+def subject_sic(text: str) -> str | None:
+    """SIC des Emittenten laut SEC-Kopf DIESER Meldung (Stand zum Meldezeitpunkt, nicht heute)."""
+    subj = text.split("SUBJECT COMPANY:")[1].split("FILED BY:")[0] if "SUBJECT COMPANY:" in text else ""
+    m = re.search(r"STANDARD INDUSTRIAL CLASSIFICATION:[^\n]*?\[(\d{4})\]", subj)
+    return m.group(1) if m else None
+
+
 def parse_text(text: str) -> dict:
     m = re.search(r"FILED AS OF DATE:\s*(\d{8})", text)
     ref = datetime.strptime(m.group(1), "%Y%m%d") if m else None
@@ -277,6 +284,7 @@ def parse_text(text: str) -> dict:
         "demand_evidence": evidence,
         "avg_purchase_price": avg_purchase_price(item5, ref),
         "is_exit": is_exit,
+        "subject_sic": subject_sic(text),
     }
 
 
