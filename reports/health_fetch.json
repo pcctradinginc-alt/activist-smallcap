@@ -82,5 +82,26 @@
     "error": null
    }
   }
+ },
+ {
+  "ts": "2026-11-18T17:54:32+00:00",
+  "name": "fetch",
+  "sources": {
+   "tage": {
+    "ok": true,
+    "n_new": 0,
+    "error": null
+   },
+   "EDGAR": {
+    "ok": true,
+    "n_new": 0,
+    "error": null
+   },
+   "EDINET": {
+    "ok": true,
+    "n_new": 0,
+    "error": null
+   }
+  }
  }
 ]
