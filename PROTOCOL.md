@@ -72,7 +72,7 @@ Keine neuen Funktionen, Datenquellen oder Modelle – nur Korrekturen und Verein
   (USA, Japan, Europa; Studie und Papierdepot). Das Papierdepot prüft jede Order über `risk/rules.check_portfolio`:
   Positionszahl, Aktivist, Doppelung, Positionsgröße, Branche (unbekannte Branche = eigener Topf je Region), Region (sobald
   3 Regionen bestanden haben) und Cash-Deckung inkl. Kosten und offener Orders.
-  Nicht erzwungen, weil keine Datenquelle vorhanden: `max_major_holder`, `earnings_blackout_days` (bekannte Abweichung).
+  Nicht erzwungen, weil keine Datenquelle vorhanden: `max_major_holder` (bekannte Abweichung). `earnings_blackout_days` am 2026-11-18 vom Eigentümer gestrichen.
 - **Holdout:** Berichte bis 2026-11-15 haben Ergebnisse ab 2023 offen gezeigt; nach diesen Berichten wurden Regeln
   geändert. Der historische Holdout ab 2023 ist damit **vorbelastet**: Ein Bestehen ist ein Indiz, kein unabhängiger
   Nachweis. Unabhängig ist erst der Vorwärtstest (Kampagnen nach dem Einfrieren, Grundregel 2). Ab jetzt zeigen
@@ -92,3 +92,9 @@ Keine neuen Funktionen, Datenquellen oder Modelle – nur Korrekturen und Verein
   (`price_check_note`). Die Meldungen werden jetzt bereinigt; der alte Schlüssel ist zu ersetzen.
 - **Entwicklungsstopp:** Bis ein Studienlauf mit ausreichend geprüften Kampagnen vorliegt, keine neuen Datenquellen,
   Modelle oder Merkmale.
+
+## Änderung 2026-11-18 (vor dem Einfrieren, auf ausdrückliche Anweisung des Eigentümers)
+- Sperrfrist vor Quartalszahlen (`earnings_blackout_days`) gestrichen: keine kostenlose point-in-time-Quelle für Japan/Europa,
+  Regel wurde nirgends angewendet; bei 252 Tagen Haltedauer unerheblich.
+- Branche point-in-time: SIC aus dem SEC-Kopf der jeweiligen 13D-Meldung (Parser-Version 3), nicht die heutige Einstufung.
+- Zweite Kursquelle (Tiingo) nur für qualifizierte US-Kampagnen; Nachlade-Modus füllt den Cache, bis alle geprüft sind.
