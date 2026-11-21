@@ -13,3 +13,8 @@ candidate_id,event_id,ticker,region,reason,date
 20261117-8d3269,EDINET:S100ZEGN,6855,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-17
 20261118-c41b2a,EDINET:S100ZGQR,256A,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-18
 20261119-eb9da7,EDINET:S100ZING,9246,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-19
+20261121-05135b,EDGAR:0001062993-26-006212,DXYZ,US,außerhalb Universum: Aktienzahl unbekannt,2026-11-21
+20261121-1f2caa,EDGAR:0001062993-26-006214,ZTR,US,außerhalb Universum: Aktienzahl unbekannt,2026-11-21
+20261121-2cdff0,EDGAR:0000921895-26-003234,CSBA,US,außerhalb Universum: Tagesumsatz zu gering; Marktkapitalisierung außerhalb; Banken; OTC,2026-11-21
+20261121-f732da,EDINET:S100ZI9A,6807,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-21
+20261121-c55398,EDINET:S100ZJ7U,7522,JP,verworfen: Anstieg 20T,2026-11-21
