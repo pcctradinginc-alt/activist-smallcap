@@ -1,6 +1,6 @@
 {
- "frozen_at": "2026-11-21T07:36:43+00:00",
- "git_commit": "95466fa6e824da17d9ff3ed184035b6b219574e6",
+ "frozen_at": "2026-11-21T07:43:04+00:00",
+ "git_commit": "ff1672ee366d1d8b1186794e7a86c314c15a7d6f",
  "splits": {
   "train": [
    null,
@@ -16,15 +16,15 @@
   ]
  },
  "family_alpha": 0.1,
- "note": "Neu eingefroren nach Übernahme 97b8dba (2026-11-21); Holdout verbraucht, Nachweis nur vorwärts",
+ "note": "Neu eingefroren nach JP-Finanzinstitut-Filter (2026-11-21)",
  "hashes": {
   "config/params.yaml": "ce089f37cd469cf9e8aa846e3de03cdb893aacee34072d75fa79bb52939160de",
   "config/risk_limits.yaml": "9a267ed25a7970e50e56eeeb925444bdd35d5595f0129197d5001254b2eaf4f3",
-  "PROTOCOL.md": "f6b97bebe40281fe5a62b09bc9c8993ec2ae0a2daff96daa72c1da93feebedea",
+  "PROTOCOL.md": "74e30c235d89b45c1769b3f628c1b8ef45c489647902804831045fc67c596672",
   "src/activist/study/alpha.py": "1b7b429a00ddd8443cb159d1721e1598ff250d3c0115f7b7d8218ffc48188aa5",
   "src/activist/study/stats.py": "b72893f8f236032170c898eca60cbd6d7da5698a0ea25d01d849730f6da71d08",
   "src/activist/study/event_study.py": "6ce0c53ad659b6232a7db5cff47c469b693d7bdb16961866a48f90b0238197ba",
-  "src/activist/study/dataset.py": "9f9e3e5d1c35f08c4671cb953b46ad8dc87021191f1cc30428079444f55d069a",
+  "src/activist/study/dataset.py": "7d1543e7dfd61a4d6c496567e258582dcccae3001ed08d16e4e655f323d8ab84",
   "src/activist/study/dataset_eu.py": "db90dc4f4be9e4c90a7142903b769e7ec3f733520c2b245543ea9d6090c1c5f2",
   "src/activist/paper/execution.py": "8ee2e4701b9a5a0d000b1eb299073ff0ad16d44123321783330030a325860d53",
   "src/activist/features/universe.py": "d6b7b456b075d2b96ed43b374eec8b0b79f1cb51c7f679828483d4a1793e1e94",
@@ -37,6 +37,6 @@
   "src/activist/sources/sector.py": "ca61bcfcb01febb747ca32412431c1fdf1f085a5c237a4eba6197de8325395df",
   "src/activist/study/holders.py": "6c09a6021f01b6eed57c956bb77922f2a8fe51c54007b1fcf68082f32d3d9817",
   "src/activist/sources/hist_ticker.py": "9d65d586d051de8631fb3438454c24332bd298c122e9b8c252dbc3b86b331c60",
-  "config/activists.yaml": "4bb2addde0a01cc4fcc7814b04b95da1a8d2c4eff5ec4990cda2f1912c51c3d2"
+  "config/activists.yaml": "c36d69759ba75fdc5a46e2bef59a549da0035cf99d2e9e5357d8fe5c92326903"
  }
 }
