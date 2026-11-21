@@ -27,6 +27,10 @@ jobs:
           PYTHONPATH: src
           SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
           TIINGO_API_KEY: ${{ secrets.TIINGO_API_KEY }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
         run: python -m activist.cli paper
       - name: Commit (append-only)
         if: always()

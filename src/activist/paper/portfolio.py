@@ -326,6 +326,8 @@ def new_signals(st: dict, today: date, p: dict, events: list[dict], since: str, 
                                              if isinstance(r.get("exit_events"), list)], **chal}
         atomic_write_text(JOURNAL / "decisions" / f"{oid}.json", json.dumps(
             {**r, "decision": "order", "combo": combo, "validated": combo in ok}, default=str, ensure_ascii=False, indent=1))
+        from ..notify.buy import notify
+        notify({**st["orders"][oid], "n_after": len(st["positions"]) + len(st["orders"]), "max_fill_days": p["order"].get("max_fill_days", 3)}, r, combo, today)
 
 
 def run_day(today: date | None = None, events: list[dict] | None = None, rows: pd.DataFrame | None = None,
