@@ -1,7 +1,19 @@
 """Risikoprüfung als Tor: Ja/Nein-Regeln. Ein Verstoß verwirft – kein Konfidenzwert gleicht ihn aus.
 Je eine Stelle: candidate_reasons (Kandidatenregeln, Studie und Papierdepot) und check_portfolio (Portfoliogrenzen + Cash)."""
 from __future__ import annotations
+from datetime import date, timedelta
 from ..common import risk_limits
+
+def next_earnings(dates: list[date], d0: date) -> date | None:
+    """Erwartete nächste Quartalszahlen ab d0 (nur Termine <= d0 zählen, kein Look-ahead): gleicher Termin des Vorjahres
+    (+364 Tage, falls ein Termin 300-400 Tage zurückliegt) und letzter Termin + 91 Tage; frühester Termin >= d0. Keine Termine = None."""
+    known = sorted(d for d in dates if d <= d0)
+    if not known:
+        return None
+    proj = [e + timedelta(days=364) for e in known if 300 <= (d0 - e).days <= 400] + [known[-1] + timedelta(days=91)]
+    ahead = [p for p in proj if p >= d0]
+    return min(ahead) if ahead else None
+
 
 def candidate_reasons(row: dict, position_local: float | None, lim: dict | None = None) -> list[str]:
     """Die historisch bestimmbaren Ausschlussregeln – EINE Stelle für Ereignisstudie und Papierdepot (alle Regionen).
@@ -17,6 +29,10 @@ def candidate_reasons(row: dict, position_local: float | None, lim: dict | None 
     if ok(row.get("activist_cost")) and row["activist_cost"] and ok(row.get("price")) \
             and row["price"] > row["activist_cost"] * (1 + L["max_premium_over_activist_cost"]):
         r.append("Kurs über Aktivisten-Einstand")
+    if ok(row.get("major_holder")) and row["major_holder"] > L["max_major_holder"]:
+        r.append("Großaktionär über Grenze")          # kontrollierte Gesellschaft; fehlende Daten schließen nicht aus
+    if ok(row.get("days_to_earnings")) and L.get("earnings_blackout_days") is not None and 0 <= row["days_to_earnings"] <= L["earnings_blackout_days"]:
+        r.append("Quartalszahlen-Sperre")             # unbekannter Termin (JP/EU) schließt nicht aus
     if position_local is None:
         r.append("Wechselkurs fehlt")
     elif not ok(row.get("adv")) or position_local > L["max_position_share_of_adv"] * row["adv"]:

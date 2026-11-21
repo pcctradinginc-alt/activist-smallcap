@@ -72,7 +72,7 @@ Keine neuen Funktionen, Datenquellen oder Modelle – nur Korrekturen und Verein
   (USA, Japan, Europa; Studie und Papierdepot). Das Papierdepot prüft jede Order über `risk/rules.check_portfolio`:
   Positionszahl, Aktivist, Doppelung, Positionsgröße, Branche (unbekannte Branche = eigener Topf je Region), Region (sobald
   3 Regionen bestanden haben) und Cash-Deckung inkl. Kosten und offener Orders.
-  Nicht erzwungen, weil keine Datenquelle vorhanden: `max_major_holder` (bekannte Abweichung). `earnings_blackout_days` am 2026-11-18 vom Eigentümer gestrichen.
+  `earnings_blackout_days` am 2026-11-18 vom Eigentümer gestrichen; `max_major_holder` seit 2026-11-21 erzwungen.
 - **Holdout:** Berichte bis 2026-11-15 haben Ergebnisse ab 2023 offen gezeigt; nach diesen Berichten wurden Regeln
   geändert. Der historische Holdout ab 2023 ist damit **vorbelastet**: Ein Bestehen ist ein Indiz, kein unabhängiger
   Nachweis. Unabhängig ist erst der Vorwärtstest (Kampagnen nach dem Einfrieren, Grundregel 2). Ab jetzt zeigen
@@ -93,8 +93,35 @@ Keine neuen Funktionen, Datenquellen oder Modelle – nur Korrekturen und Verein
 - **Entwicklungsstopp:** Bis ein Studienlauf mit ausreichend geprüften Kampagnen vorliegt, keine neuen Datenquellen,
   Modelle oder Merkmale.
 
+## Änderung 2026-11-17 (Branchen, Großaktionär, Quartalszahlen-Sperre)
+`max_major_holder` und `earnings_blackout_days` werden jetzt erzwungen (`risk/rules.candidate_reasons`, alle Regionen).
+- **Branchen:** Alle Regionen nutzen die 11 Yahoo-Sektornamen. USA: Abbildung der SIC-Nummer (`sources/sector.from_sic`);
+  Japan/Europa: Yahoo-Suche je Symbol (`sector.yahoo`, Cache). Bekannte Grenze: Yahoo liefert den aktuellen, nicht den
+  damaligen Sektor (nicht point-in-time). Unbekannt = eigener Topf je Region (unverändert).
+- **Großaktionär:** Ausschluss („Großaktionär über Grenze“), wenn der größte bekannte Einzelaktionär (jeder Melder inkl.
+  Aktivist) mehr als `max_major_holder` hält. Quellen: JP/EU aus den Ereignissen (`holding_ratio`, je Melder letzte Meldung
+  vor dem Entscheidungstag, 3-Jahres-Fenster, Werte > 0,99 verworfen); USA aus den zuletzt geparsten 13D/13G-Meldungen
+  (höchstens 10 Melder, `study/holders.py`). Fehlende Daten = kein Ausschluss.
+- **Quartalszahlen-Sperre:** Keine neue Position, wenn die nächsten Quartalszahlen höchstens `earnings_blackout_days`
+  Kalendertage nach dem Entscheidungstag erwartet werden. USA: Termine der 8-K Item 2.02 (nur Block `recent`), Projektion
+  aus Vorjahrestermin (+364 Tage) bzw. letztem Termin (+91 Tage), nur Termine bis zum Entscheidungstag. JP/EU: keine freie
+  historische Terminquelle -> kein Ausschluss, in `earnings_check` als „unbekannt (keine Datenquelle)“ markiert.
+- **Kursprüfung Japan:** Es gibt keine freie zweite Kursreihe (Stooq bot-geschützt, J-Quants-Gratisplan nur 2 Jahre).
+  Für qualifizierte JP-Kampagnen wird das Yahoo-Kursniveau gegen die eigenen Preisangaben des Meldenden geprüft
+  (EDINET: Stückpreise außerbörslicher Aktienkäufe der letzten 60 Tage, ±15 %; sonst Ø-Einstand aus Erwerbsmitteln/Stückzahl,
+  ±35 %). Bestätigung -> `price_check` wahr (`price_check_kind` = „EDINET-Einstand“). Widerlegen kann nur die
+  Plausibilitätsprüfung der Kursreihe (Tagessprung > Faktor 3, split-bereinigt). Schwächer als die US-Prüfung, weil nur
+  das Niveau am Einstieg und nicht die ganze Reihe verglichen wird; im Bericht ausgewiesen.
+
 ## Änderung 2026-11-18 (vor dem Einfrieren, auf ausdrückliche Anweisung des Eigentümers)
 - Sperrfrist vor Quartalszahlen (`earnings_blackout_days`) gestrichen: keine kostenlose point-in-time-Quelle für Japan/Europa,
   Regel wurde nirgends angewendet; bei 252 Tagen Haltedauer unerheblich.
 - Branche point-in-time: SIC aus dem SEC-Kopf der jeweiligen 13D-Meldung (Parser-Version 3), nicht die heutige Einstufung.
 - Zweite Kursquelle (Tiingo) nur für qualifizierte US-Kampagnen; Nachlade-Modus füllt den Cache, bis alle geprüft sind.
+
+## Änderung 2026-11-21 (nach dem Holdout, auf Anweisung des Eigentümers: Commit 97b8dba nachgezogen)
+- Übernommen: Großaktionär-Regel (`max_major_holder`), einheitliche Yahoo-Sektornamen, Kursniveau-Prüfung Japan über EDINET.
+- Branche USA bleibt point-in-time (SIC aus dem 13D-Kopf, abgebildet auf Yahoo-Sektor). JP/EU: heutiger Yahoo-Sektor (bekannte Grenze).
+- Quartalszahlen-Sperre bleibt gestrichen: Regel greift nur, wenn `earnings_blackout_days` in `risk_limits.yaml` steht (derzeit nicht).
+- Folge: Das Einfrieren vom 2026-11-18 wird ersetzt. Der Holdout ab 2023 ist für diese Regeln **verbraucht**; ein
+  unabhängiger Nachweis kommt nur noch aus dem Vorwärtstest (Kampagnen nach dem neuen Einfrieren).
