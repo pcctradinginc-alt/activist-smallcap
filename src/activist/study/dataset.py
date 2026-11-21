@@ -267,6 +267,17 @@ def _norm_name(s: str) -> str:
     return _re.sub(r"[\W_]", "", unicodedata.normalize("NFKC", s or "").lower())
 
 
+# Banken, Versicherer, Broker, Treuhänder: melden >5 % aus Geschäft/Treuhand, nicht als Aktivist (seit 2026-11-21)
+JP_FINANCIAL = ("銀行", "信託", "証券", "證券", "生命", "保険", "損保", "フィナンシャル", "ファイナンシャル", "ホールディングス・バンク",
+                "bank", "securities", "insurance", "trust", "financial group", "life ")
+
+
+def is_jp_financial(name) -> bool:
+    import unicodedata
+    n = unicodedata.normalize("NFKC", str(name or "")).lower()
+    return any(k in n for k in JP_FINANCIAL)
+
+
 def jp_campaigns(events: list[dict]) -> list[dict]:
     """Kampagne = (Melder, Emittent). Klasse A = Haltezweck 'wichtige Vorschläge' (重要提案行為等);
     Klasse B = bekannter Aktivist (Liste oder >= 3 frühere A-Meldungen bei verschiedenen Emittenten) ohne diesen Zweck."""
@@ -290,6 +301,8 @@ def jp_campaigns(events: list[dict]) -> list[dict]:
             nm = _norm_name(e.get("filer_name"))
             listed = any(k and k in nm and since <= e["published"][:10] for k, since in names)
             behav = len({iss for t, iss in prior_a.get(f, []) if t < e["published"] and iss != sec}) >= 3
+            if not listed and is_jp_financial(e.get("filer_name")):
+                break                                   # Finanzinstitut: keine Aktivisten-Kampagne
             cls = "A" if e.get("important_proposal") else ("B" if (listed or behav) else None)
             if cls:
                 out.append(dict(e, campaign_key=f"{f}-{sec}", signal_class=cls, event_type="jp_" + cls,

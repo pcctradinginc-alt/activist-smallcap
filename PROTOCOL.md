@@ -125,3 +125,9 @@ Keine neuen Funktionen, Datenquellen oder Modelle – nur Korrekturen und Verein
 - Quartalszahlen-Sperre bleibt gestrichen: Regel greift nur, wenn `earnings_blackout_days` in `risk_limits.yaml` steht (derzeit nicht).
 - Folge: Das Einfrieren vom 2026-11-18 wird ersetzt. Der Holdout ab 2023 ist für diese Regeln **verbraucht**; ein
   unabhängiger Nachweis kommt nur noch aus dem Vorwärtstest (Kampagnen nach dem neuen Einfrieren).
+
+## Änderung 2026-11-21 (b) (Anweisung des Eigentümers): Finanzinstitute in Japan keine Aktivisten
+- Japan: Melder mit Bank/Versicherer/Broker/Treuhand im Namen (`dataset.is_jp_financial`) bilden keine Kampagne, außer sie
+  stehen in `activists.yaml`. Anlass: Papier-Käufe 2026-11-17 auf Meldungen der MUFG (595 von 2.198 JP-Kampagnen).
+- `activists.yaml`: Symphony Financial Partners ergänzt (echter Aktivist, sonst vom Namensfilter erfasst).
+- Neues Einfrieren; Nachweis nur vorwärts.
