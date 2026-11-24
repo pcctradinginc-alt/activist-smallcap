@@ -18,3 +18,7 @@ candidate_id,event_id,ticker,region,reason,date
 20261121-2cdff0,EDGAR:0000921895-26-003234,CSBA,US,außerhalb Universum: Tagesumsatz zu gering; Marktkapitalisierung außerhalb; Banken; OTC,2026-11-21
 20261121-f732da,EDINET:S100ZI9A,6807,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-21
 20261121-c55398,EDINET:S100ZJ7U,7522,JP,verworfen: Anstieg 20T,2026-11-21
+20261124-3d29c4,EDGAR:0001072613-26-000927,WWB,US,außerhalb Universum: zu wenig Kurshistorie,2026-11-24
+20261124-77b69c,EDGAR:0001104659-26-131062,BIP,US,außerhalb Universum: Aktienzahl unbekannt,2026-11-24
+20261124-37319e,EDGAR:0001418812-26-000003,WIX,US,außerhalb Universum: Marktkapitalisierung außerhalb,2026-11-24
+20261124-298c71,NSM:4be83c8e-bc4f-4b41-891e-6623caff2a4b,PAY.L,UK,außerhalb Universum: Marktkapitalisierung außerhalb,2026-11-24
