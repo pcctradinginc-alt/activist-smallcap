@@ -23,3 +23,4 @@ candidate_id,event_id,ticker,region,reason,date
 20261124-37319e,EDGAR:0001418812-26-000003,WIX,US,außerhalb Universum: Marktkapitalisierung außerhalb,2026-11-24
 20261124-298c71,NSM:4be83c8e-bc4f-4b41-891e-6623caff2a4b,PAY.L,UK,außerhalb Universum: Marktkapitalisierung außerhalb,2026-11-24
 20261125-a26556,EDINET:S100ZJF8,3291,JP,außerhalb Universum: Marktkapitalisierung außerhalb,2026-11-25
+20261126-50892f,EDGAR:0000947871-26-001052,CLYD,US,außerhalb Universum: zu wenig Kurshistorie,2026-11-26
