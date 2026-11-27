@@ -250,5 +250,26 @@
     "error": null
    }
   }
+ },
+ {
+  "ts": "2026-11-27T04:24:22+00:00",
+  "name": "fetch",
+  "sources": {
+   "tage": {
+    "ok": true,
+    "n_new": 73,
+    "error": null
+   },
+   "EDGAR": {
+    "ok": true,
+    "n_new": 0,
+    "error": null
+   },
+   "EDINET": {
+    "ok": true,
+    "n_new": 0,
+    "error": null
+   }
+  }
  }
 ]

@@ -1,45 +1,9 @@
 {
  "start_date": "2026-11-15",
  "start_value": 20000,
- "cash": 15930.0,
+ "cash": 16613.508754953626,
  "peak_value": 20000,
  "positions": {
-  "20261117-0869d3": {
-   "event_id": "EDINET:S100ZEWY",
-   "campaign_key": "E03606-290A",
-   "ticker": "290A",
-   "region": "JP",
-   "signal_class": "B",
-   "activist": "株式会社三菱ＵＦＪフィナンシャル・グループ",
-   "sector": null,
-   "buy_cost_est": 0.0175,
-   "filer_id": "E03606",
-   "filer_name": "株式会社三菱ＵＦＪフィナンシャル・グループ",
-   "issuer_id": null,
-   "published": "2026-11-16T11:17:00+09:00",
-   "order_date": "2026-11-17",
-   "position_eur": 1000.0,
-   "position_eur_local": 175261.00158691406,
-   "half_spread": 0.0,
-   "limit_hint": 1141.24,
-   "validated": false,
-   "demand": "none",
-   "url": "https://disclosure2.edinet-fsa.go.jp/WZEK0040.aspx?S100ZEWY",
-   "exit_events": [],
-   "challenger_score": null,
-   "challenger_selected": null,
-   "entry_date": "2026-11-17",
-   "entry_local": 1082.0,
-   "ref_close": 1038.0,
-   "entry_rate": 0.005700051985489986,
-   "entry_eur": 6.167456248300165,
-   "qty": 162.14140153415983,
-   "buy_cost": 0.0175,
-   "fill_ratio": 1.0,
-   "last_eur": 4.425869529826629,
-   "bench_entry": 408.0,
-   "last_date": "2026-11-26"
-  },
   "20261117-e1b30f": {
    "event_id": "EDINET:S100ZEXD",
    "campaign_key": "E03606-6366",
@@ -72,9 +36,9 @@
    "qty": 254.25651660863903,
    "buy_cost": 0.0175,
    "fill_ratio": 1.0,
-   "last_eur": 3.21047530660999,
+   "last_eur": 3.439592598268901,
    "bench_entry": 408.0,
-   "last_date": "2026-11-26"
+   "last_date": "2026-11-27"
   },
   "20261121-40b5b5": {
    "event_id": "EDINET:S100ZIXE",
@@ -108,9 +72,9 @@
    "qty": 268.4049532623527,
    "buy_cost": 0.0175,
    "fill_ratio": 1.0,
-   "last_eur": 3.5946130017748934,
+   "last_eur": 3.5598505894680574,
    "bench_entry": 392.0,
-   "last_date": "2026-11-26"
+   "last_date": "2026-11-27"
   },
   "20261121-c443e1": {
    "event_id": "EDINET:S100ZIX5",
@@ -144,13 +108,30 @@
    "qty": 221.3527853718869,
    "buy_cost": 0.0175,
    "fill_ratio": 1.0,
-   "last_eur": 4.473509443877548,
+   "last_eur": 4.858147720431689,
    "bench_entry": 392.5,
-   "last_date": "2026-11-26"
+   "last_date": "2026-11-27"
   }
  },
  "orders": {},
- "closed": [],
+ "closed": [
+  {
+   "ticker": "290A",
+   "region": "JP",
+   "activist": "株式会社三菱ＵＦＪフィナンシャル・グループ",
+   "entry_date": "2026-11-17",
+   "signal_class": "B",
+   "validated": false,
+   "challenger_score": null,
+   "challenger_selected": null,
+   "exit_date": "2026-11-27",
+   "reason": "Stopp −30 %",
+   "gross": -0.3040665434380776,
+   "bench": -0.026960784313725505,
+   "bench_missing": false,
+   "net_excess": -0.31641704204487364
+  }
+ ],
  "seen_campaigns": [
   "928785-1161863",
   "1802528-1728328",
@@ -180,7 +161,9 @@
   "1418812-1576789",
   "harwoodcapitalllp-GB00BVMTNR93",
   "E24872-3291",
-  "1055951-2094256"
+  "1055951-2094256",
+  "E11852-4187",
+  "E11852-6315"
  ],
  "history": [
   {
@@ -248,7 +231,13 @@
    "value": 19418.94,
    "cash": 15930.0,
    "positions": 4
+  },
+  {
+   "date": "2026-11-27",
+   "value": 19518.89,
+   "cash": 16613.51,
+   "positions": 3
   }
  ],
- "last_run": "2026-11-26"
+ "last_run": "2026-11-27"
 }
