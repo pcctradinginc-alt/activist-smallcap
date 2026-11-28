@@ -87,6 +87,10 @@ def cmd_study(a):
         if k not in fx_cache:
             fx_cache[k] = 1 / eur_per_unit(t, r, d)
         return fx_cache[k]
+    def benchmark_fxl(region, day):
+        # Benchmark listing currency, not the candidate currency (e.g. NOK vs SEK).
+        ticker = {"UK": "INDEX.L", "NORDIC": "INDEX.ST"}.get(region, U[region]["benchmark"])
+        return fxl(ticker, region, day)
     if a.reuse:      # nur Statistik aus gespeicherten Trades: keine Datensatz-Erstellung, keine Simulation, kein Kursabruf
         from .common import REPORTS
         files = sorted(REPORTS.glob("event_study_*_trades.csv"))
@@ -115,7 +119,7 @@ def cmd_study(a):
         from .study.dataset_eu import build_eu, load_px
         de, fe = build_eu(evs)
         ds = pd.concat([ds, de], ignore_index=True); funnel.update(fe)
-    trades = simulate(ds, pl, bl, variants=not a.main_only, fx_loader=fxl)
+    trades = simulate(ds, pl, bl, variants=not a.main_only, fx_loader=fxl, bench_fx_loader=benchmark_fxl)
     print(write_report(evaluate(trades), funnel, ds, trades, bench_loader=bl))
 
 
