@@ -9,3 +9,8 @@ jobs:
         with: {python-version: "3.12"}
       - run: pip install -r requirements.txt
       - run: pytest -q
+      - run: PYTHONPATH=src python scripts/audit_integrity.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: integrity-audit
+          path: reports/integrity_audit.json
