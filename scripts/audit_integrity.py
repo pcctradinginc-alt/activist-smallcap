@@ -30,6 +30,11 @@ def audit(root=ROOT):
                             "filer_id": e.get("filer_id"), "filer_name": e.get("filer_name"),
                             "issuer_id": e.get("issuer_id"), "issuer_name": e.get("issuer_name"),
                             "missing": missing, "review_status": "pending_original_document_review"})
+    from activist.study.dataset import jp_campaigns
+    from activist.study.identity import role_issues
+    jp_current = {c["campaign_key"]: c for c in jp_campaigns(events)}
+    ev_by_id = {e["event_id"]: e for e in events}
+    state = json.loads((root / "journal/portfolio.json").read_text())
     trades = []
     with (root / "journal/trades.csv").open() as f:
         for t in csv.DictReader(f):
@@ -38,12 +43,28 @@ def audit(root=ROOT):
                 issues.append("historical_non_board_lot")
             if t["fill_date"] < t["order_date"]:
                 issues.append("fill_before_order")
-            trades.append({"trade_id": t["trade_id"], "ticker": t["ticker"], "issues": issues})
+            event = ev_by_id.get(t["event_id"], {})
+            current = jp_current.get(t["campaign_id"], {})
+            pos = state["positions"].get(t["trade_id"], {})
+            entry_rate = pos.get("entry_rate") if t["side"] == "BUY" else None
+            notional = float(t["price"]) * float(t["qty"])
+            cash_flow = -notional * entry_rate * (1 + float(t["cost_pct"])) if entry_rate else None
+            trades.append({"trade_id": t["trade_id"], "ticker": t["ticker"], "side": t["side"], "region": t["region"],
+                           "campaign_id": t["campaign_id"], "issues": issues + role_issues(event),
+                           "filer_name": event.get("filer_name"), "issuer_name": event.get("issuer_name"),
+                           "current_signal_class": current.get("signal_class"),
+                           "current_activist_evidence": current.get("activist_evidence_kind"),
+                           "local_notional": notional, "entry_fx_from_state": entry_rate,
+                           "cash_flow_eur_from_state": cash_flow,
+                           "fx_independently_verified": False})
+    jp_buys = [t for t in trades if t["side"] == "BUY" and t["region"] == "JP"]
     counts = Counter((e.get("region"), e.get("source")) for e in events)
     return {"raw_events": len(events), "unique_event_ids": len({e["event_id"] for e in events}),
             "source_counts": [{"region": r, "source": s, "n": n} for (r,s),n in counts.items()],
             "campaign_count": len(results), "uniquely_linked": sum(x["matches"] == 1 for x in results),
-            "original_documents_reviewed": 0, "campaigns": results, "ledger": trades}
+            "original_documents_reviewed": 0,
+            "jp_historical_buys": len(jp_buys), "jp_buys_not_currently_classified": sum(not t["current_signal_class"] for t in jp_buys),
+            "jp_buys_with_board_lot_violation": sum("historical_non_board_lot" in t["issues"] for t in jp_buys), "campaigns": results, "ledger": trades}
 
 if __name__ == "__main__":
     out = audit()
