@@ -63,7 +63,8 @@ def test_run_variants_main_uses_stop_and_trades(ds):
     fee = _p()["costs"]["fixed_fee_eur_per_order"] / _p()["order"]["position_eur"]
     buy = 0.005 + 0.0025 + fee
     sell = 0.005 + 0.0025 + fee / 0.6
-    assert crash.loc["main", "net_excess"] == pytest.approx(-0.4 - buy - sell)
+    assert crash.loc["main", "legacy_net_excess_local_approx"] == pytest.approx(-0.4 - buy - sell)
+    assert crash.loc["main", "net_excess"] == pytest.approx(0.6 * (1 - sell) / (1 + buy) - 1)
     assert crash.loc["main", "cash_net_local"] == pytest.approx(0.6 * (1 - sell) / (1 + buy) - 1)
 
 
@@ -105,3 +106,16 @@ def test_write_report_files(ds, tmp_path):
     assert len(pd.read_csv(tmp_path / "sub" / "r_dataset.csv")) == len(ds)
     js = json.loads((tmp_path / "sub" / "r.json").read_text())
     assert js["funnel"]["kampagnen"] == 10 and "US/A" in js["result"]["combos"]
+
+
+def test_separate_benchmark_currency_and_eur_cash_flow():
+    from activist.common import params
+    px = px_for("BOOM", "2022-02-01", "2023-05-01")
+    b = bench_loader("US", "2022-02-01", "2023-05-01")
+    r = es.run_campaign(row(1,"BOOM"),px,b,params(),fx_local=2.,
+                        fx_at=lambda d: 2. if str(d)<"2022-04-01" else 1.,
+                        bench_fx_at=lambda d: 1.)
+    assert r["complete"]
+    assert r["benchmark_eur"] == pytest.approx(0.)
+    assert r["exit_value_eur"] == pytest.approx(r["invested_eur"]*2.4)
+    assert r["net_excess"] == pytest.approx(r["net_eur"])
