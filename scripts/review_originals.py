@@ -38,6 +38,13 @@ def review(row):
             result["prior_listing_evidence"] = bool(hist.get("ticker") and hist.get("filing_date") and hist["filing_date"] < str(day))
         except Exception as e:
             result["listing_error_type"] = type(e).__name__
+        used = row.get("historical_tickers_used", [])
+        canonical = lambda s: str(s).upper().replace(".", "-")
+        result["historical_tickers_used"] = used
+        result["historical_listing_status"] = ("missing_prior_evidence" if not result.get("prior_listing_evidence") else
+            "missing_or_ambiguous_used_ticker" if len(used) != 1 else
+            "matches_prior_issuer_filing" if canonical(used[0]) == canonical(result["historical_listing"]["ticker"]) else "ticker_mismatch")
+        result["intent_class_matches"] = parsed.get("demand") == row.get("historical_demand")
         result["checks"] = checks
         result["status"] = "document_roles_match" if all(checks.values()) else "document_roles_mismatch"
     elif row["region"] == "JP":
@@ -72,7 +79,9 @@ def main():
                             "status":"unavailable","error_type":type(e).__name__})
         time.sleep(.25)
     report = {"n":len(results),"counts":dict(Counter(r["status"] for r in results)),
-              "historical_listing_verified":0,"prior_listing_evidence":sum(r.get("prior_listing_evidence") is True for r in results),
+              "historical_listing_verified":sum(r.get("historical_listing_status") == "matches_prior_issuer_filing" and r["status"] == "document_roles_match" for r in results),
+              "listing_counts":dict(Counter(r.get("historical_listing_status","not_checked") for r in results)),
+              "intent_class_matches":sum(r.get("intent_class_matches") is True for r in results),"prior_listing_evidence":sum(r.get("prior_listing_evidence") is True for r in results),
               "intent_counts":dict(Counter(r.get("intent_status","not_classified") for r in results)), "records":results}
     atomic_write_text(ROOT/"reports/original_review.json",json.dumps(report,ensure_ascii=False,indent=2))
     print(json.dumps({k:v for k,v in report.items() if k!="records"}))
