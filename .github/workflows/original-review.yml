@@ -1,0 +1,29 @@
+name: original-review
+on:
+  push:
+    branches: ['audit/p0-integrity-20261128']
+    paths: ['.github/workflows/original-review.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -r requirements.txt
+      - run: PYTHONPATH=src python scripts/audit_integrity.py
+      - run: PYTHONPATH=src python scripts/review_originals.py
+        env:
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+          EDINET_API_KEY: ${{ secrets.EDINET_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: original-review
+          path: |
+            reports/original_review.json
+            reports/integrity_audit.json
