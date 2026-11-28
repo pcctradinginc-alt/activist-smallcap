@@ -132,6 +132,14 @@ def process_orders(st: dict, today: date, p: dict, loader=load_prices, fx=eur_pe
             # wie in der Studie: Teilausführungen über bis zu 3 Tage, gebucht wird erst das Endergebnis
             rate = fx(o["ticker"], o["region"], fill.fill_date.date())
             value_eur = o["position_eur"] * fill.fill_ratio
+            if o["region"] == "JP":
+                lot = int(p["universe"]["JP"].get("lot_size", 100))
+                qty = int(value_eur / (fill.price * rate) / lot) * lot
+                if qty <= 0:
+                    book_shadow({"candidate_id": oid, "event_id": o["event_id"], "ticker": o["ticker"], "region": o["region"], "reason": "Mindestorder am Fill nicht erreicht", "date": str(today)})
+                    del st["orders"][oid]
+                    continue
+                value_eur = qty * fill.price * rate
             cost = cost_one_side(o.get("half_spread"), p["costs"], o["region"], "buy", value_eur)
             cost += p["costs"].get("fixed_fee_eur_per_order", 0.0) * max(fill.fill_days - 1, 0) / max(value_eur, 1e-9)
             st["cash"] -= value_eur * (1 + cost)
@@ -208,9 +216,9 @@ def process_exits(st: dict, today: date, p: dict, events: list[dict], loader=loa
         bret = (b1 / b0 - 1) if b1 and b0 else None
         st["closed"].append({**{k: pos.get(k) for k in ("ticker", "region", "activist", "entry_date", "signal_class",
                                                         "validated", "challenger_score", "challenger_selected")},
-                             "exit_date": str(xd.date()), "reason": why, "gross": gross, "bench": bret or 0.0,
+                             "exit_date": str(xd.date()), "reason": why, "gross": gross, "bench": bret,
                              "bench_missing": bret is None,
-                             "net_excess": gross - (bret or 0.0) - pos["buy_cost"] - cost})
+                             "net_excess": gross - bret - pos["buy_cost"] - cost if bret is not None else None})
         book_trade({"trade_id": pid + "-S", "event_id": pos["event_id"], "campaign_id": pos["campaign_key"],
                     "ticker": pos["ticker"], "region": pos["region"], "side": "SELL", "order_date": str(today),
                     "fill_date": str(xd.date()), "price": round(xp, 4), "qty": round(pos["qty"], 4),
@@ -316,6 +324,7 @@ def new_signals(st: dict, today: date, p: dict, events: list[dict], since: str, 
             chal = {"challenger_score": None, "challenger_selected": None, "challenger_error": str(e)[:120]}
         st["orders"][oid] = {"event_id": r.get("event_id"), "campaign_key": cid, "ticker": r["ticker"],
                              "region": r["region"], "signal_class": r.get("signal_class"), "activist": r.get("activist"),
+                              "issuer_name": r.get("issuer_name") if isinstance(r.get("issuer_name"), str) else None,
                              "sector": r.get("sector") if isinstance(r.get("sector"), str) else None, "buy_cost_est": buy_cost,
                              "filer_id": r.get("filer_id"), "filer_name": r.get("filer_name"),
                              "issuer_id": r.get("issuer_id") or r.get("isin"), "published": r["published"],
