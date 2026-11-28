@@ -282,8 +282,10 @@ def jp_campaigns(events: list[dict]) -> list[dict]:
     """Kampagne = (Melder, Emittent). Klasse A = Haltezweck 'wichtige Vorschläge' (重要提案行為等);
     Klasse B = bekannter Aktivist (Liste oder >= 3 frühere A-Meldungen bei verschiedenen Emittenten) ohne diesen Zweck."""
     from ..common import load_yaml
-    names = [(_norm_name(a["name"])[:8], str(a.get("since", "1900"))) for a in load_yaml("activists.yaml")["activists"]
-             if a.get("region") == "JP"]
+    register = load_yaml("activists.yaml")
+    aliases = register.get("aliases") or {}
+    names = [(_norm_name(n), str(a.get("since", "1900"))) for a in register["activists"]
+             if a.get("region") == "JP" for n in [a["name"], *aliases.get(a["name"], [])]]
     jp = sorted([e for e in events if e.get("source") == "EDINET" and e.get("form") in JP_FORMS and e.get("doc_parsed")],
                 key=lambda e: e["published"])
     prior_a: dict[str, list[tuple[str, str]]] = {}     # Melder -> [(Zeit, Emittent)] aller A-Meldungen, zeitlich sortiert
@@ -299,14 +301,16 @@ def jp_campaigns(events: list[dict]) -> list[dict]:
             continue
         for idx, e in enumerate(evs):
             nm = _norm_name(e.get("filer_name"))
-            listed = any(k and k in nm and since <= e["published"][:10] for k, since in names)
+            listed = any(k and nm == k and since <= e["published"][:10] for k, since in names)
             behav = len({iss for t, iss in prior_a.get(f, []) if t < e["published"] and iss != sec}) >= 3
-            if not listed and is_jp_financial(e.get("filer_name")):
+            if not listed and (is_jp_financial(e.get("filer_name")) or "アセットマネジメント" in str(e.get("filer_name") or "")):
                 break                                   # Finanzinstitut: keine Aktivisten-Kampagne
             cls = "A" if e.get("important_proposal") else ("B" if (listed or behav) else None)
             if cls:
                 out.append(dict(e, campaign_key=f"{f}-{sec}", signal_class=cls, event_type="jp_" + cls,
-                                followups=evs[idx + 1:], ticker=sec))
+                                followups=evs[idx + 1:], ticker=sec,
+                                activist_evidence_kind="proposal" if cls == "A" else ("register_name" if listed else "prior_proposals"),
+                                prior_proposal_count=len({iss for t, iss in prior_a.get(f, []) if t < e["published"] and iss != sec})))
                 break
     return out
 
@@ -332,7 +336,8 @@ def build_jp(events: list[dict], end: date | None = None, since: str | None = No
             continue
         funnel["JP kampagnen"] += 1
         row = {k: c.get(k) for k in ("event_id", "campaign_key", "published", "form", "signal_class", "event_type",
-                                     "filer_id", "filer_name", "issuer_name", "url", "region", "ticker")}
+                                     "filer_id", "filer_name", "issuer_id", "issuer_name", "url", "region", "ticker",
+                                     "activist_evidence_kind", "prior_proposal_count")}
         row.update(activist=c.get("filer_name"), demand="capital_or_proposal" if c.get("important_proposal") else "none",
                    demand_evidence=c.get("important_proposal_evidence"), stake=c.get("holding_ratio"))
         d0 = date.fromisoformat(c["published"][:10])
@@ -374,6 +379,6 @@ def build_jp(events: list[dict], end: date | None = None, since: str | None = No
                 funnel["JP qualifiziert"] -= 1; funnel["JP Kursreihe unplausibel"] += 1
                 row["status"] = "gesperrt: Kursabweichung"; rows.append(row); continue
         row["mcap"] = c.get("total_shares_outstanding") * pf["price"] if c.get("total_shares_outstanding") else None
-        row.update(data_quality(row, ticker_certain=True, activist_evidence=True))
+        row.update(data_quality(row, ticker_certain=False, activist_evidence=False))  # original-document identity and independent activist evidence pending
         rows.append(row)
     return pd.DataFrame(rows), funnel
