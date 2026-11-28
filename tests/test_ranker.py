@@ -126,3 +126,10 @@ def test_feature_analysis_small_sample_and_fixed_demand_contrast():
 def test_challenger_holdout_needs_min_sample():
     from activist.learn import ranker
     assert ranker.challenger_holdout({}, _fa_df(0.0, n=10))["status"] == ranker.ST_INSUFFICIENT
+
+
+def test_pit_excludes_same_day_and_missing_outcomes():
+    df = pd.DataFrame({"published": ["2020-01-01", "2020-01-02", "2020-03-01T15:00:00Z"],
+                       "exit_date": ["2020-03-01", "2020-02-01", "2020-04-01"],
+                       "net_excess": [5.0, np.nan, 0.1], "activist": ["A", "A", "A"]})
+    assert R.pit_activist_record(df).iloc[2].activist_prior_n == 0
