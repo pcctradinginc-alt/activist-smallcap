@@ -140,6 +140,10 @@ def build_eu(events: list[dict], end: date | None = None, use_network_figi: bool
         row = {k: c.get(k) for k in ("event_id", "campaign_key", "published", "form", "signal_class", "event_type",
                                      "filer_id", "filer_name", "issuer_id", "issuer_name", "url", "region")}
         row.update(activist=c.get("filer_name"), isin=isin, demand="none", demand_evidence=None, stake=c.get("holding_ratio"))
+        from .identity import identity_status
+        row.update(identity_status(c))
+        if row["identity_status"] == "conflict":
+            row["status"] = "Identitätskonflikt"; funnel["EU Identitätskonflikt"] += 1; rows.append(row); continue
         if not c.get("published"):
             funnel["EU ohne Datum (kein Signal)"] += 1; row["status"] = "kein Datum"; rows.append(row); continue
         # Ohne Uhrzeit (z. B. SIX): published ist bereits konservativ der Folgetag 00:00 UTC (effective_decision_time)
@@ -198,6 +202,6 @@ def build_eu(events: list[dict], end: date | None = None, use_network_figi: bool
         funnel["EU verworfen" if reasons else "EU qualifiziert"] += 1
         from .dataset import data_quality
         row["price_check"] = None                 # keine zweite kostenlose Kursquelle für Europa -> ungeprüft
-        row.update(data_quality(row, ticker_certain=bool(isin), activist_evidence=True))
+        row.update(data_quality(row, ticker_certain=False, activist_evidence=False))
         rows.append(row)
     return pd.DataFrame(rows), funnel
