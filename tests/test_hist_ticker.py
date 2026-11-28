@@ -55,7 +55,7 @@ def test_ixbrl_dei_tiffany(net):
 def test_delisted_rightside_and_sizmek(net):
     r = h.ticker_hist(1589094, "2017-06-01")
     assert (r["ticker"], r["exchange"]) == ("NAME", "NASDAQ")
-    r = h.ticker_hist(1591877, "2016-01-10")
+    r = h.ticker_hist(1591877, "2016-06-01")
     assert (r["ticker"], r["exchange"]) == ("SZMK", "NASDAQ")
 
 
@@ -79,16 +79,16 @@ def test_none_when_no_filing_and_cache(net):
     r = h.ticker_hist(98246, "2030-01-01")
     assert r["ticker"] is None and r["source"] == "none"
     n = len(net["docs"])
-    assert h.ticker_hist(98246, "2030-01-20") == r      # gleicher Monat -> Cache
+    assert h.ticker_hist(98246, "2030-01-20") == r      # unabhängiger Tagescache
     assert len(net["docs"]) == n
     cache = json.loads((common.DATA / "cache" / "hist_ticker" / "0000098246.json").read_text())
-    assert "2030-01" in cache
+    assert "pit-v2:2030-01-01" in cache and "pit-v2:2030-01-20" in cache
 
 
 def test_cache_hit_skips_network(net):
     a = h.ticker_hist(98246, "2020-06-30")
     nd = len(net["docs"])
-    assert h.ticker_hist(98246, "2020-06-02") == a
+    assert h.ticker_hist(98246, "2020-06-30") == a
     assert len(net["docs"]) == nd
 
 
@@ -123,3 +123,9 @@ def test_colon_pattern_and_false_positives():
                          "Our common stock trades on the NYSE American under the symbol \"ACM\".")
     assert r["ticker"] == "ACM" and r["exchange"] == "NYSE American"
     assert h.extract_ticker("see the symbol of the company and the other things") is None
+
+
+def test_no_future_or_same_day_ticker_evidence():
+    rows = [{"form":"10-K","date":d,"doc":"x","accession":d} for d in
+            ("2020-01-01","2020-02-01","2020-02-02")]
+    assert [x["date"] for x in h._candidates(rows,h.secmeta._d("2020-02-01"))] == ["2020-01-01"]
