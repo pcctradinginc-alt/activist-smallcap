@@ -12,6 +12,7 @@ class Fill:
     fill_ratio: float
     limit: float | None
     reason: str = ""
+    first_fill_date: pd.Timestamp | None = None
     fill_days: int = 0          # Anzahl Tage mit Teilausführung -> je Tag eine Ordergebühr
 
 
@@ -37,7 +38,7 @@ def simulate_entry(px: pd.DataFrame, decision_time: pd.Timestamp, order_cfg: dic
     if before.empty or after.empty:
         return Fill(False, None, None, 0.0, None, "keine Kurse")
     limit = float(before.close.iloc[-1]) * (1 + order_cfg["limit_above_last_close"])
-    remaining, notional, qty_val, first, days = 1.0, 0.0, 0.0, None, 0
+    remaining, shares, qty_val, first, last, days = 1.0, 0.0, 0.0, None, None, 0
     for ts, row in after.head(order_cfg["max_fill_days"]).iterrows():
         if row.open <= limit:
             p = float(row.open)
@@ -50,13 +51,14 @@ def simulate_entry(px: pd.DataFrame, decision_time: pd.Timestamp, order_cfg: dic
         take = min(remaining, cap)
         if take <= 0:
             continue
-        notional += take * p; qty_val += take; remaining -= take; days += 1
+        shares += take / p; qty_val += take; remaining -= take; days += 1
         first = first or ts
+        last = ts
         if remaining <= 1e-9:
             break
     if qty_val == 0:
         return Fill(False, None, None, 0.0, limit, "Limit nicht erreicht / kein Umsatz")
-    return Fill(True, first, notional / qty_val, qty_val, limit, fill_days=days)
+    return Fill(True, last, qty_val / shares, qty_val, limit, first_fill_date=first, fill_days=days)
 
 
 def simulate_exit(px: pd.DataFrame, entry_date: pd.Timestamp, entry_price: float, exit_cfg: dict,
