@@ -37,3 +37,16 @@ def test_build_jp_lot_size_rule(monkeypatch):
     ds, f = dataset.build_jp([ev(1, "2023-01-05T10:00:00+09:00", "E1", "1234", True)], end=pd.Timestamp("2024-03-01").date())
     # 100 Stück x 5.000 JPY = 500.000 JPY > 1.000 EUR x 160 = 160.000 JPY
     assert ds.iloc[0]["status"].startswith("verworfen") and "Mindestorder" in ds.iloc[0]["status"]
+
+
+def test_no_prefix_collision_or_future_proposals():
+    events = [ev(1, "2023-01-01T10:00:00+09:00", "E5", "4000", False, name="Oasis Management Unrelated Company")]
+    events += [ev(2+k, f"2023-0{k+2}-01T10:00:00+09:00", "E5", f"500{k}", True) for k in range(3)]
+    assert "E5-4000" not in {c["campaign_key"] for c in dataset.jp_campaigns(events)}
+
+
+def test_passive_asset_manager_not_behavioral_b():
+    name = "三井住友ＤＳアセットマネジメント株式会社"
+    events = [ev(k, f"2023-0{k+1}-01T10:00:00+09:00", "E9", f"100{k}", True, name=name) for k in range(3)]
+    events.append(ev(4, "2023-06-01T10:00:00+09:00", "E9", "4290", False, name=name))
+    assert "E9-4290" not in {c["campaign_key"] for c in dataset.jp_campaigns(events)}
