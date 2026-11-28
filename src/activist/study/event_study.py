@@ -104,6 +104,65 @@ def load_trades(path) -> pd.DataFrame:
     return t
 
 
+
+# Only relax one named candidate filter; never relax universe, data quality,
+# minimum lot, missing FX, or execution capacity. No holdout exploration.
+ABLATION_FILTERS = ("Spread", "Anstieg 20T", "Kurs über Aktivisten-Einstand",
+                    "Großaktionär über Grenze", "Quartalszahlen-Sperre", "Liquidität")
+
+
+def policy_comparisons(t: pd.DataFrame) -> dict:
+    """Event-level comparisons, not a cash-constrained portfolio backtest.
+    Use only development cohorts with observed net excess. A filter's
+    marginal admissions must have exactly that one rejection reason.
+    Exit comparisons are paired on identical campaigns with complete outcomes.
+    """
+    required = {"variant", "qualified", "executed", "complete", "status", "net_excess",
+                "campaign_key", "region", "signal_class", "published"}
+    if t.empty or not required.issubset(t.columns):
+        return {}
+    import numpy as np
+    from .alpha import split_of
+    d = dev_only(t).copy()
+    d["split"] = d.published.map(split_of)
+    d = d[(d.executed == True) & (d.complete == True) &
+          np.isfinite(pd.to_numeric(d.net_excess, errors="coerce"))]
+    out = {}
+    for (region, cls, split), g in d.groupby(["region", "signal_class", "split"]):
+        main = g[g.variant == "main"]
+        if main.campaign_key.duplicated().any():
+            continue
+        base = main[main.qualified == True]
+        def summary(x):
+            y = x.net_excess
+            return {"n": int(len(y)), "mean": float(y.mean()) if len(y) else None,
+                    "worst": float(y.min()) if len(y) else None}
+        base_summary = summary(base)
+        filters = {}
+        for f in ABLATION_FILTERS:
+            admitted = main[main.status == "verworfen: " + f]
+            relaxed = pd.concat([base, admitted])
+            a, b = summary(admitted), summary(relaxed)
+            filters[f] = {"added": a, "relaxed": b,
+                          "delta_mean": b["mean"] - base_summary["mean"]
+                          if a["n"] and base_summary["n"] else None}
+        exits = {}
+        for variant in sorted(set(g.variant) - {"main"}):
+            alt = g[(g.variant == variant) & (g.qualified == True)]
+            if alt.campaign_key.duplicated().any():
+                continue
+            pair = base[["campaign_key", "net_excess"]].merge(
+                alt[["campaign_key", "net_excess"]], on="campaign_key", suffixes=("_main", "_alt"))
+            delta = pair.net_excess_alt - pair.net_excess_main
+            exits[variant] = {"n_paired": int(len(pair)),
+                              "delta_mean": float(delta.mean()) if len(pair) else None,
+                              "main_worst": float(pair.net_excess_main.min()) if len(pair) else None,
+                              "alt_worst": float(pair.net_excess_alt.min()) if len(pair) else None}
+        out[f"{region}/{cls}/{split}"] = {"base": base_summary, "filters": filters,
+                                           "exits": exits, "status": "exploratory_only"}
+    return out
+
+
 def evaluate(t: pd.DataFrame) -> dict:
     """Reine Auswertung der Trades-Tabelle (kein Netzwerk). Erkundungstabellen nur mit Entwicklungszeitraum (dev_only)."""
     p = params()
@@ -115,6 +174,7 @@ def evaluate(t: pd.DataFrame) -> dict:
     from ..learn import ranker
     res["alpha"] = run_alpha(t)
     res["data_quality"] = res["alpha"]["data_quality"]
+    res["policy_comparisons"] = policy_comparisons(t)
     mt = main_trades(t)
     if len(mt):
         mt = ranker.pit_activist_record(mt)
