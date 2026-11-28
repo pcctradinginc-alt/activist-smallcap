@@ -12,20 +12,21 @@ D0 = date(2020, 1, 15)
 
 
 def test_ticker_certain_survivorship(monkeypatch):
+    monkeypatch.setattr(hist_ticker, "ticker_hist", lambda *a: {"ticker":"ABC","filing_date":"2020-01-10","filing":"test"})
     row = {"ticker_source": "hist:10-K", "price_source": "tiingo"}
-    assert dataset._ticker_certain(row, _px(), D0, "1", "ABC") is True and row["ticker_check"] == "hist+einstand"
+    assert dataset._ticker_certain(row, _px(), D0, "1", "ABC") is True and row["ticker_check"] == "prior_issuer_filing"
 
 
 def test_ticker_certain_einstand(monkeypatch):
     monkeypatch.setattr(hist_ticker, "ticker_hist", lambda *a: (_ for _ in ()).throw(AssertionError("kein Abruf nötig")))
     row = {"activist_cost": 10.5, "price_source": "yahoo"}
-    assert dataset._ticker_certain(row, _px(), D0, "1", "ABC") is True and row["ticker_check"] == "einstand"
+    assert dataset._ticker_certain(row, _px(), D0, "1", "ABC") is False and row["ticker_check"] is None
 
 
 def test_ticker_certain_hist_normalised(monkeypatch):
-    monkeypatch.setattr(hist_ticker, "ticker_hist", lambda *a: {"ticker": "brk.b"})
+    monkeypatch.setattr(hist_ticker, "ticker_hist", lambda *a: {"ticker": "brk.b", "filing_date": "2020-01-10"})
     row = {"activist_cost": 99.0}
-    assert dataset._ticker_certain(row, _px(), D0, "1", "BRK-B") is True and row["ticker_check"] == "hist"
+    assert dataset._ticker_certain(row, _px(), D0, "1", "BRK-B") is True and row["ticker_check"] == "prior_issuer_filing"
 
 
 def test_ticker_certain_false(monkeypatch):
@@ -49,3 +50,8 @@ def test_data_quality_requires_checked_prices():
     assert not dq["verified"] and "Kurse doppelt geprüft" in dq["dq_missing"]
     assert dataset.data_quality({**row, "price_check": True}, True, True)["verified"]
     assert not dataset.data_quality({**row, "price_check": True}, False, True)["verified"]
+
+
+def test_future_listing_does_not_validate(monkeypatch):
+    monkeypatch.setattr(hist_ticker, "ticker_hist", lambda *a: {"ticker":"ABC","filing_date":"2020-01-16"})
+    assert not dataset._ticker_certain({}, _px(), D0, "1", "ABC")
