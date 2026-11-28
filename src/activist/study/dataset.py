@@ -51,6 +51,8 @@ def data_quality(row: dict, ticker_certain: bool, activist_evidence: bool) -> di
     checks = {"Kurse doppelt geprüft": row.get("price_check") is True, "Ticker eindeutig": bool(ticker_certain),
               "Marktkapitalisierung bekannt": row.get("mcap") is not None and row.get("mcap") == row.get("mcap"),
               "Aktivist belegt": bool(activist_evidence)}
+    if "identity_status" in row:
+        checks["Unabhängige Rollen- und Wertpapieridentität"] = row.get("identity_verified") is True
     return {"verified": all(checks.values()), "dq_missing": "; ".join(k for k, v in checks.items() if not v)}
 
 
