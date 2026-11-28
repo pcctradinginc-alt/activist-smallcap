@@ -43,10 +43,14 @@ def run_campaign(c: dict, px: pd.DataFrame, bench: pd.DataFrame, p: dict, stop=T
     bret = float(b1 / b0 - 1)
     buy = cost_one_side(c.get("half_spread"), p["costs"], c["region"], "buy", value)
     buy += p["costs"].get("fixed_fee_eur_per_order", 0.0) * max(fill.fill_days - 1, 0) / max(value, 1e-9)
-    cost = buy + cost_one_side(c.get("half_spread"), p["costs"], c["region"], "sell", value)
+    sell = cost_one_side(c.get("half_spread"), p["costs"], c["region"], "sell", value * (1 + gross))
+    cost = buy + sell
+    cash_net = (1 + gross) * (1 - sell) / (1 + buy) - 1
     return {"executed": True, "complete": why not in OPEN, "fill_ratio": fill.fill_ratio,
             "entry_date": fill.fill_date, "entry": fill.price, "exit_date": xd, "exit": xp, "exit_reason": why,
             "gross": gross, "bench": bret, "cost": cost, "net_excess": gross - bret - cost,
+            "buy_cost": buy, "sell_cost": sell, "invested_eur": value, "cash_net_local": cash_net,
+            "cash_net_excess_local": cash_net - bret,
             "hold_days": int((px.index > fill.fill_date).sum() if why in OPEN else ((px.index > fill.fill_date) & (px.index <= xd)).sum())}
 
 
