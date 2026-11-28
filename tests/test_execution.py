@@ -49,7 +49,8 @@ def test_entry_volume_cap_partial_over_three_days():
     f = simulate_entry(frame(rows), DECISION, ORDER, 1000)
     assert f.filled
     assert f.fill_ratio == pytest.approx(0.6)  # nur 3 Tage erlaubt
-    assert f.fill_date == pd.Timestamp("2024-01-03")
+    assert f.first_fill_date == pd.Timestamp("2024-01-03")
+    assert f.fill_date == pd.Timestamp("2024-01-05")
 
 
 def test_entry_volume_cap_full_fill_in_three_days():
@@ -131,3 +132,13 @@ def test_fixed_fee_per_order_scales_with_position():
     assert cost_one_side(0.0, cfg, "US", "buy", 500) == pytest.approx(0.0375)
     assert cost_one_side(0.0, cfg, "US", "buy", 3000) == pytest.approx(0.0125)
     assert cost_one_side(0.0, cfg, "US", "buy") == pytest.approx(0.0075)
+
+
+def test_partial_fills_quantity_weighted_and_no_early_exit():
+    px = frame([(100, 101, 99, 100, 1000), (100, 101, 99, 100, 100),
+                (50, 51, 49, 50, 100), (100, 101, 99, 100, 100)])
+    f = simulate_entry(px, DECISION, ORDER, 1000)
+    assert f.first_fill_date == px.index[1] and f.fill_date == px.index[3]
+    assert f.fill_ratio == pytest.approx(1.0)
+    assert f.price == pytest.approx(1000 / (5 + 5 + 2.5))
+    assert simulate_exit(px, f.fill_date, f.price, EXIT)[2] == "keine Folgekurse"
