@@ -184,7 +184,11 @@ def evaluate(t: pd.DataFrame) -> dict:
     mt = main_trades(t)
     if len(mt):
         mt = ranker.pit_activist_record(mt)
-        tr, va, ho = mt[mt.split == "train"], mt[mt.split == "valid"], mt[mt.split == "holdout"]
+        # Purge outcomes not yet known at the next evaluation boundary.
+        exit_day = mt.exit_date.astype(str).str[:10]
+        tr = mt[(mt.split == "train") & (exit_day < "2020-01-01")]
+        va = mt[(mt.split == "valid") & (exit_day < "2023-01-01")]
+        ho = mt[mt.split == "holdout"]
         res["learning"] = ranker.decide(tr, va)
         # Merkmalsanalyse nur auf Trainingsdaten (Validierung und Holdout bleiben unangetastet)
         res["learning"]["features"] = ranker.feature_analysis(tr) if len(tr) else {}
