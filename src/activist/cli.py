@@ -95,8 +95,13 @@ def cmd_study(a):
             raise SystemExit(1)
         tf = files[-1]
         base = tf.with_name(tf.name[:-len("_trades.csv")])
+        from .study.alpha import _hashes
+        metadata = json.loads(base.with_suffix(".json").read_text(encoding="utf-8"))
+        if metadata.get("protocol_hashes") != _hashes():
+            print("Studienartefakt ohne passenden Protokoll-Prüfwert: vollständige Studie erforderlich.")
+            raise SystemExit(1)
         trades, ds = load_trades(tf), pd.read_csv(base.with_name(base.name + "_dataset.csv"), low_memory=False)
-        funnel = Counter(json.loads(base.with_suffix(".json").read_text(encoding="utf-8"))["funnel"])
+        funnel = Counter(metadata["funnel"])
         print(f"Wiederverwendung: {tf.name}")
         print(write_report(evaluate(trades), funnel, ds, trades, bench_loader=bl))
         return
