@@ -96,8 +96,17 @@ def validated_combos() -> set[str]:
     if not files:
         return set()
     # nur der bestätigende Holdout-Test bei eingefrorenem Protokoll zählt (keine Entwicklungsergebnisse)
-    a = json.loads(files[-1].read_text()).get("alpha") or {}
-    return set(a.get("passed") or []) if a.get("frozen") else set()
+    from ..study.alpha import freeze_state
+    try:
+        fs = freeze_state()
+        a = json.loads(files[-1].read_text()).get("alpha") or {}
+    except (OSError, ValueError, KeyError):
+        return set()
+    if not fs.get("frozen") or not a.get("frozen") or not fs.get("frozen_at"):
+        return set()
+    if (a.get("freeze") or {}).get("frozen_at") != fs["frozen_at"]:
+        return set()
+    return set(a.get("passed") or [])
 
 
 # ------------------------------------------------------------------ Bausteine
