@@ -753,7 +753,7 @@
       "label": true,
       "label_reason": "Written and in-person demands for the chair to resign and for a monitoring board.",
       "archived_proposal_rule_positive": false,
-      "current_proposal_rule_positive": false
+      "current_proposal_rule_positive": true
     },
     {
       "event_id": "EDINET:S100T30F",
@@ -2655,28 +2655,28 @@
   },
   "current_rule": {
     "sample_counts": {
-      "tp": 1,
-      "fn": 3,
+      "tp": 2,
+      "fn": 2,
       "fp": 2,
       "tn": 88
     },
     "weighted_estimated_counts": {
-      "tp": 605.0,
-      "fn": 144.95,
+      "tp": 616.2,
+      "fn": 133.75,
       "fp": 277.3125,
       "tn": 73029.7375
     },
-    "weighted_precision_ratio": 0.6856980944959977,
-    "weighted_recall_ratio": 0.8067204480298686,
-    "precision": 0.5388648850345257,
-    "recall": 0.5597318853901774,
+    "weighted_precision_ratio": 0.6896378058505057,
+    "weighted_recall_ratio": 0.8216547769851323,
+    "precision": 0.541727502087181,
+    "recall": 0.5615904415812267,
     "precision_90_interval": [
-      0.17275788676355544,
-      0.8673175497320322
+      0.17385549511765472,
+      0.8674184424766155
     ],
     "recall_90_interval": [
-      0.1775969265117316,
-      0.8848231160578984
+      0.17829125108098468,
+      0.885634891869864
     ]
   }
 }

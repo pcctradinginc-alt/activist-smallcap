@@ -44,6 +44,7 @@ jobs:
           SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
           TIINGO_API_KEY: ${{ secrets.TIINGO_API_KEY }}
         run: |
+          set -o pipefail
           scratch="$RUNNER_TEMP/paper-dry-run"
           mkdir -p "$scratch"
           cp -a journal "$scratch/journal"

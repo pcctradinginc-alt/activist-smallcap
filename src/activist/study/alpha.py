@@ -32,7 +32,7 @@ PROTOCOL_FILES = ["config/params.yaml", "config/risk_limits.yaml", "PROTOCOL.md"
                   "src/activist/sources/edinet_docs.py", "src/activist/sources/edinet_backfill.py",
                   "src/activist/sources/edgar_backfill.py", "src/activist/common.py", "src/activist/cli.py", "src/activist/study/identity.py",
                   "src/activist/sources/edgar.py", "src/activist/sources/openfigi.py", "src/activist/sources/fx.py",
-                  "src/activist/study/funnel.py", "config/identity_evidence.json"]
+                  "src/activist/study/funnel.py", "src/activist/sources/campaigns_c.py", "config/identity_evidence.json"]
 FAMILY_ALPHA = 0.10
 COHORT_LAG_DAYS = 380
 

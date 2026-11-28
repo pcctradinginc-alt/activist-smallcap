@@ -312,9 +312,9 @@ def classify(text: str) -> tuple[str, str | None]:
     if cls != "none":
         return cls, ev
     sents = filing13d._sentences(text)
-    for c in filing13d.DEMAND_PRIORITY:
+    for c, pattern in _DE.items():
         for s in sents:
-            if _DE[c].search(s):
+            if pattern.search(s):
                 return c, s[:filing13d.EVIDENCE_MAX]
     return "none", None
 

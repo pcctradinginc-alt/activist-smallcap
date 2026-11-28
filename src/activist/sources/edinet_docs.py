@@ -136,17 +136,20 @@ def proposal_category(text: str | None) -> str:
     purpose = _nfkc(text)
     if not purpose:
         return "unknown"
-    if re.search(r"公開買付|完全子会社|非公開化|株式併合", purpose):
-        return "control_transaction"
-    for clause in re.split(r"[。\n]", purpose):
+    if re.search(r"資本業務提携契約|業務提携契約に基づ", purpose):
+        return "strategic_alliance"
+    clauses = re.split(r"[。\n]", purpose)
+    for clause in clauses:
         if _NEG.search(clause):
             continue
-        if re.search(r"状況に応じ|場合がある|可能性がある|含まれることがある|あり[得う]る|することもある", clause):
+        if re.search(r"状況に応じ|場合があ|可能性があ|ことがある|あり[得う]る|こともある", clause):
             continue
-        if re.search(r"増配|特別配当|自己株式(?:の)?取得|取締役(?:候補|の選任|の解任|.{0,8}指名)|"
-                     r"事業(?:の)?譲渡|資産(?:の)?売却|有利子負債(?:の)?活用|株主資本(?:の)?抑制", clause):
+        if re.search(r"増配|特別配当|自己株式(?:の)?取得|取締役(?:候補|退任|.{0,10}選任|.{0,10}解[任職]|.{0,8}指名)|"
+                     r"事業.{0,14}譲渡|資産(?:の)?売却|有利子負債(?:の)?活用|株主資本(?:の)?抑制", clause):
             if re.search(r"提案|求め|要求|要請|すべき|発行者に対し", clause):
                 return "specific_intervention"
+    if re.search(r"公開買付|完全子会社|非公開化|株式併合", purpose):
+        return "control_transaction"
     if "重要提案行為" in purpose:
         return "generic_or_negated_proposal"
     return "no_specific_intervention"

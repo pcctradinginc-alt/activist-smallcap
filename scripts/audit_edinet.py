@@ -14,7 +14,7 @@ from activist.study.dataset import JP_FORMS, is_jp_financial, jp_campaigns
 from activist.study.identity import norm
 
 SAMPLE_PER_STRATUM = 16
-SEED = 20261128
+SEED = 20261129
 LIMIT = RateLimiter(3)
 
 

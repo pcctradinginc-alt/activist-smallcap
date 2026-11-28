@@ -336,7 +336,7 @@ def jp_campaigns(events: list[dict], *, evidence=None) -> list[dict]:
             if not listed and is_jp_financial(e.get("filer_name")):
                 break                                   # Finanzinstitut: keine Aktivisten-Kampagne
             purpose = edinet_docs.proposal_category(e.get("purpose_text"))
-            if purpose == "control_transaction":
+            if purpose in ("control_transaction", "strategic_alliance"):
                 continue
             cls = "A" if purpose == "specific_intervention" else ("B" if (listed or behav) else None)
             if cls:

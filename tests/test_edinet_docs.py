@@ -136,3 +136,12 @@ def test_issuer_role_conflict_and_filer_code_exclusion():
 def test_generic_security_code_is_not_issuer_evidence():
     result = ed.parse_large_holding_zip(make_zip([("x:SecurityCode", "証券コード", "c", "83060")]))
     assert result["issuer_sec_code"] is None and not result["issuer_role_explicit"]
+
+
+def test_concrete_interventions_require_more_than_conditional_or_alliance_language():
+    from activist.sources.edinet_docs import proposal_category
+
+    assert proposal_category("提出者は、発行者に対して増配を要求することがある。重要提案行為等。") == "generic_or_negated_proposal"
+    assert proposal_category("資本業務提携契約に基づき取締役候補者の指名を提案する。") == "strategic_alliance"
+    assert proposal_category("発行者に対して事業の一部の譲渡を提案している。") == "specific_intervention"
+    assert proposal_category("提出者は発行者の非公開化を目的に公開買付を行う予定です。") == "control_transaction"
