@@ -34,9 +34,12 @@ def audit(root=ROOT):
     from activist.study.identity import role_issues
     jp_current = {c["campaign_key"]: c for c in jp_campaigns(events)}
     ev_by_id = {e["event_id"]: e for e in events}
-    state = json.loads((root / "journal/portfolio.json").read_text())
+    journal = root / "journal_archive/2026-11-28-pre-p0-reset"
+    if not journal.exists():
+        journal = root / "journal"
+    state = json.loads((journal / "portfolio.json").read_text())
     trades = []
-    with (root / "journal/trades.csv").open() as f:
+    with (journal / "trades.csv").open() as f:
         for t in csv.DictReader(f):
             issues = []
             if t["region"] == "JP" and abs(float(t["qty"]) % 100) > 1e-6:
