@@ -61,19 +61,18 @@ def _ticker_certain(row: dict, px, d0: date, issuer_id: str, current: str | None
     Survivorship-Pfad (historischer Ticker + Tiingo-Kurs am Einstand validiert) · Kurs am Entscheidungstag passt zum
     Einstand des Aktivisten · oder der historische Ticker aus den SEC-Meldungen gleicht dem heutigen."""
     row["ticker_check"] = None
-    if str(row.get("ticker_source") or "").startswith("hist:") and row.get("price_source") == "tiingo":
-        row["ticker_check"] = "hist+einstand"
-    elif prices.validate_against(px, d0, row.get("activist_cost")):
-        row["ticker_check"] = "einstand"
-    else:
-        try:
-            h = (hist_ticker.ticker_hist(issuer_id, d0) or {}).get("ticker")
-        except Exception:
-            h = None
-        norm = lambda x: str(x).upper().replace(".", "-")
-        if h and current and norm(h) == norm(current):
-            row["ticker_check"] = "hist"
-    return row["ticker_check"] is not None
+    try:
+        h = hist_ticker.ticker_hist(issuer_id, d0) or {}
+    except Exception:
+        h = {}
+    normalize = lambda x: str(x).upper().replace(".", "-")
+    if (h.get("ticker") and h.get("filing_date") and h["filing_date"] < str(d0)
+            and current and normalize(h["ticker"]) == normalize(current)):
+        row["ticker_check"] = "prior_issuer_filing"
+        row["ticker_evidence_filing"] = h.get("filing")
+        row["ticker_evidence_date"] = h["filing_date"]
+        return True
+    return False
 
 
 def campaigns(events: list[dict], reg: Register) -> list[dict]:
@@ -228,12 +227,13 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
         st = _major(None, None, None, row["stake"] / 100) if isinstance(row.get("stake"), (int, float)) else None
         row["major_holder"] = max((x for x in (mh, st) if x is not None), default=None)
         try:
-            ed = secmeta.earnings_dates(c["issuer_id"])
-            ne = next_earnings(ed, d0)
+            # Historical realized earnings dates are not announced schedules.
+            # No point-in-time calendar is available; never use later 8-Ks as forecasts.
+            ed, ne = [], None
         except Exception:
             ed, ne = [], None
         row["days_to_earnings"] = (ne - d0).days if ne else None
-        row["earnings_check"] = "8-K 2.02" if ed else "unbekannt"
+        row["earnings_check"] = "unbekannt (kein historischer Ankündigungskalender)"
         try:
             from ..paper.portfolio import eur_per_unit
             pos_usd = p["order"]["position_eur"] / eur_per_unit(row["ticker"], "US", d0)
