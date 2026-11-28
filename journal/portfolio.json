@@ -1,137 +1,11 @@
 {
- "start_date": "2026-11-15",
+ "start_date": "2026-11-28",
  "start_value": 20000,
- "cash": 16613.508754953626,
+ "cash": 20000,
  "peak_value": 20000,
- "positions": {
-  "20261117-e1b30f": {
-   "event_id": "EDINET:S100ZEXD",
-   "campaign_key": "E03606-6366",
-   "ticker": "6366",
-   "region": "JP",
-   "signal_class": "B",
-   "activist": "株式会社三菱ＵＦＪフィナンシャル・グループ",
-   "sector": null,
-   "buy_cost_est": 0.0175,
-   "filer_id": "E03606",
-   "filer_name": "株式会社三菱ＵＦＪフィナンシャル・グループ",
-   "issuer_id": null,
-   "published": "2026-11-16T11:56:00+09:00",
-   "order_date": "2026-11-17",
-   "position_eur": 1000.0,
-   "position_eur_local": 175261.00158691406,
-   "half_spread": 0.0011986192306265215,
-   "limit_hint": 713.79,
-   "validated": false,
-   "demand": "none",
-   "url": "https://disclosure2.edinet-fsa.go.jp/WZEK0040.aspx?S100ZEXD",
-   "exit_events": [],
-   "challenger_score": null,
-   "challenger_selected": null,
-   "entry_date": "2026-11-17",
-   "entry_local": 690.0,
-   "ref_close": 668.0,
-   "entry_rate": 0.005700051985489986,
-   "entry_eur": 3.9330358699880903,
-   "qty": 254.25651660863903,
-   "buy_cost": 0.0175,
-   "fill_ratio": 1.0,
-   "last_eur": 3.4626038974694326,
-   "bench_entry": 408.0,
-   "last_date": "2026-11-27"
-  },
-  "20261121-40b5b5": {
-   "event_id": "EDINET:S100ZIXE",
-   "campaign_key": "E08957-4290",
-   "ticker": "4290",
-   "region": "JP",
-   "signal_class": "B",
-   "activist": "三井住友ＤＳアセットマネジメント株式会社",
-   "sector": null,
-   "buy_cost_est": 0.0175,
-   "filer_id": "E08957",
-   "filer_name": "三井住友ＤＳアセットマネジメント株式会社",
-   "issuer_id": NaN,
-   "published": "2026-11-20T15:04:00+09:00",
-   "order_date": "2026-11-21",
-   "position_eur": 1000.0,
-   "position_eur_local": 175167.99926757812,
-   "half_spread": 0.0,
-   "limit_hint": 659.2,
-   "validated": false,
-   "demand": "none",
-   "url": "https://disclosure2.edinet-fsa.go.jp/WZEK0040.aspx?S100ZIXE",
-   "exit_events": [],
-   "challenger_score": null,
-   "challenger_selected": null,
-   "entry_date": "2026-11-24",
-   "entry_local": 647.0,
-   "ref_close": 630.0,
-   "entry_rate": 0.005758444601374713,
-   "entry_eur": 3.725713657089439,
-   "qty": 268.4049532623527,
-   "buy_cost": 0.0175,
-   "fill_ratio": 1.0,
-   "last_eur": 3.548544283131762,
-   "bench_entry": 392.0,
-   "last_date": "2026-11-27"
-  },
-  "20261121-c443e1": {
-   "event_id": "EDINET:S100ZIX5",
-   "campaign_key": "E08957-5381",
-   "ticker": "5381",
-   "region": "JP",
-   "signal_class": "B",
-   "activist": "三井住友ＤＳアセットマネジメント株式会社",
-   "sector": null,
-   "buy_cost_est": 0.0175,
-   "filer_id": "E08957",
-   "filer_name": "三井住友ＤＳアセットマネジメント株式会社",
-   "issuer_id": NaN,
-   "published": "2026-11-20T14:59:00+09:00",
-   "order_date": "2026-11-21",
-   "position_eur": 1000.0,
-   "position_eur_local": 175167.99926757812,
-   "half_spread": 0.0,
-   "limit_hint": 821.94,
-   "validated": false,
-   "demand": "none",
-   "url": "https://disclosure2.edinet-fsa.go.jp/WZEK0040.aspx?S100ZIX5",
-   "exit_events": [],
-   "challenger_score": null,
-   "challenger_selected": null,
-   "entry_date": "2026-11-25",
-   "entry_local": 788.0,
-   "ref_close": 742.0,
-   "entry_rate": 0.005733090418821081,
-   "entry_eur": 4.517675250031012,
-   "qty": 221.3527853718869,
-   "buy_cost": 0.0175,
-   "fill_ratio": 1.0,
-   "last_eur": 4.950633971589448,
-   "bench_entry": 392.5,
-   "last_date": "2026-11-27"
-  }
- },
+ "positions": {},
  "orders": {},
- "closed": [
-  {
-   "ticker": "290A",
-   "region": "JP",
-   "activist": "株式会社三菱ＵＦＪフィナンシャル・グループ",
-   "entry_date": "2026-11-17",
-   "signal_class": "B",
-   "validated": false,
-   "challenger_score": null,
-   "challenger_selected": null,
-   "exit_date": "2026-11-27",
-   "reason": "Stopp −30 %",
-   "gross": -0.3040665434380776,
-   "bench": -0.026960784313725505,
-   "bench_missing": false,
-   "net_excess": -0.31641704204487364
-  }
- ],
+ "closed": [],
  "seen_campaigns": [
   "928785-1161863",
   "1802528-1728328",
@@ -167,83 +41,13 @@
  ],
  "history": [
   {
-   "date": "2026-11-15",
-   "value": 20000,
-   "cash": 20000,
-   "positions": 0
-  },
-  {
-   "date": "2026-11-16",
-   "value": 20000,
-   "cash": 20000,
-   "positions": 0
-  },
-  {
-   "date": "2026-11-17",
-   "value": 20000,
-   "cash": 20000,
-   "positions": 0
-  },
-  {
-   "date": "2026-11-18",
-   "value": 19817.75,
-   "cash": 17965.0,
-   "positions": 2
-  },
-  {
-   "date": "2026-11-19",
-   "value": 19818.61,
-   "cash": 17965.0,
-   "positions": 2
-  },
-  {
-   "date": "2026-11-20",
-   "value": 19699.35,
-   "cash": 17965.0,
-   "positions": 2
-  },
-  {
-   "date": "2026-11-21",
-   "value": 19634.47,
-   "cash": 17965.0,
-   "positions": 2
-  },
-  {
-   "date": "2026-11-23",
-   "value": 19652.65,
-   "cash": 17965.0,
-   "positions": 2
-  },
-  {
-   "date": "2026-11-24",
-   "value": 19661.62,
-   "cash": 16947.5,
-   "positions": 3
-  },
-  {
-   "date": "2026-11-25",
-   "value": 19444.25,
-   "cash": 15930.0,
-   "positions": 4
-  },
-  {
-   "date": "2026-11-26",
-   "value": 19418.94,
-   "cash": 15930.0,
-   "positions": 4
-  },
-  {
-   "date": "2026-11-27",
-   "value": 19518.89,
-   "cash": 16613.51,
-   "positions": 3
-  },
-  {
    "date": "2026-11-28",
-   "value": 19542.18,
-   "cash": 16613.51,
-   "positions": 3
+   "value": 20000,
+   "cash": 20000,
+   "positions": 0
   }
  ],
- "last_run": "2026-11-28"
+ "last_run": "2026-11-28",
+ "reset_reason": "P0: historical JP signals and board-lot errors; old journal preserved",
+ "reset_source_commit": "237d432e7b418fd2ade53e5ff356ceb8d8cf6728"
 }

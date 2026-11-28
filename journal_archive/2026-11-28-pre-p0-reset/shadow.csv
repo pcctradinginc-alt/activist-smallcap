@@ -1,0 +1,28 @@
+candidate_id,event_id,ticker,region,reason,date
+20261115-5492de,EDGAR:0000928785-26-000009,nan,US,nur Endwert,2026-11-15
+20261115-6312e4,EDGAR:0001193125-26-458677,MTRI,US,verworfen: Spread; Anstieg 20T,2026-11-15
+20261115-64ee1b,EDGAR:0001140361-26-043472,CDLR,US,gesperrt: Kursabweichung,2026-11-15
+20261115-eab6ff,EDGAR:0001072613-26-000890,COUR,US,Korrektur: Forderung war SEC-Standardliste (kein Aktivist),2026-11-15
+20261117-894b23,EDINET:S100ZCC0,5986,JP,außerhalb Universum: Marktkapitalisierung außerhalb,2026-11-17
+20261117-55749b,EDINET:S100ZEWT,2805,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-17
+20261117-101bff,EDINET:S100ZEXC,4966,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-17
+20261117-7f6bf2,EDINET:S100ZEH0,7133,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-17
+20261117-ca9be8,EDINET:S100ZE2P,6490,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-17
+20261117-b15350,EDINET:S100ZECP,6941,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-17
+20261117-86b2fc,EDINET:S100ZI0R,6036,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-17
+20261117-8d3269,EDINET:S100ZEGN,6855,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-17
+20261118-c41b2a,EDINET:S100ZGQR,256A,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-18
+20261119-eb9da7,EDINET:S100ZING,9246,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-19
+20261121-05135b,EDGAR:0001062993-26-006212,DXYZ,US,außerhalb Universum: Aktienzahl unbekannt,2026-11-21
+20261121-1f2caa,EDGAR:0001062993-26-006214,ZTR,US,außerhalb Universum: Aktienzahl unbekannt,2026-11-21
+20261121-2cdff0,EDGAR:0000921895-26-003234,CSBA,US,außerhalb Universum: Tagesumsatz zu gering; Marktkapitalisierung außerhalb; Banken; OTC,2026-11-21
+20261121-f732da,EDINET:S100ZI9A,6807,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-21
+20261121-c55398,EDINET:S100ZJ7U,7522,JP,verworfen: Anstieg 20T,2026-11-21
+20261124-3d29c4,EDGAR:0001072613-26-000927,WWB,US,außerhalb Universum: zu wenig Kurshistorie,2026-11-24
+20261124-77b69c,EDGAR:0001104659-26-131062,BIP,US,außerhalb Universum: Aktienzahl unbekannt,2026-11-24
+20261124-37319e,EDGAR:0001418812-26-000003,WIX,US,außerhalb Universum: Marktkapitalisierung außerhalb,2026-11-24
+20261124-298c71,NSM:4be83c8e-bc4f-4b41-891e-6623caff2a4b,PAY.L,UK,außerhalb Universum: Marktkapitalisierung außerhalb,2026-11-24
+20261125-a26556,EDINET:S100ZJF8,3291,JP,außerhalb Universum: Marktkapitalisierung außerhalb,2026-11-25
+20261126-50892f,EDGAR:0000947871-26-001052,CLYD,US,außerhalb Universum: zu wenig Kurshistorie,2026-11-26
+20261127-a69204,EDINET:S100ZIX7,4187,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-27
+20261127-0cb9a3,EDINET:S100ZIZ0,6315,JP,verworfen: Mindestorder (100 Stück) > Position,2026-11-27

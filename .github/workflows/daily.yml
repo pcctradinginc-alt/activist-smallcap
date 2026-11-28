@@ -22,7 +22,7 @@ jobs:
           EDINET_API_KEY: ${{ secrets.EDINET_API_KEY }}
         run: python -m activist.cli fetch --source all --days 2
       - name: Papierdepot (Schattenmodus)
-        if: always()
+        if: always() && hashFiles('journal/PAUSE_PAPER') == ''
         env:
           PYTHONPATH: src
           SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
