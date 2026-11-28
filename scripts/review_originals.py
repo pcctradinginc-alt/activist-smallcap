@@ -9,7 +9,9 @@ from collections import Counter
 from activist.common import ROOT, atomic_write_text
 from activist.sources import edgar, edinet_docs
 from activist.study.identity import norm
-from activist.parse.filing13d import classify_demand
+from activist.parse.filing13d import parse_text
+from activist.sources import hist_ticker
+from datetime import date
 
 def review(row):
     result = {"event_id": row["event_id"], "campaign_key": row["campaign_key"],
@@ -26,6 +28,16 @@ def review(row):
             if k.endswith("_id"):
                 a,b = a.lstrip("0"),b.lstrip("0")
             checks[k] = bool(a and b and a == b)
+        parsed = parse_text(raw.decode("utf-8", errors="replace"))
+        result.update(demand=parsed.get("demand"), demand_evidence=parsed.get("demand_evidence"),
+                      intent_status="text_evidence_found" if parsed.get("demand_evidence") else "no_specific_demand_extracted")
+        try:
+            day = date.fromisoformat(row["published"][:10])
+            hist = hist_ticker.ticker_hist(row["issuer_id"], day)
+            result["historical_listing"] = hist
+            result["prior_listing_evidence"] = bool(hist.get("ticker") and hist.get("filing_date") and hist["filing_date"] < str(day))
+        except Exception as e:
+            result["listing_error_type"] = type(e).__name__
         result["checks"] = checks
         result["status"] = "document_roles_match" if all(checks.values()) else "document_roles_mismatch"
     elif row["region"] == "JP":
@@ -60,7 +72,8 @@ def main():
                             "status":"unavailable","error_type":type(e).__name__})
         time.sleep(.25)
     report = {"n":len(results),"counts":dict(Counter(r["status"] for r in results)),
-              "historical_listing_verified":0,"records":results}
+              "historical_listing_verified":0,"prior_listing_evidence":sum(r.get("prior_listing_evidence") is True for r in results),
+              "intent_counts":dict(Counter(r.get("intent_status","not_classified") for r in results)), "records":results}
     atomic_write_text(ROOT/"reports/original_review.json",json.dumps(report,ensure_ascii=False,indent=2))
     print(json.dumps({k:v for k,v in report.items() if k!="records"}))
 if __name__ == "__main__":
