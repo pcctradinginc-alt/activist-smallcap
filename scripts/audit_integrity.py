@@ -12,6 +12,13 @@ def audit(root=ROOT):
     for e in events:
         by_day[(e.get("region"), str(e.get("published"))[:10])].append(e)
     results = []
+    # Historical trade rows, not today's security master. Join on the original campaign and exact publication.
+    historical = defaultdict(set)
+    for f in sorted((root / 'reports').glob('event_study_*_trades.csv')):
+        with f.open() as fh:
+            for t in csv.DictReader(fh):
+                if t.get('variant') == 'main' and t.get('ticker'):
+                    historical[(t.get('campaign_key'), t.get('published'))].add(t['ticker'])
     with (root / "reports/campaign_outcomes.csv").open() as f:
         for row in csv.DictReader(f):
             matches = []
@@ -26,6 +33,8 @@ def audit(root=ROOT):
             missing = [k for k in ("event_id", "url", "filer_id", "issuer_id", "issuer_name") if not e.get(k)]
             results.append({"campaign_key": row["campaign_key"], "region": row["region"],
                             "published": row["published"], "original_verified_flag": row["verified"],
+                            "historical_tickers_used": sorted(historical[(row["campaign_key"], row["published"])]),
+                            "historical_demand": row.get("demand"),
                             "matches": len(matches), "event_id": e.get("event_id"), "url": e.get("url"),
                             "filer_id": e.get("filer_id"), "filer_name": e.get("filer_name"),
                             "issuer_id": e.get("issuer_id"), "issuer_name": e.get("issuer_name"),
