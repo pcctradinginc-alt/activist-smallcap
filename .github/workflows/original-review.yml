@@ -16,6 +16,9 @@ jobs:
         with: {python-version: "3.12"}
       - run: pip install -r requirements.txt
       - run: PYTHONPATH=src python scripts/audit_integrity.py
+      - run: PYTHONPATH=src python scripts/audit_edinet.py
+        env:
+          EDINET_API_KEY: ${{ secrets.EDINET_API_KEY }}
       - run: PYTHONPATH=src python scripts/review_originals.py
         env:
           SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
@@ -27,3 +30,4 @@ jobs:
           path: |
             reports/original_review.json
             reports/integrity_audit.json
+            reports/edinet_review.json
