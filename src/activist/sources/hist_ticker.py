@@ -8,7 +8,7 @@ Cache: DATA/cache/hist_ticker/{cik10}.json, Schluessel = Stichtagsmonat.
 """
 from __future__ import annotations
 import html, json, re, time
-from datetime import date
+from datetime import date, timedelta
 from .. import common
 from . import edgar, secmeta
 
@@ -191,17 +191,15 @@ def _all_filings(cik, lo: date, hi: date) -> list[dict]:
 def _candidates(rows: list[dict], asof: date) -> list[dict]:
     out = []
     for check, n in _TIERS:
-        prior, after = [], []
+        prior = []
         for r in rows:
             if not r["doc"] or not check(r["form"]):
                 continue
             d = date.fromisoformat(r["date"]); delta = (asof - d).days
-            if 0 <= delta <= BEFORE_DAYS:
+            if 0 < delta <= BEFORE_DAYS:
                 prior.append((delta, r))
-            elif -AFTER_DAYS <= delta < 0:
-                after.append((-delta, r))
-        prior.sort(key=lambda x: x[0]); after.sort(key=lambda x: x[0])
-        out += [r for _, r in (prior + after)[:n]]
+        prior.sort(key=lambda x: x[0])
+        out += [r for _, r in prior[:n]]
     return out
 
 
@@ -230,12 +228,12 @@ def ticker_hist(cik, asof_date) -> dict:
     """Ticker (Stammaktie) zum Stichtag: {"ticker","exchange","source","evidence","filing"}; ticker=None wenn nicht ermittelbar."""
     asof = secmeta._d(asof_date)
     c10 = secmeta._cik10(cik)
-    key = f"{asof:%Y-%m}"
+    key = f"pit-v2:{asof:%Y-%m-%d}"
     path = _cache_file(c10)
     cache = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
     if key in cache:
         return cache[key]
-    rows = _all_filings(cik, asof.replace(year=asof.year - 2) if asof.year > 1995 else asof, asof.replace(year=asof.year + 1))
+    rows = _all_filings(cik, asof - timedelta(days=730), asof)
     res, errors = None, 0
     for r in _candidates(rows, asof):
         try:
