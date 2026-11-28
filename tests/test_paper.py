@@ -105,7 +105,7 @@ def price_path(extra):
 def test_qualified_creates_order_then_buy_booked(monkeypatch):
     monkeypatch.setattr(pf, "validated_combos", lambda: {"US/A"})
     px = flat()
-    res = run(D0, px, rows_of(cand()))
+    res = run(D0, px, rows_of(cand(verified=True, identity_verified=True)))
     st = state()
     assert res["orders"] == 1 and res["positions"] == 0
     (oid, o), = st["orders"].items()
@@ -385,3 +385,9 @@ def test_limit_touch_only_does_not_fill():
     cfg = {"limit_above_last_close": 0.03, "max_fill_days": 3, "max_share_of_daily_volume": 0.05}
     f = simulate_entry(px, pd.Timestamp("2025-01-02 22:00", tz="UTC"), cfg, 1000.0)
     assert not f.filled
+
+
+def test_alpha_pass_without_individual_identity_is_not_validated(monkeypatch):
+    monkeypatch.setattr(pf, "validated_combos", lambda: {"US/A"})
+    run(D0, flat(), rows_of(cand(verified=True)))
+    assert next(iter(state()["orders"].values()))["validated"] is False
