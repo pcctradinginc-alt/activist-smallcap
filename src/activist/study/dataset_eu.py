@@ -21,8 +21,9 @@ from datetime import date, timedelta
 import pandas as pd
 from ..common import DATA, load_yaml, params, risk_limits
 from ..features.universe import price_features, universe_check
-from ..sources import openfigi, prices, sector
+from ..sources import openfigi, prices
 from . import holders
+from .identity import apply_identity, identity_status, load_evidence
 from ..risk.rules import candidate_reasons
 
 EU_REGIONS = {"UK", "NORDIC", "BENELUX_FR", "DACH"}
@@ -126,9 +127,10 @@ def fx_series(pair: str, end: date) -> pd.Series | None:
 
 
 def build_eu(events: list[dict], end: date | None = None, use_network_figi: bool = True,
-             since: str | None = None) -> tuple[pd.DataFrame, Counter]:
+             since: str | None = None, *, confirmed_only=False) -> tuple[pd.DataFrame, Counter]:
     p, lim = params(), risk_limits()["candidate"]
-    funnel, rows, fxc = Counter(), [], {}
+    funnel, rows = Counter(), []
+    evidence = load_evidence()
     idx = holders.build_index(events)
     end = end or date.today()
     for c in eu_campaigns(events, funnel):
@@ -140,8 +142,12 @@ def build_eu(events: list[dict], end: date | None = None, use_network_figi: bool
         row = {k: c.get(k) for k in ("event_id", "campaign_key", "published", "form", "signal_class", "event_type",
                                      "filer_id", "filer_name", "issuer_id", "issuer_name", "url", "region")}
         row.update(activist=c.get("filer_name"), isin=isin, demand="none", demand_evidence=None, stake=c.get("holding_ratio"))
-        from .identity import identity_status
         row.update(identity_status(c))
+        if confirmed_only and c["event_id"] not in evidence:
+            row["status"] = "gesperrt: kein geprüfter Identitätsnachweis"
+            funnel["EU " + row["status"]] += 1
+            rows.append(row)
+            continue
         if row["identity_status"] == "conflict":
             row["status"] = "Identitätskonflikt"; funnel["EU Identitätskonflikt"] += 1; rows.append(row); continue
         if not c.get("published"):
@@ -156,6 +162,7 @@ def build_eu(events: list[dict], end: date | None = None, use_network_figi: bool
         if not ticker:
             funnel["EU ohne Ticker (Survivorship-Lücke)"] += 1; row["status"] = "kein Ticker"; rows.append(row); continue
         row["ticker"] = ticker
+        approved = apply_identity(row, c, evidence)
         d0 = date.fromisoformat(c["published"][:10])
         try:
             px = load_px(ticker, d0 - timedelta(days=45), min(d0 + timedelta(days=420), end))
@@ -165,24 +172,18 @@ def build_eu(events: list[dict], end: date | None = None, use_network_figi: bool
             funnel["EU keine Kurse (delistet/Survivorship)"] += 1; row["status"] = "keine Kurse"; rows.append(row); continue
         pf = price_features(px, c["published"])
         # lokale Währung -> EUR am Entscheidungstag
-        pair = next((v for k, v in SUFFIX_FX.items() if ticker.endswith(k)), None)
-        fx = 1.0
-        if pair:
-            if pair not in fxc:
-                fxc[pair] = fx_series(pair, end)
-            s = fxc[pair]
-            try:
-                fx = float(s.asof(pd.Timestamp(d0))) if s is not None else float("nan")
-            except Exception:
-                fx = float("nan")
-            if pd.isna(fx):                       # kein stiller Fallback auf einen Näherungskurs
-                funnel["EU Wechselkurs fehlt"] += 1; row["status"] = "gesperrt: Wechselkurs fehlt"; rows.append(row); continue
+        from ..sources.fx import eur_per_unit
+        try:
+            fx = eur_per_unit(ticker, reg, d0)
+        except (ValueError, OSError, TypeError, ArithmeticError):
+            funnel["EU Wechselkurs fehlt"] += 1; row["status"] = "gesperrt: Wechselkurs fehlt"; rows.append(row); continue
         pf_eur = dict(pf, price=pf["price"] * fx, adv=pf["adv"] * fx) if pf.get("ok") else pf
         shares = c.get("total_voting_rights")
         if not shares and c.get("voting_rights_held") and c.get("holding_ratio"):
             shares = c["voting_rights_held"] / c["holding_ratio"]   # Gesamtzahl aus der Meldung selbst
         uv = universe_check(p["universe"][reg], pf_eur, shares, None, False)
-        row.update(price=pf_eur.get("price"), adv=pf_eur.get("adv"), runup_20d=pf.get("runup_20d"),
+        row.update(price=pf_eur.get("price"), price_local=pf.get("price"), adv=pf_eur.get("adv"),
+                   adv_eur=pf_eur.get("adv"), runup_20d=pf.get("runup_20d"),
                    half_spread=pf.get("half_spread"),
                    mcap=(shares * pf_eur["price"]) if shares and pf_eur.get("price") else None, fx=fx)
         if uv:
@@ -190,7 +191,7 @@ def build_eu(events: list[dict], end: date | None = None, use_network_figi: bool
                 funnel[f"EU Universum: {v}"] += 1
             row["status"] = "außerhalb Universum: " + "; ".join(uv); rows.append(row); continue
         funnel["EU im Universum"] += 1
-        row["sector"] = sector.yahoo(ticker)
+        row["sector"] = None  # no archived sector classifications
         from .dataset import _major
         row["major_holder"] = _major(idx, (reg, isin), c["published"], row.get("stake"))
         row["days_to_earnings"], row["earnings_check"] = None, "unbekannt (keine Datenquelle)"
@@ -202,6 +203,6 @@ def build_eu(events: list[dict], end: date | None = None, use_network_figi: bool
         funnel["EU verworfen" if reasons else "EU qualifiziert"] += 1
         from .dataset import data_quality
         row["price_check"] = None                 # keine zweite kostenlose Kursquelle für Europa -> ungeprüft
-        row.update(data_quality(row, ticker_certain=False, activist_evidence=False))
+        row.update(data_quality(row, ticker_certain=bool(approved), activist_evidence=bool(approved and approved.get("activist_review"))))
         rows.append(row)
     return pd.DataFrame(rows), funnel

@@ -37,3 +37,15 @@ def test_independent_filter_control_and_holdout_exclusion():
     assert len(r["valid/main"]["ledger"]) == 2
     assert len(r["valid/without_Spread"]["ledger"]) == 4
     assert r["valid/cash"]["cash"] == 20000
+
+
+def test_daily_marks_use_eur_values_and_missing_marks_invalidate_drawdown():
+    rows = pd.DataFrame([row("a", "2022-01-03", "2022-01-05", exit_value_eur=1050.)])
+    days = pd.date_range("2022-01-03", "2022-01-05")
+    result = replay(rows, start_cash=2000, calendar=days,
+                    marks=lambda row, active: pd.Series([990., 950.], index=active))
+    assert result["daily_nav"] == {"2022-01-03": 1980., "2022-01-04": 1940., "2022-01-05": 2019.}
+    assert result["max_drawdown"] == pytest.approx(.03)
+    assert result["capital_days_eur"] == 2020.
+    unavailable = replay(rows, start_cash=2000, calendar=days)
+    assert unavailable["missing_mark_days"] == 2 and unavailable["net_return"] is None

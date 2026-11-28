@@ -131,6 +131,27 @@ def important_proposal(text: str) -> tuple[bool, str | None]:
     return False, hits[0]
 
 
+def proposal_category(text: str | None) -> str:
+    """Separate substantiated issuer action from a legal reservation and control deals."""
+    purpose = _nfkc(text)
+    if not purpose:
+        return "unknown"
+    if re.search(r"公開買付|完全子会社|非公開化|株式併合", purpose):
+        return "control_transaction"
+    for clause in re.split(r"[。\n]", purpose):
+        if _NEG.search(clause):
+            continue
+        if re.search(r"状況に応じ|場合がある|可能性がある|含まれることがある|あり[得う]る|することもある", clause):
+            continue
+        if re.search(r"増配|特別配当|自己株式(?:の)?取得|取締役(?:候補|の選任|の解任|.{0,8}指名)|"
+                     r"事業(?:の)?譲渡|資産(?:の)?売却|有利子負債(?:の)?活用|株主資本(?:の)?抑制", clause):
+            if re.search(r"提案|求め|要求|要請|すべき|発行者に対し", clause):
+                return "specific_intervention"
+    if "重要提案行為" in purpose:
+        return "generic_or_negated_proposal"
+    return "no_specific_intervention"
+
+
 def parse_rows(rows: list[dict]) -> dict:
     out: dict = {"issuer_sec_code": None, "issuer_name": None, "purpose_text": None, "important_proposal": False,
                  "important_proposal_evidence": None, "holding_ratio": None, "previous_holding_ratio": None,

@@ -1,6 +1,6 @@
 """Papier-Kauf-Mail aus einer neuen Order. Fehler beim Versand brechen den Tageslauf nie ab."""
 from __future__ import annotations
-import glob, json, math
+import math
 from datetime import timedelta
 from ..common import JOURNAL, file_hash
 from .mail import send
@@ -13,10 +13,9 @@ def _pct(v, signed=True):
 
 def _stats(combo: str) -> dict:
     """Kennzahlen der Vergleichsfälle aus dem neuesten Studienbericht (Entwicklung, sonst Holdout)."""
-    files = sorted(glob.glob("reports/event_study_????????.json"))
-    if not files:
-        return {}
-    a = json.load(open(files[-1])).get("alpha", {})
+    from ..common import REPORTS
+    from ..study.alpha import current_artifact
+    a = current_artifact(REPORTS).get("alpha") or {}
     return (a.get("development") or {}).get(combo) or (a.get("holdout") or {}).get(combo) or {}
 
 
@@ -43,7 +42,7 @@ def compose(o: dict, r: dict, combo: str, today) -> tuple[str, str, str]:
          "demand": o.get("demand") or "none", "evidence": _val(r.get("demand_evidence")) or "kein Textbeleg",
          "url": o.get("url") or "", "campaign": o.get("campaign_key") or "",
          "limit": f"{o['limit_hint']:.2f}" if o.get("limit_hint") else "–", "valid": f"{o.get('max_fill_days', 3)} Handelstage ab {today}",
-         "size": f"{o['position_eur']:.0f} € (≈ {o.get('position_eur_local') or 0:.0f} Stück)",
+         "size": f"{o['position_eur']:.0f} €",
          "size_short": f"{o['position_eur']:.0f} €", "costs": f"≈ {o.get('buy_cost_est', 0):.2%} je Seite",
          "conf": {"mean": _pct(s.get("mean")), "ci": f"{_pct(s.get('ci_low'))} bis {_pct(s.get('ci_high'))}",
                   "n": str(s.get("n", 0)), "q25": _pct(s.get("worst_quartile")), "worst": _pct(s.get("worst")),

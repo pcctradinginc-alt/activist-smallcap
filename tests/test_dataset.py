@@ -98,6 +98,10 @@ def env(monkeypatch, tmp_path):
     monkeypatch.setattr(dataset.secmeta, "ticker_asof",
                         lambda cik, asof: ({"ticker": tick[str(cik)], "otc": False} if str(cik) in tick else None))
     monkeypatch.setattr(dataset.secmeta, "company", lambda cik: {"sic": "3570"})
+    monkeypatch.setattr(dataset.hist_ticker, "ticker_hist",
+                        lambda cik, day: ({**dataset.secmeta.ticker_asof(cik, day),
+                                           "filing_date": "2022-12-31", "filing": "prior"}
+                                          if dataset.secmeta.ticker_asof(cik, day) else {}))
     monkeypatch.setattr(dataset.secmeta, "shares_outstanding_asof",
                         lambda cik, asof: (shares[str(cik)], "x", "y"))
     monkeypatch.setattr(dataset.secmeta, "excluded_industry", lambda sic: None)

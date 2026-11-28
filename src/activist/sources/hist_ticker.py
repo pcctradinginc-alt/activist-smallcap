@@ -4,7 +4,7 @@ Vorgehen: eigene Periodenberichte/8-K/S-1/424B nahe am Stichtag aus submissions 
 waehlen, Primaerdokument laden und den Ticker der Stammaktie aus dem Text lesen:
   (a) iXBRL dei:TradingSymbol, (b) Titelseiten-Tabelle "Trading Symbol(s)", (c) Textmuster
   "traded on ... under the symbol XYZ" / "(Nasdaq: XYZ)".
-Cache: DATA/cache/hist_ticker/{cik10}.json, Schluessel = Stichtagsmonat.
+Cache: DATA/cache/hist_ticker/{cik10}.json, Schluessel = exakter Stichtag.
 """
 from __future__ import annotations
 import html, json, re, time
@@ -15,12 +15,12 @@ from . import edgar, secmeta
 HEAD_BYTES = 300_000          # erstes Fenster (Titelseite)
 MAX_BYTES = 1_000_000         # zweites Fenster (Item 5 / grosse iXBRL-Header liegen oft dahinter)
 BEFORE_DAYS, AFTER_DAYS = 400, 200
-_ANNUAL = {"10-K", "10-K405", "10-KSB", "10-KT"}
+_ANNUAL = {"10-K", "10-K405", "10-KSB", "10-KT", "20-F", "40-F"}
 _TIERS = [  # (Formen, max. Dokumente)
     (lambda f: f in _ANNUAL, 2),
-    (lambda f: f.startswith("S-1") or f.startswith("424B") or f in ("S-3", "10-12B"), 1),
+    (lambda f: f.startswith("S-1") or f.startswith("424B") or f.startswith(("F-1", "F-3", "10-12B", "8-A12B")) or f == "S-3", 1),
     (lambda f: f in ("10-Q", "10-QSB"), 1),
-    (lambda f: f == "8-K", 1),
+    (lambda f: f in ("8-K", "6-K"), 4),
 ]
 _BAD = {"THE", "OF", "SYMBOL", "NONE", "N/A", "NA", "COMMON", "STOCK", "NYSE", "NASDAQ", "AMEX", "SHARES",
         "CLASS", "INC", "LTD", "CORP", "AND", "OR", "TO", "IN", "ON", "FOR", "NO", "IS", "US", "A", "I"}
@@ -73,11 +73,8 @@ def _pick(cands: list[tuple[str, str | None]]) -> tuple[str, str | None] | None:
             seen.add(t); uniq.append((t, ctx))
     plain = [(t, c) for t, c in uniq if not _is_unit_warrant(t, [x for x, _ in uniq])]
     # Kontext 'warrant/unit/note/preferred' aussortieren
-    ok = [(t, c) for t, c in plain if not (c and re.search(r"\bwarrants?\b|\bunits?\b|\bnotes?\b|\bdebentures?\b|\brights?\b", c, re.I))]
-    for lst in (ok, plain):
-        if lst:
-            return lst[0]
-    return None
+    ok = [(t, c) for t, c in plain if not (c and re.search(r"\bwarrants?\b|\bunits?\b|\bnotes?\b|\bdebentures?\b|\brights?\b|\bpreferred\b", c, re.I))]
+    return ok[0] if len(ok) == 1 else None
 
 
 # ---------------------------------------------------------------- Extraktion
@@ -130,6 +127,8 @@ _P_SYMBOL = re.compile(
     r"(?P<pre>[^.]{0,200}?)(?:traded|trades|trading|listed|quoted|is quoted)\s+(?:\w+\s+){0,3}?(?:on|in|through)\s+(?:the\s+)?"
     r"(?P<ex>" + _EXCH_ALT + r")[^.]{0,80}?\s+(?:under|using)\s+(?:the\s+)?(?:(?:trading|ticker|stock)\s+)?"
     r"(?:ticker\s+)?symbols?\s*(?:of\s+)?[\"'(]*\s*(?P<t>[A-Z][A-Z0-9.\-]{0,6})\b", re.I)
+_P_LISTED = re.compile(
+    r"(?i)\b(?:common stock|ordinary shares)\s+(?:is|are)\s+listed\s+under the symbol\s+[\"'](?P<t>[A-Z][A-Z0-9.\-]{0,6})[\"']\s+on\s+(?:the\s+)?(?P<ex>" + _EXCH_ALT + r")")
 _P_COLON = re.compile(r"\(\s*(?P<ex>NASDAQ|Nasdaq|NYSE|NYSE American|NYSE MKT|AMEX|NYSE Amex)\s*(?:GS|GM|CM)?\s*:\s*(?P<t>[A-Z][A-Z0-9.\-]{0,5})\s*\)")
 
 
@@ -146,6 +145,9 @@ def _text_patterns(raw: str) -> dict | None:
                 not re.search(r"common|ordinary|shares|class", head, re.I):
             continue
         cands.append((t, head)); info.setdefault(t, (m.group("ex"), txt[m.start(): m.end()][-160:]))
+    for m in _P_LISTED.finditer(txt):
+        if (t := _clean_tick(m.group("t"))):
+            cands.append((t, None)); info.setdefault(t, (m.group("ex"), m.group(0)))
     if not cands:
         for m in _P_COLON.finditer(txt):
             t = _clean_tick(m.group("t"))
@@ -228,7 +230,7 @@ def ticker_hist(cik, asof_date) -> dict:
     """Ticker (Stammaktie) zum Stichtag: {"ticker","exchange","source","evidence","filing"}; ticker=None wenn nicht ermittelbar."""
     asof = secmeta._d(asof_date)
     c10 = secmeta._cik10(cik)
-    key = f"pit-v2:{asof:%Y-%m-%d}"
+    key = f"pit-v3:{asof:%Y-%m-%d}"
     path = _cache_file(c10)
     cache = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
     if key in cache:

@@ -1,0 +1,3584 @@
+{
+  "source_run": 46181672838,
+  "records": [
+    {
+      "event_id": "EDGAR:0000921895-15-001791",
+      "campaign_key": "1559771-1325702",
+      "region": "US",
+      "published": "2015-07-28T16:32:23-04:00",
+      "filer_id": "0001559771",
+      "filer_name": "Engaged Capital LLC",
+      "issuer_id": "0001325702",
+      "issuer_name": "MAGNACHIP SEMICONDUCTOR Corp",
+      "url": "https://www.sec.gov/Archives/edgar/data/1559771/0000921895-15-001791.txt",
+      "document_sha256": "97c2e7d9fbc60c5b49f33214b29cff6da83cd9af3dc7e3d6a0a9f301c2bbf630",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer’s financial position and investment strategy, the price levels of the Shares, conditions in the securities markets and general economic and industry conditions, the Reporting Persons may in the future take such actions with respect to their investment in the Issuer as they deem appropriate including, without limitation, engagin",
+      "reparsed_demand": "strategy",
+      "reparsed_excerpt": "The Reporting Persons believe that the Issuer’s core foundry assets and semiconductor products business are capable of significantly improved operational performance and could be attractive to potential strategic acquirers and/or partners.",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Asset and valuation thesis, possible acquirers, conditional plans and explicit no-present-plan language.",
+      "simulated_tickers": [
+        "MX"
+      ],
+      "listing": {
+        "ticker": "MX",
+        "exchange": "NYSE",
+        "source": "text_pattern",
+        "evidence": " Stockholder Matters and Issuer Purchases of Equity Securities Market Information Our common stock is listed on the New York Stock Exchange under the symbol \"MX",
+        "filing": "0001193125-15-204040",
+        "form": "10-K",
+        "filing_date": "2015-05-28"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001193125-16-577346",
+      "campaign_key": "1056973-1389050",
+      "region": "US",
+      "published": "2016-05-04T15:13:01-04:00",
+      "filer_id": "0001056973",
+      "filer_name": "CARLSON CAPITAL L P",
+      "issuer_id": "0001389050",
+      "issuer_name": "Archrock, Inc.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1389050/0001193125-16-577346.txt",
+      "document_sha256": "001e4a7e73297a95ebeda68a3d7e7774e46e9cb087011c039b9b08d291ffc6fd",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "(a)-(j) The Reporting Persons and their representatives intend, from time to time, to engage in discussions and correspondence with management and the Issuer’s Board of Directors (the “Board”) regarding, among other things, the Issuer’s business, management and strategic alternatives and direction.",
+      "reparsed_demand": "sale",
+      "reparsed_excerpt": "(a)-(j) The Reporting Persons and their representatives intend, from time to time, to engage in discussions and correspondence with management and the Issuer’s Board of Directors (the “Board”) regarding, among other things, the Issuer’s business, management and strategic alternatives and direction.",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "General intention to talk and a valuation thesis rather than a concrete proposal.",
+      "simulated_tickers": [
+        "AROC"
+      ],
+      "listing": {
+        "ticker": "AROC",
+        "exchange": "NYSE",
+        "source": "text_pattern",
+        "evidence": "n Equity, Related Stockholder Matters and Issuer Purchases of Equity Securities Our common stock is traded on the New York Stock Exchange under the symbol \"AROC",
+        "filing": "0001389050-16-000047",
+        "form": "10-K",
+        "filing_date": "2016-02-29"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-16-005035",
+      "campaign_key": "1619125-1058811",
+      "region": "US",
+      "published": "2016-06-29T09:00:42-04:00",
+      "filer_id": "0001619125",
+      "filer_name": "VIEX Capital Advisors, LLC",
+      "issuer_id": "0001058811",
+      "issuer_name": "IMMERSION CORP",
+      "url": "https://www.sec.gov/Archives/edgar/data/1058811/0000921895-16-005035.txt",
+      "document_sha256": "1d283219573f0088bf36c420060f35bd20fcb47e1478bdffdfb40c19e85d37c4",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "strategy",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer’s financial position and investment strategy, the price levels of the Shares, conditions in the securities markets and general economic and industry conditions, the Reporting Persons may in the future take such actions with respect to their investment in the Issuer as they deem appropriate including, without limitation, engagin",
+      "reparsed_demand": "none",
+      "reparsed_excerpt": null,
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "IMMR"
+      ],
+      "listing": {
+        "ticker": "IMMR",
+        "exchange": "NASDAQ",
+        "source": "text_pattern",
+        "evidence": "mmon Equity, Related Stockholder Matters and Issuer Purchases of Equity Securities Our common stock is traded on the Nasdaq Global Market under the symbol \"IMMR",
+        "filing": "0001058811-16-000019",
+        "form": "10-K",
+        "filing_date": "2016-02-26"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-17-000101",
+      "campaign_key": "1560207-1517175",
+      "region": "US",
+      "published": "2017-01-26T09:00:29-05:00",
+      "filer_id": "0001560207",
+      "filer_name": "Legion Partners Asset Management, LLC",
+      "issuer_id": "0001517175",
+      "issuer_name": "Chefs' Warehouse, Inc.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1517175/0000921895-17-000101.txt",
+      "document_sha256": "903612b1f49360e66c780e4d68c783a2d7ea4e166faa3d762cde90b265300443",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "strategy",
+      "historical_excerpt": "In the Reporting Persons’ view, one of the key areas that does not appear to be well understood or fully appreciated by the market, is the opportunity for the Issuer’s adjusted EBITDA margins to expand from current levels.",
+      "reparsed_demand": "strategy",
+      "reparsed_excerpt": "In the Reporting Persons’ view, one of the key areas that does not appear to be well understood or fully appreciated by the market, is the opportunity for the Issuer’s adjusted EBITDA margins to expand from current levels.",
+      "reviewed_demand": "strategy",
+      "context_excerpt": "on the market’s perception of the Issuer and have recommended to the Issuer certain action items that management and the Issuer’s Board of Directors (the “Board”) can take, including, among other things, to adopt a majority vote standard for the election of directors, a phase out of related part",
+      "assessment": "Concrete governance and disclosure recommendations to management.",
+      "simulated_tickers": [
+        "CHEF"
+      ],
+      "listing": {
+        "ticker": "CHEF",
+        "exchange": "NASDAQ",
+        "source": "text_pattern",
+        "evidence": " Our common stock is listed on the NASDAQ Global Select Market under the symbol \"CHEF",
+        "filing": "0001567619-16-002464",
+        "form": "S-3",
+        "filing_date": "2016-06-03"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001193125-17-080794",
+      "campaign_key": "1404073-1171486",
+      "region": "US",
+      "published": "2017-03-13T21:54:04-04:00",
+      "filer_id": "0001404073",
+      "filer_name": "Blackstone Holdings III L.P.",
+      "issuer_id": "0001171486",
+      "issuer_name": "NATURAL RESOURCE PARTNERS LP",
+      "url": "https://www.sec.gov/Archives/edgar/data/1404073/0001193125-17-080794.txt",
+      "document_sha256": "d7edf19f2afb5c3dc2cf0e966de967099c1412af896db1c45f31f963a8e65492",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "board",
+      "historical_excerpt": "In connection with the consummation of the transactions contemplated by the Purchase Agreement, the Blackstone Purchasers entered into a Board Representation and Observation Rights Agreement (the “ Board Representation Agreement ”) dated March 2, 2017 by and among the Blackstone Purchasers, the Partnership and certain other parties thereto.",
+      "reparsed_demand": "board",
+      "reparsed_excerpt": "In connection with the consummation of the transactions contemplated by the Purchase Agreement, the Blackstone Purchasers entered into a Board Representation and Observation Rights Agreement (the “ Board Representation Agreement ”) dated March 2, 2017 by and among the Blackstone Purchasers, the Partnership and certain other parties thereto.",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Board appointment rights granted under a preferred-units and warrants purchase. Common-equity activism not established.",
+      "simulated_tickers": [
+        "NRP"
+      ],
+      "listing": {
+        "ticker": "NRP",
+        "exchange": "NYSE",
+        "source": "text_pattern",
+        "evidence": "TTERS AND ISSUER PURCHASES OF EQUITY SECURITIES NRP Common Units and Cash Distributions Our common units are listed and traded on the NYSE under the symbol \"NRP",
+        "filing": "0001171486-17-000010",
+        "form": "10-K",
+        "filing_date": "2017-03-06"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001013594-17-000386",
+      "campaign_key": "1444376-1058811",
+      "region": "US",
+      "published": "2017-05-12T13:46:34-04:00",
+      "filer_id": "0001444376",
+      "filer_name": "Raging Capital Management, LLC",
+      "issuer_id": "0001058811",
+      "issuer_name": "IMMERSION CORP",
+      "url": "https://www.sec.gov/Archives/edgar/data/1058811/0001013594-17-000386.txt",
+      "document_sha256": "fa39055eb89f2e75e46325b11657b171e3b1526cd7300475cab6588937adf772",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "capital_return",
+      "historical_excerpt": "The Reporting Persons may take positions regarding or make proposals with respect to, or with respect to potential changes in, the Issuer's: operations, management, certificate of incorporation and bylaws, composition of the Board, ownership, capital or corporate structure, dividend policy, potential acquisitions or sales, businesses or assets, strategy and/or plans of the Issuer as a means of enh",
+      "reparsed_demand": "capital_return",
+      "reparsed_excerpt": "The Reporting Persons may take positions regarding or make proposals with respect to, or with respect to potential changes in, the Issuer's: operations, management, certificate of incorporation and bylaws, composition of the Board, ownership, capital or corporate structure, dividend policy, potential acquisitions or sales, businesses or assets, strategy and/or plans of the Issuer as a means of enh",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "IMMR"
+      ],
+      "listing": {
+        "ticker": "IMMR",
+        "exchange": "NASDAQ",
+        "source": "text_pattern",
+        "evidence": "mmon Equity, Related Stockholder Matters and Issuer Purchases of Equity Securities Our common stock is traded on the Nasdaq Global Market under the symbol \"IMMR",
+        "filing": "0001058811-17-000009",
+        "form": "10-K",
+        "filing_date": "2017-03-03"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000807249-17-000081",
+      "campaign_key": "807249-1350593",
+      "region": "US",
+      "published": "2017-05-17T17:02:19-04:00",
+      "filer_id": "0000807249",
+      "filer_name": "GAMCO INVESTORS, INC. ET AL",
+      "issuer_id": "0001350593",
+      "issuer_name": "Mueller Water Products, Inc.",
+      "url": "https://www.sec.gov/Archives/edgar/data/807249/0000807249-17-000081.txt",
+      "document_sha256": "4907619127bb08bebac32dedb3cb40d53b8082db3e96dddd2d290fd55ee124fe",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "capital_return",
+      "historical_excerpt": "Such suggestions or positions may relate to one or more of the transactions specified in clauses (a) through (j) of Item 4 of Schedule 13D including, without limitation, such matters as disposing of one or more businesses, selling the company or acquiring another company or business, changing operating or marketing strategies, adopting or not adopting, certain types of anti-takeover measures and r",
+      "reparsed_demand": "capital_return",
+      "reparsed_excerpt": "Such suggestions or positions may relate to one or more of the transactions specified in clauses (a) through (j) of Item 4 of Schedule 13D including, without limitation, such matters as disposing of one or more businesses, selling the company or acquiring another company or business, changing operating or marketing strategies, adopting or not adopting, certain types of anti-takeover measures and r",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "MWA"
+      ],
+      "listing": {
+        "ticker": "MWA",
+        "exchange": "NYSE",
+        "source": "text_pattern",
+        "evidence": "TY, RELATED STOCKHOLDER MATTERS AND ISSUER PURCHASES OF EQUITY SECURITIES Our common stock is listed on the New York Stock Exchange under the trading symbol MWA",
+        "filing": "0001350593-16-000118",
+        "form": "10-K",
+        "filing_date": "2016-11-22"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000807249-17-000088",
+      "campaign_key": "807249-64472",
+      "region": "US",
+      "published": "2017-06-01T16:01:42-04:00",
+      "filer_id": "0000807249",
+      "filer_name": "GAMCO INVESTORS, INC. ET AL",
+      "issuer_id": "0000064472",
+      "issuer_name": "GENCOR INDUSTRIES INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/807249/0000807249-17-000088.txt",
+      "document_sha256": "9bb4da56dce3e59640b5fc9dc28f130e62ceb958277a961888555c61d1931d97",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "capital_return",
+      "historical_excerpt": "Such suggestions or positions may relate to one or more of the transactions specified in clauses (a) through (j) of Item 4 of Schedule 13D including, without limitation, such matters as disposing of one or more businesses, selling the company or acquiring another company or business, changing operating or marketing strategies, adopting or not adopting, certain types of anti-takeover measures and r",
+      "reparsed_demand": "capital_return",
+      "reparsed_excerpt": "Such suggestions or positions may relate to one or more of the transactions specified in clauses (a) through (j) of Item 4 of Schedule 13D including, without limitation, such matters as disposing of one or more businesses, selling the company or acquiring another company or business, changing operating or marketing strategies, adopting or not adopting, certain types of anti-takeover measures and r",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "GENC"
+      ],
+      "listing": {
+        "ticker": "GENC",
+        "exchange": "NASDAQ",
+        "source": "text_pattern",
+        "evidence": ", RELATED STOCKHOLDER MATTERS AND ISSUER'S PURCHASES OF EQUITY SECURITIES The Company's stock has been traded on the NASDAQ Global Market under the symbol \"GENC",
+        "filing": "0001193125-16-783228",
+        "form": "10-K",
+        "filing_date": "2016-12-02"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000902664-17-004403",
+      "campaign_key": "1159159-1546417",
+      "region": "US",
+      "published": "2017-11-20T15:00:32-05:00",
+      "filer_id": "0001159159",
+      "filer_name": "JANA PARTNERS LLC",
+      "issuer_id": "0001546417",
+      "issuer_name": "Bloomin' Brands, Inc.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1546417/0000902664-17-004403.txt",
+      "document_sha256": "9a53a442590fa82ab654afdc160f7da2b990fc772d652b315bee374ce163589c",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "JANA, with the assistance of the other Reporting Persons, intends to have discussions with the Issuer's board of directors and management regarding topics including a review of strategic alternatives including exploring a sale of the Issuer; portfolio composition; operating performance and cost management; capital allocation; board composition; and governance.",
+      "reparsed_demand": "sale",
+      "reparsed_excerpt": "JANA, with the assistance of the other Reporting Persons, intends to have discussions with the Issuer's board of directors and management regarding topics including a review of strategic alternatives including exploring a sale of the Issuer; portfolio composition; operating performance and cost management; capital allocation; board composition; and governance.",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Review of a sale is a specified topic for planned talks. No delivered demand in Item 4.",
+      "simulated_tickers": [
+        "BLMN"
+      ],
+      "listing": {
+        "ticker": "BLMN",
+        "exchange": "NASDAQ",
+        "source": "text_pattern",
+        "evidence": " and Issuer Purchases of Equity Securities MARKET INFORMATION AND DIVIDENDS Our common stock is listed on the Nasdaq Global Select Market under the symbol \"BLMN",
+        "filing": "0001546417-17-000012",
+        "form": "10-K",
+        "filing_date": "2017-02-22"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-17-002879",
+      "campaign_key": "1517137-1683606",
+      "region": "US",
+      "published": "2017-12-18T17:27:04-05:00",
+      "filer_id": "0001517137",
+      "filer_name": "Starboard Value LP",
+      "issuer_id": "0001683606",
+      "issuer_name": "Cars.com Inc.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1683606/0000921895-17-002879.txt",
+      "document_sha256": "1837edcbbb6cfb92d9f2965527ea8d48e3bbe97d00d91ea7c3623288e4ceae9e",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer’s financial position and investment strategy, the price levels of the Shares, conditions in the securities markets and general economic and industry conditions, the Reporting Persons may in the future take such actions with respect to their investment in the Issuer as they deem appropriate including, without limitation, engagin",
+      "reparsed_demand": "none",
+      "reparsed_excerpt": null,
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "CARS"
+      ],
+      "listing": {
+        "ticker": "CARS",
+        "exchange": "NYSE",
+        "filing_date": "2017-06-05",
+        "url": "https://www.sec.gov/Archives/edgar/data/1683606/000119312517194574/d514190d8k.htm",
+        "sha256": "ea02cffc9a75cb0ea4965d1daadea5d26392939e3b883b9f8f9498cf00567941",
+        "evidence": "Its common stock is listed under the symbol “CARS” on the New York Stock Exchange."
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001446114-18-000002",
+      "campaign_key": "1446114-914156",
+      "region": "US",
+      "published": "2018-01-05T09:39:08-05:00",
+      "filer_id": "0001446114",
+      "filer_name": "Ancora Advisors, LLC",
+      "issuer_id": "0000914156",
+      "issuer_name": "UFP TECHNOLOGIES INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/1446114/0001446114-18-000002.txt",
+      "document_sha256": "b17c43464dd628aacbfa7f6e43b83ba02be908181a45722da833758111cd331c",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "The Reporting Persons intend to communicate with the Issuer's management and board of directors about a broad range of strategic and operational matters, including, without limitation, a sale of the Issuer or certain of its businesses or assets, in which the Reporting Persons may participate, as a means of enhancing shareholder value.",
+      "reparsed_demand": "sale",
+      "reparsed_excerpt": "The Reporting Persons intend to communicate with the Issuer's management and board of directors about a broad range of strategic and operational matters, including, without limitation, a sale of the Issuer or certain of its businesses or assets, in which the Reporting Persons may participate, as a means of enhancing shareholder value.",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Plans to discuss a broad range of topics including a possible sale; explicit no-present-plan qualification.",
+      "simulated_tickers": [
+        "UFPT"
+      ],
+      "listing": {
+        "ticker": "UFPT",
+        "exchange": "NASDAQ",
+        "source": "text_pattern",
+        "evidence": "UITY SECURITIES Market Price From July 8, 1996, until April 18, 2001, the Company's common stock was listed on the NASDAQ National Market under the symbol \"UFPT",
+        "filing": "0001171843-17-001409",
+        "form": "10-K",
+        "filing_date": "2017-03-10"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-18-000290",
+      "campaign_key": "1619125-1580808",
+      "region": "US",
+      "published": "2018-01-29T09:00:40-05:00",
+      "filer_id": "0001619125",
+      "filer_name": "VIEX Capital Advisors, LLC",
+      "issuer_id": "0001580808",
+      "issuer_name": "A10 Networks, Inc.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1580808/0000921895-18-000290.txt",
+      "document_sha256": "79ff483f4a7f97b0cd8c1966522dbc010d4229023707c02fd52f6ff67554af42",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "The Reporting Persons note that other companies have rewarded their stockholders by leveraging financial and technological synergies to drive greater scale by pursuing strategic alternatives and consolidating into larger corporations.",
+      "reparsed_demand": "sale",
+      "reparsed_excerpt": "The Reporting Persons note that other companies have rewarded their stockholders by leveraging financial and technological synergies to drive greater scale by pursuing strategic alternatives and consolidating into larger corporations.",
+      "reviewed_demand": "strategy",
+      "context_excerpt": "d CEO Lee Chen and other Section 16 officers should immediately terminate their routine 10b5-1 sales which, in the Reporting Persons’ view, do not align to stockholder value creation. 9 CUSIP NO. 002121101 No Reporting Person has any present plan or proposal which would relate to or result in any of",
+      "assessment": "Issuer officers asked to terminate routine insider sales. Industry consolidation is background.",
+      "simulated_tickers": [
+        "ATEN"
+      ],
+      "listing": {
+        "ticker": "ATEN",
+        "exchange": "NYSE",
+        "source": "text_pattern",
+        "evidence": "hases of Equity Securities Market for Registrant's Common Equity Our common stock has been quoted on the New York Stock Exchange (\"NYSE\") under the symbol \"ATEN",
+        "filing": "0001580808-17-000013",
+        "form": "10-K",
+        "filing_date": "2017-02-24"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000930413-18-000522",
+      "campaign_key": "1281446-882796",
+      "region": "US",
+      "published": "2018-02-15T18:50:17-05:00",
+      "filer_id": "0001281446",
+      "filer_name": "GREAT POINT PARTNERS LLC",
+      "issuer_id": "0000882796",
+      "issuer_name": "BIOCRYST PHARMACEUTICALS INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/882796/0000930413-18-000522.txt",
+      "document_sha256": "3b8fdf3a7255fda3fedecfe1a12e42a0547ba350ac614e8184f584ebed12b1a9",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "The Reporting Persons are filing this Statement because the Reporting Persons hold the Common Stock with a purpose or effect of defeating a proposed merger agreement recently announced by the Issuer.",
+      "reparsed_demand": "sale",
+      "reparsed_excerpt": "The Reporting Persons are filing this Statement because the Reporting Persons hold the Common Stock with a purpose or effect of defeating a proposed merger agreement recently announced by the Issuer.",
+      "reviewed_demand": "oppose_merger",
+      "context_excerpt": "tion of medicines. The Reporting Persons are strongly opposed to the merger with Idera and intend to vote their shares of Common Stock against any proposal to authorize or consummate such merger. The Reporting Persons believe the Common Stock is undervalued and represent a low-risk and",
+      "assessment": "Exercised an opposition campaign, not a proposed sale.",
+      "simulated_tickers": [
+        "BCRX"
+      ],
+      "listing": {
+        "ticker": "BCRX",
+        "exchange": "NASDAQ",
+        "source": "text_pattern",
+        "evidence": "TOCKHOLDER MATTERS AND ISSUER PURCHASES OF EQUITY SECURITIES Market Information Our common stock trades on the NASDAQ Global Select Market under the symbol BCRX",
+        "filing": "0001171843-17-001159",
+        "form": "10-K",
+        "filing_date": "2017-02-27"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000807249-18-000057",
+      "campaign_key": "807249-891482",
+      "region": "US",
+      "published": "2018-03-28T16:04:15-04:00",
+      "filer_id": "0000807249",
+      "filer_name": "GAMCO INVESTORS, INC. ET AL",
+      "issuer_id": "0000891482",
+      "issuer_name": "FULL HOUSE RESORTS INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/891482/0000807249-18-000057.txt",
+      "document_sha256": "fa937937e4853c23985c890f5c3773cd24d4fe0ba9de2175928ba8c97daf25e5",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "capital_return",
+      "historical_excerpt": "Such suggestions or positions may relate to one or more of the transactions specified in clauses (a) through (j) of Item 4 of Schedule 13D including, without limitation, such matters as disposing of one or more businesses, selling the company or acquiring another company or business, changing operating or marketing strategies, adopting or not adopting, certain types of anti-takeover measures and r",
+      "reparsed_demand": "capital_return",
+      "reparsed_excerpt": "Such suggestions or positions may relate to one or more of the transactions specified in clauses (a) through (j) of Item 4 of Schedule 13D including, without limitation, such matters as disposing of one or more businesses, selling the company or acquiring another company or business, changing operating or marketing strategies, adopting or not adopting, certain types of anti-takeover measures and r",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "FLL"
+      ],
+      "listing": {
+        "ticker": "FLL",
+        "exchange": "NASDAQ",
+        "source": "text_pattern",
+        "evidence": " Our common stock is traded on the Nasdaq Capital Market under the symbol \"FLL",
+        "filing": "0000891482-18-000010",
+        "form": "10-K",
+        "filing_date": "2018-03-08"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-18-001138",
+      "campaign_key": "1346824-882796",
+      "region": "US",
+      "published": "2018-04-02T16:52:24-04:00",
+      "filer_id": "0001346824",
+      "filer_name": "RA CAPITAL MANAGEMENT, LLC",
+      "issuer_id": "0000882796",
+      "issuer_name": "BIOCRYST PHARMACEUTICALS INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/882796/0000921895-18-001138.txt",
+      "document_sha256": "14b7837de38e28332f48d185630da03edfd6573cc8b1900061b44213630b4871",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "RA Capital Management, LLC (“RA Capital”) delivered a letter to the board of directors (the “Board”) of the Issuer on April 2, 2018, in connection with the Issuer’s proposed merger (the “Proposed Merger”) with Idera Pharmaceuticals, Inc.",
+      "reparsed_demand": "sale",
+      "reparsed_excerpt": "RA Capital Management, LLC (“RA Capital”) delivered a letter to the board of directors (the “Board”) of the Issuer on April 2, 2018, in connection with the Issuer’s proposed merger (the “Proposed Merger”) with Idera Pharmaceuticals, Inc.",
+      "reviewed_demand": "oppose_merger",
+      "context_excerpt": "further stated in the letter its belief that the Board failed to adequately consider all available strategic alternatives prior to negotiating and finalizing the Proposed Merger and that, if effected, the combination of the Issuer and Idera would result in a dilutive impact on the Issuer’s stockholders and provide a dis",
+      "assessment": "Letter to the board explicitly opposing the Idera transaction.",
+      "simulated_tickers": [
+        "BCRX"
+      ],
+      "listing": {
+        "ticker": "BCRX",
+        "exchange": "NASDAQ",
+        "source": "text_pattern",
+        "evidence": "TOCKHOLDER MATTERS AND ISSUER PURCHASES OF EQUITY SECURITIES Market Information Our common stock trades on the NASDAQ Global Select Market under the symbol BCRX",
+        "filing": "0001171843-18-001855",
+        "form": "10-K",
+        "filing_date": "2018-03-12"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001058854-18-000023",
+      "campaign_key": "1058854-813298",
+      "region": "US",
+      "published": "2018-04-03T17:49:49-04:00",
+      "filer_id": "0001058854",
+      "filer_name": "CANNELL CAPITAL LLC",
+      "issuer_id": "0000813298",
+      "issuer_name": "DESTINATION XL GROUP, INC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1058854/0001058854-18-000023.txt",
+      "document_sha256": "7dabb8d4b2b82285ca4d1b609578cd10822091038a9c8577c25dc0031bc1937d",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "strategy",
+      "historical_excerpt": "Such actions may include, but may not necessarily be limited to, pursuit of strategic initiatives to enhance shareholder value.",
+      "reparsed_demand": "strategy",
+      "reparsed_excerpt": "Such actions may include, but may not necessarily be limited to, pursuit of strategic initiatives to enhance shareholder value.",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Reservation of rights and a broad reference to possible strategic initiatives. Scope of referenced communication uncertain.",
+      "simulated_tickers": [
+        "DXLG"
+      ],
+      "listing": {
+        "ticker": "DXLG",
+        "exchange": "NASDAQ",
+        "source": "text_pattern",
+        "evidence": "rs and Issuer Purchases of Equity Securities Market Information Our common stock is listed for trading on the NASDAQ Global Select Market under the symbol \"DXLG",
+        "filing": "0001564590-18-006679",
+        "form": "10-K",
+        "filing_date": "2018-03-23"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-18-001360",
+      "campaign_key": "1559771-6845",
+      "region": "US",
+      "published": "2018-04-17T09:00:33-04:00",
+      "filer_id": "0001559771",
+      "filer_name": "Engaged Capital LLC",
+      "issuer_id": "0000006845",
+      "issuer_name": "APOGEE ENTERPRISES, INC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/6845/0000921895-18-001360.txt",
+      "document_sha256": "318c3871d7d57de6ce5190f350123498d04f501f48b46f64ee8d54e5ec783eb7",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer’s financial position and investment strategy, the price levels of the Shares, conditions in the securities markets and general economic and industry conditions, the Reporting Persons may in the future take such actions with respect to their investment in the Issuer as they deem appropriate including, without limitation, engagin",
+      "reparsed_demand": "capital_return",
+      "reparsed_excerpt": "The Reporting Persons have discussed, and intend to continue to discuss, with the Issuer’s management team and Board of Directors (the “Board”) ways to potentially improve the Issuer’s capital allocation practices, operational improvement plans, growth initiatives, investor communications, portfolio optimization and corporate governance, among other topics, all of which the Reporting Persons belie",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Engagement on multiple potentially improvable topics without a separately substantiated demand.",
+      "simulated_tickers": [
+        "APOG"
+      ],
+      "listing": {
+        "ticker": "APOG",
+        "exchange": "NASDAQ",
+        "source": "text_pattern",
+        "evidence": " AND ISSUER PURCHASES OF EQUITY SECURITIES Market Information Apogee common stock is traded on the NASDAQ Stock Market LLC (Nasdaq) under the ticker symbol APOG",
+        "filing": "0000006845-17-000009",
+        "form": "10-K",
+        "filing_date": "2017-04-28"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001418812-18-000047",
+      "campaign_key": "1418812-100726",
+      "region": "US",
+      "published": "2018-05-11T20:30:53-04:00",
+      "filer_id": "0001418812",
+      "filer_name": "VA Partners I, LLC",
+      "issuer_id": "0000100726",
+      "issuer_name": "UNIFI INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/100726/0001418812-18-000047.txt",
+      "document_sha256": "837b0f605686c75d68db975cc6370b7abfbce3d0afb2e4b356d7b7fe60510420",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "The topics of these conversations have covered and will cover a range of issues, including those relating to the business of the Issuer, management, board composition (which include whether it makes sense for a ValueAct Capital employee to be on the Issuer's board of directors), investor communications, operations, capital allocation, dividend policy, financial condition, mergers and acquisitions ",
+      "reparsed_demand": "sale",
+      "reparsed_excerpt": "The topics of these conversations have covered and will cover a range of issues, including those relating to the business of the Issuer, management, board composition (which include whether it makes sense for a ValueAct Capital employee to be on the Issuer's board of directors), investor communications, operations, capital allocation, dividend policy, financial condition, mergers and acquisitions ",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Topics of discussions include possible board representation and transactions; no explicit request in the cited context.",
+      "simulated_tickers": [
+        "UFI"
+      ],
+      "listing": {
+        "ticker": "UFI",
+        "exchange": "NYSE",
+        "source": "text_pattern",
+        "evidence": "older Matters and Issuer Purchases of Equity Securities UNIFI's common stock is listed for trading on the New York Stock Exchange (\"NYSE\") under the symbol \"UFI",
+        "filing": "0001564590-17-018240",
+        "form": "10-K",
+        "filing_date": "2017-09-01"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000807249-18-000114",
+      "campaign_key": "807249-1164863",
+      "region": "US",
+      "published": "2018-06-12T16:15:03-04:00",
+      "filer_id": "0000807249",
+      "filer_name": "GAMCO INVESTORS, INC. ET AL",
+      "issuer_id": "0001164863",
+      "issuer_name": "ENPRO INDUSTRIES, INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/1164863/0000807249-18-000114.txt",
+      "document_sha256": "e0dbe1a24533dced64a7c00f8172fb5d2b693fcadf63bbea30c01066e20e2bde",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "capital_return",
+      "historical_excerpt": "Such suggestions or positions may relate to one or more of the transactions specified in clauses (a) through (j) of Item 4 of Schedule 13D including, without limitation, such matters as disposing of one or more businesses, selling the company or acquiring another company or business, changing operating or marketing strategies, adopting or not adopting, certain types of anti-takeover measures and r",
+      "reparsed_demand": "capital_return",
+      "reparsed_excerpt": "Such suggestions or positions may relate to one or more of the transactions specified in clauses (a) through (j) of Item 4 of Schedule 13D including, without limitation, such matters as disposing of one or more businesses, selling the company or acquiring another company or business, changing operating or marketing strategies, adopting or not adopting, certain types of anti-takeover measures and r",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "NPO"
+      ],
+      "listing": {
+        "ticker": "NPO",
+        "exchange": "NYSE",
+        "source": "text_pattern",
+        "evidence": " SHAREHOLDER MATTERS AND ISSUER PURCHASES OF EQUITY SECURITIES Our common stock is publicly traded on the New York Stock Exchange (\"NYSE\") under the symbol \"NPO",
+        "filing": "0001164863-18-000009",
+        "form": "10-K",
+        "filing_date": "2018-02-26"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001013594-18-000552",
+      "campaign_key": "1560207-901491",
+      "region": "US",
+      "published": "2018-10-01T16:09:30-04:00",
+      "filer_id": "0001560207",
+      "filer_name": "Legion Partners Asset Management, LLC",
+      "issuer_id": "0000901491",
+      "issuer_name": "PAPA JOHNS INTERNATIONAL INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/1560207/0001013594-18-000552.txt",
+      "document_sha256": "0bd09b48c1a09a7fd043a805bf71339ba45a6383e5a796d42601d67e7f6e2f5a",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "strategy",
+      "historical_excerpt": "The Reporting Persons believe that meaningfully higher earnings power than the company has demonstrated historically is attainable through a combination of cost efficiencies and refranchising of company owned operations.",
+      "reparsed_demand": "strategy",
+      "reparsed_excerpt": "The Reporting Persons believe that meaningfully higher earnings power than the company has demonstrated historically is attainable through a combination of cost efficiencies and refranchising of company owned operations.",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Operational thesis and preliminary engagement. No clear position on implementing a specified action.",
+      "simulated_tickers": [
+        "PZZA"
+      ],
+      "listing": {
+        "ticker": "PZZA",
+        "exchange": "NASDAQ",
+        "source": "text_pattern",
+        "evidence": "tters and Issuer Purchases of Equity Securities Our common stock trades on The NASDAQ Global Select Market tier of The NASDAQ Stock Market under the symbol PZZA",
+        "filing": "0001558370-18-001176",
+        "form": "10-K",
+        "filing_date": "2018-02-27"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-18-003121",
+      "campaign_key": "1619125-1120914",
+      "region": "US",
+      "published": "2018-11-20T09:00:53-05:00",
+      "filer_id": "0001619125",
+      "filer_name": "VIEX Capital Advisors, LLC",
+      "issuer_id": "0001120914",
+      "issuer_name": "PDF SOLUTIONS INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/1120914/0000921895-18-003121.txt",
+      "document_sha256": "5ef3cadc679f24c944fc33b31e5e8b15e3c7d5945a2ce934d9a95c39e8bbf7bb",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "strategy",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer’s financial position and investment strategy, the price levels of the Shares, conditions in the securities markets and general economic and industry conditions, the Reporting Persons may in the future take such actions with respect to their investment in the Issuer as they deem appropriate including, without limitation, engagin",
+      "reparsed_demand": "none",
+      "reparsed_excerpt": null,
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "PDFS"
+      ],
+      "listing": {
+        "ticker": "PDFS",
+        "exchange": "NASDAQ",
+        "source": "text_pattern",
+        "evidence": "mon Equity, and Related Stockholder Matters and Issuer Purchases of Equity Securities Our common stock trades on the NASDAQ Global Market under the symbol \"PDFS",
+        "filing": "0001437749-18-004863",
+        "form": "10-K",
+        "filing_date": "2018-03-16"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-18-003147",
+      "campaign_key": "1444376-98222",
+      "region": "US",
+      "published": "2018-11-26T16:48:13-05:00",
+      "filer_id": "0001444376",
+      "filer_name": "Raging Capital Management, LLC",
+      "issuer_id": "0000098222",
+      "issuer_name": "TIDEWATER INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/1444376/0000921895-18-003147.txt",
+      "document_sha256": "01db7d756dca68bceb3080337ac4f56f36048f3e05835ba128f8a791bbe2c4f6",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": ") of the Issuer owned by each Reporting Person were acquired pursuant to the Business Combination (as defined in Item 4) in consideration of the following securities of GulfMark Offshore, Inc.",
+      "reparsed_demand": "sale",
+      "reparsed_excerpt": "On November 15, 2018, the Issuer completed its previously-announced business combination (the “Business Combination”) with GulfMark pursuant to the Agreement and Plan of Merger (the “Merger Agreement”), dated July 15, 2018, between the Issuer and GulfMark.",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Completed issuer business combination explains the acquisition of the holding.",
+      "simulated_tickers": [
+        "TDW"
+      ],
+      "listing": {
+        "ticker": "TDW",
+        "exchange": "NYSE",
+        "source": "text_pattern",
+        "evidence": ", a Delaware corporation that is a listed company on the New York Stock Exchange under the symbol \"TDW",
+        "filing": "0001564590-18-005788",
+        "form": "10-KT",
+        "filing_date": "2018-03-15"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001418812-18-000114",
+      "campaign_key": "1418812-1512499",
+      "region": "US",
+      "published": "2018-12-14T16:43:04-05:00",
+      "filer_id": "0001418812",
+      "filer_name": "VA Partners I, LLC",
+      "issuer_id": "0001512499",
+      "issuer_name": "LINDBLAD EXPEDITIONS HOLDINGS, INC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1512499/0001418812-18-000114.txt",
+      "document_sha256": "b4dabc3bc52e9a53e1864de850845df9c92459c58b417630789f80e1a3aba2f4",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "The topics of these conversations have covered and will cover a range of issues, including those relating to the business of the Issuer, management, board composition (which include whether it makes sense for a ValueAct Capital employee to be on the Issuer's board of directors), investor communications, operations, capital allocation, dividend policy, financial condition, mergers and acquisitions ",
+      "reparsed_demand": "sale",
+      "reparsed_excerpt": "The topics of these conversations have covered and will cover a range of issues, including those relating to the business of the Issuer, management, board composition (which include whether it makes sense for a ValueAct Capital employee to be on the Issuer's board of directors), investor communications, operations, capital allocation, dividend policy, financial condition, mergers and acquisitions ",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Topics of discussions include possible board representation and transactions; no explicit request in the cited context.",
+      "simulated_tickers": [
+        "LIND"
+      ],
+      "listing": {
+        "ticker": "LIND",
+        "exchange": "NASDAQ",
+        "source": "text_pattern",
+        "evidence": "tters and Issuer Purchases of Equity Securities Market Information Our common stock and warrants are traded on the NASDAQ Capital Market under the symbols \"LIND",
+        "filing": "0001213900-18-002504",
+        "form": "10-K",
+        "filing_date": "2018-03-02"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001058854-18-000067",
+      "campaign_key": "1058854-1384195",
+      "region": "US",
+      "published": "2018-12-27T09:18:42-05:00",
+      "filer_id": "0001058854",
+      "filer_name": "CANNELL CAPITAL LLC",
+      "issuer_id": "0001384195",
+      "issuer_name": "RING ENERGY, INC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1058854/0001058854-18-000067.txt",
+      "document_sha256": "1487c66fe59d3b3bd66d755aa2983342258eb66886c4638810567322851e29e4",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "CC hopes to work collaboratively with REI in order to produce positive change, which change may include (i) reconstitution of the BOD; (ii) enhancement of the Company’s capital structure; and possibly a (iii) merger into, or with, other companies to enjoy greater scale and expertise.",
+      "reparsed_demand": "sale",
+      "reparsed_excerpt": "CC hopes to work collaboratively with REI in order to produce positive change, which change may include (i) reconstitution of the BOD; (ii) enhancement of the Company’s capital structure; and possibly a (iii) merger into, or with, other companies to enjoy greater scale and expertise.",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "A letter was delivered, but the Item 4 summary lists several possible changes without resolving a single demand.",
+      "simulated_tickers": [
+        "REI"
+      ],
+      "listing": {
+        "ticker": "REI",
+        "exchange": "NYSE American",
+        "source": "text_pattern",
+        "evidence": "ockholder Matters and Issuer Purchases of Equity Securities Market for our Common Stock Our common stock is listed on the NYSE MKT under the trading symbol \"REI",
+        "filing": "0001144204-18-014905",
+        "form": "10-K",
+        "filing_date": "2018-03-15"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-19-000018",
+      "campaign_key": "1559771-863436",
+      "region": "US",
+      "published": "2019-01-04T15:01:10-05:00",
+      "filer_id": "0001559771",
+      "filer_name": "Engaged Capital LLC",
+      "issuer_id": "0000863436",
+      "issuer_name": "BENCHMARK ELECTRONICS INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/863436/0000921895-19-000018.txt",
+      "document_sha256": "6b2ed56d332f299af3e12ebcb3703c4ab528189dab7245b5bee5771a6c80e07c",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer’s financial position and investment strategy, the price levels of the Shares, conditions in the securities markets and general economic and industry conditions, the Reporting Persons may in the future take such actions with respect to their investment in the Issuer as they deem appropriate including, without limitation, engagin",
+      "reparsed_demand": "board",
+      "reparsed_excerpt": "The Reporting Persons previously ran a successful proxy contest at the Issuer’s 2016 annual meeting of shareholders at which two of its director nominees were elected to the Board.",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Prior successful proxy contest in 2016 is historical context; no confirmed new contest.",
+      "simulated_tickers": [
+        "BHE"
+      ],
+      "listing": {
+        "ticker": "BHE",
+        "exchange": "NYSE",
+        "source": "text_pattern",
+        "evidence": " Our common shares are listed on the New York Stock Exchange under the symbol \"BHE",
+        "filing": "0000863436-18-000005",
+        "form": "10-K",
+        "filing_date": "2018-03-01"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-19-000487",
+      "campaign_key": "1517137-901491",
+      "region": "US",
+      "published": "2019-02-14T17:10:08-05:00",
+      "filer_id": "0001517137",
+      "filer_name": "Starboard Value LP",
+      "issuer_id": "0000901491",
+      "issuer_name": "PAPA JOHNS INTERNATIONAL INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/901491/0000921895-19-000487.txt",
+      "document_sha256": "8da22fddf74b5830be2870bbdeaf0a3573a711d81aa4cb9abeb17c95a031cb59",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "The standstill provisions generally prohibit Starboard from taking specified actions with respect to the Issuer and its securities, including, among others: (i) soliciting or participating in the solicitation of proxies; (ii) joining any “group” or becoming party to any voting arrangement or agreement; (iii) depositing Shares in any voting trust or subjecting any Shares to any arrangement or agree",
+      "reparsed_demand": "sale",
+      "reparsed_excerpt": "The standstill provisions generally prohibit Starboard from taking specified actions with respect to the Issuer and its securities, including, among others: (i) soliciting or participating in the solicitation of proxies; (ii) joining any “group” or becoming party to any voting arrangement or agreement; (iii) depositing Shares in any voting trust or subjecting any Shares to any arrangement or agree",
+      "reviewed_demand": "board",
+      "context_excerpt": "ence. Governance Agreement Additionally, the Issuer and Starboard entered into a Governance Agreement, dated February 4, 2019, in which the Issuer has agreed to (i) increase the size of the Board from six to nine directors, (ii) nominate and appoint Mr. Smith (the “Starboard Appointee”), Anthony M. S",
+      "assessment": "Negotiated increase in board size and appointment commitments. Sale terms occur in standstill language.",
+      "simulated_tickers": [
+        "PZZA"
+      ],
+      "listing": {
+        "ticker": "PZZA",
+        "exchange": "NASDAQ",
+        "source": "text_pattern",
+        "evidence": "tters and Issuer Purchases of Equity Securities Our common stock trades on The NASDAQ Global Select Market tier of The NASDAQ Stock Market under the symbol PZZA",
+        "filing": "0001558370-18-001176",
+        "form": "10-K",
+        "filing_date": "2018-02-27"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-19-000581",
+      "campaign_key": "1619125-1736946",
+      "region": "US",
+      "published": "2019-02-26T09:01:09-05:00",
+      "filer_id": "0001619125",
+      "filer_name": "VIEX Capital Advisors, LLC",
+      "issuer_id": "0001736946",
+      "issuer_name": "Arlo Technologies, Inc.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1736946/0000921895-19-000581.txt",
+      "document_sha256": "6a5278c16363b8cc7854a289d4baf8e85dea9a91c6a0782f29775bfa4a1bc390",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer’s financial position and investment strategy, the price levels of the Shares, conditions in the securities markets and general economic and industry conditions, the Reporting Persons may in the future take such actions with respect to their investment in the Issuer as they deem appropriate including, without limitation, engagin",
+      "reparsed_demand": "strategy",
+      "reparsed_excerpt": "The Reporting Persons believe the Issuer must take immediate steps to improve its operating model, including, but not limited to, materially reducing its cash burn and enacting a pathway to improving its gross margins and profitability while maintaining the integrity of the Issuer’s balance sheet.",
+      "reviewed_demand": "strategy",
+      "context_excerpt": "an. The Reporting Persons believe the Issuer must take immediate steps to improve its operating model, including, but not limited to, materially reducing its cash burn and enacting a pathway to improving its gross margins and profitability while maintaining the integrity of the Issuer’s balance sheet",
+      "assessment": "Specific demand to reduce cash burn and improve margins.",
+      "simulated_tickers": [
+        "ARLO"
+      ],
+      "listing": {
+        "ticker": "ARLO",
+        "exchange": "NYSE",
+        "source": "text_pattern",
+        "evidence": " On August 3, 2018, Arlo's shares began trading on the New York Stock Exchange under the ticker symbol \"ARLO",
+        "filing": "0001736946-19-000010",
+        "form": "10-K",
+        "filing_date": "2019-02-22"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-19-000887",
+      "campaign_key": "1688522-1113809",
+      "region": "US",
+      "published": "2019-03-25T18:40:13-04:00",
+      "filer_id": "0001688522",
+      "filer_name": "Philotimo Fund, LP",
+      "issuer_id": "0001113809",
+      "issuer_name": "BUILD A BEAR WORKSHOP INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/1113809/0000921895-19-000887.txt",
+      "document_sha256": "225bac3a6d09a6b2118a42bcb588c1cbfef324ac7b0e985fc94a6241953f7c1e",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer’s financial position and investment strategy, the price levels of the Shares, conditions in the securities markets and general economic and industry conditions, the Reporting Persons may in the future take such actions with respect to their investment in the Issuer as they deem appropriate including, without limitation, engagin",
+      "reparsed_demand": "board",
+      "reparsed_excerpt": "Additionally, the Reporting Persons intend on discussing board representation that is inclusive of stockholders and value creation.",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Intention to discuss board representation, with no nomination or specified board action disclosed.",
+      "simulated_tickers": [
+        "BBW"
+      ],
+      "listing": {
+        "ticker": "BBW",
+        "exchange": "NYSE",
+        "source": "text_pattern",
+        "evidence": "TY, RELATED STOCKHOLDER MATTERS AND ISSUER PURCHASES OF EQUITY SECURITIES Our common stock is listed on the New York Stock Exchange (NYSE) under the symbol \"BBW",
+        "filing": "0001437749-18-004676",
+        "form": "10-K",
+        "filing_date": "2018-03-15"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001193125-19-106589",
+      "campaign_key": "1409751-1301787",
+      "region": "US",
+      "published": "2019-04-15T16:29:02-04:00",
+      "filer_id": "0001409751",
+      "filer_name": "Coliseum Capital Management, LLC",
+      "issuer_id": "0001301787",
+      "issuer_name": "BlueLinx Holdings Inc.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1301787/0001193125-19-106589.txt",
+      "document_sha256": "06f1b1f150935de3d4ec461de613b78c2ff3ebb40d806a2c2e8ec1e79ed9238d",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "In pursuing such investment purposes, the Reporting Persons may further purchase, hold, vote, trade, dispose or otherwise deal in the Common Stock at times, and in such manner (including pursuant to hedging transactions), as they deem advisable to benefit from changes in market prices of the Common Stock, changes in the Issuer’s operations, business strategy or prospects, or from a sale or merger ",
+      "reparsed_demand": "none",
+      "reparsed_excerpt": null,
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "BXC"
+      ],
+      "listing": {
+        "ticker": "BXC",
+        "exchange": null,
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=BXC",
+        "filing": "0001301787-19-000013",
+        "form": "10-K",
+        "filing_date": "2019-03-13"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000899140-19-000402",
+      "campaign_key": "1577524-1446847",
+      "region": "US",
+      "published": "2019-05-16T16:52:59-04:00",
+      "filer_id": "0001577524",
+      "filer_name": "Sarissa Capital Management LP",
+      "issuer_id": "0001446847",
+      "issuer_name": "IRONWOOD PHARMACEUTICALS INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/1446847/0000899140-19-000402.txt",
+      "document_sha256": "ae260a9693f2dec6f3c811b65d94757e11b70336042bcb556fa2ff33d91a3e26",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "strategy",
+      "historical_excerpt": "The Reporting Persons view the recent spinoff of the Issuer’s R&D business, as had been proposed by the Reporting Persons to the Issuer, as a good first step towards creating shareholder value while preserving strategic optionality.",
+      "reparsed_demand": "strategy",
+      "reparsed_excerpt": "The Reporting Persons view the recent spinoff of the Issuer’s R&D business, as had been proposed by the Reporting Persons to the Issuer, as a good first step towards creating shareholder value while preserving strategic optionality.",
+      "reviewed_demand": "strategy",
+      "context_excerpt": "recent spinoff of the Issuer’s R&D business, as had been proposed by the Reporting Persons to the Issuer, as a good first step towards creating shareholder value while preserving strategic optionality. The Reporting Persons continue to believe that the Issuer’s efforts to commercialize in primary care a",
+      "assessment": "Prior spin-off proposal plus a recommendation about commercialization of the remaining assets.",
+      "simulated_tickers": [
+        "IRWD"
+      ],
+      "listing": {
+        "ticker": "IRWD",
+        "exchange": "NASDAQ",
+        "source": "text_pattern",
+        "evidence": "holder Matters and Issuer Purchases of Equity Securities Shares of our Class A common stock are traded on the Nasdaq Global Select Market under the symbol \"IRWD",
+        "filing": "0001558370-19-001005",
+        "form": "10-K",
+        "filing_date": "2019-02-25"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001104659-19-066851",
+      "campaign_key": "1414517-720500",
+      "region": "US",
+      "published": "2019-11-25T09:00:14-05:00",
+      "filer_id": "0001414517",
+      "filer_name": "Privet Fund LP",
+      "issuer_id": "0000720500",
+      "issuer_name": "AMTECH SYSTEMS INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/720500/0001104659-19-066851.txt",
+      "document_sha256": "f37b2018c86531842e92ddee1ca738d3d670eece672178b82c9d5eac22354d8f",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "strategy",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer’s financial position and investment strategy, the price levels of the Common Stock, conditions in the securities markets and general economic and industry conditions, the Reporting Persons may in the future take such actions with respect to an investment in the Issuer as they deem appropriate including, without limitation, enga",
+      "reparsed_demand": "none",
+      "reparsed_excerpt": null,
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "ASYS"
+      ],
+      "listing": {
+        "ticker": "ASYS",
+        "exchange": "NASDAQ",
+        "source": "text_pattern",
+        "evidence": "01 per share (Common Stock), is trading on the NASDAQ Global Select Market, under the symbol \"ASYS",
+        "filing": "0001564590-19-044022",
+        "form": "10-K",
+        "filing_date": "2019-11-21"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-20-000941",
+      "campaign_key": "1517137-1169561",
+      "region": "US",
+      "published": "2020-03-30T17:16:16-04:00",
+      "filer_id": "0001517137",
+      "filer_name": "Starboard Value LP",
+      "issuer_id": "0001169561",
+      "issuer_name": "COMMVAULT SYSTEMS INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/1169561/0000921895-20-000941.txt",
+      "document_sha256": "4ede74a595501a810c46f57ffdb8cc53c453343f6302435dd7bfabd9a1b3df1e",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer’s financial position and investment strategy, the price levels of the Shares, conditions in the securities markets and general economic and industry conditions, the Reporting Persons may in the future take such actions with respect to their investment in the Issuer as they deem appropriate including, without limitation, engagin",
+      "reparsed_demand": "none",
+      "reparsed_excerpt": null,
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "CVLT"
+      ],
+      "listing": {
+        "ticker": "CVLT",
+        "exchange": "NASDAQ",
+        "source": "text_pattern",
+        "evidence": "s and Issuer Purchases of Equity Securities Market for our Common Stock Our common stock is listed and traded on The NASDAQ Global Market under the symbol \"CVLT",
+        "filing": "0001169561-19-000022",
+        "form": "10-K",
+        "filing_date": "2019-05-02"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000902664-20-002878",
+      "campaign_key": "1817187-100726",
+      "region": "US",
+      "published": "2020-08-04T21:44:08-04:00",
+      "filer_id": "0001817187",
+      "filer_name": "INCLUSIVE CAPITAL PARTNERS, L.P.",
+      "issuer_id": "0000100726",
+      "issuer_name": "UNIFI INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/1817187/0000902664-20-002878.txt",
+      "document_sha256": "0b39e3a1f694c945d61c5cbd38368995f8802ee87ac521fd94fbf64603038b4a",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "The topics of these conversations have covered and will cover a range of issues, including those relating to the business of the Issuer, management, board composition, investor communications, operations, capital allocation, dividend policy, financial condition, mergers and acquisitions strategy, overall business strategy, executive compensation, corporate governance and environmental and social m",
+      "reparsed_demand": "sale",
+      "reparsed_excerpt": "The topics of these conversations have covered and will cover a range of issues, including those relating to the business of the Issuer, management, board composition, investor communications, operations, capital allocation, dividend policy, financial condition, mergers and acquisitions strategy, overall business strategy, executive compensation, corporate governance and environmental and social m",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Director status and a list of topics for broad engagement. No specific new demand in Item 4.",
+      "simulated_tickers": [
+        "UFI"
+      ],
+      "listing": {
+        "ticker": "UFI",
+        "exchange": "NYSE",
+        "source": "text_pattern",
+        "evidence": "r Matters and Issuer Purchases of Equity Securities UNIFI's common stock is listed for trading on the New York Stock Exchange (the \"NYSE\") under the symbol \"UFI",
+        "filing": "0001564590-19-033600",
+        "form": "10-K",
+        "filing_date": "2019-08-29"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000807249-21-000007",
+      "campaign_key": "807249-352825",
+      "region": "US",
+      "published": "2021-01-08T16:01:49-05:00",
+      "filer_id": "0000807249",
+      "filer_name": "GAMCO INVESTORS, INC. ET AL",
+      "issuer_id": "0000352825",
+      "issuer_name": "FOSTER L B CO",
+      "url": "https://www.sec.gov/Archives/edgar/data/352825/0000807249-21-000007.txt",
+      "document_sha256": "f12678a5458032990f326420ba33677bce59c30af1a67c7c882c4f57371485fb",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "capital_return",
+      "historical_excerpt": "Such suggestions or positions may relate to one or more of the transactions specified in clauses (a) through (j) of Item 4 of Schedule 13D including, without limitation, such matters as disposing of one or more businesses, selling the company or acquiring another company or business, changing operating or marketing strategies, adopting or not adopting, certain types of anti-takeover measures and r",
+      "reparsed_demand": "capital_return",
+      "reparsed_excerpt": "Such suggestions or positions may relate to one or more of the transactions specified in clauses (a) through (j) of Item 4 of Schedule 13D including, without limitation, such matters as disposing of one or more businesses, selling the company or acquiring another company or business, changing operating or marketing strategies, adopting or not adopting, certain types of anti-takeover measures and r",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "FSTR"
+      ],
+      "listing": {
+        "ticker": "FSTR",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=FSTR; exchange=NASDAQ Global Select Market",
+        "filing": "0000352825-20-000008",
+        "form": "10-K",
+        "filing_date": "2020-02-27"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001315863-21-000232",
+      "campaign_key": "1279150-851310",
+      "region": "US",
+      "published": "2021-03-08T12:58:46-05:00",
+      "filer_id": "0001279150",
+      "filer_name": "SCOPIA CAPITAL MANAGEMENT LP",
+      "issuer_id": "0000851310",
+      "issuer_name": "HARMONIC INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/851310/0001315863-21-000232.txt",
+      "document_sha256": "99acbfa47ea7596f8b842160d3f255e345bb6c8d6fc1a50e7b6b11b278e14d64",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "The Reporting Persons and their representatives have engaged in, and expect to continue to engage in, discussions with members of management and the board of directors of the Issuer (the \"Board\"), and may engage in discussions with other current or prospective shareholders, industry analysts, investment and financing professionals, sources of credit and other third parties regarding a variety of m",
+      "reparsed_demand": "none",
+      "reparsed_excerpt": null,
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "HLIT"
+      ],
+      "listing": {
+        "ticker": "HLIT",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=HLIT; exchange=The NASDAQ Global Select Market",
+        "filing": "0000851310-21-000012",
+        "form": "10-K",
+        "filing_date": "2021-03-02"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001193805-21-000477",
+      "campaign_key": "1619125-1007587",
+      "region": "US",
+      "published": "2021-04-12T08:30:36-04:00",
+      "filer_id": "0001619125",
+      "filer_name": "VIEX Capital Advisors, LLC",
+      "issuer_id": "0001007587",
+      "issuer_name": "KVH INDUSTRIES INC \\DE\\",
+      "url": "https://www.sec.gov/Archives/edgar/data/1007587/0001193805-21-000477.txt",
+      "document_sha256": "ab2d8eb6584ce13fa7d2e43573ae9abbc3c51703c8329c0763af9d4711754667",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "board",
+      "historical_excerpt": "On January 14, 2021, Series One delivered a letter to the Issuer (the “Nomination Notice”) nominating Messrs.",
+      "reparsed_demand": "board",
+      "reparsed_excerpt": "On January 14, 2021, Series One delivered a letter to the Issuer (the “Nomination Notice”) nominating Messrs.",
+      "reviewed_demand": "board",
+      "context_excerpt": "m advisable. On January 14, 2021, Series One delivered a letter to the Issuer (the “Nomination Notice”) nominating Messrs. Mutch and Singer for election to the Board at the Issuer’s 2021 annual meeting of stockholders (the “2021 Annual Meeting”). The Reporting Persons believe the Nominees have the nece",
+      "assessment": "Delivered issuer-specific nomination notice.",
+      "simulated_tickers": [
+        "KVHI"
+      ],
+      "listing": {
+        "ticker": "KVHI",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=KVHI; exchange=The NASDAQ Stock Market LLC",
+        "filing": "0001007587-21-000004",
+        "form": "10-K",
+        "filing_date": "2021-03-03"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-21-001070",
+      "campaign_key": "1461945-1165002",
+      "region": "US",
+      "published": "2021-04-15T17:05:54-04:00",
+      "filer_id": "0001461945",
+      "filer_name": "JCP Investment Management, LLC",
+      "issuer_id": "0001165002",
+      "issuer_name": "WESTWOOD HOLDINGS GROUP INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/1461945/0000921895-21-001070.txt",
+      "document_sha256": "5951a96483a93287bfc7e75f2748dea2be3507f99ec773dc68669a4e13f652c9",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "The Reporting Persons intend to review their investment in the Issuer on a continuing basis and to communicate with the Issuer’s management, Board and other interested parties about a broad range of operational and strategic matters, and may discuss a potential sale of the Issuer or certain of its businesses or assets, in which the Reporting Persons may participate, as a means of enhancing stockho",
+      "reparsed_demand": "none",
+      "reparsed_excerpt": null,
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "WHG"
+      ],
+      "listing": {
+        "ticker": "WHG",
+        "exchange": "NYSE",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=WHG; exchange=New York Stock Exchange",
+        "filing": "0001165002-21-000023",
+        "form": "10-K",
+        "filing_date": "2021-03-04"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-21-001959",
+      "campaign_key": "1446114-1309402",
+      "region": "US",
+      "published": "2021-08-09T17:27:00-04:00",
+      "filer_id": "0001446114",
+      "filer_name": "Ancora Advisors, LLC",
+      "issuer_id": "0001309402",
+      "issuer_name": "Green Plains Inc.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1446114/0000921895-21-001959.txt",
+      "document_sha256": "42bb833fee36e38712b912a80d6c939804a8bded9329b92372139a27a910de3b",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer’s financial position and investment strategy, the price levels of the Shares, conditions in the securities markets and general economic and industry conditions, the Reporting Persons may in the future take such actions with respect to their investment in the Issuer as they deem appropriate including, without limitation, engagin",
+      "reparsed_demand": "none",
+      "reparsed_excerpt": null,
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "GPRE"
+      ],
+      "listing": {
+        "ticker": "GPRE",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=GPRE; exchange=The Nasdaq Stock Market LLC",
+        "filing": "0001309402-21-000014",
+        "form": "10-K",
+        "filing_date": "2021-02-16"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000919574-21-006567",
+      "campaign_key": "1537323-318833",
+      "region": "US",
+      "published": "2021-11-03T09:36:39-04:00",
+      "filer_id": "0001537323",
+      "filer_name": "Corre Partners Management, LLC",
+      "issuer_id": "0000318833",
+      "issuer_name": "TEAM INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/1537323/0000919574-21-006567.txt",
+      "document_sha256": "f3fe67bb9e31bff43828bdfc6846f3fc210d6864f5d75950c663bbf8a4d68b14",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "strategy",
+      "historical_excerpt": "In light of recent developments regarding the Issuer, including the events disclosed by the Issuer in its Report on Form 8-K filed with the SEC on October 25, 2021, the Reporting Persons have communicated with the Issuer on a number of key issues, including operational and balance sheet strategy.",
+      "reparsed_demand": "strategy",
+      "reparsed_excerpt": "In light of recent developments regarding the Issuer, including the events disclosed by the Issuer in its Report on Form 8-K filed with the SEC on October 25, 2021, the Reporting Persons have communicated with the Issuer on a number of key issues, including operational and balance sheet strategy.",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Communication on issues and confidentiality agreement to evaluate options. No clear requested outcome.",
+      "simulated_tickers": [
+        "TISI"
+      ],
+      "listing": {
+        "ticker": "TISI",
+        "exchange": "NYSE",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=TISI; exchange=New York Stock Exchange",
+        "filing": "0000318833-21-000018",
+        "form": "10-K",
+        "filing_date": "2021-03-12"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-21-002776",
+      "campaign_key": "1730145-1808997",
+      "region": "US",
+      "published": "2021-11-29T17:22:01-05:00",
+      "filer_id": "0001730145",
+      "filer_name": "Voss Capital, LLC",
+      "issuer_id": "0001808997",
+      "issuer_name": "American Outdoor Brands, Inc.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1808997/0000921895-21-002776.txt",
+      "document_sha256": "9f3553a758f215298afd425d29b23fc12dff06895891addd8a10a33d3693d678",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer’s financial position and investment strategy, the price levels of the Shares, conditions in the securities markets and general economic and industry conditions, the Reporting Persons may in the future take such actions with respect to their investment in the Issuer as they deem appropriate including, without limitation, engagin",
+      "reparsed_demand": "none",
+      "reparsed_excerpt": null,
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "AOUT"
+      ],
+      "listing": {
+        "ticker": "AOUT",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=AOUT; exchange=Nasdaq Global Select Market",
+        "filing": "0001564590-21-036740",
+        "form": "10-K",
+        "filing_date": "2021-07-15"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001193125-21-370622",
+      "campaign_key": "1409751-1638290",
+      "region": "US",
+      "published": "2021-12-30T16:24:00-05:00",
+      "filer_id": "0001409751",
+      "filer_name": "Coliseum Capital Management, LLC",
+      "issuer_id": "0001638290",
+      "issuer_name": "MasterCraft Boat Holdings, Inc.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1409751/0001193125-21-370622.txt",
+      "document_sha256": "0172484177b18981d6a213fd2734f2c90e3283db6f733f1a4ca60d1ddaed69fb",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "In pursuing such investment purposes, the Reporting Persons may further purchase, hold, vote, trade, dispose or otherwise deal in the Common Stock at times, and in such manner (including pursuant to hedging transactions), as they deem advisable to benefit from changes in market prices of the Common Stock, changes in the Issuer’s operations, business strategy or prospects, or from a sale or merger ",
+      "reparsed_demand": "none",
+      "reparsed_excerpt": null,
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "MCFT"
+      ],
+      "listing": {
+        "ticker": "MCFT",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=MCFT; exchange=NASDAQ",
+        "filing": "0001564590-21-046866",
+        "form": "10-K",
+        "filing_date": "2021-09-02"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-22-000091",
+      "campaign_key": "1446114-6176",
+      "region": "US",
+      "published": "2022-01-07T08:31:16-05:00",
+      "filer_id": "0001446114",
+      "filer_name": "Ancora Advisors, LLC",
+      "issuer_id": "0000006176",
+      "issuer_name": "AMPCO PITTSBURGH CORP",
+      "url": "https://www.sec.gov/Archives/edgar/data/6176/0000921895-22-000091.txt",
+      "document_sha256": "9e7d2d7b98406491edce902485a8e903b3858d1dd77ccb254bac9f51362da2f4",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer’s financial position and investment strategy, the price levels of the Shares, conditions in the securities markets and general economic and industry conditions, the Reporting Persons may in the future take such actions with respect to their investment in the Issuer as they deem appropriate including, without limitation, engagin",
+      "reparsed_demand": "capital_return",
+      "reparsed_excerpt": "The Reporting Persons have engaged, and intend to continue to engage, in discussions with members of the Issuer’s Board of Directors (the “Board”) and management team regarding means to create shareholder value, including, but not limited to, by improving capital allocation, divesting non-core assets, conducting a strategic review of current lines of business and enhancing corporate governance (in",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Broad engagement agenda with several alternatives. The cited generic language is not a sale demand.",
+      "simulated_tickers": [
+        "AP"
+      ],
+      "listing": {
+        "ticker": "AP",
+        "exchange": "NYSE",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=AP; exchange=New York Stock Exchange",
+        "filing": "0001564590-21-055733",
+        "form": "10-Q",
+        "filing_date": "2021-11-09"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001193125-22-077905",
+      "campaign_key": "1391297-1593984",
+      "region": "US",
+      "published": "2022-03-17T08:47:00-04:00",
+      "filer_id": "0001391297",
+      "filer_name": "Access Industries Holdings LLC",
+      "issuer_id": "0001593984",
+      "issuer_name": "MediWound Ltd.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1391297/0001193125-22-077905.txt",
+      "document_sha256": "054780513ec54f7f090113e806306c3d82c851eb79ef4adeced448446f3f332a",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "strategy",
+      "historical_excerpt": "The Reporting Persons may engage in discussions with management, the Issuer’s board of directors, other stockholders of the Issuer and other relevant parties concerning the business, operations, board composition, management, strategy and future plans of the Issuer.",
+      "reparsed_demand": "none",
+      "reparsed_excerpt": null,
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "MDWD"
+      ],
+      "listing": {
+        "ticker": "MDWD",
+        "exchange": "NASDAQ",
+        "source": "text_pattern",
+        "evidence": " Our ordinary shares are listed on the Nasdaq Global Market under the symbol \"MDWD",
+        "filing": "0001178913-22-000928",
+        "form": "424B5",
+        "filing_date": "2022-03-03"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000807249-22-000118",
+      "campaign_key": "807249-1132105",
+      "region": "US",
+      "published": "2022-09-23T16:10:09-04:00",
+      "filer_id": "0000807249",
+      "filer_name": "GAMCO INVESTORS, INC. ET AL",
+      "issuer_id": "0001132105",
+      "issuer_name": "SPORTSMAN'S WAREHOUSE HOLDINGS, INC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/807249/0000807249-22-000118.txt",
+      "document_sha256": "e897eb3e6fc5d5716578a691e1e69e5cc18d75e5ce12f1cdbb8443edc806f4dc",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "capital_return",
+      "historical_excerpt": "Such suggestions or positions may relate to one or more of the transactions specified in clauses (a) through (j) of Item 4 of Schedule 13D including, without limitation, such matters as disposing of one or more businesses, selling the company or acquiring another company or business, changing operating or marketing strategies, adopting or not adopting, certain types of anti-takeover measures and r",
+      "reparsed_demand": "capital_return",
+      "reparsed_excerpt": "Such suggestions or positions may relate to one or more of the transactions specified in clauses (a) through (j) of Item 4 of Schedule 13D including, without limitation, such matters as disposing of one or more businesses, selling the company or acquiring another company or business, changing operating or marketing strategies, adopting or not adopting, certain types of anti-takeover measures and r",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "SPWH"
+      ],
+      "listing": {
+        "ticker": "SPWH",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=SPWH; exchange=The Nasdaq Stock Market LLC",
+        "filing": "0001558370-22-004698",
+        "form": "10-K",
+        "filing_date": "2022-03-30"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-22-002925",
+      "campaign_key": "1517137-934549",
+      "region": "US",
+      "published": "2022-11-08T17:16:03-05:00",
+      "filer_id": "0001517137",
+      "filer_name": "Starboard Value LP",
+      "issuer_id": "0000934549",
+      "issuer_name": "ACACIA RESEARCH CORP",
+      "url": "https://www.sec.gov/Archives/edgar/data/934549/0000921895-22-002925.txt",
+      "document_sha256": "2653fa7cd5346ba4b36610fc92914fca4ab10677d34a61fa83aa3331caa4fdf8",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer’s financial position and investment strategy, the price levels of the Shares, conditions in the securities markets and general economic and industry conditions, the Reporting Persons may in the future take such actions with respect to their investment in the Issuer as they deem appropriate including, without limitation, engagin",
+      "reparsed_demand": "board",
+      "reparsed_excerpt": "Sagal as a director of the Issuer and recommend two additional directors for appointment to the Board.",
+      "reviewed_demand": "board",
+      "context_excerpt": "nt Mr. Sagal as a director of the Issuer and recommend two additional directors for appointment to the Board. On February 25, 2020, pursuant to the terms of the Securities Purchase Agreement, the Issuer issued Series B Warrants to purchase up to 100 million Shares for an aggregate purchase price of $4.6 mil",
+      "assessment": "Specific director-selection agreement in Item 4.",
+      "simulated_tickers": [
+        "ACTG"
+      ],
+      "listing": {
+        "ticker": "ACTG",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=ACTG; exchange=The Nasdaq Stock Market, LLC",
+        "filing": "0000934549-22-000006",
+        "form": "10-K",
+        "filing_date": "2022-03-31"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001387131-22-011869",
+      "campaign_key": "1360554-1084991",
+      "region": "US",
+      "published": "2022-11-28T16:10:52-05:00",
+      "filer_id": "0001360554",
+      "filer_name": "Hoak Public Equities, LP",
+      "issuer_id": "0001084991",
+      "issuer_name": "NATURAL GAS SERVICES GROUP INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/1360554/0001387131-22-011869.txt",
+      "document_sha256": "4c5ce35158bea5436e164c9d06b9256d3e431469eccc432c87573f3ceb1faf8d",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "capital_return",
+      "historical_excerpt": "The Reporting Persons understand the dynamics and potential of the Issuer’s business and believe their perspective will be important for the Issuer as it handles a management transition, navigates current market opportunities and optimizes new fleet additions, capital allocation and overall capital structure and financial management.",
+      "reparsed_demand": "capital_return",
+      "reparsed_excerpt": "The Reporting Persons understand the dynamics and potential of the Issuer’s business and believe their perspective will be important for the Issuer as it handles a management transition, navigates current market opportunities and optimizes new fleet additions, capital allocation and overall capital structure and financial management.",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Fleet, allocation and management perspective and discretionary investment plans; no requested distribution.",
+      "simulated_tickers": [
+        "NGS"
+      ],
+      "listing": {
+        "ticker": "NGS",
+        "exchange": "NYSE",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=NGS; exchange=New York Stock Exchange",
+        "filing": "0001084991-22-000009",
+        "form": "10-K",
+        "filing_date": "2022-03-18"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001193125-22-303901",
+      "campaign_key": "1767199-723603",
+      "region": "US",
+      "published": "2022-12-13T17:12:44-05:00",
+      "filer_id": "0001767199",
+      "filer_name": "Mill Road Capital III, L.P.",
+      "issuer_id": "0000723603",
+      "issuer_name": "CULP INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/723603/0001193125-22-303901.txt",
+      "document_sha256": "6a2aaeb29f33dffa63d4dcf5d96b3c60abc614bf7bdd92e5b285728013a4f874",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "strategy",
+      "historical_excerpt": "The Reporting Persons may wish to engage in a constructive dialogue with officers, directors and other representatives of the Issuer, as well as the Issuer’s shareholders; topics of discussion may include, but are not limited to, the Issuer’s markets, operations, competitors, prospects, strategy, personnel, directors, ownership and capitalization.",
+      "reparsed_demand": "none",
+      "reparsed_excerpt": null,
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "CULP"
+      ],
+      "listing": {
+        "ticker": "CULP",
+        "exchange": "NYSE",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=CULP; exchange=New York Stock Exchange",
+        "filing": "0001564590-22-025820",
+        "form": "10-K",
+        "filing_date": "2022-07-15"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000893739-23-000016",
+      "campaign_key": "893739-1158172",
+      "region": "US",
+      "published": "2023-03-06T09:01:08-05:00",
+      "filer_id": "0000893739",
+      "filer_name": "180 DEGREE CAPITAL CORP. /NY/",
+      "issuer_id": "0001158172",
+      "issuer_name": "COMSCORE, INC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/893739/0000893739-23-000016.txt",
+      "document_sha256": "20afbc485bf0e6e334cd065b4b8ed1b126328e66cbaeb5cce08abcef9aec945d",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "capital_return",
+      "historical_excerpt": "On March 6, 2023, the Reporting Person issued a press release containing an open letter to shareholders and employees of the Issuer (the \"Press Release\") to express the Reporting Person's disappointment in the Issuer's adherence to what the Reporting Person believes is an outdated director compensation policy and a lack of transparency regarding how the board of directors of the Issuer (the \"Board",
+      "reparsed_demand": "capital_return",
+      "reparsed_excerpt": "On March 6, 2023, the Reporting Person issued a press release containing an open letter to shareholders and employees of the Issuer (the \"Press Release\") to express the Reporting Person's disappointment in the Issuer's adherence to what the Reporting Person believes is an outdated director compensation policy and a lack of transparency regarding how the board of directors of the Issuer (the \"Board",
+      "reviewed_demand": "board",
+      "context_excerpt": " part of these changes, the Reporting Person recommended either the immediate resignation of Brent Rosenthal from the Board or, at least, the removal of his position as Lead Independent Director on the Board. This summary of the Press Release does not purport to be complete and is qualifi",
+      "assessment": "Explicit request for resignation or removal as lead independent director.",
+      "simulated_tickers": [
+        "SCOR"
+      ],
+      "listing": {
+        "ticker": "SCOR",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=SCOR; exchange=NASDAQ Global Select Market",
+        "filing": "0001158172-23-000013",
+        "form": "10-K",
+        "filing_date": "2023-03-02"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-23-000806",
+      "campaign_key": "1873893-1201792",
+      "region": "US",
+      "published": "2023-03-31T17:05:02-04:00",
+      "filer_id": "0001873893",
+      "filer_name": "325 CAPITAL LLC",
+      "issuer_id": "0001201792",
+      "issuer_name": "AMERICAN PUBLIC EDUCATION INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/1873893/0000921895-23-000806.txt",
+      "document_sha256": "467e5c640a57de916793e0cd5c41d62a9bc14293399037d12928cb3c38aec3c9",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "board",
+      "historical_excerpt": "Braner to its Board of Directors (the “ Board ”), effective March 28, 2023, and to nominate him for election at the 2023 Annual Meeting.",
+      "reparsed_demand": "board",
+      "reparsed_excerpt": "Braner to its Board of Directors (the “ Board ”), effective March 28, 2023, and to nominate him for election at the 2023 Annual Meeting.",
+      "reviewed_demand": "board",
+      "context_excerpt": "he “ Board ”), effective March 28, 2023, and to nominate him for election at the 2023 Annual Meeting. Mr. Braner has also been appointed as a member of the Management Development and Compensation Committee. The terms of the Cooperation Agreement further provide that the Reporting Persons are subject",
+      "assessment": "Specific director appointment and nomination in cooperation agreement.",
+      "simulated_tickers": [
+        "APEI"
+      ],
+      "listing": {
+        "ticker": "APEI",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=APEI; exchange=Nasdaq Global Select Market",
+        "filing": "0001201792-23-000004",
+        "form": "10-K",
+        "filing_date": "2023-03-14"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-23-000931",
+      "campaign_key": "1688522-1066194",
+      "region": "US",
+      "published": "2023-04-24T15:49:18-04:00",
+      "filer_id": "0001688522",
+      "filer_name": "Philotimo Fund, LP",
+      "issuer_id": "0001066194",
+      "issuer_name": "EGAIN Corp",
+      "url": "https://www.sec.gov/Archives/edgar/data/1066194/0000921895-23-000931.txt",
+      "document_sha256": "a8bb0c6fdaff4f82ecfe7b14cc4d247a8915c4cb2bbc407e0c112bf9143142f9",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer’s financial position and investment strategy, the price levels of the Shares, conditions in the securities markets and general economic and industry conditions, the Reporting Persons may in the future take such actions with respect to their investment in the Issuer as they deem appropriate including, without limitation, engagin",
+      "reparsed_demand": "none",
+      "reparsed_excerpt": null,
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "EGAN"
+      ],
+      "listing": {
+        "ticker": "EGAN",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=EGAN; exchange=The Nasdaq Stock Market LLC",
+        "filing": "0001558370-22-014362",
+        "form": "10-K",
+        "filing_date": "2022-09-13"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001398344-23-007941",
+      "campaign_key": "1383838-1000694",
+      "region": "US",
+      "published": "2023-04-27T14:52:43-04:00",
+      "filer_id": "0001383838",
+      "filer_name": "SHAH CAPITAL MANAGEMENT",
+      "issuer_id": "0001000694",
+      "issuer_name": "NOVAVAX INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/1000694/0001398344-23-007941.txt",
+      "document_sha256": "2ff05eb0f239a9f1299181e3289aa2ad21b5bf083eec5d3b3cc9f1b2bebde853",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "In pursuing investment purposes, the Reporting Persons may further purchase, hold, vote, trade, dispose or otherwise deal in the shares at times, and in such manner, as they deem advisable to benefit from, among other things: (1) changes in the market prices of the shares; (2) changes in the Issuer’s operations, business strategy or prospects; or (3) from the sale, merger, or other proposed corpor",
+      "reparsed_demand": "none",
+      "reparsed_excerpt": null,
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "NVAX"
+      ],
+      "listing": {
+        "ticker": "NVAX",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=NVAX; exchange=The Nasdaq Global Select Market",
+        "filing": "0001000694-23-000005",
+        "form": "10-K",
+        "filing_date": "2023-02-28"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001193805-23-001235",
+      "campaign_key": "1580320-1808997",
+      "region": "US",
+      "published": "2023-08-30T09:18:16-04:00",
+      "filer_id": "0001580320",
+      "filer_name": "ENGINE CAPITAL, L.P.",
+      "issuer_id": "0001808997",
+      "issuer_name": "American Outdoor Brands, Inc.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1808997/0001193805-23-001235.txt",
+      "document_sha256": "2ae37de6d0db877e0d2b4f068894388926f8d1bc051162231d36461891f677dd",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer’s financial position, results and strategic direction, actions taken by the Issuer’s management and the Board, other investment opportunities available to the Reporting Persons, the price levels of the Shares, conditions in the securities markets and general economic and industry conditions, the Reporting Persons may in the fut",
+      "reparsed_demand": "board",
+      "reparsed_excerpt": "Pursuant to the Cooperation Agreement, Engine was subject to certain customary standstill restrictions from the date of the Cooperation Agreement until the earlier of (x) 30 days prior to the Issuer’s advance notice deadline for stockholder nominations of directors for the 2023 Annual Meeting and (y) August 7, 2023 (the “Standstill Period”).",
+      "reviewed_demand": "board",
+      "context_excerpt": "e “Amendment”), pursuant to which the Issuer agreed to nominate Mr. Favreau as a Class III director for re-election to the Board at the 2023 Annual Meeting to serve until the election and qualification of his successor at the 2024 annual meeting of stockholders (the “2024 Annual Meeting”), and that",
+      "assessment": "May 2023 amendment commits to a specific director re-election.",
+      "simulated_tickers": [
+        "AOUT"
+      ],
+      "listing": {
+        "ticker": "AOUT",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=AOUT; exchange=Nasdaq Global Select Market",
+        "filing": "0000950170-23-030394",
+        "form": "10-K",
+        "filing_date": "2023-06-28"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001104659-23-097323",
+      "campaign_key": "1346824-1671858",
+      "region": "US",
+      "published": "2023-08-31T17:25:13-04:00",
+      "filer_id": "0001346824",
+      "filer_name": "RA CAPITAL MANAGEMENT, L.P.",
+      "issuer_id": "0001671858",
+      "issuer_name": "ARS Pharmaceuticals, Inc.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1671858/0001104659-23-097323.txt",
+      "document_sha256": "cff9a8a72aa700b68a79e983dea9051d0e2d7424201757fdd3f36bb45a2b9ac9",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "In addition, consistent with their investment purpose, the Reporting Persons may engage in communications with persons associated with the Issuer, including shareholders of the Issuer, officers of the Issuer, members of the board of directors of the Issuer, and/or or other third parties, to discuss matters regarding the Issuer, including but not limited to its operations, strategic direction, gove",
+      "reparsed_demand": "none",
+      "reparsed_excerpt": null,
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "SPRY"
+      ],
+      "listing": {
+        "ticker": "SPRY",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=SPRY; exchange=The Nasdaq Stock Market LLC",
+        "filing": "0000950170-23-009491",
+        "form": "10-K",
+        "filing_date": "2023-03-23"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000807249-23-000126",
+      "campaign_key": "807249-1069533",
+      "region": "US",
+      "published": "2023-10-05T16:00:55-04:00",
+      "filer_id": "0000807249",
+      "filer_name": "GAMCO INVESTORS, INC. ET AL",
+      "issuer_id": "0001069533",
+      "issuer_name": "RGC RESOURCES INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/807249/0000807249-23-000126.txt",
+      "document_sha256": "29e9e3eea63f6c67ef478f1cc3d9ce0ee4bc6f35cb241adf4576045a50d77ca8",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "capital_return",
+      "historical_excerpt": "Such suggestions or positions may relate to one or more of the transactions specified in clauses (a) through (j) of Item 4 of Schedule 13D including, without limitation, such matters as disposing of one or more businesses, selling the company or acquiring another company or business, changing operating or marketing strategies, adopting or not adopting, certain types of anti-takeover measures and r",
+      "reparsed_demand": "capital_return",
+      "reparsed_excerpt": "Such suggestions or positions may relate to one or more of the transactions specified in clauses (a) through (j) of Item 4 of Schedule 13D including, without limitation, such matters as disposing of one or more businesses, selling the company or acquiring another company or business, changing operating or marketing strategies, adopting or not adopting, certain types of anti-takeover measures and r",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "RGCO"
+      ],
+      "listing": {
+        "ticker": "RGCO",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=RGCO; exchange=NASDAQ",
+        "filing": "0001437749-22-028313",
+        "form": "10-K",
+        "filing_date": "2022-12-02"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001140361-23-048351",
+      "campaign_key": "1103804-1162194",
+      "region": "US",
+      "published": "2023-10-16T16:30:16-04:00",
+      "filer_id": "0001103804",
+      "filer_name": "VIKING GLOBAL INVESTORS LP",
+      "issuer_id": "0001162194",
+      "issuer_name": "STANDARD BIOTOOLS INC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1162194/0001140361-23-048351.txt",
+      "document_sha256": "9f9137752be69fc89b42fb697afd88d8ff7c0e0ecfd87ec6614a9d09da99cb27",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "On October 4, 2023, the Issuer, SomaLogic, Inc., a Delaware corporation (“SomaLogic”), and Martis Merger Sub, Inc., a Delaware corporation and a wholly owned subsidiary of the Issuer (“Merger Sub”), entered into an Agreement and Plan of Merger (the “Merger Agreement”), pursuant to which, among other matters, and subject to the satisfaction or waiver of the conditions set forth in the Merger Agreem",
+      "reparsed_demand": "sale",
+      "reparsed_excerpt": "On October 4, 2023, the Issuer, SomaLogic, Inc., a Delaware corporation (“SomaLogic”), and Martis Merger Sub, Inc., a Delaware corporation and a wholly owned subsidiary of the Issuer (“Merger Sub”), entered into an Agreement and Plan of Merger (the “Merger Agreement”), pursuant to which, among other matters, and subject to the satisfaction or waiver of the conditions set forth in the Merger Agreem",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Voting agreement supports the issuer’s already-announced merger. No independently initiated sale demand established.",
+      "simulated_tickers": [
+        "LAB"
+      ],
+      "listing": {
+        "ticker": "LAB",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=LAB; exchange=The Nasdaq Global Select Market",
+        "filing": "0001162194-23-000013",
+        "form": "10-K",
+        "filing_date": "2023-03-14"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-23-002456",
+      "campaign_key": "1580320-884624",
+      "region": "US",
+      "published": "2023-11-03T17:15:22-04:00",
+      "filer_id": "0001580320",
+      "filer_name": "ENGINE CAPITAL, L.P.",
+      "issuer_id": "0000884624",
+      "issuer_name": "Orthofix Medical Inc.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1580320/0000921895-23-002456.txt",
+      "document_sha256": "ef4f1741fc062fc9ad36d1554c6b8b6018f2efa2f0a46e2784fbf44348578c7d",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer’s financial position, results and strategic direction, actions taken by the Issuer’s management and the Board, other investment opportunities available to the Reporting Persons, the price levels of the Shares, conditions in the securities markets and general economic and industry conditions, the Reporting Persons may in the fut",
+      "reparsed_demand": "none",
+      "reparsed_excerpt": null,
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "OFIX"
+      ],
+      "listing": {
+        "ticker": "OFIX",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=OFIX; exchange=Nasdaq Global Select Market",
+        "filing": "0000950170-23-006242",
+        "form": "10-K",
+        "filing_date": "2023-03-06"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001104659-23-120922",
+      "campaign_key": "1308557-1448397",
+      "region": "US",
+      "published": "2023-11-24T08:25:46-05:00",
+      "filer_id": "0001308557",
+      "filer_name": "Economou George",
+      "issuer_id": "0001448397",
+      "issuer_name": "Seanergy Maritime Holdings Corp.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1308557/0001104659-23-120922.txt",
+      "document_sha256": "2a13f4252ec6a0ebfec954f590e574c5c1a842a0f2ea6e341a255c5cde81d00f",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "These discussions may review options for enhancing stockholder value through, among other things, various strategic alternatives, including without limitation asset dispositions, or operational or management initiatives.",
+      "reparsed_demand": "sale",
+      "reparsed_excerpt": "These discussions may review options for enhancing stockholder value through, among other things, various strategic alternatives, including without limitation asset dispositions, or operational or management initiatives.",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Discussion of strategic alternatives is conditional.",
+      "simulated_tickers": [
+        "SHIP"
+      ],
+      "listing": {
+        "ticker": "SHIP",
+        "exchange": "NASDAQ",
+        "filing_date": "2023-03-31",
+        "url": "https://www.sec.gov/Archives/edgar/data/1448397/000114036123015463/brhc10049936_20f.htm",
+        "sha256": "e23fb2cbf1c8122481acd0d6772b76235e5c882697b0168cb27ebc027236e933",
+        "evidence": "Cover page: common shares, SHIP, The Nasdaq Stock Market LLC."
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-24-000112",
+      "campaign_key": "1687509-1788999",
+      "region": "US",
+      "published": "2024-01-23T16:00:21-05:00",
+      "filer_id": "0001687509",
+      "filer_name": "Rubric Capital Management LP",
+      "issuer_id": "0001788999",
+      "issuer_name": "Xperi Inc.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1687509/0000921895-24-000112.txt",
+      "document_sha256": "4b6560e001141171d2499e500e5935f412e04cbc0b261966e956d47cb7a19279",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer’s financial position and investment strategy, the price levels of the Shares, conditions in the securities markets and general economic and industry conditions, the Reporting Persons may in the future take such actions with respect to their investment in the Issuer as they deem appropriate including, without limitation, engagin",
+      "reparsed_demand": "board",
+      "reparsed_excerpt": "On January 22, 2024, Rubric Capital Master Fund LP, one of the Rubric Funds (“Rubric Master”), delivered a letter to the Issuer nominating Deborah S.",
+      "reviewed_demand": "board",
+      "context_excerpt": ", one of the Rubric Funds (“Rubric Master”), delivered a letter to the Issuer nominating Deborah S. Conrad and Thomas A. Lacey (the “Nominees”) for election to the Board of Directors of the Issuer (the “Board”) at the Issuer’s 2024 annual meeting of stockholders (the “Annual Meeting”). No Reporting Person",
+      "assessment": "Actual notification nominating two named directors.",
+      "simulated_tickers": [
+        "XPER"
+      ],
+      "listing": {
+        "ticker": "XPER",
+        "exchange": "NYSE",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=XPER; exchange=New York Stock Exchange",
+        "filing": "0000950170-23-006053",
+        "form": "10-K",
+        "filing_date": "2023-03-06"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001193805-24-000342",
+      "campaign_key": "1402258-1865631",
+      "region": "US",
+      "published": "2024-03-08T16:07:18-05:00",
+      "filer_id": "0001402258",
+      "filer_name": "Frischer Charles L",
+      "issuer_id": "0001865631",
+      "issuer_name": "NEXTNAV INC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1402258/0001193805-24-000342.txt",
+      "document_sha256": "f3f3c50e67ee9f8b433e7a5f95e72fbcc976c72275a432d37e77f900f2222090",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "strategy",
+      "historical_excerpt": "The Reporting Person intends to review his investment in the Issuer on a continuing basis and may engage in discussions with management, the Issuer's board of directors, other shareholders of the Issuer and other relevant parties concerning the Issuer's business, operations, governance, management, strategy and future plans.",
+      "reparsed_demand": "capital_return",
+      "reparsed_excerpt": "(d) Right to receive dividends or proceeds",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Cited language is a general dialogue reservation. Automated dividend hit came from a different section.",
+      "simulated_tickers": [
+        "NN"
+      ],
+      "listing": {
+        "ticker": "NN",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=NN; exchange=Nasdaq",
+        "filing": "0001213900-23-024631",
+        "form": "10-K",
+        "filing_date": "2023-03-30"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000807249-24-000046",
+      "campaign_key": "807249-58361",
+      "region": "US",
+      "published": "2024-04-19T16:14:33-04:00",
+      "filer_id": "0000807249",
+      "filer_name": "GAMCO INVESTORS, INC. ET AL",
+      "issuer_id": "0000058361",
+      "issuer_name": "LEE ENTERPRISES, Inc",
+      "url": "https://www.sec.gov/Archives/edgar/data/807249/0000807249-24-000046.txt",
+      "document_sha256": "d8f8854fe4a624a5ac1b681c7e3a5c4de6dd89477568dbf1b98f2ef2b71c634a",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "capital_return",
+      "historical_excerpt": "Such suggestions or positions may relate to one or more of the transactions specified in clauses (a) through (j) of Item 4 of Schedule 13D including, without limitation, such matters as disposing of one or more businesses, selling the company or acquiring another company or business, changing operating or marketing strategies, adopting or not adopting, certain types of anti-takeover measures and r",
+      "reparsed_demand": "capital_return",
+      "reparsed_excerpt": "Such suggestions or positions may relate to one or more of the transactions specified in clauses (a) through (j) of Item 4 of Schedule 13D including, without limitation, such matters as disposing of one or more businesses, selling the company or acquiring another company or business, changing operating or marketing strategies, adopting or not adopting, certain types of anti-takeover measures and r",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "LEE"
+      ],
+      "listing": {
+        "ticker": "LEE",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=LEE; exchange=The Nasdaq Global Select Market",
+        "filing": "0001628280-23-041119",
+        "form": "10-K",
+        "filing_date": "2023-12-08"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001193125-24-134445",
+      "campaign_key": "1676292-1399520",
+      "region": "US",
+      "published": "2024-05-08T18:33:59-04:00",
+      "filer_id": "0001676292",
+      "filer_name": "Hill Path Capital LP",
+      "issuer_id": "0001399520",
+      "issuer_name": "ONE Group Hospitality, Inc.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1676292/0001193125-24-134445.txt",
+      "document_sha256": "bc8fc20697d77777cbbec5d44fbc7cbf919a0511cb81717e7ee8ad97c444a56e",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "The Penny Warrant is subject to customary anti-dilution protections for cash distribution participations, issuances below fair market value and business combinations.",
+      "reparsed_demand": "capital_return",
+      "reparsed_excerpt": "The Reporting Persons and their representatives have had and expect to continue to have meetings, written communications and discussions with the members of management and the Board regarding a variety of matters relating to the Issuer, including, among other things, the Issuer’s business, operating performance, capital structure, capital allocation, corporate governance, Board composition and oth",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Appointments arise from the financing agreement for preferred stock and warrants. Common-equity activism not established.",
+      "simulated_tickers": [
+        "STKS"
+      ],
+      "listing": {
+        "ticker": "STKS",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=STKS; exchange=NASDAQ",
+        "filing": "0001558370-24-003231",
+        "form": "10-K",
+        "filing_date": "2024-03-14"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-24-001466",
+      "campaign_key": "1959730-813298",
+      "region": "US",
+      "published": "2024-06-26T20:37:55-04:00",
+      "filer_id": "0001959730",
+      "filer_name": "Fund 1 Investments, LLC",
+      "issuer_id": "0000813298",
+      "issuer_name": "DESTINATION XL GROUP, INC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/813298/0000921895-24-001466.txt",
+      "document_sha256": "8aabd5342ecec54a2720c6da723d9095d718168f697589d9a1afbb075ac0f1a1",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer’s financial position, results and strategic direction, actions taken by the Issuer’s management team and the Board, price levels of the Shares, conditions in the securities markets, general economic and industry conditions, and other investment opportunities available to the Reporting Person, the Reporting Person may in the fut",
+      "reparsed_demand": "strategy",
+      "reparsed_excerpt": "The Reporting Person intends to engage in discussions with the Issuer’s board of directors (the “Board”) and management team regarding operational and strategic opportunities for the Issuer to enhance stockholder value.",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "DXLG"
+      ],
+      "listing": {
+        "ticker": "DXLG",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=DXLG; exchange=Nasdaq",
+        "filing": "0000950170-24-034763",
+        "form": "10-K",
+        "filing_date": "2024-03-21"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-24-001467",
+      "campaign_key": "1959730-1495320",
+      "region": "US",
+      "published": "2024-06-26T20:39:45-04:00",
+      "filer_id": "0001959730",
+      "filer_name": "Fund 1 Investments, LLC",
+      "issuer_id": "0001495320",
+      "issuer_name": "Vera Bradley, Inc.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1959730/0000921895-24-001467.txt",
+      "document_sha256": "e707be95f8c8ce08767958dac2dc90ca8234a9695e6b8d4736c5a61523758ad7",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer’s financial position, results and strategic direction, actions taken by the Issuer’s management team and the Board, price levels of the Shares, conditions in the securities markets, general economic and industry conditions, and other investment opportunities available to the Reporting Person, the Reporting Person may in the fut",
+      "reparsed_demand": "strategy",
+      "reparsed_excerpt": "The Reporting Person intends to engage in discussions with the Issuer’s board of directors (the “Board”) and management team regarding operational and strategic opportunities for the Issuer to enhance stockholder value.",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "VRA"
+      ],
+      "listing": {
+        "ticker": "VRA",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=VRA; exchange=NASDAQ Global Select Market",
+        "filing": "0001495320-24-000026",
+        "form": "10-K",
+        "filing_date": "2024-03-29"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001193125-24-176749",
+      "campaign_key": "1491072-1701758",
+      "region": "US",
+      "published": "2024-07-09T16:23:48-04:00",
+      "filer_id": "0001491072",
+      "filer_name": "Anson Funds Management LP",
+      "issuer_id": "0001701758",
+      "issuer_name": "Lovesac Co",
+      "url": "https://www.sec.gov/Archives/edgar/data/1491072/0001193125-24-176749.txt",
+      "document_sha256": "d9ace84243393581919cc1087674e6fe860bf72ab38662db857c906868231a2b",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "The topics of these conversations have covered and will cover a range of issues, including those relating to the business of the Issuer, management, board composition, investor communications, operations, capital allocation, dividend policy, financial condition, mergers and acquisitions strategy and strategic plans, overall business strategy, executive compensation, and corporate governance matter",
+      "reparsed_demand": "sale",
+      "reparsed_excerpt": "The topics of these conversations have covered and will cover a range of issues, including those relating to the business of the Issuer, management, board composition, investor communications, operations, capital allocation, dividend policy, financial condition, mergers and acquisitions strategy and strategic plans, overall business strategy, executive compensation, and corporate governance matter",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "List of dialogue topics including M&A and board composition. No concrete request identified.",
+      "simulated_tickers": [
+        "LOVE"
+      ],
+      "listing": {
+        "ticker": "LOVE",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=LOVE; exchange=Nasdaq",
+        "filing": "0001628280-24-015804",
+        "form": "10-K",
+        "filing_date": "2024-04-11"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001193125-24-176872",
+      "campaign_key": "1767199-1436126",
+      "region": "US",
+      "published": "2024-07-09T20:07:56-04:00",
+      "filer_id": "0001767199",
+      "filer_name": "Mill Road Capital III, L.P.",
+      "issuer_id": "0001436126",
+      "issuer_name": "Mistras Group, Inc.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1767199/0001193125-24-176872.txt",
+      "document_sha256": "dc1b85b1e8f5939670b8aa1db2d7a1a826d6ffde6f46c9ebf133f95d81a195f6",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "strategy",
+      "historical_excerpt": "The Reporting Persons may wish to engage in a constructive dialogue with officers, directors and other representatives of the Issuer, as well as the Issuer’s stockholders; topics of discussion may include, but are not limited to, the Issuer’s market, operations, competitors, prospects, strategy, personnel, directors, ownership and capitalization.",
+      "reparsed_demand": "none",
+      "reparsed_excerpt": null,
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "MG"
+      ],
+      "listing": {
+        "ticker": "MG",
+        "exchange": "NYSE",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=MG; exchange=New York Stock Exchange",
+        "filing": "0001436126-24-000025",
+        "form": "10-K",
+        "filing_date": "2024-03-11"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-24-002101",
+      "campaign_key": "1730145-1683695",
+      "region": "US",
+      "published": "2024-09-05T17:46:48-04:00",
+      "filer_id": "0001730145",
+      "filer_name": "Voss Capital, LP",
+      "issuer_id": "0001683695",
+      "issuer_name": "International Money Express, Inc.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1683695/0000921895-24-002101.txt",
+      "document_sha256": "62b2e5c5ba9f39137cfb5daf5f8731524e03ea865fea69085b213e9ce51f0d49",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "The Reporting Persons have engaged, and intend to continue to engage, in communications with the Issuer’s Board of Directors (the “Board”) and management team regarding ways to maximize shareholder value at the Issuer, including, but not limited to, a sale of the Issuer in a take private transaction.",
+      "reparsed_demand": "sale",
+      "reparsed_excerpt": "The Reporting Persons have engaged, and intend to continue to engage, in communications with the Issuer’s Board of Directors (the “Board”) and management team regarding ways to maximize shareholder value at the Issuer, including, but not limited to, a sale of the Issuer in a take private transaction.",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Specific take-private dialogue is mentioned; attribution of a concrete demand versus discussions is uncertain.",
+      "simulated_tickers": [
+        "IMXI"
+      ],
+      "listing": {
+        "ticker": "IMXI",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=IMXI; exchange=Nasdaq",
+        "filing": "0001683695-24-000042",
+        "form": "10-K",
+        "filing_date": "2024-02-28"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001104659-24-102454",
+      "campaign_key": "1472322-799850",
+      "region": "US",
+      "published": "2024-09-24T16:31:34-04:00",
+      "filer_id": "0001472322",
+      "filer_name": "Nantahala Capital Management, LLC",
+      "issuer_id": "0000799850",
+      "issuer_name": "AMERICAS CARMART INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/799850/0001104659-24-102454.txt",
+      "document_sha256": "93a889e2e64affe1c3c563e310912828cb5b62ace7f85f85a0a0d566408bc602",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "strategy",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer’s financial position and investment strategy, the price levels of the Common Stock, conditions in the securities markets and general economic and industry conditions, the Reporting Persons may in the future take such actions with respect to their investment in the Issuer as they deem appropriate including, without limitation, e",
+      "reparsed_demand": "none",
+      "reparsed_excerpt": null,
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "CRMT"
+      ],
+      "listing": {
+        "ticker": "CRMT",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=CRMT; exchange=NASDAQ",
+        "filing": "0001171843-24-003950",
+        "form": "10-K",
+        "filing_date": "2024-07-15"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001104659-24-110937",
+      "campaign_key": "1655183-1867102",
+      "region": "US",
+      "published": "2024-10-23T19:06:45-04:00",
+      "filer_id": "0001655183",
+      "filer_name": "Mudrick Capital Management, L.P.",
+      "issuer_id": "0001867102",
+      "issuer_name": "Vertical Aerospace Ltd.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1655183/0001104659-24-110937.txt",
+      "document_sha256": "7c90b0e2610a4a1e89ab5f5da153a46c89d3e00e7244b3816349f4a851d3d767",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "The Convertible Senior Secured Notes and Warrants reported as beneficially owned herein were initially acquired pursuant to that certain Convertible Note Subscription Agreement, dated October 26, 2021 (as amended, the “Convertible Senior Secured Notes Subscription Agreement”), by and among Broadstone Acquisition Corp. and MCM on behalf of certain funds, investors, entities or accounts that are man",
+      "reparsed_demand": "sale",
+      "reparsed_excerpt": "The Convertible Senior Secured Notes and Warrants reported as beneficially owned herein were initially acquired pursuant to that certain Convertible Note Subscription Agreement, dated October 26, 2021 (as amended, the “Convertible Senior Secured Notes Subscription Agreement”), by and among Broadstone Acquisition Corp. and MCM on behalf of certain funds, investors, entities or accounts that are man",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Convertible notes and warrants acquisition terms, not a sale request. Ordinary-share coverage is a separate question.",
+      "simulated_tickers": [
+        "EVTL"
+      ],
+      "listing": {
+        "ticker": "EVTL",
+        "exchange": "NYSE",
+        "filing_date": "2024-03-14",
+        "url": "https://www.sec.gov/Archives/edgar/data/1867102/000110465924034234/evtl-20231231x20f.htm",
+        "sha256": "ab4b6f9c7e872120b64e150df30bc70accf2f269b822b9a7a92e293192a7441a",
+        "evidence": "Cover page: ordinary shares, EVTL, New York Stock Exchange."
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-24-002415",
+      "campaign_key": "1688522-1573221",
+      "region": "US",
+      "published": "2024-11-01T09:00:48-04:00",
+      "filer_id": "0001688522",
+      "filer_name": "Philotimo Fund, LP",
+      "issuer_id": "0001573221",
+      "issuer_name": "TheRealReal, Inc.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1688522/0000921895-24-002415.txt",
+      "document_sha256": "a0f831666ad6d4e93654f4fbae412d646134e05aa5798fb60dea61a3839a369b",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer’s financial position and investment strategy, the price levels of the Shares, conditions in the securities markets and general economic and industry conditions, the Reporting Persons may in the future take such actions with respect to their investment in the Issuer as they deem appropriate including, without limitation, engagin",
+      "reparsed_demand": "none",
+      "reparsed_excerpt": null,
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "REAL"
+      ],
+      "listing": {
+        "ticker": "REAL",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=REAL; exchange=The Nasdaq Global Select Market",
+        "filing": "0001573221-24-000030",
+        "form": "10-K",
+        "filing_date": "2024-03-01"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001373604-24-000114",
+      "campaign_key": "1373604-1593899",
+      "region": "US",
+      "published": "2024-12-16T09:50:36-05:00",
+      "filer_id": "0001373604",
+      "filer_name": "BML Investment Partners, L.P.",
+      "issuer_id": "0001593899",
+      "issuer_name": "Atea Pharmaceuticals, Inc.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1593899/0001373604-24-000114.txt",
+      "document_sha256": "f16f544bce70eab01e01f99919d47270b9fd445b3bf2cf28a6b6aa79319e455f",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "On December 13th, 2024, the Reporting Persons sent a letter to the Board of Directors of the Issuer, indicating the Reporting Person's belief that the Issuer needs to find a strategic partner or explore other strategic alternatives.",
+      "reparsed_demand": "sale",
+      "reparsed_excerpt": "On December 13th, 2024, the Reporting Persons sent a letter to the Board of Directors of the Issuer, indicating the Reporting Person's belief that the Issuer needs to find a strategic partner or explore other strategic alternatives.",
+      "reviewed_demand": "sale",
+      "context_excerpt": "he Reporting Person's belief that the Issuer needs to find a strategic partner or explore other strategic alternatives. All of the shares of Common Stock reported herein as being beneficially owned by the Reporting Persons were acquired for investment purposes. Except as set forth herein, none of the Reporting Person",
+      "assessment": "Letter from the reporting persons advocating a partner or strategic alternatives.",
+      "simulated_tickers": [
+        "AVIR"
+      ],
+      "listing": {
+        "ticker": "AVIR",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=AVIR; exchange=The Nasdaq Global Select Market",
+        "filing": "0000950170-24-022226",
+        "form": "10-K",
+        "filing_date": "2024-02-28"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001398344-25-000406",
+      "campaign_key": "1705447-886136",
+      "region": "US",
+      "published": "2025-01-08T10:17:56-05:00",
+      "filer_id": "0001705447",
+      "filer_name": "GATE CITY CAPITAL MANAGEMENT, LLC",
+      "issuer_id": "0000886136",
+      "issuer_name": "SAGA COMMUNICATIONS INC",
+      "url": "https://www.sec.gov/Archives/edgar/data/1705447/0001398344-25-000406.txt",
+      "document_sha256": "e7156f8c755f24c44beabcceb0ce90fd272ef6b9ab6b63f86a94e834b7f8ba0a",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "The Reporting Person may in the future take such actions with respect to its investment in the Issuer as it deems appropriate including, without limitation, continuing to engage in communications with management and the Board of the Issuer, engaging in discussions with shareholders of the Issuer and others about the Issuer and the Reporting Person's investment, making proposals to the Issuer conce",
+      "reparsed_demand": "sale",
+      "reparsed_excerpt": "The Reporting Person may in the future take such actions with respect to its investment in the Issuer as it deems appropriate including, without limitation, continuing to engage in communications with management and the Board of the Issuer, engaging in discussions with shareholders of the Issuer and others about the Issuer and the Reporting Person's investment, making proposals to the Issuer conce",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Boilerplate reservation of future actions.",
+      "simulated_tickers": [
+        "SGA"
+      ],
+      "listing": {
+        "ticker": "SGA",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=SGA; exchange=NASDAQ Global Market",
+        "filing": "0001558370-24-003419",
+        "form": "10-K",
+        "filing_date": "2024-03-15"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000904853-25-000003",
+      "campaign_key": "904853-1273685",
+      "region": "US",
+      "published": "2025-02-26T17:05:02-05:00",
+      "filer_id": "0000904853",
+      "filer_name": "Amster Howard",
+      "issuer_id": "0001273685",
+      "issuer_name": "NEW YORK MORTGAGE TRUST, INC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/904853/0000904853-25-000003.txt",
+      "document_sha256": "f96ac8d104762a4c8c3fdd56875cc833b9090e60ef3432a4cf5b50ad1701945e",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "Depending on various factors, including, without limitation, the Issuer's financial condition, the price of the shares of its Common Stock, conditions in the securities markets, and general economic and industry conditions, the Reporting Persons may in the future take such actions with respect to their investment in the issuer as they deem appropriate., including without limitation, engaging in co",
+      "reparsed_demand": "none",
+      "reparsed_excerpt": null,
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "ADAM"
+      ],
+      "listing": {
+        "ticker": "NYMT",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=NYMT; exchange=NASDAQ Stock Market",
+        "filing": "0001273685-25-000028",
+        "form": "10-K",
+        "filing_date": "2025-02-21"
+      },
+      "listing_status": "ticker_mismatch",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "archived_ticker_mismatch",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-25-000625",
+      "campaign_key": "1580320-1590584",
+      "region": "US",
+      "published": "2025-02-26T17:22:46-05:00",
+      "filer_id": "0001580320",
+      "filer_name": "ENGINE CAPITAL, L.P.",
+      "issuer_id": "0001590584",
+      "issuer_name": "Civeo Corp",
+      "url": "https://www.sec.gov/Archives/edgar/data/1590584/0000921895-25-000625.txt",
+      "document_sha256": "74954c74ce80d9a23b9595eca97671a08f298f0cbe367b94faedeba5a82e9dab",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer's financial position, results and strategic direction, actions taken by the Issuer's management and the Board of Directors (the \"Board\"), other investment opportunities available to the Reporting Persons, the price levels of the Shares, conditions in the securities markets and general economic and industry conditions, the Repor",
+      "reparsed_demand": "none",
+      "reparsed_excerpt": null,
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "CVEO"
+      ],
+      "listing": {
+        "ticker": "CVEO",
+        "exchange": "NYSE",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=CVEO; exchange=New York Stock Exchange",
+        "filing": "0001590584-24-000038",
+        "form": "10-K",
+        "filing_date": "2024-02-29"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-25-000684",
+      "campaign_key": "1380585-1593899",
+      "region": "US",
+      "published": "2025-03-04T09:27:19-05:00",
+      "filer_id": "0001380585",
+      "filer_name": "Radoff Bradley Louis",
+      "issuer_id": "0001593899",
+      "issuer_name": "Atea Pharmaceuticals, Inc.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1593899/0000921895-25-000684.txt",
+      "document_sha256": "310e4ced1622e9b8e1a5fd4a2e960057933fc6fe3c0fb5f5dcc38bb69433440e",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer's financial position and investment strategy, the price levels of the Shares, conditions in the securities markets and general economic and industry conditions, the Reporting Persons may in the future take such actions with respect to their investment in the Issuer as they deem appropriate including, without limitation, engagin",
+      "reparsed_demand": "board",
+      "reparsed_excerpt": "The Reporting Persons believe that the Issuer is in desperate need of direct stockholder representation in the boardroom and intend to nominate a competing slate of candidates for election to the Board at the upcoming annual meeting of stockholders.",
+      "reviewed_demand": "board",
+      "context_excerpt": "ckholder representation in the boardroom and intend to nominate a competing slate of candidates for election to the Board at the upcoming annual meeting of stockholders. The Reporting Persons intend to discuss their views with respect to the foregoing matters with the Issuer, its stockholders a",
+      "assessment": "Concrete competing slate announced for the upcoming annual meeting.",
+      "simulated_tickers": [
+        "AVIR"
+      ],
+      "listing": {
+        "ticker": "AVIR",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=AVIR; exchange=The Nasdaq Global Select Market",
+        "filing": "0000950170-24-022226",
+        "form": "10-K",
+        "filing_date": "2024-02-28"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0001104659-25-021795",
+      "campaign_key": "1263508-1737953",
+      "region": "US",
+      "published": "2025-03-07T17:07:29-05:00",
+      "filer_id": "0001263508",
+      "filer_name": "BAKER BROS. ADVISORS LP",
+      "issuer_id": "0001737953",
+      "issuer_name": "Replimune Group, Inc.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1263508/0001104659-25-021795.txt",
+      "document_sha256": "9e363ca63a5ea88c091e99867c8760651cffce0a3129bc8fd401be7b6da4f3a4",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "board",
+      "historical_excerpt": "On March 5, 2025, the board of directors of the Issuer (the \"Board\"), upon the recommendation of the Board's Nominating and Corporate Governance Committee, (i) increased the size of the Board from nine members to ten, and (ii) appointed Michael Goller, a full-time employee of the Adviser to the Board, effective immediately.",
+      "reparsed_demand": "board",
+      "reparsed_excerpt": "On March 5, 2025, the board of directors of the Issuer (the \"Board\"), upon the recommendation of the Board's Nominating and Corporate Governance Committee, (i) increased the size of the Board from nine members to ten, and (ii) appointed Michael Goller, a full-time employee of the Adviser to the Board, effective immediately.",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Director appointed by the issuer on recommendation of its own nominating committee. Investor initiative not established in Item 4.",
+      "simulated_tickers": [
+        "REPL"
+      ],
+      "listing": {
+        "ticker": "REPL",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=REPL; exchange=Nasdaq",
+        "filing": "0001737953-24-000008",
+        "form": "10-K",
+        "filing_date": "2024-05-16"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000950170-25-040487",
+      "campaign_key": "1569866-1077688",
+      "region": "US",
+      "published": "2025-03-17T17:25:03-04:00",
+      "filer_id": "0001569866",
+      "filer_name": "GLOBAL VALUE INVESTMENT CORP.",
+      "issuer_id": "0001077688",
+      "issuer_name": "HOOKER FURNISHINGS Corp",
+      "url": "https://www.sec.gov/Archives/edgar/data/1569866/0000950170-25-040487.txt",
+      "document_sha256": "7d6ff2eee8ccb0817e5290da97facb3e727f7ee236a0fa324292d2b50f1b7a04",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "In pursuing such investment purposes, the Reporting Persons may further purchase, hold, vote, trade, dispose, or otherwise deal in the Common Stock at times, and in such manner, as they deem advisable to benefit from, among other things, (1) changes in the market prices of the shares of Common Stock; (2) changes in the Issuer's operations, business strategy, or prospects; or (3) from the sale or m",
+      "reparsed_demand": "none",
+      "reparsed_excerpt": null,
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "HOFT"
+      ],
+      "listing": {
+        "ticker": "HOFT",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=HOFT; exchange=NASDAQ",
+        "filing": "0001185185-24-000378",
+        "form": "10-K",
+        "filing_date": "2024-04-12"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000807249-25-000083",
+      "campaign_key": "807249-63296",
+      "region": "US",
+      "published": "2025-06-13T16:08:53-04:00",
+      "filer_id": "0000807249",
+      "filer_name": "GAMCO INVESTORS, INC. ET AL",
+      "issuer_id": "0000063296",
+      "issuer_name": "MATTHEWS INTERNATIONAL CORP",
+      "url": "https://www.sec.gov/Archives/edgar/data/807249/0000807249-25-000083.txt",
+      "document_sha256": "a18bbda70189df12fd1c22d29807ac35da7ff10437f89f1b49bf8019cbc8f4f0",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "capital_return",
+      "historical_excerpt": "Such suggestions or positions may relate to one or more of the transactions specified in clauses (a) through (j) of Item 4 of Schedule 13D including, without limitation, such matters as disposing of one or more businesses, selling the company or acquiring another company or business, changing operating or marketing strategies, adopting or not adopting, certain types of anti-takeover measures and r",
+      "reparsed_demand": "capital_return",
+      "reparsed_excerpt": "Such suggestions or positions may relate to one or more of the transactions specified in clauses (a) through (j) of Item 4 of Schedule 13D including, without limitation, such matters as disposing of one or more businesses, selling the company or acquiring another company or business, changing operating or marketing strategies, adopting or not adopting, certain types of anti-takeover measures and r",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "MATW"
+      ],
+      "listing": {
+        "ticker": "MATW",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=MATW; exchange=Nasdaq Global Select Market",
+        "filing": "0000063296-24-000094",
+        "form": "10-K",
+        "filing_date": "2024-11-22"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000935836-25-000426",
+      "campaign_key": "1792126-1655759",
+      "region": "US",
+      "published": "2025-06-16T18:10:01-04:00",
+      "filer_id": "0001792126",
+      "filer_name": "Logos Global Management LP",
+      "issuer_id": "0001655759",
+      "issuer_name": "ARVINAS, INC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1655759/0000935836-25-000426.txt",
+      "document_sha256": "546ce446602eb267eee15d8c802bb27243dec57f1c2d97a0315dee4bfdee4f17",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "Any such actions could involve one or more of the events referred to in clauses (a) through (j) of Item 4 of Schedule 13D, including, potentially, one or more mergers, consolidations, sales or acquisitions of assets, change in control, issuances, purchases, dispositions or pledges of securities or other changes in capitalization.",
+      "reparsed_demand": "capital_return",
+      "reparsed_excerpt": "Specifically, the letter urged the board to consider a special distribution to stockholders, to refrain from further investment in the early-stage pipeline, and to adopt a leaner operating model focused on preserving cash.",
+      "reviewed_demand": "capital_return",
+      "context_excerpt": "s direction and structure. Specifically, the letter urged the board to consider a special distribution to stockholders, to refrain from further investment in the early-stage pipeline, and to adopt a leaner operating model focused on preserving cash. In addition, we believe that the company should not ",
+      "assessment": "Specific special distribution and operating changes requested in writing.",
+      "simulated_tickers": [
+        "ARVN"
+      ],
+      "listing": {
+        "ticker": "ARVN",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=ARVN; exchange=The Nasdaq Global Select Market LLC",
+        "filing": "0001655759-25-000016",
+        "form": "10-K",
+        "filing_date": "2025-02-11"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000807249-25-000101",
+      "campaign_key": "807249-876427",
+      "region": "US",
+      "published": "2025-08-01T16:03:27-04:00",
+      "filer_id": "0000807249",
+      "filer_name": "GAMCO INVESTORS, INC. ET AL",
+      "issuer_id": "0000876427",
+      "issuer_name": "MONRO, INC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/807249/0000807249-25-000101.txt",
+      "document_sha256": "718d4b3a4d449cc2850821e0f4d4a2498aad76b3b027bfc52f4f46ac1af459ee",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "capital_return",
+      "historical_excerpt": "Such suggestions or positions may relate to one or more of the transactions specified in clauses (a) through (j) of Item 4 of Schedule 13D including, without limitation, such matters as disposing of one or more businesses, selling the company or acquiring another company or business, changing operating or marketing strategies, adopting or not adopting, certain types of anti-takeover measures and r",
+      "reparsed_demand": "capital_return",
+      "reparsed_excerpt": "Such suggestions or positions may relate to one or more of the transactions specified in clauses (a) through (j) of Item 4 of Schedule 13D including, without limitation, such matters as disposing of one or more businesses, selling the company or acquiring another company or business, changing operating or marketing strategies, adopting or not adopting, certain types of anti-takeover measures and r",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "The quoted text is conditional discretion, a generic dialogue agenda, or an enumeration of reserved actions. It does not demonstrate a concrete requested issuer action in Item 4.",
+      "simulated_tickers": [
+        "MNRO"
+      ],
+      "listing": {
+        "ticker": "MNRO",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=MNRO; exchange=The Nasdaq Stock Market",
+        "filing": "0001562762-25-000146",
+        "form": "10-K",
+        "filing_date": "2025-05-28"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000904853-25-000005",
+      "campaign_key": "904853-1527590",
+      "region": "US",
+      "published": "2025-08-05T14:46:54-04:00",
+      "filer_id": "0000904853",
+      "filer_name": "Amster Howard",
+      "issuer_id": "0001527590",
+      "issuer_name": "Ready Capital Corp",
+      "url": "https://www.sec.gov/Archives/edgar/data/904853/0000904853-25-000005.txt",
+      "document_sha256": "07550e34f5bb8371a947cfba58e9852ddd4cca77f2d5a3a94ba98e7231073f03",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "Depending on various factors, including, without limitation, the Issuer's financial condition, the price levels of the shares of its Common Stock, condition in the securities markets, and general economic and industry conditions, the Reporting Persons, may in the future take such actions with respect to their investment in the Issuer as the deem appropriate, including, without limitation, engaging",
+      "reparsed_demand": "none",
+      "reparsed_excerpt": null,
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "No present intention with a reservation to modify plans.",
+      "simulated_tickers": [
+        "RC"
+      ],
+      "listing": {
+        "ticker": "RC",
+        "exchange": "NYSE",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=RC; exchange=New York Stock Exchange",
+        "filing": "0001628280-25-009464",
+        "form": "10-K",
+        "filing_date": "2025-03-03"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    },
+    {
+      "event_id": "EDGAR:0000921895-25-002706",
+      "campaign_key": "1959730-1552800",
+      "region": "US",
+      "published": "2025-10-07T17:06:38-04:00",
+      "filer_id": "0001959730",
+      "filer_name": "Fund 1 Investments, LLC",
+      "issuer_id": "0001552800",
+      "issuer_name": "TILE SHOP HOLDINGS, INC.",
+      "url": "https://www.sec.gov/Archives/edgar/data/1959730/0000921895-25-002706.txt",
+      "document_sha256": "f1da96a8e27d6843e11fe6370af3e527d83ddfc3cd1db850ab0c0ed141797203",
+      "roles": {
+        "filer_id": true,
+        "issuer_id": true,
+        "filer_name": true,
+        "issuer_name": true
+      },
+      "historical_signal_class": "A",
+      "historical_demand": "sale",
+      "historical_excerpt": "Depending on various factors including, without limitation, the Issuer's financial position, results and strategic direction, actions taken by the Issuer's management team and the Board, price levels of the Shares, conditions in the securities markets, general economic and industry conditions, and other investment opportunities available to the Reporting Person, the Reporting Person may in the fut",
+      "reparsed_demand": "strategy",
+      "reparsed_excerpt": "The Reporting Person intends to engage in discussions with the Board and the Issuer's management team regarding the Deregistration Plan, the Issuer's corporate governance and stockholder rights, and operational and strategic opportunities for the Issuer to enhance stockholder value (including following implementation of the Deregistration Plan, if approved by stockholders), among other matters.",
+      "reviewed_demand": "unsubstantiated",
+      "context_excerpt": null,
+      "assessment": "Deregistration was initiated by the issuer. Intent to discuss it does not substantiate a filer sale demand.",
+      "simulated_tickers": [
+        "TTSH"
+      ],
+      "listing": {
+        "ticker": "TTSH",
+        "exchange": "NASDAQ",
+        "source": "ixbrl_dei",
+        "evidence": "dei:TradingSymbol=TTSH; exchange=Nasdaq",
+        "filing": "0001552800-25-000003",
+        "form": "10-K",
+        "filing_date": "2025-02-27"
+      },
+      "listing_status": "matches_prior_issuer_filing",
+      "confirmatory_eligible": false,
+      "exclusion": [
+        "historical_price_series_security_link_missing",
+        "no_confirmed_demand",
+        "previously_exposed_holdout"
+      ]
+    }
+  ]
+}

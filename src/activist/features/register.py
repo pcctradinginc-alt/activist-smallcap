@@ -12,7 +12,7 @@ import bisect
 from collections import defaultdict
 import pandas as pd
 from ..confidence.basic import shrink_to_mean
-from ..parse.campaigns import known_activists
+from ..common import load_yaml
 
 MIN_ISSUERS = 3
 INITIAL = {"SC 13D", "SCHEDULE 13D"}
@@ -26,6 +26,13 @@ class Register:
             f, i = str(e.get("filer_id") or "").lstrip("0"), str(e.get("issuer_id") or "").lstrip("0")
             if e["form"] in INITIAL and f and i and f != i and (f, i) not in seen:
                 seen.add((f, i)); self.first13d[f].append(e["published"])
+        self.listed_since = {}
+        for entry in load_yaml("activists.yaml")["activists"]:
+            for field in ("cik", "edinet"):
+                if entry.get(field):
+                    key = str(entry[field]).lstrip("0")
+                    since = str(entry.get("since", "1900-01-01"))
+                    self.listed_since[key] = min(since, self.listed_since.get(key, since))
         self.results = results if results is not None else pd.DataFrame()
 
     def prior_campaigns(self, filer: str, asof: str) -> int:
@@ -33,11 +40,12 @@ class Register:
 
     def is_listed(self, filer: str, asof: str) -> bool:
         """Im kuratierten Register (config/activists.yaml) zum Stichtag."""
-        return str(filer or "").lstrip("0") in known_activists(asof)
+        start = self.listed_since.get(str(filer or "").lstrip("0"))
+        return start is not None and start <= asof[:10]
 
     def is_activist(self, filer: str, asof: str) -> bool:
         f = str(filer or "").lstrip("0")
-        return f in known_activists(asof) or self.prior_campaigns(f, asof) >= MIN_ISSUERS
+        return self.is_listed(f, asof) or self.prior_campaigns(f, asof) >= MIN_ISSUERS
 
     def metrics(self, filer: str, asof: str) -> dict:
         """Nur abgeschlossene Kampagnen mit exit_date < asof; Schrumpfung bei < 10."""

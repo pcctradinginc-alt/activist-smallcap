@@ -4,6 +4,11 @@ on:
     - cron: "30 22 * * 1-5"   # nach US-Börsenschluss (EDGAR)
     - cron: "0 9 * * 1-5"     # nach Tokioter Meldeschluss (EDINET, 18:00 JST)
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Pipeline prüfen, ohne Journal, Datenbranch oder Mailversand zu ändern"
+        type: boolean
+        default: true
 permissions:
   contents: write
 concurrency: data-write
@@ -22,7 +27,7 @@ jobs:
           EDINET_API_KEY: ${{ secrets.EDINET_API_KEY }}
         run: python -m activist.cli fetch --source all --days 2
       - name: Papierdepot (Schattenmodus)
-        if: always() && hashFiles('journal/PAUSE_PAPER') == ''
+        if: success() && github.ref == 'refs/heads/main' && !inputs.dry_run && hashFiles('journal/PAUSE_PAPER') == ''
         env:
           PYTHONPATH: src
           SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
@@ -32,8 +37,34 @@ jobs:
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           MAIL_TO: ${{ secrets.MAIL_TO }}
         run: python -m activist.cli paper
+      - name: Papierdepot und Bericht als Trockenlauf
+        if: inputs.dry_run
+        env:
+          PYTHONPATH: src
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+          TIINGO_API_KEY: ${{ secrets.TIINGO_API_KEY }}
+        run: |
+          scratch="$RUNNER_TEMP/paper-dry-run"
+          mkdir -p "$scratch"
+          cp -a journal "$scratch/journal"
+          for folder in config data reports; do ln -s "$PWD/$folder" "$scratch/$folder"; done
+          rm -f "$scratch/journal/PAUSE_PAPER"
+          export ACTIVIST_ROOT="$scratch"
+          day=$(python -c 'from activist.paper.portfolio import load_state; from datetime import date, timedelta; print(max(date.today(), date.fromisoformat(load_state()["last_run"]) + timedelta(days=1)))')
+          python -m activist.cli paper --date "$day" | tee "$scratch/paper.log"
+          python -m activist.cli weekly > "$scratch/weekly-preview.txt"
+          git diff --exit-code -- journal journal_archive
+      - uses: actions/upload-artifact@v4
+        if: always() && inputs.dry_run
+        with:
+          name: paper-dry-run
+          path: |
+            ${{ runner.temp }}/paper-dry-run/paper.log
+            ${{ runner.temp }}/paper-dry-run/weekly-preview.txt
+            ${{ runner.temp }}/paper-dry-run/journal/
+            reports/health_fetch.json
       - name: Commit (append-only)
-        if: always()
+        if: always() && github.ref == 'refs/heads/main' && !inputs.dry_run
         run: |
           git config user.name "activist-bot"; git config user.email "actions@users.noreply.github.com"
           git add data/events journal reports/health_*.json && git diff --cached --quiet || (git commit -m "data: Meldungen $(date -u +%F)" && ok=0; for i in 1 2 3 4 5 6 7 8; do git pull --rebase && git push && { ok=1; break; }; sleep $((RANDOM % 30 + 10)); done; [ $ok = 1 ])

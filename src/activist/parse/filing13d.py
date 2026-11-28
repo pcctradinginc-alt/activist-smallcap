@@ -83,7 +83,10 @@ _ITEM5_END = r"(?i)item\s*[67]\s*[.:\-–—]"
 
 
 def _legacy_item4(txt: str) -> str:
-    return _legacy_section(txt, _ITEM4_START, r"(?i)item\s*5\s*[.:\-–—]")
+    end = r"(?i)item\s*5\s*[.:\-–—]*\s*interest\s+in\s+(?:the\s+)?securities"
+    named = r"(?i)item\s*4\s*[.:\-–—]*\s*purpose\s+of\s+(?:the\s+)?transactions?[.:\-–—]*"
+    abbreviated = r"(?im)^item\s*4\s*[.:\-–—]"
+    return _legacy_section(txt, named, end) or _legacy_section(txt, abbreviated, end)
 
 
 # --------------------------------------------------------------------------- Prozent / Stückzahl
@@ -155,7 +158,7 @@ def _sentences(text: str) -> list[str]:
     return out
 
 
-PARSER_VERSION = 3   # erhöhen bei jeder Änderung der Klassifikation -> Cache wird neu aufgebaut
+PARSER_VERSION = 4   # erhöhen bei jeder Änderung der Klassifikation -> Cache wird neu aufgebaut
 
 _ITEM4_LIST = [
     r"acquisition by any person of additional securities", r"extraordinary corporate transaction",
@@ -167,6 +170,11 @@ _ITEM4_LIST = [
 
 
 def _is_boilerplate(s: str) -> bool:
+    if re.search(r"(?i)\b(?:depending (?:on|upon)|in pursuing (?:such )?investment purposes|"
+                 r"may (?:in the future |from time to time )?(?:engage in|discuss|consider|wish to)|"
+                 r"may be made at any time|any such actions could involve|"
+                 r"do(?:es)? not have any present|no present (?:plan|proposal|intention))\b", s):
+        return True
     if _NEGATION.search(s):
         return True
     if sum(bool(re.search(p, s, re.I)) for p in _LIST_PHRASES) >= 2:
@@ -239,7 +247,7 @@ def subject_sic(text: str) -> str | None:
     return m.group(1) if m else None
 
 
-def parse_text(text: str) -> dict:
+def parse_text(text: str, *, full_context=False) -> dict:
     m = re.search(r"FILED AS OF DATE:\s*(\d{8})", text)
     ref = datetime.strptime(m.group(1), "%Y%m%d") if m else None
 
@@ -273,7 +281,7 @@ def parse_text(text: str) -> dict:
         percent = _percent_legacy(full)
         shares = _shares_legacy(full)
 
-    item4_text = item4[:ITEM4_MAX]
+    item4_text = item4 if full_context else item4[:ITEM4_MAX]
     demand, evidence = classify_demand(item4)
     is_exit = bool((percent is not None and percent < 5) or _EXIT_TEXT.search(full))
     return {

@@ -1,4 +1,5 @@
 """Bestätigender Alpha-Test: Holdout-Versiegelung, Holm, nur geprüfte Daten, Protokolländerung sperrt."""
+from datetime import datetime
 import numpy as np
 import pandas as pd
 import pytest
@@ -23,6 +24,11 @@ def root(tmp_path, monkeypatch):
     for f in alpha.PROTOCOL_FILES:
         (tmp_path / f).parent.mkdir(parents=True, exist_ok=True)
         (tmp_path / f).write_text("x")
+    class PreHoldoutClock(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return cls(2022, 12, 31, tzinfo=tz)
+    monkeypatch.setattr(alpha, "datetime", PreHoldoutClock)
     monkeypatch.setattr(alpha, "ROOT", tmp_path)
     monkeypatch.setattr(alpha, "FREEZE", tmp_path / "PROTOCOL_FREEZE.json")
     return tmp_path

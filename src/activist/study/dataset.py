@@ -15,8 +15,9 @@ from ..features.register import Register
 from ..features.universe import price_features, universe_check
 from ..parse import filing13d
 from ..risk.rules import candidate_reasons, next_earnings
-from ..sources import delisting, hist_ticker, prices, secmeta, sector
+from ..sources import delisting, edinet_docs, hist_ticker, prices, secmeta, sector
 from . import holders
+from .identity import apply_identity, approved_identity, identity_status, load_evidence, role_issues
 
 INITIAL = {"SC 13D", "SCHEDULE 13D"}
 AMEND = {"SC 13D/A", "SCHEDULE 13D/A"}
@@ -58,8 +59,7 @@ def data_quality(row: dict, ticker_certain: bool, activist_evidence: bool) -> di
 
 def _ticker_certain(row: dict, px, d0: date, issuer_id: str, current: str | None) -> bool:
     """Ist der Ticker der damaligen Firma sicher zugeordnet? secmeta.ticker_asof liefert nur den HEUTIGEN Ticker, daher:
-    Survivorship-Pfad (historischer Ticker + Tiingo-Kurs am Einstand validiert) · Kurs am Entscheidungstag passt zum
-    Einstand des Aktivisten · oder der historische Ticker aus den SEC-Meldungen gleicht dem heutigen."""
+    Verlangt einen passenden Ticker aus einer früheren Meldung des Emittenten."""
     row["ticker_check"] = None
     try:
         h = hist_ticker.ticker_hist(issuer_id, d0) or {}
@@ -126,7 +126,7 @@ def campaigns(events: list[dict], reg: Register) -> list[dict]:
 
 
 def build(events: list[dict], end: date | None = None, parse_filings: bool = True,
-          since: str | None = None) -> tuple[pd.DataFrame, Counter]:
+          since: str | None = None, *, confirmed_only=False) -> tuple[pd.DataFrame, Counter]:
     p, lim = params(), risk_limits()["candidate"]
     reg = Register(events)
     funnel, rows, cache = Counter(), [], _parsed_cache()
@@ -134,6 +134,7 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
     for e in events:
         if e.get("region") == "US" and e.get("issuer_id"):
             by_issuer.setdefault(str(e["issuer_id"]).lstrip("0"), []).append(e)
+    evidence = load_evidence()
     cfg = p["universe"]["US"]
     end = end or date.today()
     for c in campaigns(events, reg):
@@ -143,15 +144,20 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
         row = {k: c.get(k) for k in ("event_id", "campaign_key", "published", "form", "signal_class", "event_type",
                                      "filer_id", "filer_name", "issuer_id", "issuer_name", "url", "region")}
         row["activist"] = c.get("filer_name") or c.get("filer_id")
-        from .identity import identity_status
         row.update(identity_status(c))
+        if confirmed_only and c["event_id"] not in evidence:
+            row["status"] = "gesperrt: kein geprüfter Identitätsnachweis"
+            funnel[row["status"]] += 1
+            rows.append(row)
+            continue
         if row["identity_status"] == "conflict":
             row["status"] = "Identitätskonflikt"; funnel["Identitätskonflikt"] += 1; rows.append(row); continue
-        try:
-            t = secmeta.ticker_asof(c["issuer_id"], c["published"][:10])
-        except Exception:
-            funnel["SEC-Stammdaten nicht abrufbar"] += 1; row["status"] = "keine Stammdaten"; rows.append(row); continue
         d0 = date.fromisoformat(c["published"][:10])
+        try:
+            h = hist_ticker.ticker_hist(c["issuer_id"], d0)
+        except Exception:
+            h = {}
+        t = h if h.get("ticker") else None
         ft = _parse(c["url"], cache) if parse_filings and c["form"] in INITIAL | AMEND else {}
         sic = ft.get("subject_sic")
         row["sector"] = sector.from_sic(sic)   # point-in-time: SIC aus dem Kopf der Meldung -> Yahoo-Sektorname
@@ -170,10 +176,6 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
             # Survivorship: historischen Ticker aus den eigenen SEC-Meldungen rekonstruieren, Kurse über Tiingo
             ft0 = _parse(c["url"], cache) if parse_filings else {}
             row["activist_cost"] = ft0.get("avg_purchase_price")
-            try:
-                h = hist_ticker.ticker_hist(c["issuer_id"], d0)
-            except Exception:
-                h = {}
             if h.get("ticker"):
                 row["ticker"], row["ticker_source"] = h["ticker"], "hist:" + str(h.get("source"))
                 try:
@@ -195,13 +197,14 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
                        terminal_cash=out.get("cash_per_share"), terminal_evidence=out.get("evidence"))
             funnel[f"Survivorship: Endwert {out.get('type')}"] += 1
             row["status"] = "nur Endwert"; rows.append(row); continue
+        approved = apply_identity(row, c, evidence)
         pf = price_features(px, c["published"])
         try:
-            so = secmeta.shares_outstanding_asof(c["issuer_id"], d0)
+            so = secmeta.shares_outstanding_asof(c["issuer_id"], d0 - timedelta(days=1))
         except Exception:
             so = None
         uv = universe_check(cfg, pf, so[0] if so else None, secmeta.excluded_industry(sic),
-                            bool(t and t["otc"]) if since else False)   # OTC-Status nur heute bekannt -> nur im Live-Betrieb
+                            h.get("exchange") == "OTC")   # OTC-Status nur heute bekannt -> nur im Live-Betrieb
         row.update({k: pf.get(k) for k in ("price", "adv", "runup_20d", "half_spread")})
         row["mcap"] = so[0] * pf["price"] if so and pf.get("ok") else None
         if uv:
@@ -226,13 +229,7 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
                 mh = None
         st = _major(None, None, None, row["stake"] / 100) if isinstance(row.get("stake"), (int, float)) else None
         row["major_holder"] = max((x for x in (mh, st) if x is not None), default=None)
-        try:
-            # Historical realized earnings dates are not announced schedules.
-            # No point-in-time calendar is available; never use later 8-Ks as forecasts.
-            ed, ne = [], None
-        except Exception:
-            ed, ne = [], None
-        row["days_to_earnings"] = (ne - d0).days if ne else None
+        row["days_to_earnings"] = None
         row["earnings_check"] = "unbekannt (kein historischer Ankündigungskalender)"
         try:
             from ..paper.portfolio import eur_per_unit
@@ -249,17 +246,22 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
         row["exit_events"] = exits
         row["status"] = ("verworfen: " + "; ".join(reasons)) if reasons else "qualifiziert"
         funnel["verworfen (Schattenportfolio)" if reasons else "qualifiziert"] += 1
-        if not reasons and row.get("price_source") == "yahoo" and row.get("price_check") is None:
+        if (not reasons or approved) and row.get("price_source") == "yahoo" and row.get("price_check") is None:
             try:            # Zweitquelle nur für qualifizierte Kampagnen (Tiingo-Kontingent)
                 _, chk = prices.load(row["ticker"], "US", d0 - timedelta(days=45), min(d0 + timedelta(days=420), end))
                 row["price_check"] = chk.get("ok")
                 row["price_check_note"] = prices._scrub(chk.get("error")) if chk.get("error") else (f"Abweichung {chk.get('max_dev')}" if chk.get("ok") is False else None)
                 if chk.get("ok") is False:
-                    funnel["qualifiziert"] -= 1; funnel["Kursquellen weichen ab"] += 1
+                    funnel["verworfen (Schattenportfolio)" if reasons else "qualifiziert"] -= 1
+                    funnel["Kursquellen weichen ab"] += 1
                     row["status"] = "gesperrt: Kursabweichung"; rows.append(row); continue
             except Exception as e:
                 row["price_check_note"] = prices._scrub(e)[:200]
-        row.update(data_quality(row, ticker_certain=_ticker_certain(row, px, d0, c["issuer_id"], row.get("ticker")), activist_evidence=bool(c.get("listed_activist") or ft.get("demand_evidence"))))
+        intent = (approved or {}).get("demand_review", {})
+        activist_evidence = (intent.get("class") == row.get("demand") and intent.get("concrete") is True
+                              if c["signal_class"] == "A" else bool(c.get("listed_activist") and (approved or {}).get("activist_review")))
+        row.update(data_quality(row, ticker_certain=_ticker_certain(row, px, d0, c["issuer_id"], row.get("ticker")),
+                                activist_evidence=activist_evidence))
         rows.append(row)
     return pd.DataFrame(rows), funnel
 
@@ -274,17 +276,26 @@ def _norm_name(s: str) -> str:
 
 
 # Banken, Versicherer, Broker, Treuhänder: melden >5 % aus Geschäft/Treuhand, nicht als Aktivist (seit 2026-11-21)
-JP_FINANCIAL = ("銀行", "信託", "証券", "證券", "生命", "保険", "損保", "フィナンシャル", "ファイナンシャル", "ホールディングス・バンク",
-                "bank", "securities", "insurance", "trust", "financial group", "life ")
+def jp_institution_kind(name) -> str | None:
+    import unicodedata
+    n = unicodedata.normalize("NFKC", str(name or "")).casefold()
+    categories = {
+        "custodian": ("信託銀行", "custodian", "trust bank", "カストディ"),
+        "insurer": ("生命", "保険", "損保", "insurance", "life insurance"),
+        "bank": ("銀行", "bank", "フィナンシャル", "ファイナンシャル", "financial group"),
+        "broker": ("証券", "證券", "securities"),
+        "asset_manager": ("アセットマネジメント", "アセット・マネジメント", "asset management",
+                          "ブラックロック", "キャピタル・リサーチ・アンド・マネージメント"),
+        "trustee": ("信託", "trust"),
+    }
+    return next((kind for kind, patterns in categories.items() if any(k in n for k in patterns)), None)
 
 
 def is_jp_financial(name) -> bool:
-    import unicodedata
-    n = unicodedata.normalize("NFKC", str(name or "")).lower()
-    return any(k in n for k in JP_FINANCIAL)
+    return jp_institution_kind(name) is not None
 
 
-def jp_campaigns(events: list[dict]) -> list[dict]:
+def jp_campaigns(events: list[dict], *, evidence=None) -> list[dict]:
     """Kampagne = (Melder, Emittent). Klasse A = Haltezweck 'wichtige Vorschläge' (重要提案行為等);
     Klasse B = bekannter Aktivist (Liste oder >= 3 frühere A-Meldungen bei verschiedenen Emittenten) ohne diesen Zweck."""
     from ..common import load_yaml
@@ -294,10 +305,14 @@ def jp_campaigns(events: list[dict]) -> list[dict]:
              if a.get("region") == "JP" for n in [a["name"], *aliases.get(a["name"], [])]]
     jp = sorted([e for e in events if e.get("source") == "EDINET" and e.get("form") in JP_FORMS and e.get("doc_parsed")],
                 key=lambda e: e["published"])
+    evidence = evidence if evidence is not None else load_evidence()
     prior_a: dict[str, list[tuple[str, str]]] = {}     # Melder -> [(Zeit, Emittent)] aller A-Meldungen, zeitlich sortiert
     for e in jp:
-        if e.get("important_proposal") and e.get("filer_id"):
-            prior_a.setdefault(e["filer_id"], []).append((e["published"], e.get("issuer_sec_code")))
+        if not e.get("important_proposal") or is_jp_financial(e.get("filer_name")):
+            continue
+        approved = approved_identity(e, e.get("issuer_sec_code"), evidence)
+        if approved and approved.get("proposal_review", {}).get("concrete") is True:
+            prior_a.setdefault(e["filer_id"], []).append((e["published"], e["issuer_id"]))
     by: dict[tuple, list] = {}
     for e in jp:
         by.setdefault((e.get("filer_id"), e.get("issuer_sec_code")), []).append(e)
@@ -308,15 +323,21 @@ def jp_campaigns(events: list[dict]) -> list[dict]:
         for idx, e in enumerate(evs):
             nm = _norm_name(e.get("filer_name"))
             listed = any(k and nm == k and since <= e["published"][:10] for k, since in names)
-            behav = len({iss for t, iss in prior_a.get(f, []) if t < e["published"] and iss != sec}) >= 3
-            if not listed and (is_jp_financial(e.get("filer_name")) or "アセットマネジメント" in str(e.get("filer_name") or "")):
+            prior_count = len({iss for t, iss in prior_a.get(f, []) if t < e["published"] and iss != e.get("issuer_id")})
+            behav = prior_count >= 3 and bool(e.get("issuer_id"))
+            if role_issues(e):
+                continue
+            if not listed and is_jp_financial(e.get("filer_name")):
                 break                                   # Finanzinstitut: keine Aktivisten-Kampagne
-            cls = "A" if e.get("important_proposal") else ("B" if (listed or behav) else None)
+            purpose = edinet_docs.proposal_category(e.get("purpose_text"))
+            if purpose == "control_transaction":
+                continue
+            cls = "A" if purpose == "specific_intervention" else ("B" if (listed or behav) else None)
             if cls:
                 out.append(dict(e, campaign_key=f"{f}-{sec}", signal_class=cls, event_type="jp_" + cls,
                                 followups=evs[idx + 1:], ticker=sec,
                                 activist_evidence_kind="proposal" if cls == "A" else ("register_name" if listed else "prior_proposals"),
-                                prior_proposal_count=len({iss for t, iss in prior_a.get(f, []) if t < e["published"] and iss != sec})))
+                                prior_proposal_count=prior_count, proposal_category=purpose))
                 break
     return out
 
@@ -328,26 +349,27 @@ def _major(idx: dict, key, before: str, stake) -> float | None:
     return max((x for x in (mh, st) if x is not None), default=None)
 
 
-def build_jp(events: list[dict], end: date | None = None, since: str | None = None) -> tuple[pd.DataFrame, Counter]:
+def build_jp(events: list[dict], end: date | None = None, since: str | None = None, *, confirmed_only=False) -> tuple[pd.DataFrame, Counter]:
     p, lim = params(), risk_limits()["candidate"]
     cfg, funnel, rows = p["universe"]["JP"], Counter(), []
+    evidence = load_evidence()
     jp_idx = holders.build_index(events)
     end = end or date.today()
-    try:
-        fx = prices.yahoo("EURJPY=X", date(2015, 1, 1), end)["close"]
-    except Exception:
-        fx = None
-    for c in jp_campaigns(events):
+    for c in jp_campaigns(events, evidence=evidence):
         if since and c["published"] < since:
             continue
         funnel["JP kampagnen"] += 1
         row = {k: c.get(k) for k in ("event_id", "campaign_key", "published", "form", "signal_class", "event_type",
                                      "filer_id", "filer_name", "issuer_id", "issuer_name", "url", "region", "ticker",
                                      "activist_evidence_kind", "prior_proposal_count")}
-        row.update(activist=c.get("filer_name"), demand="capital_or_proposal" if c.get("important_proposal") else "none",
+        row.update(activist=c.get("filer_name"), demand="capital_or_proposal" if c["signal_class"] == "A" else "none",
                    demand_evidence=c.get("important_proposal_evidence"), stake=c.get("holding_ratio"))
-        from .identity import identity_status
         row.update(identity_status(c))
+        if confirmed_only and c["event_id"] not in evidence:
+            row["status"] = "gesperrt: kein geprüfter Identitätsnachweis"
+            funnel[row["status"]] += 1
+            rows.append(row)
+            continue
         if row["identity_status"] == "conflict":
             row["status"] = "Identitätskonflikt"; funnel["JP Identitätskonflikt"] += 1; rows.append(row); continue
         d0 = date.fromisoformat(c["published"][:10])
@@ -355,6 +377,7 @@ def build_jp(events: list[dict], end: date | None = None, since: str | None = No
             px, chk = prices.load(c["ticker"], "JP", d0 - timedelta(days=45), min(d0 + timedelta(days=420), end))
         except Exception:
             funnel["JP keine Kurse (delistet/Survivorship)"] += 1; row["status"] = "keine Kurse"; rows.append(row); continue
+        approved = apply_identity(row, c, evidence)
         pf = price_features(px, c["published"])
         uv = universe_check(cfg, pf, c.get("total_shares_outstanding"), None, False)
         row.update({k: pf.get(k) for k in ("price", "adv", "runup_20d", "half_spread")})
@@ -363,11 +386,13 @@ def build_jp(events: list[dict], end: date | None = None, since: str | None = No
                 funnel[f"JP Universum: {v}"] += 1
             row["status"] = "außerhalb Universum: " + "; ".join(uv); rows.append(row); continue
         funnel["JP im Universum"] += 1
-        eurjpy = float(fx.asof(pd.Timestamp(d0))) if fx is not None else float("nan")
-        if pd.isna(eurjpy):                       # kein stiller Fallback auf einen Näherungskurs
+        from ..sources.fx import eur_per_unit
+        try:
+            eurjpy = 1 / eur_per_unit(c["ticker"], "JP", d0)
+        except (ValueError, OSError, TypeError, ArithmeticError):                       # kein stiller Fallback auf einen Näherungskurs
             funnel["JP Wechselkurs fehlt"] += 1; row["status"] = "gesperrt: Wechselkurs fehlt"; rows.append(row); continue
         pos_jpy = p["order"]["position_eur"] * eurjpy
-        row["sector"] = sector.yahoo(c["ticker"] + prices.YAHOO_SUFFIX["JP"])
+        row["sector"] = None  # no archived JP sector classifications
         row["major_holder"] = _major(jp_idx, ("JP", c.get("issuer_sec_code") or c["ticker"]), c["published"], row.get("stake"))
         row["days_to_earnings"], row["earnings_check"] = None, "unbekannt (keine Datenquelle)"
         reasons = candidate_reasons(row, pos_jpy, lim)
@@ -389,6 +414,7 @@ def build_jp(events: list[dict], end: date | None = None, since: str | None = No
                 funnel["JP qualifiziert"] -= 1; funnel["JP Kursreihe unplausibel"] += 1
                 row["status"] = "gesperrt: Kursabweichung"; rows.append(row); continue
         row["mcap"] = c.get("total_shares_outstanding") * pf["price"] if c.get("total_shares_outstanding") else None
-        row.update(data_quality(row, ticker_certain=False, activist_evidence=False))  # original-document identity and independent activist evidence pending
+        row.update(data_quality(row, ticker_certain=bool(approved), activist_evidence=bool(
+            approved and approved.get("proposal_review", {}).get("concrete") is True and c["signal_class"] == "A")))
         rows.append(row)
     return pd.DataFrame(rows), funnel

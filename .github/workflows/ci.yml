@@ -8,6 +8,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
       - run: pip install -r requirements.txt
+      - run: python -m playwright install chromium
       - run: pytest -q
       - run: PYTHONPATH=src python scripts/audit_integrity.py
       - uses: actions/upload-artifact@v4

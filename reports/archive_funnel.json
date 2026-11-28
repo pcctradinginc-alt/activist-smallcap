@@ -1,0 +1,43 @@
+{
+  "BENELUX_FR": {
+    "raw": 8990,
+    "unique": 8990,
+    "original_parse_not_recorded": 8990,
+    "both_roles_named": 7064
+  },
+  "DACH": {
+    "raw": 8058,
+    "unique": 8058,
+    "both_roles_named": 8058,
+    "original_parse_not_recorded": 8058
+  },
+  "JP": {
+    "raw": 74057,
+    "unique": 74057,
+    "both_roles_named": 73946,
+    "both_roles_identified": 74057,
+    "original_parsed_at_import": 73953,
+    "original_parse_failed": 3,
+    "original_parse_not_recorded": 101
+  },
+  "NORDIC": {
+    "raw": 12904,
+    "unique": 12904,
+    "original_parse_not_recorded": 12904,
+    "both_roles_named": 1908
+  },
+  "UK": {
+    "raw": 86001,
+    "unique": 86001,
+    "both_roles_named": 79203,
+    "original_parse_not_recorded": 86001,
+    "both_roles_identified": 1361
+  },
+  "US": {
+    "raw": 62313,
+    "unique": 62313,
+    "both_roles_named": 62313,
+    "both_roles_identified": 62313,
+    "original_parse_not_recorded": 62313
+  }
+}

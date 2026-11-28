@@ -3,9 +3,10 @@ auf qualifizierten Kampagnen; verworfene Kampagnen laufen als Schattenportfolio 
 from __future__ import annotations
 import json
 from datetime import date, timedelta
+import math
 import pandas as pd
-from ..common import REPORTS, atomic_write_text, params
-from ..paper.execution import cost_one_side, simulate_entry, simulate_exit
+from ..common import REPORTS, atomic_write_text, file_hash, params
+from ..paper.execution import benchmark_return, cost_one_side, entry_cashflows, net_returns, simulate_entry, simulate_exit
 from .alpha import dev_only, main_trades, run_alpha
 from .stats import verdict
 
@@ -17,55 +18,56 @@ def run_campaign(c: dict, px: pd.DataFrame, bench: pd.DataFrame, p: dict, stop=T
                  exit_events=(), fx_local: float = 1.0, fx_at=None, bench_fx_at=None) -> dict:
     """fx_local = Einheiten Landeswährung je EUR am Entscheidungstag (Volumen-Obergrenze in Landeswährung)."""
     pos_local = p["order"]["position_eur"] * fx_local
-    fill = simulate_entry(px, pd.Timestamp(c["published"]), p["order"], pos_local)
+    lot = int(p["universe"]["JP"].get("lot_size", 100)) if c["region"] == "JP" else None
+    fill = simulate_entry(px, pd.Timestamp(c["published"]), p["order"], pos_local, lot_size=lot)
     if not fill.filled:
         return {"executed": False, "reason": fill.reason}
-    import math
-    entry_fx = fx_at(fill.fill_date.date()) if fx_at else fx_local
-    if not math.isfinite(entry_fx) or entry_fx <= 0:
+    try:
+        details = entry_cashflows(fill, lambda d: 1 / (fx_at(d) if fx_at else fx_local),
+                                  c.get("half_spread"), p["costs"], c["region"])
+    except (ValueError, TypeError, ZeroDivisionError):
         return {"executed": False, "reason": "Einstiegswechselkurs fehlt"}
-    local_value = pos_local * fill.fill_ratio
-    value = local_value / entry_fx
-    if c["region"] == "JP":
-        lot = int(p["universe"]["JP"].get("lot_size", 100))
-        qty = int(local_value / fill.price / lot) * lot
-        if qty <= 0:
-            return {"executed": False, "reason": "Mindestorder am Fill nicht erreicht"}
-        local_value = qty * fill.price
-        value = local_value / entry_fx
+    value = sum(x["notional_eur"] for x in details)
+    qty = sum(x["qty"] for x in details)
+    entry_fx = qty * fill.price / value
+    buy = sum(x["cost_eur"] for x in details) / value
     xd, xp, why = simulate_exit(px, fill.fill_date, fill.price, p["exit"], exit_events, stop, max_days)
     gross = xp / fill.price - 1
-    buy = cost_one_side(c.get("half_spread"), p["costs"], c["region"], "buy", value)
-    buy += p["costs"].get("fixed_fee_eur_per_order", 0.0) * max(fill.fill_days - 1, 0) / max(value, 1e-9)
     entry_fields = {"invested_eur": value, "buy_cost": buy, "entry_fx_local_per_eur": entry_fx,
-                    "entry": fill.price, "fill_ratio": fill.fill_ratio}
+                    "entry": fill.price, "fill_ratio": fill.fill_ratio, "entry_fills": details, "qty": qty}
     # Vergleichsindex zeitgleich zu den Aktienkursen: Einstieg zur Eröffnung, Ausstieg zur Eröffnung (Meldung/Stopp)
     # bzw. zum Schluss (Haltedauer/Datenende)
+    exit_fx = fx_at(xd.date()) if fx_at else fx_local
+    if not math.isfinite(exit_fx) or exit_fx <= 0:
+        return {"executed": True, "complete": False, "reason": "Ausstiegswechselkurs fehlt",
+                "entry_date": fill.fill_date, "exit_date": xd, **entry_fields}
+    exit_value_eur = qty * xp / exit_fx
+    sell = cost_one_side(c.get("half_spread"), p["costs"], c["region"], "sell", exit_value_eur)
+    settlement = {"exit_value_eur": exit_value_eur, "sell_cost": sell, "position_closes": why not in OPEN}
     bo = bench["open"] if "open" in bench else bench["close"]
     b0 = bo.get(fill.fill_date, float("nan"))
     b1 = (bo if why in ("Aktivist reduziert", "Stopp") else bench["close"]).get(xd, float("nan"))
     if pd.isna(b0) or pd.isna(b1):
         return {"executed": True, "complete": False, "reason": "Vergleichsindex fehlt", "entry_date": fill.fill_date,
-                "exit_date": xd, "exit_reason": why, **entry_fields}
+                "exit_date": xd, "exit_reason": why, **entry_fields, **settlement}
     if b0 <= 0 or b1 <= 0 or bench["close"].loc[fill.fill_date:xd].pct_change().abs().max() > BENCH_MAX_DAILY_MOVE:
         return {"executed": True, "complete": False, "reason": "Vergleichsindex unplausibel", "entry_date": fill.fill_date,
-                "exit_date": xd, "exit_reason": why, **entry_fields}
+                "exit_date": xd, "exit_reason": why, **entry_fields, **settlement}
     bret = float(b1 / b0 - 1)
-    exit_fx = fx_at(xd.date()) if fx_at else fx_local
-    if not math.isfinite(exit_fx) or exit_fx <= 0:
-        return {"executed": True, "complete": False, "reason": "Ausstiegswechselkurs fehlt",
-                "entry_date": fill.fill_date, "exit_date": xd, "invested_eur": value, "buy_cost": buy}
     fx_ratio = entry_fx / exit_fx
-    exit_value_eur = value * (1 + gross) * fx_ratio
-    sell = cost_one_side(c.get("half_spread"), p["costs"], c["region"], "sell", exit_value_eur)
     cost = buy + sell
     cash_net = (1 + gross) * (1 - sell) / (1 + buy) - 1
-    net_eur = exit_value_eur * (1 - sell) / (value * (1 + buy)) - 1
+    benchmark_entries = []
+    for x in details:
+        day = date.fromisoformat(x["date"])
+        rate = bench_fx_at(day) if bench_fx_at else (fx_at(day) if fx_at else fx_local)
+        quote = bo.get(pd.Timestamp(day), float("nan"))
+        benchmark_entries.append((x["notional_eur"], quote / rate if rate and rate > 0 else None))
     bfx0 = bench_fx_at(fill.fill_date.date()) if bench_fx_at else entry_fx
     bfx1 = bench_fx_at(xd.date()) if bench_fx_at else exit_fx
-    bench_eur = (1 + bret) * bfx0 / bfx1 - 1 if all(math.isfinite(x) and x > 0 for x in (bfx0,bfx1)) else None
-    net_excess = net_eur - bench_eur if bench_eur is not None else None
-    return {"executed": True, "complete": why not in OPEN and bench_eur is not None, "fill_ratio": fill.fill_ratio,
+    bench_eur = benchmark_return(benchmark_entries, b1 / bfx1 if bfx1 and bfx1 > 0 else None)
+    net_eur, net_excess = net_returns(value * (1 + buy), exit_value_eur * (1 - sell), bench_eur)
+    return {**entry_fields, **settlement, "executed": True, "complete": why not in OPEN and bench_eur is not None,
             "entry_date": fill.fill_date, "entry": fill.price, "exit_date": xd, "exit": xp, "exit_reason": why,
             "gross": gross, "bench": bret, "cost": cost, "net_excess": net_excess,
             "legacy_net_excess_local_approx": gross - bret - cost, "benchmark_eur": bench_eur,
@@ -81,8 +83,10 @@ def run_campaign(c: dict, px: pd.DataFrame, bench: pd.DataFrame, p: dict, stop=T
 def simulate(ds: pd.DataFrame, price_loader, bench_loader, variants: bool = True, fx_loader=None, bench_fx_loader=None) -> pd.DataFrame:
     """Datenbeschaffung + Handelssimulation (langsam, Netzwerk); die Auswertung steht getrennt in evaluate()."""
     p = params()
-    names = ["main"] + (["no_stop"] + [f"hold_{d}" for d in p["study"]["explore_holding_days"]] if variants else [])
+    names = ["main"] + (["no_stop", "no_reduction"] + [f"hold_{d}" for d in p["study"]["explore_holding_days"]] if variants else [])
     trades = []
+    if ds.empty or "status" not in ds:
+        return pd.DataFrame()
     for _, c in ds[ds.status.str.startswith(("qualifiziert", "verworfen"), na=False)].iterrows():
         c = c.to_dict()
         d0 = date.fromisoformat(c["published"][:10])
@@ -105,9 +109,9 @@ def simulate(ds: pd.DataFrame, price_loader, bench_loader, variants: bool = True
                            "variant": "main", "qualified": c["status"] == "qualifiziert", "executed": False,
                            "reason": "Wechselkurs fehlt", "published": c.get("published")})
             continue
-        ex = [pd.Timestamp(x) for x in (c.get("exit_events") or [])]
+        ex = [pd.Timestamp(x) for x in c["exit_events"]] if isinstance(c.get("exit_events"), list) else []
         for n in names:
-            stop = n == "main"
+            stop = n in ("main", "no_reduction")
             md = int(n.split("_")[1]) if n.startswith("hold_") else None
             def rate_at(day):
                 try:
@@ -119,14 +123,17 @@ def simulate(ds: pd.DataFrame, price_loader, bench_loader, variants: bool = True
                     return float(bench_fx_loader(c["region"], day))
                 except Exception:
                     return float("nan")
-            r = run_campaign(c, px, bench, p, stop, md, ex if not md else (), fxl, rate_at if fx_loader else None,
+            r = run_campaign(c, px, bench, p, stop, md, ex if not md and n != "no_reduction" else (), fxl, rate_at if fx_loader else None,
                              bench_rate_at if bench_fx_loader else None)
+            through = c.get("security_evidence_through")
+            coverage = isinstance(through, str) and r.get("exit_date") is not None and str(r["exit_date"])[:10] <= through
             trades.append({**{k: c[k] for k in ("campaign_key", "activist", "filer_id", "region", "signal_class",
                                                  "status", "ticker", "published", "demand")},
                            **{k: c.get(k) for k in ("event_id", "issuer_id", "issuer_name", "filer_name", "url", "demand_evidence", "activist_evidence_kind", "prior_proposal_count", "identity_status", "identity_issues", "identity_verified")},
-                           "mcap": c.get("mcap"), "verified": c.get("verified") is True, "dq_missing": c.get("dq_missing"),
+                           "mcap": c.get("mcap"), "verified": c.get("verified") is True and coverage, "dq_missing": c.get("dq_missing"),
                            "stake": c.get("stake"), "runup_20d": c.get("runup_20d"),
-                           "adv_eur": (c.get("adv") / fxl) if c.get("adv") and fxl else None,
+                           "adv_eur": (c.get("adv_eur") if c["region"] in ("UK", "NORDIC", "BENELUX_FR", "DACH")
+                                       else c["adv"] / fxl if c.get("adv") and fxl else None),
                            "price_source": c.get("price_source"),
                            "variant": n, "qualified": c["status"] == "qualifiziert", **r})
     return pd.DataFrame(trades)
@@ -161,12 +168,18 @@ def policy_comparisons(t: pd.DataFrame) -> dict:
     if t.empty or not required.issubset(t.columns):
         return {}
     import numpy as np
-    from .alpha import split_of
+    from .alpha import SPLITS, bootstrap_p, holm, split_of
+    from .stats import summarize
     d = dev_only(t).copy()
+    if "identity_verified" in d:
+        d = d[(d.identity_verified == True) & (d.verified == True)]
     d["split"] = d.published.map(split_of)
+    if "exit_date" in d:
+        cutoff = d["split"].map(lambda split: SPLITS[split][1])
+        d = d[d.exit_date.astype(str).str[:10] <= cutoff]
     d = d[(d.executed == True) & (d.complete == True) &
           np.isfinite(pd.to_numeric(d.net_excess, errors="coerce"))]
-    out = {}
+    out, pvalues = {}, {}
     for (region, cls, split), g in d.groupby(["region", "signal_class", "split"]):
         main = g[g.variant == "main"]
         if main.campaign_key.duplicated().any():
@@ -174,10 +187,17 @@ def policy_comparisons(t: pd.DataFrame) -> dict:
         base = main[main.qualified == True]
         def summary(x):
             y = x.net_excess
-            return {"n": int(len(y)), "mean": float(y.mean()) if len(y) else None,
-                    "worst": float(y.min()) if len(y) else None}
+            result = {"n": int(len(y)), "mean": float(y.mean()) if len(y) else None,
+                      "worst": float(y.min()) if len(y) else None}
+            if len(x) and {"activist", "entry_date"} <= set(x.columns):
+                stats = summarize(x)
+                result.update(ci_low=stats["ci_low"], ci_high=stats["ci_high"],
+                              n_activists=int(x.activist.nunique()),
+                              n_entry_months=int(pd.to_datetime(x.entry_date).dt.to_period("M").nunique()))
+            return result
         base_summary = summary(base)
         filters = {}
+        key = f"{region}/{cls}/{split}"
         for f in ABLATION_FILTERS:
             admitted = main[main.status == "verworfen: " + f]
             relaxed = pd.concat([base, admitted])
@@ -185,28 +205,43 @@ def policy_comparisons(t: pd.DataFrame) -> dict:
             filters[f] = {"added": a, "relaxed": b,
                           "delta_mean": b["mean"] - base_summary["mean"]
                           if a["n"] and base_summary["n"] else None}
+            if a["n"] and base_summary["n"] and {"activist", "entry_date"} <= set(admitted.columns):
+                pvalues[(key, "filters", f)] = bootstrap_p(admitted)
         exits = {}
         for variant in sorted(set(g.variant) - {"main"}):
             alt = g[(g.variant == variant) & (g.qualified == True)]
             if alt.campaign_key.duplicated().any():
                 continue
-            pair = base[["campaign_key", "net_excess"]].merge(
+            fields = ["campaign_key", "net_excess"]
+            fields += [k for k in ("activist", "entry_date") if k in base]
+            pair = base[fields].merge(
                 alt[["campaign_key", "net_excess"]], on="campaign_key", suffixes=("_main", "_alt"))
             delta = pair.net_excess_alt - pair.net_excess_main
-            exits[variant] = {"n_paired": int(len(pair)),
+            pair["net_excess"] = delta
+            exits[variant] = {"n_paired": int(len(pair)), "paired_delta": summary(pair),
                               "delta_mean": float(delta.mean()) if len(pair) else None,
                               "main_worst": float(pair.net_excess_main.min()) if len(pair) else None,
                               "alt_worst": float(pair.net_excess_alt.min()) if len(pair) else None}
-        out[f"{region}/{cls}/{split}"] = {"base": base_summary, "filters": filters,
+            if len(pair) and {"activist", "entry_date"} <= set(pair.columns):
+                pvalues[(key, "exits", variant)] = bootstrap_p(pair)
+        out[key] = {"base": base_summary, "filters": filters,
                                            "exits": exits, "status": "exploratory_only"}
+    for (key, group, name), adjusted in holm(pvalues).items():
+        out[key][group][name]["holm_p_positive_excess"] = adjusted
     return out
 
 
-def evaluate(t: pd.DataFrame) -> dict:
+def evaluate(t: pd.DataFrame, *, marks=None) -> dict:
     """Reine Auswertung der Trades-Tabelle (kein Netzwerk). Erkundungstabellen nur mit Entwicklungszeitraum (dev_only)."""
     p = params()
     res = {"combos": {}, "execution": {}}
     if t.empty:
+        from ..learn import ranker
+        alpha = run_alpha(t.assign(region=pd.Series(dtype=str), signal_class=pd.Series(dtype=str)))
+        res.update(alpha=alpha, data_quality=alpha["data_quality"],
+                   learning={"status": ranker.ST_INSUFFICIENT, "closed_campaigns": 0,
+                             "active": False, "n_train": 0, "n_valid": 0},
+                   policy_comparisons={}, control_portfolios={})
         return res
     names = sorted(t.variant.unique(), key=lambda v: v != "main")
     # Bestätigender Test (Train/Validierung/Holdout, nur geprüfte Daten, Holm) + Lernstatus
@@ -215,7 +250,7 @@ def evaluate(t: pd.DataFrame) -> dict:
     res["data_quality"] = res["alpha"]["data_quality"]
     res["policy_comparisons"] = policy_comparisons(t)
     from .control_portfolios import compare
-    res["control_portfolios"] = compare(t, start_cash=p["study"]["econ_portfolio_eur"])
+    res["control_portfolios"] = compare(t, start_cash=p["study"]["econ_portfolio_eur"], marks=marks)
     mt = main_trades(t)
     if len(mt):
         mt = ranker.pit_activist_record(mt)
@@ -230,6 +265,8 @@ def evaluate(t: pd.DataFrame) -> dict:
         if res["learning"]["status"] != ranker.ST_INSUFFICIENT:
             res["learning"]["card_full"] = ranker.card_full(tr)
             if res["alpha"]["frozen"] and res["learning"]["status"] == ranker.ST_CHALLENGER:
+                start = res["alpha"]["freeze"]["frozen_at"][:10]
+                ho = ho[ho.published.str[:10] > start]
                 res["learning"]["holdout"] = ranker.challenger_holdout(res["learning"]["card_full"], ho)
         res["outcomes"] = mt
     else:
@@ -416,6 +453,14 @@ def write_report(res: dict, funnel, ds: pd.DataFrame, trades: pd.DataFrame, path
          "wird ausschließlich im versiegelten bestätigenden Test ausgewertet.", "",
          "## Datentrichter", ""]
     L += [f"- {k}: {v}" for k, v in funnel.most_common()]
+    if res.get("confirmed_only"):
+        L += ["", "Kampagnen ohne geprüften Identitätsnachweis wurden vor dem Kursabruf ausgeschlossen."]
+    if res.get("regional_funnel"):
+        L += ["", "| Region | Rohmeldungen | Eindeutig | Kampagnen | Qualifiziert | Ausgeführt | Abgeschlossen |",
+              "|---|---:|---:|---:|---:|---:|---:|"]
+        for region, n in res["regional_funnel"].items():
+            L.append(f"| {region} | {n['raw']} | {n['unique']} | {n['campaigns']} | "
+                     f"{n['qualified']} | {n['executed']} | {n['closed']} |")
     gap = sum(v for k, v in funnel.items() if k.startswith("Survivorship: Endwert")) / max(funnel.get("kampagnen", 1), 1)
     rec = (ds.price_source == "tiingo").sum() if "price_source" in ds else 0
     L += ["", f"**Survivorship: {rec} verschwundene Titel über historischen Ticker + Tiingo zurückgeholt; "
@@ -448,14 +493,17 @@ def write_report(res: dict, funnel, ds: pd.DataFrame, trades: pd.DataFrame, path
                             "gross", "bench", "cost", "net_excess", "split", "verified", "event_id", "issuer_id", "issuer_name",
                             "filer_id", "filer_name", "ticker", "url", "demand_evidence", "activist_evidence_kind",
                             "prior_proposal_count", "dq_missing") if c in out]
-        atomic_write_text(REPORTS / "campaign_outcomes.csv", out[cols].to_csv(index=False))   # Ergebnis je abgeschlossener Kampagne
+        atomic_write_text(path.parent / "campaign_outcomes.csv", out[cols].to_csv(index=False))   # Ergebnis je abgeschlossener Kampagne
     card = (res.get("learning") or {}).get("card_full")
-    if card:
-        atomic_write_text(REPORTS / "scorecard.json", json.dumps({"status": res["learning"]["status"], "card": card},
-                                                                 default=str, indent=1, ensure_ascii=False))
-    atomic_write_text(path.with_name(path.stem + "_trades.csv"), trades.to_csv(index=False))
     from .alpha import _hashes
-    atomic_write_text(path.with_suffix(".json"), json.dumps({"protocol_hashes": _hashes(), "result": res, "funnel": dict(funnel), "alpha": res.get("alpha"),
+    hashes = _hashes()
+    outcome_path = path.parent / "campaign_outcomes.csv"
+    scorecard = {"status": (res.get("learning") or {}).get("status", "zu wenig Daten"),
+                 "card": card, "protocol_hashes": hashes,
+                 "outcomes_hash": file_hash(outcome_path) if card and outcome_path.exists() else None}
+    atomic_write_text(path.parent / "scorecard.json", json.dumps(scorecard, default=str, indent=1, ensure_ascii=False))
+    atomic_write_text(path.with_name(path.stem + "_trades.csv"), trades.to_csv(index=False))
+    atomic_write_text(path.with_suffix(".json"), json.dumps({"protocol_hashes": hashes, "result": res, "funnel": dict(funnel), "alpha": res.get("alpha"),
                                                               "data_quality": res.get("data_quality"), "learning": res.get("learning")},
                                                              default=str, indent=1))
     return str(path)

@@ -82,7 +82,7 @@ def test_none_when_no_filing_and_cache(net):
     assert h.ticker_hist(98246, "2030-01-20") == r      # unabhängiger Tagescache
     assert len(net["docs"]) == n
     cache = json.loads((common.DATA / "cache" / "hist_ticker" / "0000098246.json").read_text())
-    assert "pit-v2:2030-01-01" in cache and "pit-v2:2030-01-20" in cache
+    assert "pit-v3:2030-01-01" in cache and "pit-v3:2030-01-20" in cache
 
 
 def test_cache_hit_skips_network(net):

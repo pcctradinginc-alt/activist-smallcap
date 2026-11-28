@@ -4,6 +4,8 @@ from datetime import date
 import pandas as pd
 import pytest
 from activist.paper import portfolio as pf
+from activist.common import file_hash
+from activist.study.alpha import _hashes
 
 
 @pytest.fixture
@@ -13,11 +15,12 @@ def reports(tmp_path, monkeypatch):
     card = {"features": {"activist_prior_mean": {"type": "numeric", "edges": [0.0],
                                                  "buckets": {"0": {"value": -0.10, "n": 50}, "1": {"value": 0.20, "n": 50}}}},
             "train_mean": 0.02, "threshold": 0.05, "n_train": 100}
-    (tmp_path / "scorecard.json").write_text(json.dumps({"status": "x", "card": card}))
     pd.DataFrame([{"activist": "Good", "exit_date": "2025-01-01", "net_excess": 0.5},
                   {"activist": "Bad", "exit_date": "2025-01-01", "net_excess": -0.5},
                   {"activist": "Bad", "exit_date": "2030-01-01", "net_excess": 9.9}]       # Zukunft: darf nicht zählen
                  ).to_csv(tmp_path / "campaign_outcomes.csv", index=False)
+    (tmp_path / "scorecard.json").write_text(json.dumps({"status": "x", "card": card,
+        "protocol_hashes": _hashes(), "outcomes_hash": file_hash(tmp_path / "campaign_outcomes.csv")}))
     return tmp_path
 
 

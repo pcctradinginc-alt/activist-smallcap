@@ -16,7 +16,8 @@ from datetime import date, datetime, timedelta, timezone
 import pandas as pd
 from ..common import EventStore, JOURNAL, atomic_write_text, file_hash, params
 from ..risk.rules import check_portfolio, portfolio_size_factor
-from .execution import cost_one_side, simulate_entry
+from .execution import benchmark_return, cost_one_side, entry_cashflows, net_returns, simulate_entry
+from ..sources.fx import benchmark_eur_per_unit, eur_per_unit
 
 STATE = JOURNAL / "portfolio.json"
 TRADES = JOURNAL / "trades.csv"
@@ -25,7 +26,6 @@ TRADE_COLS = ["trade_id", "event_id", "campaign_id", "ticker", "region", "side",
               "qty", "cost_pct", "journal_hash"]
 SHADOW_COLS = ["candidate_id", "event_id", "ticker", "region", "reason", "date"]
 EU = ("UK", "NORDIC", "BENELUX_FR", "DACH")
-FX = {"US": "EURUSD=X", "JP": "EURJPY=X"}
 
 
 # ------------------------------------------------------------------ Kurse und Währung
@@ -35,27 +35,6 @@ def load_prices(ticker: str, region: str, start: date, end: date) -> pd.DataFram
         from ..study.dataset_eu import load_px
         return load_px(ticker, start, end, cache=False)
     return prices.load(ticker, region, start, end, cache=False)[0]
-
-
-def eur_per_unit(ticker: str, region: str, day: date) -> float:
-    """Umrechnung lokale Währung -> EUR (Kurse sind in Landeswährung; .L bereits in Pfund)."""
-    from ..sources import prices
-    pair = FX.get(region)
-    inverse = True
-    if region in EU:
-        from ..study.dataset_eu import SUFFIX_FX
-        pair = next((v for k, v in SUFFIX_FX.items() if ticker.endswith(k)), None); inverse = False
-    if not pair:
-        return 1.0
-    if pair not in _FX:                       # einmal je Währungspaar die ganze Historie laden
-        _FX[pair] = prices.yahoo(pair, date(2014, 1, 1), date.today())["close"]
-    v = float(_FX[pair].asof(pd.Timestamp(day)))
-    if pd.isna(v):
-        raise ValueError(f"kein Wechselkurs {pair} am {day}")
-    return 1 / v if inverse else v
-
-
-_FX: dict = {}
 
 
 # ------------------------------------------------------------------ Zustand / Journal
@@ -96,10 +75,10 @@ def validated_combos() -> set[str]:
     if not files:
         return set()
     # nur der bestätigende Holdout-Test bei eingefrorenem Protokoll zählt (keine Entwicklungsergebnisse)
-    from ..study.alpha import freeze_state
+    from ..study.alpha import current_artifact, freeze_state
     try:
         fs = freeze_state()
-        a = json.loads(files[-1].read_text()).get("alpha") or {}
+        a = current_artifact(REPORTS).get("alpha") or {}
     except (OSError, ValueError, KeyError):
         return set()
     if not fs.get("frozen") or not a.get("frozen") or not fs.get("frozen_at"):
@@ -131,40 +110,49 @@ def process_orders(st: dict, today: date, p: dict, loader=load_prices, fx=eur_pe
             continue
         px = px[px.index < pd.Timestamp(today)] if o.get("exclude_today") else px
         from ..features.universe import local_day
-        after = px[px.index > local_day(o["published"])]
+        placed = max(local_day(o["published"]), pd.Timestamp(o["order_date"]))
+        after = px[px.index > placed]
         if len(after) == 0:
-            continue                                   # noch kein Handelstag nach Veröffentlichung
-        fill = simulate_entry(px, pd.Timestamp(o["published"]), p["order"], o["position_eur_local"])
+            continue
+        lot = int(p["universe"]["JP"].get("lot_size", 100)) if o["region"] == "JP" else None
+        fill = simulate_entry(px, placed, p["order"], o["position_eur_local"], lot_size=lot)
         days_seen = len(after.head(p["order"]["max_fill_days"]))
         complete = fill.filled and fill.fill_ratio >= 0.999
         if fill.filled and (complete or days_seen >= p["order"]["max_fill_days"]):
-            # wie in der Studie: Teilausführungen über bis zu 3 Tage, gebucht wird erst das Endergebnis
-            rate = fx(o["ticker"], o["region"], fill.fill_date.date())
-            value_eur = o["position_eur_local"] * fill.fill_ratio * rate
-            if o["region"] == "JP":
-                lot = int(p["universe"]["JP"].get("lot_size", 100))
-                qty = int(value_eur / (fill.price * rate) / lot) * lot
-                if qty <= 0:
-                    book_shadow({"candidate_id": oid, "event_id": o["event_id"], "ticker": o["ticker"], "region": o["region"], "reason": "Mindestorder am Fill nicht erreicht", "date": str(today)})
-                    del st["orders"][oid]
-                    continue
-                value_eur = qty * fill.price * rate
-            cost = cost_one_side(o.get("half_spread"), p["costs"], o["region"], "buy", value_eur)
-            cost += p["costs"].get("fixed_fee_eur_per_order", 0.0) * max(fill.fill_days - 1, 0) / max(value_eur, 1e-9)
+            try:
+                details = entry_cashflows(fill, lambda d: fx(o["ticker"], o["region"], d),
+                                          o.get("half_spread"), p["costs"], o["region"])
+            except (ValueError, OSError, TypeError, ArithmeticError):
+                continue
+            qty = sum(x["qty"] for x in details)
+            value_eur = sum(x["notional_eur"] for x in details)
+            cost = sum(x["cost_eur"] for x in details) / value_eur
+            rate = value_eur / (qty * fill.price)
             if value_eur * (1 + cost) > st["cash"]:
                 book_shadow({"candidate_id": oid, "event_id": o["event_id"], "ticker": o["ticker"], "region": o["region"], "reason": "Cash am Fill nicht ausreichend", "date": str(today)})
                 del st["orders"][oid]
                 continue
-            st["cash"] -= value_eur * (1 + cost)
+            benchmark_entries = []
+            for x in details:
+                day = date.fromisoformat(x["date"])
+                quote = _bench_close(o["region"], day, "open")
+                try:
+                    quote_eur = quote * benchmark_eur_per_unit(o["region"], day, fx) if quote else None
+                except (ValueError, OSError, TypeError, ArithmeticError):
+                    quote_eur = None
+                benchmark_entries.append((x["notional_eur"], quote_eur))
+            debit = value_eur * (1 + cost)
+            st["cash"] -= debit
             st["positions"][oid] = {**o, "entry_date": str(fill.fill_date.date()), "entry_local": fill.price,
                                     "ref_close": float(px.close.asof(fill.fill_date)), "entry_rate": rate,
-                                    "entry_eur": fill.price * rate, "qty": value_eur / (fill.price * rate),
-                                    "buy_cost": cost, "fill_ratio": fill.fill_ratio, "last_eur": fill.price * rate,
-                                    "bench_entry": _bench_close(o["region"], fill.fill_date.date(), "open")}
+                                    "entry_eur": value_eur / qty, "qty": qty,
+                                    "buy_cost": cost, "fill_ratio": fill.fill_ratio, "last_eur": value_eur / qty,
+                                    "entry_fills": details, "entry_debit_eur": debit,
+                                    "benchmark_entries": benchmark_entries}
             book_trade({"trade_id": oid, "event_id": o["event_id"], "campaign_id": o["campaign_key"], "ticker": o["ticker"],
                         "region": o["region"], "side": "BUY", "order_date": o["order_date"],
                         "fill_date": str(fill.fill_date.date()), "price": round(fill.price, 4),
-                        "qty": round(value_eur / (fill.price * rate), 4), "cost_pct": round(cost, 5)})
+                        "qty": round(qty, 4), "cost_pct": round(cost, 5)})
             del st["orders"][oid]
         elif not fill.filled and days_seen >= p["order"]["max_fill_days"]:
             book_shadow({"candidate_id": oid, "event_id": o["event_id"], "ticker": o["ticker"], "region": o["region"],
@@ -207,10 +195,17 @@ def process_exits(st: dict, today: date, p: dict, events: list[dict], loader=loa
         path = px[px.index > ed]
         if path.empty:
             continue
-        rate = fx(pos["ticker"], pos["region"], today)
-        er = pos.get("entry_rate") or rate
-        pos["last_eur"] = pos["entry_eur"] * float(path.close.iloc[-1]) / entry_adj * rate / er
-        pos["last_date"] = str(path.index[-1].date())
+        er = pos.get("entry_rate")
+        if not er:
+            continue
+        mark_day = path.index[-1].date()
+        try:
+            rate = fx(pos["ticker"], pos["region"], mark_day)
+        except (ValueError, OSError, TypeError, ArithmeticError):
+            rate = None
+        if rate:
+            pos["last_eur"] = pos["entry_local"] * float(path.close.iloc[-1]) / entry_adj * rate
+            pos["last_date"] = str(mark_day)
         ex = [pd.Timestamp(t) for t in (pos.get("exit_events") or [])]
         red = _activist_reduced(pos, events)
         if red:
@@ -219,17 +214,28 @@ def process_exits(st: dict, today: date, p: dict, events: list[dict], loader=loa
         if why in OPEN:
             continue                                   # kein Auslöser -> Position bleibt offen
         why = {"Stopp": "Stopp −30 %", "Haltedauer": "12 Monate"}.get(why, why)
-        rx = fx(pos["ticker"], pos["region"], xd.date())
-        value = pos["qty"] * pos["entry_eur"] * (xp / entry_adj) * (rx / er)
+        try:
+            rx = fx(pos["ticker"], pos["region"], xd.date())
+        except (ValueError, OSError, TypeError, ArithmeticError):
+            continue
+        value = pos["qty"] * pos["entry_local"] * (xp / entry_adj) * rx
         cost = cost_one_side(pos.get("half_spread"), p["costs"], pos["region"], "sell", value)
         proceeds = value * (1 - cost)
-        debit = pos["qty"] * pos["entry_eur"] * (1 + pos["buy_cost"])
-        net_eur = proceeds / debit - 1
+        debit = pos.get("entry_debit_eur") or pos["qty"] * pos["entry_eur"] * (1 + pos["buy_cost"])
         st["cash"] += proceeds
         gross = xp / entry_adj - 1
         b1 = _bench_close(pos["region"], xd.date(), "close" if why == "12 Monate" else "open")
-        b0 = pos.get("bench_entry")
-        bret = (b1 / b0 - 1) if b1 and b0 else None
+        bench_entries = pos.get("benchmark_entries")
+        try:
+            if bench_entries is None:
+                day = date.fromisoformat(pos["entry_date"])
+                b0 = pos.get("bench_entry")
+                bench_entries = [(debit, b0 * benchmark_eur_per_unit(pos["region"], day, fx))] if b0 else []
+            bench_exit = b1 * benchmark_eur_per_unit(pos["region"], xd.date(), fx) if b1 else None
+            bret = benchmark_return(bench_entries, bench_exit)
+        except (ValueError, OSError, TypeError, ArithmeticError):
+            bret = None
+        net_eur, excess = net_returns(debit, proceeds, bret)
         st["closed"].append({**{k: pos.get(k) for k in ("ticker", "region", "activist", "entry_date", "signal_class",
                                                         "validated", "challenger_score", "challenger_selected")},
                              "exit_date": str(xd.date()), "reason": why, "gross": gross, "bench": bret,
@@ -237,7 +243,7 @@ def process_exits(st: dict, today: date, p: dict, events: list[dict], loader=loa
                              "entry_debit_eur": debit, "exit_proceeds_eur": proceeds,
                              "entry_fx_eur_per_local": er, "exit_fx_eur_per_local": rx,
                              "net_eur": net_eur,
-                             "net_excess": gross - bret - pos["buy_cost"] - cost if bret is not None else None})
+                             "net_excess": excess, "return_model": "eur_cashflows_v1"})
         book_trade({"trade_id": pid + "-S", "event_id": pos["event_id"], "campaign_id": pos["campaign_key"],
                     "ticker": pos["ticker"], "region": pos["region"], "side": "SELL", "order_date": str(today),
                     "fill_date": str(xd.date()), "price": round(xp, 4), "qty": round(pos["qty"], 4),
@@ -281,13 +287,15 @@ def challenger_view(r: dict, today: date, fx_rate: float | None) -> dict:
     from ..common import REPORTS
     from ..confidence.basic import shrink_to_mean
     from ..learn import ranker
-    sc = REPORTS / "scorecard.json"
-    if not sc.exists():
+    from ..study.alpha import current_artifact
+    from ..common import file_hash
+    sc = current_artifact(REPORTS, "scorecard.json")
+    card = sc.get("card")
+    if not card:
         return {"challenger_score": None, "challenger_selected": None}
-    card = json.loads(sc.read_text())["card"]
     prior = None
     oc = REPORTS / "campaign_outcomes.csv"
-    if oc.exists():
+    if oc.exists() and sc.get("outcomes_hash") == file_hash(oc):
         o = pd.read_csv(oc)
         o = o[pd.to_datetime(o.exit_date) < pd.Timestamp(today)]
         if len(o):
@@ -295,7 +303,8 @@ def challenger_view(r: dict, today: date, fx_rate: float | None) -> dict:
             prior = shrink_to_mean(own.net_excess.mean() if len(own) else o.net_excess.mean(), len(own), o.net_excess.mean())
     feat = pd.DataFrame([{"activist_prior_mean": prior, "demand": r.get("demand"), "stake": r.get("stake"),
                           "runup_20d": r.get("runup_20d"),
-                          "adv_eur": (r.get("adv") * fx_rate) if r.get("adv") and fx_rate else None}])
+                          "adv_eur": (r.get("adv_eur") if r.get("region") in EU
+                                      else r["adv"] * fx_rate if r.get("adv") and fx_rate else None)}])
     sco = float(ranker.score(feat, card).iloc[0])
     return {"challenger_score": sco, "challenger_selected": bool(sco >= card["threshold"])}
 
@@ -306,7 +315,9 @@ def new_signals(st: dict, today: date, p: dict, events: list[dict], since: str, 
     if rows is None:
         from ..study.dataset import build, build_jp
         from ..study.dataset_eu import build_eu
-        parts = [build(events, since=since)[0], build_jp(events, since=since)[0], build_eu(events, since=since)[0]]
+        parts = [build(events, since=since, confirmed_only=True)[0],
+                 build_jp(events, since=since, confirmed_only=True)[0],
+                 build_eu(events, since=since, confirmed_only=True)[0]]
         rows = pd.concat([x for x in parts if not x.empty], ignore_index=True) if any(not x.empty for x in parts) else pd.DataFrame()
     if rows.empty:
         return
@@ -320,9 +331,13 @@ def new_signals(st: dict, today: date, p: dict, events: list[dict], since: str, 
             continue
         st["seen_campaigns"].append(cid)
         oid = f"{today:%Y%m%d}-{hashlib.sha1(cid.encode()).hexdigest()[:6]}"
-        if r.get("status") != "qualifiziert":
+        status = r.get("status")
+        if status == "qualifiziert" and "identity_status" in r:
+            if r.get("verified") is not True or r.get("identity_verified") is not True:
+                status = "gesperrt: Identität oder Datenqualität ungeprüft"
+        if status != "qualifiziert":
             book_shadow({"candidate_id": oid, "event_id": r.get("event_id"), "ticker": r.get("ticker"),
-                         "region": r.get("region"), "reason": r.get("status"), "date": str(today)})
+                         "region": r.get("region"), "reason": status, "date": str(today)})
             continue
         pos_eur = p["order"]["position_eur"] * factor
         buy_cost = cost_one_side(r.get("half_spread"), p["costs"], r["region"], "buy", pos_eur)
@@ -351,7 +366,8 @@ def new_signals(st: dict, today: date, p: dict, events: list[dict], since: str, 
                              "filer_id": r.get("filer_id"), "filer_name": r.get("filer_name"),
                              "issuer_id": r.get("issuer_id") or r.get("isin"), "published": r["published"],
                              "order_date": str(today), "position_eur": pos_eur, "position_eur_local": local,
-                             "half_spread": r.get("half_spread"), "limit_hint": (r.get("price") or 0) * 1.03,
+                             "half_spread": r.get("half_spread"), "limit_hint": (r.get("price_local") if r["region"] in EU else r.get("price") or 0) *
+                                           (1 + p["order"]["limit_above_last_close"]),
                              "validated": validated, "demand": r.get("demand"), "url": r.get("url"),
                              "exit_events": [str(x) for x in (r.get("exit_events") or [])
                                              if isinstance(r.get("exit_events"), list)], **chal}
@@ -363,11 +379,14 @@ def new_signals(st: dict, today: date, p: dict, events: list[dict], since: str, 
 
 def run_day(today: date | None = None, events: list[dict] | None = None, rows: pd.DataFrame | None = None,
             loader=load_prices, fx=eur_per_unit) -> dict:
+    if (JOURNAL / "PAUSE_PAPER").exists():
+        return {"skipped": "Papierdepot gesperrt"}
     today = today or date.today()
     p, st = params(), load_state()
-    if st.get("last_run") == str(today):
+    if st.get("last_run") and str(today) <= st["last_run"]:
         return {"skipped": "bereits gelaufen"}      # verspäteter/doppelter Lauf erzeugt keine zweite Order
     events = events if events is not None else EventStore().all()
+    events = [event for event in events if event["published"][:10] <= str(today)]
     since = st.get("last_run") or str(today - timedelta(days=3))
     process_orders(st, today, p, loader, fx)
     process_exits(st, today, p, events, loader, fx)

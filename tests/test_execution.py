@@ -142,3 +142,19 @@ def test_partial_fills_quantity_weighted_and_no_early_exit():
     assert f.fill_ratio == pytest.approx(1.0)
     assert f.price == pytest.approx(1000 / (5 + 5 + 2.5))
     assert simulate_exit(px, f.fill_date, f.price, EXIT)[2] == "keine Folgekurse"
+
+
+def test_partial_executions_have_distinct_fx_and_respect_daily_board_lots():
+    from activist.paper.execution import entry_cashflows
+    from activist.common import params
+
+    p = params()
+    d = pd.date_range("2026-01-01", periods=4)
+    px = pd.DataFrame({"open": 100., "close": 100., "low": 99., "volume": [0, 3000, 1900, 2000]}, index=d)
+    fill = simulate_entry(px, d[0], p["order"], 25000., lot_size=100)
+    assert [x.qty for x in fill.executions] == [100, 100]
+    assert [x.day for x in fill.executions] == [d[1], d[3]]
+    result = entry_cashflows(fill, lambda day: {d[1].date(): 0.006, d[3].date(): 0.005}[day],
+                             0.01, p["costs"], "JP")
+    assert [x["notional_eur"] for x in result] == [60, 50]
+    assert [x["cost_eur"] for x in result] == pytest.approx([10.75, 10.625])

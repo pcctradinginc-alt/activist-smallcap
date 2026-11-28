@@ -211,7 +211,7 @@ def test_stop_loss_sells_on_trigger_day_at_min_open_stop():
     assert c["reason"].startswith("Stopp") and c["exit_date"] == str(D2) and c["entry_date"] == str(D1)
     sell_cost = cost_one_side(0.01, COSTS, "US", "sell", 10 * 70.0)
     assert c["gross"] == pytest.approx(-0.30)
-    assert c["net_excess"] == pytest.approx(-0.30 - BUY_COST - sell_cost)
+    assert c["net_excess"] == pytest.approx(0.70 * (1 - sell_cost) / (1 + BUY_COST) - 1)
     assert c["validated"] is False
     assert st["cash"] == pytest.approx(cash_before + 10 * 70.0 * (1 - sell_cost))
     buy, sell_row = trades()
@@ -391,3 +391,9 @@ def test_alpha_pass_without_individual_identity_is_not_validated(monkeypatch):
     monkeypatch.setattr(pf, "validated_combos", lambda: {"US/A"})
     run(D0, flat(), rows_of(cand(verified=True)))
     assert next(iter(state()["orders"].values()))["validated"] is False
+
+
+def test_pause_marker_prevents_local_execution():
+    (pf.JOURNAL / "PAUSE_PAPER").touch()
+    assert pf.run_day(D1) == {"skipped": "Papierdepot gesperrt"}
+    assert not pf.STATE.exists()

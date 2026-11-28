@@ -5,6 +5,7 @@ from activist.study import dataset
 def ev(i, pub, filer, sec, ip, ratio=0.06, form="LargeHolding", name="X Fund"):
     return {"event_id": f"EDINET:{i}", "source": "EDINET", "region": "JP", "form": form, "published": pub,
             "filer_id": filer, "filer_name": name, "issuer_sec_code": sec, "important_proposal": ip,
+            "purpose_text": "発行者に対し増配を提案する" if ip else "純投資",
             "holding_ratio": ratio, "doc_parsed": True, "total_shares_outstanding": 1e7, "url": "u"}
 
 
@@ -16,10 +17,15 @@ def test_jp_class_a_from_important_proposal_and_exit_followup():
     assert out[0]["followups"][0]["holding_ratio"] == 0.04
 
 
-def test_jp_pure_investment_non_activist_ignored_and_behavioural_b():
+def test_jp_behavioural_b_requires_reviewed_distinct_issuers(monkeypatch):
     evs = [ev(10 + k, f"2023-0{k+1}-01T10:00:00+09:00", "E9", f"10{k}0", True) for k in range(3)]
     evs += [ev(20, "2023-06-01T10:00:00+09:00", "E9", "2000", False),     # B: 3 frühere A-Meldungen
             ev(21, "2023-06-01T10:00:00+09:00", "E7", "3000", False)]     # reiner Investor -> nichts
+    out = {c["campaign_key"]: c["signal_class"] for c in dataset.jp_campaigns(evs)}
+    assert "E9-2000" not in out and "E7-3000" not in out
+    for e in evs:
+        e["issuer_id"] = "issuer-" + e["issuer_sec_code"]
+    monkeypatch.setattr(dataset, "approved_identity", lambda *a: {"proposal_review": {"concrete": True}})
     out = {c["campaign_key"]: c["signal_class"] for c in dataset.jp_campaigns(evs)}
     assert out["E9-2000"] == "B" and "E7-3000" not in out
 

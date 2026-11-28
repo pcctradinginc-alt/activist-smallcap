@@ -4,6 +4,7 @@ import pytest
 from activist import health
 from activist.paper import portfolio as pf, report
 from activist import common
+from activist.study.alpha import _hashes
 
 
 @pytest.fixture(autouse=True)
@@ -23,6 +24,7 @@ def env(tmp_path, monkeypatch):
     monkeypatch.setattr(health, "HEALTH", r / "health.json")
     monkeypatch.setattr(health, "ROOT", tmp_path)
     (r / "event_study_x.json").write_text(json.dumps({
+        "protocol_hashes": _hashes(),
         "data_quality": {"verified_share": 0.5, "n_events": 12, "n_campaigns_valid": 7, "n_campaigns_unverified": 2}}))
     health.record_run("t", {"edgar": {"ok": False, "n_new": 0, "error": "HTTP 500"}}, r / "health.json")
     return tmp_path

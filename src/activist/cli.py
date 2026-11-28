@@ -16,29 +16,36 @@ def cmd_fetch(a):
         evs = []
         if a.source in ("edgar", "all"):
             try:
-                evs += edgar.fetch_events(d, with_headers=not a.no_headers, limit=a.limit)
+                edgar_rows = edgar.fetch_events(d, with_headers=not a.no_headers, limit=a.limit)
+                evs += edgar_rows
+                health_src.setdefault("EDGAR", {"ok": True, "n_new": 0})
             except Exception as e:     # ein Quellenfehler darf den Tageslauf (und das Papierdepot) nicht stoppen
                 print(f"::warning::EDGAR {d}: {e}")
                 health_src["EDGAR"] = {"ok": False, "n_new": 0, "error": str(e)[:200]}
         n = store.append(evs)
+        if "EDGAR" in health_src:
+            health_src["EDGAR"]["n_new"] += n
         if a.source in ("edinet", "all"):
             import os
             from .sources.edinet_backfill import fetch_day
             if os.environ.get("EDINET_API_KEY"):
                 try:
-                    r = fetch_day(d, os.environ["EDINET_API_KEY"], store); n += r["new"]; evs += [None] * r["docs"]
+                    r = fetch_day(d, os.environ["EDINET_API_KEY"], store)
+                    n += r["new"]
+                    evs += [None] * r["docs"]
+                    health_src.setdefault("EDINET", {"ok": True, "n_new": 0})["n_new"] += r["new"]
+                    if r["parse_errors"]:
+                        health_src["EDINET"].update(ok=False, error=f"{r['parse_errors']} Dokumente nicht geparst")
                 except Exception as e:
                     print(f"::warning::EDINET {d}: {e}")
                     health_src["EDINET"] = {"ok": False, "n_new": 0, "error": str(e)[:200]}
             else:
-                print("EDINET übersprungen: EDINET_API_KEY fehlt")
+                health_src["EDINET"] = {"ok": False, "n_new": 0, "error": "EDINET_API_KEY fehlt"}
         total += n
         health_src.setdefault("tage", {"ok": True, "n_new": 0, "error": None})["n_new"] += n
         print(f"{d}: {len(evs)} Meldungen, {n} neu")
     print(f"gesamt neu: {total}")
     from .health import record_run
-    for k in ("EDGAR", "EDINET"):
-        health_src.setdefault(k, {"ok": True, "n_new": 0, "error": None})
     record_run("fetch", health_src)
 
 
@@ -79,7 +86,7 @@ def cmd_study(a):
         if b.startswith("^"):                 # Indizes ohne Börsensuffix direkt laden
             return prices.yahoo(b, s, e)
         return prices.load(b, r, s, e)[0]
-    from .paper.portfolio import eur_per_unit
+    from .sources.fx import benchmark_eur_per_unit, eur_per_unit
     fx_cache = {}
 
     def fxl(t, r, d):            # Landeswährung je EUR (gecacht je Region/Tag)
@@ -88,9 +95,9 @@ def cmd_study(a):
             fx_cache[k] = 1 / eur_per_unit(t, r, d)
         return fx_cache[k]
     def benchmark_fxl(region, day):
-        # Benchmark listing currency, not the candidate currency (e.g. NOK vs SEK).
-        ticker = {"UK": "INDEX.L", "NORDIC": "INDEX.ST"}.get(region, U[region]["benchmark"])
-        return fxl(ticker, region, day)
+        return 1 / benchmark_eur_per_unit(region, day)
+    if a.reuse and getattr(a, "confirmed_only", False):
+        raise SystemExit("--reuse und --confirmed-only schließen sich aus")
     if a.reuse:      # nur Statistik aus gespeicherten Trades: keine Datensatz-Erstellung, keine Simulation, kein Kursabruf
         from .common import REPORTS
         files = sorted(REPORTS.glob("event_study_*_trades.csv"))
@@ -101,7 +108,8 @@ def cmd_study(a):
         base = tf.with_name(tf.name[:-len("_trades.csv")])
         from .study.alpha import _hashes
         metadata = json.loads(base.with_suffix(".json").read_text(encoding="utf-8"))
-        if metadata.get("protocol_hashes") != _hashes():
+        if metadata.get("protocol_hashes") != _hashes() or (metadata.get("result") or {}).get("confirmed_only"):
+
             print("Studienartefakt ohne passenden Protokoll-Prüfwert: vollständige Studie erforderlich.")
             raise SystemExit(1)
         trades, ds = load_trades(tf), pd.read_csv(base.with_name(base.name + "_dataset.csv"), low_memory=False)
@@ -110,17 +118,38 @@ def cmd_study(a):
         print(write_report(evaluate(trades), funnel, ds, trades, bench_loader=bl))
         return
     from .study.dataset import build, build_jp
-    evs = [e for e in EventStore().all() if not a.since or e["published"] >= a.since]
-    ds, funnel = build(evs, parse_filings=not a.no_parse)
+    from .study.funnel import archive_funnel, append_study_stages
+    evs = EventStore().all()
+    regional_funnel = archive_funnel(evs)
+    confirmed_only = getattr(a, "confirmed_only", False)
+    ds, funnel = build(evs, parse_filings=not a.no_parse, since=a.since, confirmed_only=confirmed_only)
     if any(e.get("source") == "EDINET" for e in evs):
-        dj, fj = build_jp(evs)
+        dj, fj = build_jp(evs, since=a.since, confirmed_only=confirmed_only)
         ds = pd.concat([ds, dj], ignore_index=True); funnel.update(fj)
     if any(e.get("region") in ("UK", "NORDIC", "BENELUX_FR", "DACH") for e in evs):
         from .study.dataset_eu import build_eu, load_px
-        de, fe = build_eu(evs)
+        de, fe = build_eu(evs, since=a.since, confirmed_only=confirmed_only)
         ds = pd.concat([ds, de], ignore_index=True); funnel.update(fe)
     trades = simulate(ds, pl, bl, variants=not a.main_only, fx_loader=fxl, bench_fx_loader=benchmark_fxl)
-    print(write_report(evaluate(trades), funnel, ds, trades, bench_loader=bl))
+    def marks(row, days):
+        try:
+            start = days[0].date()
+            end = days[-1].date()
+            if row.get("price_source") == "tiingo":
+                quotes = prices.tiingo_cached(row["ticker"], start - timedelta(days=7), end)
+            else:
+                quotes = pl(row["ticker"], row["region"], start - timedelta(days=7), end)
+            close = quotes.close.reindex(days, method="ffill", tolerance=pd.Timedelta(days=7))
+            values = [float(v) * row["qty"] / fxl(row["ticker"], row["region"], d.date())
+                      for d, v in close.items()]
+            return pd.Series(values, index=days)
+        except (OSError, ValueError, TypeError, KeyError):
+            return pd.Series(index=days, dtype=float)
+
+    result = evaluate(trades, marks=marks)
+    result["confirmed_only"] = confirmed_only
+    result["regional_funnel"] = append_study_stages(regional_funnel, ds, trades)
+    print(write_report(result, funnel, ds, trades, bench_loader=bl))
 
 
 def cmd_backfill_jp(a):
@@ -207,7 +236,7 @@ def cmd_fill_prices(a):
 
 def cmd_paper(a):
     from .paper.portfolio import run_day
-    print(run_day())
+    print(run_day(date.fromisoformat(a.date) if getattr(a, "date", None) else None))
 
 
 def cmd_weekly(a):
@@ -245,6 +274,7 @@ def main(argv=None):
     f.add_argument("--no-headers", action="store_true"); f.set_defaults(fn=cmd_fetch)
     s = sp.add_parser("status"); s.add_argument("--mail", action="store_true"); s.set_defaults(fn=cmd_status)
     st = sp.add_parser("study"); st.add_argument("--main-only", action="store_true")
+    st.add_argument("--confirmed-only", action="store_true", help="Fälle ohne geprüften Identitätsnachweis vor Kursabruf ausschließen")
     st.add_argument("--since"); st.add_argument("--no-parse", action="store_true"); st.add_argument("--reuse", action="store_true")
     st.set_defaults(fn=cmd_study)
     b = sp.add_parser("backfill"); b.add_argument("--start", type=int, default=2015); b.add_argument("--end", type=int, default=2015)
@@ -255,7 +285,7 @@ def main(argv=None):
     be.add_argument("--start", required=True); be.add_argument("--end", required=True)
     be.add_argument("--enrich", action="store_true"); be.set_defaults(fn=cmd_backfill_eu)
     fp = sp.add_parser("fill-prices"); fp.set_defaults(fn=cmd_fill_prices)
-    pp = sp.add_parser("paper"); pp.set_defaults(fn=cmd_paper)
+    pp = sp.add_parser("paper"); pp.add_argument("--date"); pp.set_defaults(fn=cmd_paper)
     fz = sp.add_parser("freeze"); fz.add_argument("--note", default=""); fz.set_defaults(fn=cmd_freeze)
     wk = sp.add_parser("weekly"); wk.add_argument("--mail", action="store_true"); wk.set_defaults(fn=cmd_weekly)
     hp = sp.add_parser("health"); hp.add_argument("--core", default=""); hp.add_argument("--pool", default=""); hp.set_defaults(fn=cmd_health)

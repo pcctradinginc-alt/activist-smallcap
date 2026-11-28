@@ -47,7 +47,7 @@ def ds():
 
 def test_run_variants_main_uses_stop_and_trades(ds):
     res, t = es.run(ds, price_loader, bench_loader)
-    assert set(t.variant) == {"main", "no_stop", "hold_21", "hold_63", "hold_126", "hold_252"}
+    assert set(t.variant) == {"main", "no_stop", "no_reduction", "hold_21", "hold_63", "hold_126", "hold_252"}
     assert set(t.campaign_key) == {"k1", "k2", "k3", "k4", "k5", "k7"}   # Ladefehler wird als nicht ausgeführtes Signal gezählt
     assert not t[t.campaign_key == "k7"].executed.any()
     crash = t[t.campaign_key == "k1"].set_index("variant")
@@ -83,7 +83,8 @@ def test_run_no_variants_and_empty(ds):
     res, t = es.run(ds, price_loader, bench_loader, variants=False)
     assert set(t.variant) == {"main"}
     res2, t2 = es.run(ds.iloc[5:6], price_loader, bench_loader)
-    assert t2.empty and res2 == {"combos": {}, "execution": {}}
+    assert t2.empty and res2["combos"] == res2["execution"] == {}
+    assert res2["alpha"]["status"] == "nicht beurteilbar" and res2["data_quality"]["n_campaigns_valid"] == 0
 
 
 def test_run_exit_events_used_for_main_not_hold_variants():

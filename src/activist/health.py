@@ -49,7 +49,11 @@ def status(path=None, study_json_glob=None, freeze_path=None, min_campaigns_lear
     now = now or datetime.now(timezone.utc)
     pattern = study_json_glob or REPORTS / "event_study_*.json"
     freeze = Path(freeze_path or ROOT / "PROTOCOL_FREEZE.json")
-    study = _latest_study(pattern)
+    if study_json_glob is None:
+        from .study.alpha import current_artifact
+        study = current_artifact(REPORTS)
+    else:
+        study = _latest_study(pattern)
     dq = {"verified_share": None, "n_events": None, "n_campaigns_valid": None, "n_campaigns_unverified": None}
     alpha = {"status": "kein Bericht", "per_combo": {}}
     learning = {"closed_campaigns": 0, "needed": min_campaigns_learning, "status": "zu wenig Daten"}

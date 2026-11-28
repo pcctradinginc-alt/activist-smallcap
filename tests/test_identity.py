@@ -23,3 +23,28 @@ def test_structural_pass_is_not_document_verification():
     assert identity_status(e)["identity_verified"] is False
     e["issuer_role_conflict"] = True
     assert identity_status(e)["identity_status"] == "conflict"
+
+
+def test_approved_identity_binds_listing_and_price_series_to_original():
+    from activist.study.identity import apply_identity
+
+    event = dict(source="EDGAR", region="US", event_id="EDGAR:example", filer_id="200",
+                 issuer_id="100", filer_name="An Investor", issuer_name="An Issuer",
+                 published="2020-01-03T10:00:00-05:00", url="https://example.org/event")
+    record = {**event, "ticker": "ABC", "isin": "US0378331005", "exchange": "NASDAQ",
+              "original": {"url": event["url"], "sha256": "1" * 64, "excerpt": "original"},
+              "listing": {"url": "https://example.org/listing", "sha256": "2" * 64,
+                          "excerpt": "listing", "published": "2020-01-02"},
+              "price_series": {"url": "https://example.org/series", "sha256": "3" * 64,
+                               "excerpt": "series", "valid_from": "2019-01-01", "valid_through": "2021-01-03"}}
+
+    def approved(e=event, ticker="ABC", records=None):
+        rows = {e["event_id"]: records if records is not None else [record]}
+        return apply_identity({"ticker": ticker}, e, rows)
+
+    assert approved() == record
+    assert approved(ticker="REUSED") is None
+    assert approved({**event, "issuer_id": "777"}) is None
+    assert approved({**event, "published": "2020-01-02T10:00:00-05:00"}) is None
+    assert approved(records=[record, record]) is None
+    assert approved(records=[{**record, "price_series": {**record["price_series"], "valid_through": "2019-12-31"}}]) is None
