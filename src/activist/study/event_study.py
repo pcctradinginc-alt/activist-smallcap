@@ -179,6 +179,8 @@ def evaluate(t: pd.DataFrame) -> dict:
     res["alpha"] = run_alpha(t)
     res["data_quality"] = res["alpha"]["data_quality"]
     res["policy_comparisons"] = policy_comparisons(t)
+    from .control_portfolios import compare
+    res["control_portfolios"] = compare(t, start_cash=p["study"]["econ_portfolio_eur"])
     mt = main_trades(t)
     if len(mt):
         mt = ranker.pit_activist_record(mt)
