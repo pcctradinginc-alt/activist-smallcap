@@ -349,7 +349,8 @@ def write_report(res: dict, funnel, ds: pd.DataFrame, trades: pd.DataFrame, path
         atomic_write_text(REPORTS / "scorecard.json", json.dumps({"status": res["learning"]["status"], "card": card},
                                                                  default=str, indent=1, ensure_ascii=False))
     atomic_write_text(path.with_name(path.stem + "_trades.csv"), trades.to_csv(index=False))
-    atomic_write_text(path.with_suffix(".json"), json.dumps({"result": res, "funnel": dict(funnel), "alpha": res.get("alpha"),
+    from .alpha import _hashes
+    atomic_write_text(path.with_suffix(".json"), json.dumps({"protocol_hashes": _hashes(), "result": res, "funnel": dict(funnel), "alpha": res.get("alpha"),
                                                               "data_quality": res.get("data_quality"), "learning": res.get("learning")},
                                                              default=str, indent=1))
     return str(path)
