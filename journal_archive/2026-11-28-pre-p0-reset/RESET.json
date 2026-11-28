@@ -1,0 +1,12 @@
+{
+  "source_commit": "237d432e7b418fd2ade53e5ff356ceb8d8cf6728",
+  "reason": "P0: historical JP signals and board-lot errors; old journal preserved",
+  "old_cash": 16613.508754953626,
+  "old_positions": [
+    "20261117-e1b30f",
+    "20261121-40b5b5",
+    "20261121-c443e1"
+  ],
+  "old_closed": 1,
+  "reset_date": "2026-11-28"
+}
