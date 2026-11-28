@@ -36,7 +36,7 @@ def _champion_challenger() -> str:
         parts.append(f"Validierung: {lr.get('status')}")
     if lr.get("holdout"):
         parts.append(f"Holdout: {lr['holdout']}")
-    closed = [c for c in load_state()["closed"] if c.get("challenger_selected") is not None]
+    closed = [c for c in load_state()["closed"] if c.get("challenger_selected") is not None and c.get("net_excess") is not None and not c.get("bench_missing")]
     if closed:
         sel = [c["net_excess"] for c in closed if c["challenger_selected"]]
         allv = [c["net_excess"] for c in closed]
@@ -77,6 +77,10 @@ def _status_card(H) -> str:
     return H.card("Systemstatus", inner)
 
 
+def _pct(v):
+    return "nicht verfügbar" if v is None else f"{v:+.1%}"
+
+
 def weekly(today: date | None = None) -> tuple[str, str]:
     today = today or date.today()
     st = load_state()
@@ -101,19 +105,19 @@ def weekly(today: date | None = None) -> tuple[str, str]:
         r = x["last_eur"] / x["entry_eur"] - 1
         flag = "" if x.get("validated") else " [nicht nachgewiesen]"
         trig = f" | Ausstieg ausgelöst: {x['exit_trigger']}" if x.get("exit_trigger") else ""
-        L.append(f"- {x['ticker']} ({x['region']}, Kl. {x.get('signal_class')}) {x.get('activist')} | seit {x['entry_date']} | "
+        L.append(f"- {x['ticker']} ({x['region']}, Kl. {x.get('signal_class')}) | Emittent: {x.get('issuer_name') or 'unbekannt'} | Melder: {x.get('activist')} | seit {x['entry_date']} | "
                  f"Einstieg {x['entry_eur']:.2f} € -> {x['last_eur']:.2f} € ({r:+.1%}) | Wert {x['qty'] * x['last_eur']:,.0f} €{flag}{trig}")
     L += ["", "OFFENE ORDERS"]
     L += [f"- {o['ticker']} ({o['region']}) {o.get('activist')} | Order {o['order_date']} | {o['position_eur']:,.0f} €"
           for o in st["orders"].values()] or ["keine"]
     closed_w = [c for c in st["closed"] if c["exit_date"] >= str(today - timedelta(days=7))]
     L += ["", "AUSSTIEGE DIESE WOCHE"]
-    L += [f"- {c['ticker']} {c['reason']} | brutto {c['gross']:+.1%} | Index {c['bench']:+.1%} | netto gegen Index {c['net_excess']:+.1%}"
+    L += [f"- {c['ticker']} {c['reason']} | brutto {c['gross']:+.1%} | Index {_pct(c.get('bench') if not c.get('bench_missing') else None)} | netto gegen Index {_pct(c.get('net_excess') if not c.get('bench_missing') else None)}"
           for c in closed_w] or ["keine"]
     if st["closed"]:
-        n = [c["net_excess"] for c in st["closed"]]
-        L += ["", f"Alle abgeschlossenen Trades: {len(n)} | Ø Nettoüberrendite {sum(n) / len(n):+.1%} | "
-                  f"positiv {sum(1 for v in n if v > 0) / len(n):.0%}"]
+        n = [c["net_excess"] for c in st["closed"] if c.get("net_excess") is not None and not c.get("bench_missing")]
+        L += ["", f"Abgeschlossene Trades mit Benchmark: {len(n)} | Ø Nettoüberrendite {_pct(sum(n) / len(n) if n else None)} | "
+                  f"positiv {_pct(sum(1 for v in n if v > 0) / len(n) if n else None)}"]
     L += ["", "VERWORFENE KANDIDATEN DIESE WOCHE"]
     rows = []
     if SHADOW.exists():
@@ -151,7 +155,7 @@ def weekly_html(today: date | None = None) -> str:
         r = x["last_eur"] / x["entry_eur"] - 1
         tag = "" if x.get("validated") else "<br>" + H.pill("nicht nachgewiesen", H.ORANGE)
         trig = "<br>" + H.pill("Ausstieg: " + x["exit_trigger"], H.RED) if x.get("exit_trigger") else ""
-        rows.append([f'<b>{H.e(x["ticker"])}</b><div style="color:{H.SUB};font-size:12px">{H.e(x.get("activist"))} · '
+        rows.append([f'<b>{H.e(x["ticker"])}</b><div style="color:{H.SUB};font-size:12px">Emittent: {H.e(x.get("issuer_name") or "unbekannt")}<br>Melder: {H.e(x.get("activist"))} · '
                      f'{H.e(x["region"])} · Kl. {H.e(x.get("signal_class"))}</div>{tag}{trig}',
                      H.e(x["entry_date"][8:10] + "." + x["entry_date"][5:7] + "."),
                      H.eur(x["entry_eur"], 2) + f'<div style="color:{H.SUB};font-size:12px">→ {H.eur(x["last_eur"], 2)}</div>',
@@ -165,13 +169,13 @@ def weekly_html(today: date | None = None) -> str:
     closed_w = [c for c in st["closed"] if c["exit_date"] >= str(today - timedelta(days=7))]
     if closed_w:
         cards.append(H.card("Ausstiege diese Woche", H.table(["Titel", "Grund", "Brutto", "Index", "Netto ggü. Index"], [
-            [f'<b>{H.e(c["ticker"])}</b>', H.e(c["reason"]), H.signed(c["gross"]), H.signed(c["bench"]), H.signed(c["net_excess"])]
+            [f'<b>{H.e(c["ticker"])}</b>', H.e(c["reason"]), H.signed(c["gross"]), H.signed(c.get("bench") if not c.get("bench_missing") else None), H.signed(c.get("net_excess") if not c.get("bench_missing") else None)]
             for c in closed_w], ["left", "left", "right", "right", "right"])))
     if st["closed"]:
-        n = [c["net_excess"] for c in st["closed"]]
+        n = [c["net_excess"] for c in st["closed"] if c.get("net_excess") is not None and not c.get("bench_missing")]
         cards.append(H.card("Bilanz abgeschlossener Trades", H.kpis([
-            ("Trades", str(len(n))), ("Ø netto ggü. Index", H.signed(sum(n) / len(n))),
-            ("Trefferquote", f"{sum(1 for v in n if v > 0) / len(n):.0%}")])))
+            ("Trades mit Benchmark", str(len(n))), ("Ø netto ggü. Index", H.signed(sum(n) / len(n) if n else None)),
+            ("Trefferquote", f"{sum(1 for v in n if v > 0) / len(n):.0%}" if n else "–")])))
     sh = []
     if SHADOW.exists():
         with open(SHADOW) as f:
