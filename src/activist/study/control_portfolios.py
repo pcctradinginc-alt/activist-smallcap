@@ -23,7 +23,7 @@ def replay(rows: pd.DataFrame, start_cash=20000.0, max_positions=15):
         nonlocal cash
         for key, pos in sorted(list(held.items()), key=lambda item: (pd.isna(item[1]["exit_date"]), item[1]["exit_date"], item[0])):
             if pos["complete"] and pd.notna(pos["exit_date"]) and pos["exit_date"] < day:
-                proceeds = pos["value"] * (1 + pos["gross"]) * (1 - pos["sell"])
+                proceeds = pos["exit_value"] * (1 - pos["sell"])
                 cash += proceeds
                 ledger.append({"day": str(pos["exit_date"].date()), "side": "SELL",
                                "key": key, "cash_flow": proceeds, "cash": cash})
@@ -46,9 +46,13 @@ def replay(rows: pd.DataFrame, start_cash=20000.0, max_positions=15):
             rejected += 1
             continue
         gross, sell = row.get("gross"), row.get("sell_cost")
-        complete = row.get("complete") == True and pd.notna(gross) and pd.notna(sell)
+        exit_value = row.get("exit_value_eur")
+        # Legacy fixture or explicit constant-currency data only; never silently ignore a missing FX field.
+        if "exit_value_eur" not in rows.columns and pd.notna(gross):
+            exit_value = value * (1 + gross)
+        complete = row.get("complete") == True and pd.notna(sell) and pd.notna(exit_value)
         held[key] = {"ticker": ticker, "value": value, "debit": debit,
-                     "gross": gross, "sell": sell, "complete": complete,
+                     "gross": gross, "sell": sell, "complete": complete, "exit_value": exit_value,
                      "exit_date": row["exit_date"]}
         cash -= debit
         ledger.append({"day": str(day.date()), "side": "BUY", "key": key,
