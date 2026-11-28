@@ -13,14 +13,15 @@ def replay(rows: pd.DataFrame, start_cash=20000.0, max_positions=15):
     held, ledger = {}, []
     rejected = 0
     if rows.empty:
-        return {"cash": cash, "open_cost_basis": 0.0, "ledger": [], "rejected": 0}
+        return {"cash": cash, "open_cost_basis": 0.0, "open_positions": 0, "ledger": [], "rejected": 0,
+                "status": "exploratory_cash_flow_replay_not_mtm"}
     rows = rows.copy()
     rows["entry_date"] = pd.to_datetime(rows.entry_date, errors="coerce").dt.normalize()
     rows["exit_date"] = pd.to_datetime(rows.exit_date, errors="coerce").dt.normalize()
     rows = rows.dropna(subset=["entry_date"]).sort_values(["entry_date", "campaign_key"])
     def settle(day):
         nonlocal cash
-        for key, pos in sorted(list(held.items())):
+        for key, pos in sorted(list(held.items()), key=lambda item: (pd.isna(item[1]["exit_date"]), item[1]["exit_date"], item[0])):
             if pos["complete"] and pd.notna(pos["exit_date"]) and pos["exit_date"] < day:
                 proceeds = pos["value"] * (1 + pos["gross"]) * (1 - pos["sell"])
                 cash += proceeds
@@ -71,6 +72,10 @@ def compare(trades: pd.DataFrame, start_cash=20000.0, max_positions=15):
     out = {}
     for split, g in d.groupby("split"):
         policies = {v: g[(g.variant == v) & (g.qualified == True)] for v in g.variant.unique()}
+        from .event_study import ABLATION_FILTERS
+        main = g[g.variant == "main"]
+        for f in ABLATION_FILTERS:
+            policies["without_" + f] = main[(main.qualified == True) | (main.status == "verworfen: " + f)]
         policies["cash"] = g.iloc[0:0]
         for name, rows in policies.items():
             out[split + "/" + name] = replay(rows, start_cash, max_positions)
