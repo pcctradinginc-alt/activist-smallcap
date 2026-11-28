@@ -140,7 +140,7 @@ def process_orders(st: dict, today: date, p: dict, loader=load_prices, fx=eur_pe
         if fill.filled and (complete or days_seen >= p["order"]["max_fill_days"]):
             # wie in der Studie: Teilausführungen über bis zu 3 Tage, gebucht wird erst das Endergebnis
             rate = fx(o["ticker"], o["region"], fill.fill_date.date())
-            value_eur = o["position_eur"] * fill.fill_ratio
+            value_eur = o["position_eur_local"] * fill.fill_ratio * rate
             if o["region"] == "JP":
                 lot = int(p["universe"]["JP"].get("lot_size", 100))
                 qty = int(value_eur / (fill.price * rate) / lot) * lot
@@ -151,6 +151,10 @@ def process_orders(st: dict, today: date, p: dict, loader=load_prices, fx=eur_pe
                 value_eur = qty * fill.price * rate
             cost = cost_one_side(o.get("half_spread"), p["costs"], o["region"], "buy", value_eur)
             cost += p["costs"].get("fixed_fee_eur_per_order", 0.0) * max(fill.fill_days - 1, 0) / max(value_eur, 1e-9)
+            if value_eur * (1 + cost) > st["cash"]:
+                book_shadow({"candidate_id": oid, "event_id": o["event_id"], "ticker": o["ticker"], "region": o["region"], "reason": "Cash am Fill nicht ausreichend", "date": str(today)})
+                del st["orders"][oid]
+                continue
             st["cash"] -= value_eur * (1 + cost)
             st["positions"][oid] = {**o, "entry_date": str(fill.fill_date.date()), "entry_local": fill.price,
                                     "ref_close": float(px.close.asof(fill.fill_date)), "entry_rate": rate,
@@ -218,7 +222,10 @@ def process_exits(st: dict, today: date, p: dict, events: list[dict], loader=loa
         rx = fx(pos["ticker"], pos["region"], xd.date())
         value = pos["qty"] * pos["entry_eur"] * (xp / entry_adj) * (rx / er)
         cost = cost_one_side(pos.get("half_spread"), p["costs"], pos["region"], "sell", value)
-        st["cash"] += value * (1 - cost)
+        proceeds = value * (1 - cost)
+        debit = pos["qty"] * pos["entry_eur"] * (1 + pos["buy_cost"])
+        net_eur = proceeds / debit - 1
+        st["cash"] += proceeds
         gross = xp / entry_adj - 1
         b1 = _bench_close(pos["region"], xd.date(), "close" if why == "12 Monate" else "open")
         b0 = pos.get("bench_entry")
@@ -227,6 +234,9 @@ def process_exits(st: dict, today: date, p: dict, events: list[dict], loader=loa
                                                         "validated", "challenger_score", "challenger_selected")},
                              "exit_date": str(xd.date()), "reason": why, "gross": gross, "bench": bret,
                              "bench_missing": bret is None,
+                             "entry_debit_eur": debit, "exit_proceeds_eur": proceeds,
+                             "entry_fx_eur_per_local": er, "exit_fx_eur_per_local": rx,
+                             "net_eur": net_eur,
                              "net_excess": gross - bret - pos["buy_cost"] - cost if bret is not None else None})
         book_trade({"trade_id": pid + "-S", "event_id": pos["event_id"], "campaign_id": pos["campaign_key"],
                     "ticker": pos["ticker"], "region": pos["region"], "side": "SELL", "order_date": str(today),
@@ -245,6 +255,8 @@ def _activist_reduced(pos: dict, events: list[dict]) -> str | None:
     who = str(pos.get("filer_id") or pos.get("filer_name") or "").lstrip("0")
     iss = {str(pos.get("issuer_id") or "").lstrip("0"), str(pos.get("ticker"))}
     for e in sorted(events, key=lambda e: e["published"]):
+        if e.get("region", pos["region"]) != pos["region"]:
+            continue
         if e["published"] <= pos["published"]:
             continue
         if str(e.get("filer_id") or e.get("filer_name") or "").lstrip("0") != who:
