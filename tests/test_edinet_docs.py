@@ -121,3 +121,18 @@ def test_fetch_csv_json_error_hides_key(monkeypatch):
     with pytest.raises(RuntimeError) as e:
         ed.fetch_csv("S1", "SECRET")
     assert "SECRET" not in str(e.value) and "404" in str(e.value)
+
+
+def test_issuer_role_conflict_and_filer_code_exclusion():
+    items = base("72030", "7.21", "純投資")
+    items.insert(0, ("x:SecurityCodeOfFiler", "提出者の証券コード", "c", "83060"))
+    result = ed.parse_large_holding_zip(make_zip(items))
+    assert result["issuer_sec_code"] == "7203" and result["issuer_role_explicit"]
+    items.append(("x:IssuerSecurityCode", "発行者の証券コード", "c", "83060"))
+    result = ed.parse_large_holding_zip(make_zip(items))
+    assert result["issuer_sec_code"] is None and result["issuer_role_conflict"]
+
+
+def test_generic_security_code_is_not_issuer_evidence():
+    result = ed.parse_large_holding_zip(make_zip([("x:SecurityCode", "証券コード", "c", "83060")]))
+    assert result["issuer_sec_code"] is None and not result["issuer_role_explicit"]
