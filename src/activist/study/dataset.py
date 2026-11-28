@@ -142,6 +142,10 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
         row = {k: c.get(k) for k in ("event_id", "campaign_key", "published", "form", "signal_class", "event_type",
                                      "filer_id", "filer_name", "issuer_id", "issuer_name", "url", "region")}
         row["activist"] = c.get("filer_name") or c.get("filer_id")
+        from .identity import identity_status
+        row.update(identity_status(c))
+        if row["identity_status"] == "conflict":
+            row["status"] = "Identitätskonflikt"; funnel["Identitätskonflikt"] += 1; rows.append(row); continue
         try:
             t = secmeta.ticker_asof(c["issuer_id"], c["published"][:10])
         except Exception:
@@ -340,6 +344,10 @@ def build_jp(events: list[dict], end: date | None = None, since: str | None = No
                                      "activist_evidence_kind", "prior_proposal_count")}
         row.update(activist=c.get("filer_name"), demand="capital_or_proposal" if c.get("important_proposal") else "none",
                    demand_evidence=c.get("important_proposal_evidence"), stake=c.get("holding_ratio"))
+        from .identity import identity_status
+        row.update(identity_status(c))
+        if row["identity_status"] == "conflict":
+            row["status"] = "Identitätskonflikt"; funnel["JP Identitätskonflikt"] += 1; rows.append(row); continue
         d0 = date.fromisoformat(c["published"][:10])
         try:
             px, chk = prices.load(c["ticker"], "JP", d0 - timedelta(days=45), min(d0 + timedelta(days=420), end))
