@@ -327,6 +327,7 @@ def new_signals(st: dict, today: date, p: dict, events: list[dict], since: str, 
             book_shadow({"candidate_id": oid, "event_id": r.get("event_id"), "ticker": r.get("ticker"),
                          "region": r.get("region"), "reason": "gesperrt: Wechselkurs fehlt", "date": str(today)}); continue
         combo = f"{r['region']}/{r.get('signal_class')}"
+        validated = combo in ok and r.get("verified") is True and r.get("identity_verified") is True
         try:
             chal = challenger_view(r, today, pos_eur / local if local else None)
         except Exception as e:
@@ -339,11 +340,11 @@ def new_signals(st: dict, today: date, p: dict, events: list[dict], since: str, 
                              "issuer_id": r.get("issuer_id") or r.get("isin"), "published": r["published"],
                              "order_date": str(today), "position_eur": pos_eur, "position_eur_local": local,
                              "half_spread": r.get("half_spread"), "limit_hint": (r.get("price") or 0) * 1.03,
-                             "validated": combo in ok, "demand": r.get("demand"), "url": r.get("url"),
+                             "validated": validated, "demand": r.get("demand"), "url": r.get("url"),
                              "exit_events": [str(x) for x in (r.get("exit_events") or [])
                                              if isinstance(r.get("exit_events"), list)], **chal}
         atomic_write_text(JOURNAL / "decisions" / f"{oid}.json", json.dumps(
-            {**r, "decision": "order", "combo": combo, "validated": combo in ok}, default=str, ensure_ascii=False, indent=1))
+            {**r, "decision": "order", "combo": combo, "validated": validated}, default=str, ensure_ascii=False, indent=1))
         from ..notify.buy import notify
         notify({**st["orders"][oid], "n_after": len(st["positions"]) + len(st["orders"]), "max_fill_days": p["order"].get("max_fill_days", 3)}, r, combo, today)
 
