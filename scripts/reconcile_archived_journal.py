@@ -18,8 +18,19 @@ def reconcile(ecb_rates):
     state = json.loads((ARCHIVE / "portfolio.json").read_text())
     final_cash = D(str(state["cash"]))
     initial_cash = D(str(state["start_value"]))
+    trades = list(csv.DictReader((ARCHIVE / "trades.csv").open()))
+    history = {r["date"]: D(str(r["cash"])) for r in state["history"]}
+    # The first two opens were booked together on the 18th. One still has
+    # exact position details, permitting the missing debit to be isolated.
+    first_batch = {"20261117-0869d3", "20261117-e1b30f"}
+    retained = state["positions"]["20261117-e1b30f"]
+    retained_debit = (D(str(retained["qty"])) * D(str(retained["entry_eur"])) *
+                      (1 + D(str(retained["buy_cost"]))))
+    closed_entry = history["2026-11-18"] - history["2026-11-17"] + retained_debit
+    # The sale is the sole cash movement after 26 November in this archive.
+    before_single_sale = history["2026-11-26"]
     rows = []
-    for trade in csv.DictReader((ARCHIVE / "trades.csv").open()):
+    for trade in trades:
         side = trade["side"]
         day = trade["fill_date"]
         position = state["positions"].get(trade["trade_id"], {})
@@ -37,6 +48,14 @@ def reconcile(ecb_rates):
         modeled_fees = D("0.0025")
         history_eur = (D(str(position["qty"])) * D(str(position["entry_eur"]))) if fx else None
         ecb_cash = ((-ecb_notional - ecb_cost) if side == "BUY" else (ecb_notional - ecb_cost)) if ecb else None
+        archived_flow = -history_eur * (1 + D(str(position["buy_cost"]))) if fx else None
+        basis = "reconstructed_from_open_position" if fx else "only_independent_reference_available"
+        if side == "BUY" and trade["trade_id"] in first_batch and archived_flow is None:
+            archived_flow = closed_entry
+            basis = "inferred_from_round_cent_combined_buy_cash_and_other_exact_buy"
+        if side == "SELL" and trade["trade_id"] == "20261117-0869d3-S":
+            archived_flow = final_cash - before_single_sale
+            basis = "inferred_from_final_cash_and_round_cent_pre_sale_cash"
         rows.append({**trade, "notional_jpy_rounded_csv": money(notional),
                      "ecb_jpy_per_eur": money(ecb), "archived_jpy_per_eur": money(1 / fx) if fx else None,
                      "fx_difference_pct": money(((notional * fx / ecb_notional) - 1) * 100) if fx and ecb else None,
@@ -45,10 +64,11 @@ def reconcile(ecb_rates):
                      "ecb_reference_combined_fx_and_fees_eur": money(ecb_notional * modeled_fees) if ecb else None,
                      "ecb_reference_residual_order_fee_eur": money(ecb_cost - ecb_notional * (spread_rate + modeled_fees)) if ecb else None,
                      "separate_slippage": None,
-                     "archived_cash_flow_eur": money(-history_eur * (1 + D(str(position["buy_cost"])))) if fx else None,
+                     "archived_cash_flow_eur": money(archived_flow),
+                     "ecb_minus_archived_cash_flow_eur": money(ecb_cash - archived_flow) if ecb_cash is not None and archived_flow is not None else None,
                      "csv_rounding_notional_eur": money(notional * fx - history_eur) if fx else None,
                      "ecb_reference_cash_flow_eur": money(ecb_cash),
-                     "status": "reconstructed_from_open_position" if fx else "only_independent_reference_available",
+                     "status": basis,
                      "board_lot_violation": D(trade["qty"]) % 100 != 0})
     ecb_cash = initial_cash + sum((D(str(r["ecb_reference_cash_flow_eur"])) for r in rows
                                  if r["ecb_reference_cash_flow_eur"] is not None), D(0))
@@ -57,6 +77,8 @@ def reconcile(ecb_rates):
             "independent_reference_cash_eur": money(ecb_cash),
             "reference_minus_archive_eur": money(ecb_cash - final_cash),
             "unallocated_archived_flows_eur": money(final_cash - initial_cash - known),
+            "cash_snapshot_rounding_bound_eur": 0.01,
+            "closed_position_net_eur_return_from_cash": money((final_cash - before_single_sale) / -closed_entry - 1),
             "entries": rows}
 
 

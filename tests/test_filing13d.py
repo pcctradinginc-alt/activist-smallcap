@@ -195,3 +195,10 @@ def test_real_demand_still_detected_next_to_list():
     txt = ("(b) An extraordinary corporate transaction, such as a merger. "
            "The Reporting Persons believe the Board should immediately explore a sale of the Company.")
     assert classify_demand(txt)[0] == "sale"
+
+
+def test_opposing_an_existing_merger_is_not_a_sale_request():
+    category, evidence = classify_demand(
+        "The Reporting Persons are strongly opposed to the merger with Idera and intend to vote against it.")
+    assert category == "oppose_merger" and "opposed" in evidence
+    assert classify_demand("Such suggestions or positions may relate to a special dividend.") == ("none", None)

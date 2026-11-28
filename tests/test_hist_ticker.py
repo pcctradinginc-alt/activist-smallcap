@@ -82,7 +82,7 @@ def test_none_when_no_filing_and_cache(net):
     assert h.ticker_hist(98246, "2030-01-20") == r      # unabhängiger Tagescache
     assert len(net["docs"]) == n
     cache = json.loads((common.DATA / "cache" / "hist_ticker" / "0000098246.json").read_text())
-    assert "pit-v3:2030-01-01" in cache and "pit-v3:2030-01-20" in cache
+    assert "pit-v4:2030-01-01" in cache and "pit-v4:2030-01-20" in cache
 
 
 def test_cache_hit_skips_network(net):
@@ -118,7 +118,8 @@ def test_units_warrants_skipped_in_ixbrl():
 
 
 def test_colon_pattern_and_false_positives():
-    assert h.extract_ticker("<p>Acme Corp. (Nasdaq: ACME) announced</p>")["ticker"] == "ACME"
+    assert h.extract_ticker("<p>Acme Corp. (Nasdaq: ACME) announced</p>") is None
+    assert h.extract_ticker("<p>Our common stock (Nasdaq: ACME)</p>")["ticker"] == "ACME"
     r = h.extract_ticker("Our 5% notes are listed on the New York Stock Exchange under the symbol \"ACN\". "
                          "Our common stock trades on the NYSE American under the symbol \"ACM\".")
     assert r["ticker"] == "ACM" and r["exchange"] == "NYSE American"

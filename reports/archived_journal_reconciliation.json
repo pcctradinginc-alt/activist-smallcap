@@ -4,7 +4,9 @@
   "archived_cash_eur": 16613.508754953626,
   "independent_reference_cash_eur": 16611.765570324715,
   "reference_minus_archive_eur": -1.7431846289101,
-  "unallocated_archived_flows_eur": -333.991245046374,
+  "unallocated_archived_flows_eur": 1e-13,
+  "cash_snapshot_rounding_bound_eur": 0.01,
+  "closed_position_net_eur_return_from_cash": -0.3282469238785003,
   "entries": [
     {
       "trade_id": "20261117-0869d3",
@@ -29,10 +31,11 @@
       "ecb_reference_combined_fx_and_fees_eur": 2.505526918023422,
       "ecb_reference_residual_order_fee_eur": 10.022107672093687,
       "separate_slippage": null,
-      "archived_cash_flow_eur": null,
+      "archived_cash_flow_eur": -1017.5000000000001,
+      "ecb_minus_archived_cash_flow_eur": -2.249455635532642,
       "csv_rounding_notional_eur": null,
       "ecb_reference_cash_flow_eur": -1019.7494556355327,
-      "status": "only_independent_reference_available",
+      "status": "inferred_from_round_cent_combined_buy_cash_and_other_exact_buy",
       "board_lot_violation": true
     },
     {
@@ -59,6 +62,7 @@
       "ecb_reference_residual_order_fee_eur": 10.022107112253641,
       "separate_slippage": null,
       "archived_cash_flow_eur": -1017.4999999999999,
+      "ecb_minus_archived_cash_flow_eur": -2.249398671808118,
       "csv_rounding_notional_eur": -6.532237304650395e-05,
       "ecb_reference_cash_flow_eur": -1019.7493986718081,
       "status": "reconstructed_from_open_position",
@@ -88,6 +92,7 @@
       "ecb_reference_residual_order_fee_eur": 9.958027123114858,
       "separate_slippage": null,
       "archived_cash_flow_eur": -1017.5,
+      "ecb_minus_archived_cash_flow_eur": 4.270740223063279,
       "csv_rounding_notional_eur": 0.0001741310909293133,
       "ecb_reference_cash_flow_eur": -1013.2292597769367,
       "status": "reconstructed_from_open_position",
@@ -117,6 +122,7 @@
       "ecb_reference_residual_order_fee_eur": 10.01182449776145,
       "separate_slippage": null,
       "archived_cash_flow_eur": -1017.5000000000001,
+      "ecb_minus_archived_cash_flow_eur": -1.2031426472275553,
       "csv_rounding_notional_eur": 6.608506446845174e-05,
       "ecb_reference_cash_flow_eur": -1018.7031426472277,
       "status": "reconstructed_from_open_position",
@@ -145,10 +151,11 @@
       "ecb_reference_combined_fx_and_fees_eur": 1.746073940278016,
       "ecb_reference_residual_order_fee_eur": 9.994527234151365,
       "separate_slippage": null,
-      "archived_cash_flow_eur": null,
+      "archived_cash_flow_eur": 683.508754953626,
+      "ecb_minus_archived_cash_flow_eur": -0.31192789740496,
       "csv_rounding_notional_eur": null,
       "ecb_reference_cash_flow_eur": 683.1968270562211,
-      "status": "only_independent_reference_available",
+      "status": "inferred_from_final_cash_and_round_cent_pre_sale_cash",
       "board_lot_violation": true
     }
   ]

@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 
 ITEM4_MAX = 4000
 EVIDENCE_MAX = 400
-DEMAND_PRIORITY = ("sale", "capital_return", "board", "strategy")
+DEMAND_PRIORITY = ("oppose_merger", "sale", "capital_return", "board", "strategy")
 
 # --------------------------------------------------------------------------- Textaufbereitung
 
@@ -133,6 +133,9 @@ _LIST_PHRASES = [
 _RESERVATION = re.compile(r"(?i)\bfrom\s+time\s+to\s+time\b.*\b(?:may|might|could)\b|\b(?:may|might)\b.*\bfrom\s+time\s+to\s+time\b|reserves?\s+(?:the|their|its)\s+right")
 
 _RULES: dict[str, re.Pattern] = {
+    "oppose_merger": re.compile(
+        r"(?i)\b(?:oppos(?:e[sd]?|ing|ition to)|defeat(?:ing)?|vot(?:e|ing) [^.]{0,65}against)"
+        r"\s+(?:[^.]{0,40}\s+)?(?:merger|business combination)\b"),
     "sale": re.compile(
         r"(?i)sale\s+of\s+(?:the\s+)?(?:company|issuer|business)|sell\s+(?:the\s+)?(?:company|itself)|strategic\s+alternatives|\bmergers?\b"
         r"|acquisition\s+proposal|business\s+combination|take[\s-]private|going[\s-]private|(?:proposal|offer)\s+to\s+(?:acquire|purchase)\s+(?:all|the\s+company)"
@@ -158,7 +161,7 @@ def _sentences(text: str) -> list[str]:
     return out
 
 
-PARSER_VERSION = 4   # erhöhen bei jeder Änderung der Klassifikation -> Cache wird neu aufgebaut
+PARSER_VERSION = 5   # erhöhen bei jeder Änderung der Klassifikation -> Cache wird neu aufgebaut
 
 _ITEM4_LIST = [
     r"acquisition by any person of additional securities", r"extraordinary corporate transaction",
@@ -172,7 +175,8 @@ _ITEM4_LIST = [
 def _is_boilerplate(s: str) -> bool:
     if re.search(r"(?i)\b(?:depending (?:on|upon)|in pursuing (?:such )?investment purposes|"
                  r"may (?:in the future |from time to time )?(?:engage in|discuss|consider|wish to)|"
-                 r"may be made at any time|any such actions could involve|"
+                 r"may (?:take positions|make proposals) with respect to|"
+                 r"suggestions or positions may relate to|may be made at any time|any such actions could involve|"
                  r"do(?:es)? not have any present|no present (?:plan|proposal|intention))\b", s):
         return True
     if _NEGATION.search(s):
@@ -188,7 +192,7 @@ def _is_boilerplate(s: str) -> bool:
 
 
 def classify_demand(item4: str) -> tuple[str, str | None]:
-    """Priorität sale > capital_return > board > strategy > none; Beleg = erster passender Satz."""
+    """Return a filing statement and its demand category in priority order."""
     sents = [s for s in _sentences(item4) if not _is_boilerplate(s)]
     for cls in DEMAND_PRIORITY:
         for s in sents:

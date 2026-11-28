@@ -129,6 +129,10 @@ _P_SYMBOL = re.compile(
     r"(?:ticker\s+)?symbols?\s*(?:of\s+)?[\"'(]*\s*(?P<t>[A-Z][A-Z0-9.\-]{0,6})\b", re.I)
 _P_LISTED = re.compile(
     r"(?i)\b(?:common stock|ordinary shares)\s+(?:is|are)\s+listed\s+under the symbol\s+[\"'](?P<t>[A-Z][A-Z0-9.\-]{0,6})[\"']\s+on\s+(?:the\s+)?(?P<ex>" + _EXCH_ALT + r")")
+_OWN_SECURITY = re.compile(
+    r"(?i)\b(?:our|the company.s|the registrant.s)\s+(?:[a-z]+\s+){0,5}"
+    r"(?:common (?:stock|units)|ordinary shares|capital stock)\b"
+)
 _P_COLON = re.compile(r"\(\s*(?P<ex>NASDAQ|Nasdaq|NYSE|NYSE American|NYSE MKT|AMEX|NYSE Amex)\s*(?:GS|GM|CM)?\s*:\s*(?P<t>[A-Z][A-Z0-9.\-]{0,5})\s*\)")
 
 
@@ -151,8 +155,10 @@ def _text_patterns(raw: str) -> dict | None:
     if not cands:
         for m in _P_COLON.finditer(txt):
             t = _clean_tick(m.group("t"))
-            if t:
-                cands.append((t, txt[max(0, m.start() - 60): m.start()])); info.setdefault(t, (m.group("ex"), m.group(0)))
+            context = txt[max(0, m.start() - 70): m.start()]
+            if t and _OWN_SECURITY.search(context):
+                cands.append((t, context))
+                info.setdefault(t, (m.group("ex"), context + m.group(0)))
     p = _pick(cands)
     if not p:
         return None
@@ -230,7 +236,7 @@ def ticker_hist(cik, asof_date) -> dict:
     """Ticker (Stammaktie) zum Stichtag: {"ticker","exchange","source","evidence","filing"}; ticker=None wenn nicht ermittelbar."""
     asof = secmeta._d(asof_date)
     c10 = secmeta._cik10(cik)
-    key = f"pit-v3:{asof:%Y-%m-%d}"
+    key = f"pit-v4:{asof:%Y-%m-%d}"
     path = _cache_file(c10)
     cache = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
     if key in cache:
