@@ -27,7 +27,10 @@ PROTOCOL_FILES = ["config/params.yaml", "config/risk_limits.yaml", "PROTOCOL.md"
                   "src/activist/features/register.py", "src/activist/parse/filing13d.py",
                   "src/activist/sources/prices.py", "src/activist/learn/ranker.py", "src/activist/risk/rules.py",
                   "src/activist/sources/secmeta.py", "src/activist/sources/sector.py",
-                  "src/activist/study/holders.py", "src/activist/sources/hist_ticker.py", "config/activists.yaml"]
+                  "src/activist/study/holders.py", "src/activist/sources/hist_ticker.py", "config/activists.yaml",
+                  "src/activist/study/control_portfolios.py", "src/activist/paper/portfolio.py",
+                  "src/activist/sources/edinet_docs.py", "src/activist/sources/edinet_backfill.py",
+                  "src/activist/sources/edgar_backfill.py", "src/activist/common.py", "src/activist/cli.py"]
 FAMILY_ALPHA = 0.10
 COHORT_LAG_DAYS = 380
 
@@ -115,8 +118,8 @@ def holm(pvals: dict[str, float]) -> dict[str, float]:
 
 # ------------------------------------------------------------------ Test
 def main_trades(trades: pd.DataFrame, verified_only: bool = True) -> pd.DataFrame:
-    if trades.empty or "executed" not in trades:
-        return trades.iloc[0:0]
+    if trades.empty or not {"executed", "complete", "qualified", "variant", "published"}.issubset(trades.columns):
+        return trades.iloc[0:0].assign(split=pd.Series(dtype=str))
     # Rechtszensierung vermeiden: nur Kohorten, deren volle Haltedauer (252 Handelstage + Einstiegsfenster) beobachtbar ist
     cutoff = (pd.Timestamp.now(tz="UTC") - pd.Timedelta(days=COHORT_LAG_DAYS)).strftime("%Y-%m-%d")
     trades = trades[trades.published.astype(str).str[:10] <= cutoff]
