@@ -40,12 +40,13 @@ def _dt(s: pd.Series) -> pd.Series:
 def pit_activist_record(trades: pd.DataFrame) -> pd.DataFrame:
     """activist_prior_n / activist_prior_mean strikt punktgenau: nur Zeilen mit exit_date < published der Zeile."""
     df = trades.copy()
-    pub, ex = _dt(df["published"]).to_numpy(), _dt(df["exit_date"]).to_numpy()
+    pub = _dt(df["published"]).dt.normalize().to_numpy()
+    ex = _dt(df["exit_date"]).dt.normalize().to_numpy()
     y = df["net_excess"].to_numpy(float)
     act = df["activist"].to_numpy()
     ns, means = [], []
     for i in range(len(df)):
-        done = ex < pub[i]                      # NaT -> False
+        done = (ex < pub[i]) & np.isfinite(y)                      # NaT -> False
         ng = int(done.sum())
         if ng == 0:
             ns.append(0); means.append(float("nan")); continue
