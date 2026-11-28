@@ -61,8 +61,10 @@ def test_run_variants_main_uses_stop_and_trades(ds):
     assert main.loc["k4", "exit_reason"] == "offen (Datenende)"
     from activist.common import params as _p
     fee = _p()["costs"]["fixed_fee_eur_per_order"] / _p()["order"]["position_eur"]
-    cost = 2 * (0.005 + 0.0025 + fee)
-    assert crash.loc["main", "net_excess"] == pytest.approx(-0.4 - cost)
+    buy = 0.005 + 0.0025 + fee
+    sell = 0.005 + 0.0025 + fee / 0.6
+    assert crash.loc["main", "net_excess"] == pytest.approx(-0.4 - buy - sell)
+    assert crash.loc["main", "cash_net_local"] == pytest.approx(0.6 * (1 - sell) / (1 + buy) - 1)
 
 
 def test_run_results_count_only_complete_trades(ds):
