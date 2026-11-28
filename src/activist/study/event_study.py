@@ -14,7 +14,7 @@ BENCH_MAX_DAILY_MOVE = 0.25    # ein breiter Index bewegt sich nie um 25 % an ei
 
 
 def run_campaign(c: dict, px: pd.DataFrame, bench: pd.DataFrame, p: dict, stop=True, max_days=None,
-                 exit_events=(), fx_local: float = 1.0, fx_at=None) -> dict:
+                 exit_events=(), fx_local: float = 1.0, fx_at=None, bench_fx_at=None) -> dict:
     """fx_local = Einheiten Landeswährung je EUR am Entscheidungstag (Volumen-Obergrenze in Landeswährung)."""
     pos_local = p["order"]["position_eur"] * fx_local
     fill = simulate_entry(px, pd.Timestamp(c["published"]), p["order"], pos_local)
@@ -35,6 +35,10 @@ def run_campaign(c: dict, px: pd.DataFrame, bench: pd.DataFrame, p: dict, stop=T
         value = local_value / entry_fx
     xd, xp, why = simulate_exit(px, fill.fill_date, fill.price, p["exit"], exit_events, stop, max_days)
     gross = xp / fill.price - 1
+    buy = cost_one_side(c.get("half_spread"), p["costs"], c["region"], "buy", value)
+    buy += p["costs"].get("fixed_fee_eur_per_order", 0.0) * max(fill.fill_days - 1, 0) / max(value, 1e-9)
+    entry_fields = {"invested_eur": value, "buy_cost": buy, "entry_fx_local_per_eur": entry_fx,
+                    "entry": fill.price, "fill_ratio": fill.fill_ratio}
     # Vergleichsindex zeitgleich zu den Aktienkursen: Einstieg zur Eröffnung, Ausstieg zur Eröffnung (Meldung/Stopp)
     # bzw. zum Schluss (Haltedauer/Datenende)
     bo = bench["open"] if "open" in bench else bench["close"]
@@ -42,13 +46,11 @@ def run_campaign(c: dict, px: pd.DataFrame, bench: pd.DataFrame, p: dict, stop=T
     b1 = (bo if why in ("Aktivist reduziert", "Stopp") else bench["close"]).get(xd, float("nan"))
     if pd.isna(b0) or pd.isna(b1):
         return {"executed": True, "complete": False, "reason": "Vergleichsindex fehlt", "entry_date": fill.fill_date,
-                "exit_date": xd, "exit_reason": why}
+                "exit_date": xd, "exit_reason": why, **entry_fields}
     if b0 <= 0 or b1 <= 0 or bench["close"].loc[fill.fill_date:xd].pct_change().abs().max() > BENCH_MAX_DAILY_MOVE:
         return {"executed": True, "complete": False, "reason": "Vergleichsindex unplausibel", "entry_date": fill.fill_date,
-                "exit_date": xd, "exit_reason": why}
+                "exit_date": xd, "exit_reason": why, **entry_fields}
     bret = float(b1 / b0 - 1)
-    buy = cost_one_side(c.get("half_spread"), p["costs"], c["region"], "buy", value)
-    buy += p["costs"].get("fixed_fee_eur_per_order", 0.0) * max(fill.fill_days - 1, 0) / max(value, 1e-9)
     exit_fx = fx_at(xd.date()) if fx_at else fx_local
     if not math.isfinite(exit_fx) or exit_fx <= 0:
         return {"executed": True, "complete": False, "reason": "Ausstiegswechselkurs fehlt",
@@ -59,9 +61,15 @@ def run_campaign(c: dict, px: pd.DataFrame, bench: pd.DataFrame, p: dict, stop=T
     cost = buy + sell
     cash_net = (1 + gross) * (1 - sell) / (1 + buy) - 1
     net_eur = exit_value_eur * (1 - sell) / (value * (1 + buy)) - 1
-    return {"executed": True, "complete": why not in OPEN, "fill_ratio": fill.fill_ratio,
+    bfx0 = bench_fx_at(fill.fill_date.date()) if bench_fx_at else entry_fx
+    bfx1 = bench_fx_at(xd.date()) if bench_fx_at else exit_fx
+    bench_eur = (1 + bret) * bfx0 / bfx1 - 1 if all(math.isfinite(x) and x > 0 for x in (bfx0,bfx1)) else None
+    net_excess = net_eur - bench_eur if bench_eur is not None else None
+    return {"executed": True, "complete": why not in OPEN and bench_eur is not None, "fill_ratio": fill.fill_ratio,
             "entry_date": fill.fill_date, "entry": fill.price, "exit_date": xd, "exit": xp, "exit_reason": why,
-            "gross": gross, "bench": bret, "cost": cost, "net_excess": gross - bret - cost,
+            "gross": gross, "bench": bret, "cost": cost, "net_excess": net_excess,
+            "legacy_net_excess_local_approx": gross - bret - cost, "benchmark_eur": bench_eur,
+            "benchmark_entry_fx": bfx0, "benchmark_exit_fx": bfx1,
             "buy_cost": buy, "sell_cost": sell, "invested_eur": value, "cash_net_local": cash_net,
             "cash_net_excess_local": cash_net - bret,
             "entry_fx_local_per_eur": entry_fx, "exit_fx_local_per_eur": exit_fx,
@@ -70,7 +78,7 @@ def run_campaign(c: dict, px: pd.DataFrame, bench: pd.DataFrame, p: dict, stop=T
             "hold_days": int((px.index > fill.fill_date).sum() if why in OPEN else ((px.index > fill.fill_date) & (px.index <= xd)).sum())}
 
 
-def simulate(ds: pd.DataFrame, price_loader, bench_loader, variants: bool = True, fx_loader=None) -> pd.DataFrame:
+def simulate(ds: pd.DataFrame, price_loader, bench_loader, variants: bool = True, fx_loader=None, bench_fx_loader=None) -> pd.DataFrame:
     """Datenbeschaffung + Handelssimulation (langsam, Netzwerk); die Auswertung steht getrennt in evaluate()."""
     p = params()
     names = ["main"] + (["no_stop"] + [f"hold_{d}" for d in p["study"]["explore_holding_days"]] if variants else [])
@@ -106,7 +114,13 @@ def simulate(ds: pd.DataFrame, price_loader, bench_loader, variants: bool = True
                     return float(fx_loader(c["ticker"], c["region"], day))
                 except Exception:
                     return float("nan")
-            r = run_campaign(c, px, bench, p, stop, md, ex if not md else (), fxl, rate_at if fx_loader else None)
+            def bench_rate_at(day):
+                try:
+                    return float(bench_fx_loader(c["region"], day))
+                except Exception:
+                    return float("nan")
+            r = run_campaign(c, px, bench, p, stop, md, ex if not md else (), fxl, rate_at if fx_loader else None,
+                             bench_rate_at if bench_fx_loader else None)
             trades.append({**{k: c[k] for k in ("campaign_key", "activist", "filer_id", "region", "signal_class",
                                                  "status", "ticker", "published", "demand")},
                            **{k: c.get(k) for k in ("event_id", "issuer_id", "issuer_name", "filer_name", "url", "demand_evidence", "activist_evidence_kind", "prior_proposal_count", "identity_status", "identity_issues", "identity_verified")},
