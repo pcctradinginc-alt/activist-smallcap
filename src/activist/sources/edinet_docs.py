@@ -135,16 +135,18 @@ def parse_rows(rows: list[dict]) -> dict:
     out: dict = {"issuer_sec_code": None, "issuer_name": None, "purpose_text": None, "important_proposal": False,
                  "important_proposal_evidence": None, "holding_ratio": None, "previous_holding_ratio": None,
                  "total_shares_outstanding": None, "filer_name": None, "filer_names": [], "n_rows": len(rows)}
-    # Sec-Code des Emittenten (nicht den des Meldenden)
-    for r in _pick(rows, elems=("SecurityCodeOfIssuer", "IssuerSecurityCode"), labels=("発行者の証券コード",)) \
-            + _pick(rows, labels=("証券コード",), not_labels=("提出者",)):
-        c = normalize_sec_code(r[C_VAL])
-        if c:
-            out["issuer_sec_code"] = c
-            break
-    for r in _pick(rows, elems=("NameOfIssuer", "IssuerName", "NameOfIssuerOfStock"), labels=("発行者の名称", "発行者名")):
-        out["issuer_name"] = _nfkc(r[C_VAL])
-        break
+    # Only explicitly issuer-labelled fields establish the security identity.
+    codes = {normalize_sec_code(r[C_VAL]) for r in _pick(
+        rows, elems=("SecurityCodeOfIssuer", "IssuerSecurityCode"), labels=("発行者の証券コード",),
+        not_elems=("Filer", "Holder"), not_labels=("提出者", "共同保有者"))}
+    codes.discard(None)
+    names = {_nfkc(r[C_VAL]) for r in _pick(
+        rows, elems=("NameOfIssuer", "IssuerName", "NameOfIssuerOfStock"), labels=("発行者の名称", "発行者名"),
+        not_elems=("Filer", "Holder"), not_labels=("提出者", "共同保有者"))}
+    out["issuer_sec_code"] = next(iter(codes)) if len(codes) == 1 else None
+    out["issuer_name"] = next(iter(names)) if len(names) == 1 else None
+    out["issuer_role_conflict"] = len(codes) > 1 or len(names) > 1
+    out["issuer_role_explicit"] = len(codes) == 1 and len(names) == 1
     purp = _pick(rows, elems=("PurposeOfHolding",), labels=("保有目的",))
     if purp:
         out["purpose_text"] = max((r[C_VAL].strip() for r in purp), key=len)
