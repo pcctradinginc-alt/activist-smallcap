@@ -5,7 +5,7 @@ Jede Meldung (350/360) wird als CSV (type=5) geladen; das Ergebnis wird in das E
 Wiederaufnehmbar: bekannte docIDs werden übersprungen.
 """
 from __future__ import annotations
-import os, time
+import os, time, hashlib
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date, timedelta
 from ..common import EventStore
@@ -21,7 +21,12 @@ def enrich(ev: dict, key: str) -> dict:
     doc_id = ev["event_id"].split(":", 1)[1]
     try:
         _RL.wait()
-        info = edinet_docs.parse_large_holding_zip(edinet_docs.fetch_csv(doc_id, key))
+        raw = edinet_docs.fetch_csv(doc_id, key)
+        info = edinet_docs.parse_large_holding_zip(raw)
+        ev["document_sha256"] = hashlib.sha256(raw).hexdigest()
+        ev["issuer_role_explicit"] = info.get("issuer_role_explicit")
+        ev["issuer_role_conflict"] = info.get("issuer_role_conflict")
+        ev["document_filer_names"] = info.get("filer_names")
         ev.update({k: info.get(k) for k in FIELDS})
         ev["issuer_name"] = info.get("issuer_name") or ev.get("issuer_name")
         ev["doc_parsed"] = True
