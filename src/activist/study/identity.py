@@ -119,8 +119,9 @@ def approved_identity(event, ticker, evidence):
 
 def apply_identity(row, event, evidence):
     approved = approved_identity(event, row.get("ticker"), evidence)
-    if approved:
+    if approved and approved["price_series"].get("provider", "yahoo") == row.get("price_source", "yahoo"):
         row.update(identity_status="verified", identity_issues="", identity_verified=True,
                    security_isin=approved["isin"],
                    security_evidence_through=approved["price_series"]["valid_through"])
-    return approved
+        return approved
+    return None

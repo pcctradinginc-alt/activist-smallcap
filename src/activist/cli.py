@@ -122,13 +122,13 @@ def cmd_study(a):
     evs = EventStore().all()
     regional_funnel = archive_funnel(evs)
     confirmed_only = getattr(a, "confirmed_only", False)
-    ds, funnel = build(evs, parse_filings=not a.no_parse, since=a.since, confirmed_only=confirmed_only)
+    ds, funnel = build(evs, parse_filings=not a.no_parse, since=a.since, confirmed_only=confirmed_only, allow_universe_ablations=True)
     if any(e.get("source") == "EDINET" for e in evs):
-        dj, fj = build_jp(evs, since=a.since, confirmed_only=confirmed_only)
+        dj, fj = build_jp(evs, since=a.since, confirmed_only=confirmed_only, allow_universe_ablations=True)
         ds = pd.concat([ds, dj], ignore_index=True); funnel.update(fj)
     if any(e.get("region") in ("UK", "NORDIC", "BENELUX_FR", "DACH") for e in evs):
         from .study.dataset_eu import build_eu, load_px
-        de, fe = build_eu(evs, since=a.since, confirmed_only=confirmed_only)
+        de, fe = build_eu(evs, since=a.since, confirmed_only=confirmed_only, allow_universe_ablations=True)
         ds = pd.concat([ds, de], ignore_index=True); funnel.update(fe)
     trades = simulate(ds, pl, bl, variants=not a.main_only, fx_loader=fxl, bench_fx_loader=benchmark_fxl)
     def marks(row, days):
@@ -146,7 +146,15 @@ def cmd_study(a):
         except (OSError, ValueError, TypeError, KeyError):
             return pd.Series(index=days, dtype=float)
 
-    result = evaluate(trades, marks=marks)
+    def bench_marks(region, days):
+        try:
+            quotes = bl(region, days[0].date(), days[-1].date())
+            converted = {d: float(v) / benchmark_fxl(region, d.date()) for d, v in quotes.close.items()}
+            return pd.Series(converted, dtype=float)
+        except (OSError, ValueError, TypeError, KeyError):
+            return pd.Series(dtype=float)
+
+    result = evaluate(trades, marks=marks, benchmark_marks=bench_marks)
     result["confirmed_only"] = confirmed_only
     result["regional_funnel"] = append_study_stages(regional_funnel, ds, trades)
     print(write_report(result, funnel, ds, trades, bench_loader=bl))

@@ -2143,9 +2143,9 @@
       "listing_status": "matches_prior_issuer_filing",
       "confirmatory_eligible": false,
       "exclusion": [
-        "historical_price_series_security_link_missing",
         "previously_exposed_holdout"
-      ]
+      ],
+      "identity_evidence": "config/identity_evidence.json"
     },
     {
       "event_id": "EDGAR:0000921895-23-000931",

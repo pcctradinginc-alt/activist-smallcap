@@ -153,7 +153,7 @@ def load_trades(path) -> pd.DataFrame:
 
 # Only relax one named candidate filter; never relax universe, data quality,
 # minimum lot, missing FX, or execution capacity. No holdout exploration.
-ABLATION_FILTERS = ("Spread", "Anstieg 20T", "Kurs über Aktivisten-Einstand",
+ABLATION_FILTERS = ("Marktkapitalisierung außerhalb", "Tagesumsatz zu gering", "Kurs unter Mindestkurs", "Spread", "Anstieg 20T", "Kurs über Aktivisten-Einstand",
                     "Großaktionär über Grenze", "Quartalszahlen-Sperre", "Liquidität")
 
 
@@ -231,7 +231,7 @@ def policy_comparisons(t: pd.DataFrame) -> dict:
     return out
 
 
-def evaluate(t: pd.DataFrame, *, marks=None) -> dict:
+def evaluate(t: pd.DataFrame, *, marks=None, benchmark_marks=None) -> dict:
     """Reine Auswertung der Trades-Tabelle (kein Netzwerk). Erkundungstabellen nur mit Entwicklungszeitraum (dev_only)."""
     p = params()
     res = {"combos": {}, "execution": {}}
@@ -250,7 +250,8 @@ def evaluate(t: pd.DataFrame, *, marks=None) -> dict:
     res["data_quality"] = res["alpha"]["data_quality"]
     res["policy_comparisons"] = policy_comparisons(t)
     from .control_portfolios import compare
-    res["control_portfolios"] = compare(t, start_cash=p["study"]["econ_portfolio_eur"], marks=marks)
+    res["control_portfolios"] = compare(t, start_cash=p["study"]["econ_portfolio_eur"], marks=marks,
+                                        benchmark_marks=benchmark_marks)
     mt = main_trades(t)
     if len(mt):
         mt = ranker.pit_activist_record(mt)

@@ -107,7 +107,41 @@ def _marked(result, positions, marks, calendar, start_cash):
     return result
 
 
-def compare(trades: pd.DataFrame, start_cash=20000.0, max_positions=15, *, marks=None):
+def buy_and_hold(quotes, calendar, start_cash, region, costs):
+    """EUR regional-index reference with the same per-side cost model."""
+    from ..paper.execution import cost_one_side
+
+    days = pd.DatetimeIndex(calendar)
+    valid = quotes.reindex(days).where(lambda s: s.gt(0) & s.lt(float("inf")))
+    observed = valid.dropna()
+    if observed.empty:
+        return {"status": "benchmark_prices_missing", "net_return": None, "max_drawdown": None}
+    entry_day, exit_day = observed.index[[0, -1]]
+    first = float(observed.iloc[0])
+    last = float(observed.iloc[-1])
+    fixed = costs.get("fixed_fee_eur_per_order", 0.0)
+    rate = cost_one_side(None, costs, region, "buy")
+    invested = (start_cash - fixed) / (1 + rate)
+    if invested <= 0 or entry_day == exit_day:
+        return {"status": "benchmark_window_insufficient", "net_return": None, "max_drawdown": None}
+    filled = valid.ffill(limit=7)
+    mark = pd.Series(start_cash, index=days, dtype=float)
+    mark.loc[entry_day:] = invested * filled.loc[entry_day:] / first
+    proceeds = invested * last / first
+    net = proceeds * (1 - cost_one_side(None, costs, region, "sell", proceeds))
+    mark.loc[exit_day] = net
+    if mark.loc[exit_day:].isna().any() or (days[-1] - exit_day).days > 7:
+        return {"status": "benchmark_prices_missing_at_horizon", "net_return": None, "max_drawdown": None}
+    mark.loc[exit_day:] = net
+    complete = mark.notna().all()
+    dd = (1 - mark / mark.cummax().clip(lower=start_cash)).max()
+    return {"status": "cost_adjusted_index_reference" if complete else "benchmark_marks_incomplete",
+            "net_return": float(net / start_cash - 1) if complete else None,
+            "max_drawdown": float(dd) if complete else None,
+            "daily_nav": {str(d.date()): float(v) if pd.notna(v) else None for d, v in mark.items()}}
+
+
+def compare(trades: pd.DataFrame, start_cash=20000.0, max_positions=15, *, marks=None, benchmark_marks=None):
     from .alpha import dev_only, split_of
     required = {"entry_date", "exit_date", "campaign_key", "invested_eur", "buy_cost",
                 "published", "variant", "qualified", "status", "executed", "complete"}
@@ -142,4 +176,10 @@ def compare(trades: pd.DataFrame, start_cash=20000.0, max_positions=15, *, marks
         policies["cash"] = g.iloc[0:0]
         for name, rows in policies.items():
             out[split + "/" + name] = replay(rows, start_cash, max_positions, marks=marks, calendar=calendar)
+        if benchmark_marks is not None and calendar is not None:
+            from ..common import params
+            for region in sorted(set(g.region)):
+                prices = benchmark_marks(region, calendar)
+                out[f"{split}/buy_and_hold/{region}"] = buy_and_hold(
+                    prices, calendar, start_cash, region, params()["costs"])
     return out

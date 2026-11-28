@@ -19,6 +19,8 @@ from ..sources import delisting, edinet_docs, hist_ticker, prices, secmeta, sect
 from . import holders
 from .identity import apply_identity, approved_identity, identity_status, load_evidence, role_issues
 
+ECONOMIC_UNIVERSE_REASONS = {"Marktkapitalisierung außerhalb", "Tagesumsatz zu gering", "Kurs unter Mindestkurs"}
+
 INITIAL = {"SC 13D", "SCHEDULE 13D"}
 AMEND = {"SC 13D/A", "SCHEDULE 13D/A"}
 PASSIVE = {"SC 13G", "SC 13G/A", "SCHEDULE 13G", "SCHEDULE 13G/A"}
@@ -126,7 +128,7 @@ def campaigns(events: list[dict], reg: Register) -> list[dict]:
 
 
 def build(events: list[dict], end: date | None = None, parse_filings: bool = True,
-          since: str | None = None, *, confirmed_only=False) -> tuple[pd.DataFrame, Counter]:
+          since: str | None = None, *, confirmed_only=False, allow_universe_ablations=False) -> tuple[pd.DataFrame, Counter]:
     p, lim = params(), risk_limits()["candidate"]
     reg = Register(events)
     funnel, rows, cache = Counter(), [], _parsed_cache()
@@ -210,8 +212,12 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
         if uv:
             for v in uv:
                 funnel[f"Universum: {v}"] += 1
-            row["status"] = "außerhalb Universum: " + "; ".join(uv); rows.append(row); continue
-        funnel["im Universum"] += 1
+            if not (allow_universe_ablations and approved and set(uv) <= ECONOMIC_UNIVERSE_REASONS):
+                row["status"] = "außerhalb Universum: " + "; ".join(uv)
+                rows.append(row)
+                continue
+        else:
+            funnel["im Universum"] += 1
         # Ausschlussregeln, soweit historisch aus öffentlichen Daten bestimmbar
         row.update(demand=ft.get("demand"), demand_evidence=ft.get("demand_evidence"),
                    stake=ft.get("percent_of_class"), activist_cost=ft.get("avg_purchase_price"))
@@ -236,7 +242,7 @@ def build(events: list[dict], end: date | None = None, parse_filings: bool = Tru
             pos_usd = p["order"]["position_eur"] / eur_per_unit(row["ticker"], "US", d0)
         except Exception:
             pos_usd = None                        # kein stiller Fallback: ohne Wechselkurs keine Liquiditätsprüfung
-        reasons = candidate_reasons(row, pos_usd, lim)      # ADV in USD
+        reasons = [*uv, *candidate_reasons(row, pos_usd, lim)]      # ADV in USD
         # Ausstiege: spätere Meldungen dieser Kampagne mit Anteil < 5 % oder Exit-Formulierung
         exits = []
         if parse_filings:
@@ -349,7 +355,7 @@ def _major(idx: dict, key, before: str, stake) -> float | None:
     return max((x for x in (mh, st) if x is not None), default=None)
 
 
-def build_jp(events: list[dict], end: date | None = None, since: str | None = None, *, confirmed_only=False) -> tuple[pd.DataFrame, Counter]:
+def build_jp(events: list[dict], end: date | None = None, since: str | None = None, *, confirmed_only=False, allow_universe_ablations=False) -> tuple[pd.DataFrame, Counter]:
     p, lim = params(), risk_limits()["candidate"]
     cfg, funnel, rows = p["universe"]["JP"], Counter(), []
     evidence = load_evidence()
@@ -384,8 +390,12 @@ def build_jp(events: list[dict], end: date | None = None, since: str | None = No
         if uv:
             for v in uv:
                 funnel[f"JP Universum: {v}"] += 1
-            row["status"] = "außerhalb Universum: " + "; ".join(uv); rows.append(row); continue
-        funnel["JP im Universum"] += 1
+            if not (allow_universe_ablations and approved and set(uv) <= ECONOMIC_UNIVERSE_REASONS):
+                row["status"] = "außerhalb Universum: " + "; ".join(uv)
+                rows.append(row)
+                continue
+        else:
+            funnel["JP im Universum"] += 1
         from ..sources.fx import eur_per_unit
         try:
             eurjpy = 1 / eur_per_unit(c["ticker"], "JP", d0)
@@ -395,7 +405,7 @@ def build_jp(events: list[dict], end: date | None = None, since: str | None = No
         row["sector"] = None  # no archived JP sector classifications
         row["major_holder"] = _major(jp_idx, ("JP", c.get("issuer_sec_code") or c["ticker"]), c["published"], row.get("stake"))
         row["days_to_earnings"], row["earnings_check"] = None, "unbekannt (keine Datenquelle)"
-        reasons = candidate_reasons(row, pos_jpy, lim)
+        reasons = [*uv, *candidate_reasons(row, pos_jpy, lim)]
         if cfg.get("lot_size", 100) * pf["price"] > pos_jpy:
             reasons.insert(0, "Mindestorder (100 Stück) > Position")
         row["exit_events"] = [fu["published"] for fu in c["followups"]
@@ -404,14 +414,14 @@ def build_jp(events: list[dict], end: date | None = None, since: str | None = No
         row["status"] = ("verworfen: " + "; ".join(reasons)) if reasons else "qualifiziert"
         funnel["JP verworfen" if reasons else "JP qualifiziert"] += 1
         row["price_check"] = chk.get("ok")
-        if not reasons and os.environ.get("EDINET_API_KEY"):
+        if (not reasons or approved) and os.environ.get("EDINET_API_KEY"):
             # keine zweite freie Kursreihe für Japan: Kursniveau gegen die eigenen Preisangaben des Meldenden (EDINET) prüfen
             from ..sources import edinet_docs
             refs = edinet_docs.price_refs(str(c["event_id"]).split(":", 1)[-1], os.environ["EDINET_API_KEY"])
             row["price_check"], row["price_check_note"] = prices.reference_check(px, refs)
             row["price_check_kind"] = "EDINET-Einstand"
             if row["price_check"] is False:
-                funnel["JP qualifiziert"] -= 1; funnel["JP Kursreihe unplausibel"] += 1
+                funnel["JP verworfen" if reasons else "JP qualifiziert"] -= 1; funnel["JP Kursreihe unplausibel"] += 1
                 row["status"] = "gesperrt: Kursabweichung"; rows.append(row); continue
         row["mcap"] = c.get("total_shares_outstanding") * pf["price"] if c.get("total_shares_outstanding") else None
         row.update(data_quality(row, ticker_certain=bool(approved), activist_evidence=bool(

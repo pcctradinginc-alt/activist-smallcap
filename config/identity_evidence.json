@@ -1,1 +1,70 @@
-[]
+[
+  {
+    "event_id": "EDGAR:0000921895-23-000806",
+    "region": "US",
+    "published": "2023-03-31T17:05:02-04:00",
+    "url": "https://www.sec.gov/Archives/edgar/data/1873893/0000921895-23-000806.txt",
+    "filer_id": "0001873893",
+    "filer_name": "325 CAPITAL LLC",
+    "issuer_id": "0001201792",
+    "issuer_name": "AMERICAN PUBLIC EDUCATION INC",
+    "source": "EDGAR",
+    "ticker": "APEI",
+    "isin": "US02913V1035",
+    "exchange": "NASDAQ",
+    "original": {
+      "url": "https://www.sec.gov/Archives/edgar/data/1873893/0000921895-23-000806.txt",
+      "sha256": "467e5c640a57de916793e0cd5c41d62a9bc14293399037d12928cb3c38aec3c9",
+      "excerpt": "Common Stock, $0.01 par value per share (Title of Class of Securities) 02913V103 (CUSIP Number). SEC header identifies 325 Capital LLC and American Public Education Inc."
+    },
+    "listing": {
+      "url": "https://www.sec.gov/Archives/edgar/data/1201792/000120179223000004/apei-20221231.htm",
+      "published": "2023-03-14",
+      "sha256": "d3a32f1cbd0c8f12094c2d0501fb0be8117bbaa2c4105d99dc18a96b422ca3a8",
+      "excerpt": "American Public Education, Inc. | Common Stock, $0.01 par value per share | APEI | Nasdaq Global Select Market"
+    },
+    "price_series": {
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/APEI?period1=1679961600&period2=1715385600&interval=1d",
+      "sha256": "d0dcdedf4c01a5e37b679c7839f1562c6692aded1a6292bc1e99733668afae64",
+      "provider": "yahoo",
+      "valid_from": "2023-03-28",
+      "valid_through": "2024-05-07",
+      "excerpt": "283 historical sessions 2023-03-28 through 2024-05-10. Yahoo Equity APEI, NasdaqGS, American Public Education, Inc. Issuer reports corroborate the venue and ticker through 2024-05-07."
+    },
+    "supporting_documents": [
+      {
+        "url": "https://api.openfigi.com/v3/mapping",
+        "lookup": {
+          "idType": "ID_ISIN",
+          "idValue": "US02913V1035",
+          "exchCode": "US"
+        },
+        "sha256": "cc2d33a74748ed0d11de4e59e76d4ac373d1295da8f2bcd6714038e4f5f89e43",
+        "excerpt": "One mapping, APEI, BBG000RVD346, Common Stock, AMERICAN PUBLIC EDUCATION"
+      },
+      {
+        "url": "https://www.sec.gov/Archives/edgar/data/1201792/000120179224000009/apei-20240331.htm",
+        "published": "2024-05-07",
+        "sha256": "1dbe59de2378f28f1ac666b501b6e5ce67c49859b9838642a87ecf9798bf3618",
+        "excerpt": "Same CIK, common stock, APEI, Nasdaq Global Select Market"
+      },
+      {
+        "url": "https://www.sec.gov/Archives/edgar/data/1201792/000120179223000008/apei-20230331.htm",
+        "published": "2023-05-09",
+        "sha256": "8e3c208debd01a2e6543421cfa7d75cf0633ead8607eab2f5fb8cea3b2975259",
+        "excerpt": "Same CIK, common stock, APEI, Nasdaq Global Select Market"
+      },
+      {
+        "url": "https://www.sec.gov/Archives/edgar/data/1201792/000120179223000012/apei-20230630.htm",
+        "published": "2023-08-08",
+        "sha256": "9e18d6b08392a6076754714ae1a5dc3a9bb34ad6f5003bff7100dc50ec79dee7",
+        "excerpt": "Same CIK, common stock, APEI, Nasdaq Global Select Market"
+      }
+    ],
+    "demand_review": {
+      "class": "board",
+      "concrete": true,
+      "excerpt": "he “ Board ”), effective March 28, 2023, and to nominate him for election at the 2023 Annual Meeting. Mr. Braner has also been appointed as a member of the Management Development and Compensation Committee. The terms of the Cooperation Agreement further provide that the Reporting Persons are subject"
+    }
+  }
+]

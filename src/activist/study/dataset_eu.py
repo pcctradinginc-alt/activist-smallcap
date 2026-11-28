@@ -127,7 +127,8 @@ def fx_series(pair: str, end: date) -> pd.Series | None:
 
 
 def build_eu(events: list[dict], end: date | None = None, use_network_figi: bool = True,
-             since: str | None = None, *, confirmed_only=False) -> tuple[pd.DataFrame, Counter]:
+             since: str | None = None, *, confirmed_only=False, allow_universe_ablations=False) -> tuple[pd.DataFrame, Counter]:
+    from .dataset import ECONOMIC_UNIVERSE_REASONS, _major, data_quality
     p, lim = params(), risk_limits()["candidate"]
     funnel, rows = Counter(), []
     evidence = load_evidence()
@@ -189,19 +190,21 @@ def build_eu(events: list[dict], end: date | None = None, use_network_figi: bool
         if uv:
             for v in uv:
                 funnel[f"EU Universum: {v}"] += 1
-            row["status"] = "außerhalb Universum: " + "; ".join(uv); rows.append(row); continue
-        funnel["EU im Universum"] += 1
+            if not (allow_universe_ablations and approved and set(uv) <= ECONOMIC_UNIVERSE_REASONS):
+                row["status"] = "außerhalb Universum: " + "; ".join(uv)
+                rows.append(row)
+                continue
+        else:
+            funnel["EU im Universum"] += 1
         row["sector"] = None  # no archived sector classifications
-        from .dataset import _major
         row["major_holder"] = _major(idx, (reg, isin), c["published"], row.get("stake"))
         row["days_to_earnings"], row["earnings_check"] = None, "unbekannt (keine Datenquelle)"
-        reasons = candidate_reasons(row, p["order"]["position_eur"], lim)      # row["adv"] ist bereits in EUR
+        reasons = [*uv, *candidate_reasons(row, p["order"]["position_eur"], lim)]      # row["adv"] ist bereits in EUR
         thr = EXIT_BELOW[reg]
         row["exit_events"] = [fu["published"] for fu in c["followups"]
                               if fu.get("holding_ratio") is not None and fu["holding_ratio"] < thr][:1]
         row["status"] = ("verworfen: " + "; ".join(reasons)) if reasons else "qualifiziert"
         funnel["EU verworfen" if reasons else "EU qualifiziert"] += 1
-        from .dataset import data_quality
         row["price_check"] = None                 # keine zweite kostenlose Kursquelle für Europa -> ungeprüft
         row.update(data_quality(row, ticker_certain=bool(approved), activist_evidence=bool(approved and approved.get("activist_review"))))
         rows.append(row)

@@ -49,3 +49,15 @@ def test_daily_marks_use_eur_values_and_missing_marks_invalidate_drawdown():
     assert result["capital_days_eur"] == 2020.
     unavailable = replay(rows, start_cash=2000, calendar=days)
     assert unavailable["missing_mark_days"] == 2 and unavailable["net_return"] is None
+
+
+def test_cost_adjusted_benchmark_reference_is_independent():
+    from activist.common import params
+    from activist.study.control_portfolios import buy_and_hold
+
+    dates = pd.date_range("2022-02-01", periods=3)
+    prices = pd.Series([100., 80., 110.], index=dates)
+    out = buy_and_hold(prices, dates, 1000., "US", params()["costs"])
+    assert out["status"] == "cost_adjusted_index_reference"
+    assert 0 < out["net_return"] < .10
+    assert out["max_drawdown"] > .20
