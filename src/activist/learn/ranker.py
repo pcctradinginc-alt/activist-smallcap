@@ -40,8 +40,9 @@ def _dt(s: pd.Series) -> pd.Series:
 def pit_activist_record(trades: pd.DataFrame) -> pd.DataFrame:
     """activist_prior_n / activist_prior_mean strikt punktgenau: nur Zeilen mit exit_date < published der Zeile."""
     df = trades.copy()
-    pub = _dt(df["published"]).dt.normalize().to_numpy()
-    ex = _dt(df["exit_date"]).dt.normalize().to_numpy()
+    # Preserve the published local calendar date; UTC conversion can move a late US filing into tomorrow.
+    pub = pd.to_datetime(df["published"].astype(str).str[:10], errors="coerce").to_numpy()
+    ex = pd.to_datetime(df["exit_date"].astype(str).str[:10], errors="coerce").to_numpy()
     y = df["net_excess"].to_numpy(float)
     act = df["activist"].to_numpy()
     ns, means = [], []
