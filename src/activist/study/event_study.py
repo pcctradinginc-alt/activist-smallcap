@@ -20,6 +20,13 @@ def run_campaign(c: dict, px: pd.DataFrame, bench: pd.DataFrame, p: dict, stop=T
     fill = simulate_entry(px, pd.Timestamp(c["published"]), p["order"], pos_local)
     if not fill.filled:
         return {"executed": False, "reason": fill.reason}
+    value = p["order"]["position_eur"] * fill.fill_ratio
+    if c["region"] == "JP":
+        lot = int(p["universe"]["JP"].get("lot_size", 100))
+        qty = int(value * fx_local / fill.price / lot) * lot
+        if qty <= 0:
+            return {"executed": False, "reason": "Mindestorder am Fill nicht erreicht"}
+        value = qty * fill.price / fx_local
     xd, xp, why = simulate_exit(px, fill.fill_date, fill.price, p["exit"], exit_events, stop, max_days)
     gross = xp / fill.price - 1
     # Vergleichsindex zeitgleich zu den Aktienkursen: Einstieg zur Eröffnung, Ausstieg zur Eröffnung (Meldung/Stopp)
@@ -34,7 +41,6 @@ def run_campaign(c: dict, px: pd.DataFrame, bench: pd.DataFrame, p: dict, stop=T
         return {"executed": True, "complete": False, "reason": "Vergleichsindex unplausibel", "entry_date": fill.fill_date,
                 "exit_date": xd, "exit_reason": why}
     bret = float(b1 / b0 - 1)
-    value = p["order"]["position_eur"] * fill.fill_ratio
     buy = cost_one_side(c.get("half_spread"), p["costs"], c["region"], "buy", value)
     buy += p["costs"].get("fixed_fee_eur_per_order", 0.0) * max(fill.fill_days - 1, 0) / max(value, 1e-9)
     cost = buy + cost_one_side(c.get("half_spread"), p["costs"], c["region"], "sell", value)
@@ -78,7 +84,8 @@ def simulate(ds: pd.DataFrame, price_loader, bench_loader, variants: bool = True
             r = run_campaign(c, px, bench, p, stop, md, ex if not md else (), fxl)
             trades.append({**{k: c[k] for k in ("campaign_key", "activist", "filer_id", "region", "signal_class",
                                                  "status", "ticker", "published", "demand")},
-                           "mcap": c.get("mcap"), "verified": bool(c.get("verified")), "dq_missing": c.get("dq_missing"),
+                           **{k: c.get(k) for k in ("event_id", "issuer_id", "issuer_name", "filer_name", "url", "demand_evidence", "activist_evidence_kind", "prior_proposal_count")},
+                           "mcap": c.get("mcap"), "verified": c.get("verified") is True, "dq_missing": c.get("dq_missing"),
                            "stake": c.get("stake"), "runup_20d": c.get("runup_20d"),
                            "adv_eur": (c.get("adv") / fxl) if c.get("adv") and fxl else None,
                            "price_source": c.get("price_source"),
@@ -333,7 +340,9 @@ def write_report(res: dict, funnel, ds: pd.DataFrame, trades: pd.DataFrame, path
     if out is not None and len(out):
         cols = [c for c in ("campaign_key", "published", "entry_date", "exit_date", "exit_reason", "region", "signal_class",
                             "activist", "demand", "stake", "runup_20d", "adv_eur", "activist_prior_n", "activist_prior_mean",
-                            "gross", "bench", "cost", "net_excess", "split", "verified") if c in out]
+                            "gross", "bench", "cost", "net_excess", "split", "verified", "event_id", "issuer_id", "issuer_name",
+                            "filer_id", "filer_name", "ticker", "url", "demand_evidence", "activist_evidence_kind",
+                            "prior_proposal_count", "dq_missing") if c in out]
         atomic_write_text(REPORTS / "campaign_outcomes.csv", out[cols].to_csv(index=False))   # Ergebnis je abgeschlossener Kampagne
     card = (res.get("learning") or {}).get("card_full")
     if card:
