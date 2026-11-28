@@ -14,19 +14,25 @@ BENCH_MAX_DAILY_MOVE = 0.25    # ein breiter Index bewegt sich nie um 25 % an ei
 
 
 def run_campaign(c: dict, px: pd.DataFrame, bench: pd.DataFrame, p: dict, stop=True, max_days=None,
-                 exit_events=(), fx_local: float = 1.0) -> dict:
+                 exit_events=(), fx_local: float = 1.0, fx_at=None) -> dict:
     """fx_local = Einheiten Landeswährung je EUR am Entscheidungstag (Volumen-Obergrenze in Landeswährung)."""
     pos_local = p["order"]["position_eur"] * fx_local
     fill = simulate_entry(px, pd.Timestamp(c["published"]), p["order"], pos_local)
     if not fill.filled:
         return {"executed": False, "reason": fill.reason}
-    value = p["order"]["position_eur"] * fill.fill_ratio
+    import math
+    entry_fx = fx_at(fill.fill_date.date()) if fx_at else fx_local
+    if not math.isfinite(entry_fx) or entry_fx <= 0:
+        return {"executed": False, "reason": "Einstiegswechselkurs fehlt"}
+    local_value = pos_local * fill.fill_ratio
+    value = local_value / entry_fx
     if c["region"] == "JP":
         lot = int(p["universe"]["JP"].get("lot_size", 100))
-        qty = int(value * fx_local / fill.price / lot) * lot
+        qty = int(local_value / fill.price / lot) * lot
         if qty <= 0:
             return {"executed": False, "reason": "Mindestorder am Fill nicht erreicht"}
-        value = qty * fill.price / fx_local
+        local_value = qty * fill.price
+        value = local_value / entry_fx
     xd, xp, why = simulate_exit(px, fill.fill_date, fill.price, p["exit"], exit_events, stop, max_days)
     gross = xp / fill.price - 1
     # Vergleichsindex zeitgleich zu den Aktienkursen: Einstieg zur Eröffnung, Ausstieg zur Eröffnung (Meldung/Stopp)
@@ -43,14 +49,24 @@ def run_campaign(c: dict, px: pd.DataFrame, bench: pd.DataFrame, p: dict, stop=T
     bret = float(b1 / b0 - 1)
     buy = cost_one_side(c.get("half_spread"), p["costs"], c["region"], "buy", value)
     buy += p["costs"].get("fixed_fee_eur_per_order", 0.0) * max(fill.fill_days - 1, 0) / max(value, 1e-9)
-    sell = cost_one_side(c.get("half_spread"), p["costs"], c["region"], "sell", value * (1 + gross))
+    exit_fx = fx_at(xd.date()) if fx_at else fx_local
+    if not math.isfinite(exit_fx) or exit_fx <= 0:
+        return {"executed": True, "complete": False, "reason": "Ausstiegswechselkurs fehlt",
+                "entry_date": fill.fill_date, "exit_date": xd, "invested_eur": value, "buy_cost": buy}
+    fx_ratio = entry_fx / exit_fx
+    exit_value_eur = value * (1 + gross) * fx_ratio
+    sell = cost_one_side(c.get("half_spread"), p["costs"], c["region"], "sell", exit_value_eur)
     cost = buy + sell
     cash_net = (1 + gross) * (1 - sell) / (1 + buy) - 1
+    net_eur = exit_value_eur * (1 - sell) / (value * (1 + buy)) - 1
     return {"executed": True, "complete": why not in OPEN, "fill_ratio": fill.fill_ratio,
             "entry_date": fill.fill_date, "entry": fill.price, "exit_date": xd, "exit": xp, "exit_reason": why,
             "gross": gross, "bench": bret, "cost": cost, "net_excess": gross - bret - cost,
             "buy_cost": buy, "sell_cost": sell, "invested_eur": value, "cash_net_local": cash_net,
             "cash_net_excess_local": cash_net - bret,
+            "entry_fx_local_per_eur": entry_fx, "exit_fx_local_per_eur": exit_fx,
+            "exit_value_eur": exit_value_eur, "net_eur": net_eur,
+            "net_excess_eur_same_currency_benchmark": net_eur - ((1 + bret) * fx_ratio - 1),
             "hold_days": int((px.index > fill.fill_date).sum() if why in OPEN else ((px.index > fill.fill_date) & (px.index <= xd)).sum())}
 
 
@@ -85,10 +101,15 @@ def simulate(ds: pd.DataFrame, price_loader, bench_loader, variants: bool = True
         for n in names:
             stop = n == "main"
             md = int(n.split("_")[1]) if n.startswith("hold_") else None
-            r = run_campaign(c, px, bench, p, stop, md, ex if not md else (), fxl)
+            def rate_at(day):
+                try:
+                    return float(fx_loader(c["ticker"], c["region"], day))
+                except Exception:
+                    return float("nan")
+            r = run_campaign(c, px, bench, p, stop, md, ex if not md else (), fxl, rate_at if fx_loader else None)
             trades.append({**{k: c[k] for k in ("campaign_key", "activist", "filer_id", "region", "signal_class",
                                                  "status", "ticker", "published", "demand")},
-                           **{k: c.get(k) for k in ("event_id", "issuer_id", "issuer_name", "filer_name", "url", "demand_evidence", "activist_evidence_kind", "prior_proposal_count")},
+                           **{k: c.get(k) for k in ("event_id", "issuer_id", "issuer_name", "filer_name", "url", "demand_evidence", "activist_evidence_kind", "prior_proposal_count", "identity_status", "identity_issues", "identity_verified")},
                            "mcap": c.get("mcap"), "verified": c.get("verified") is True, "dq_missing": c.get("dq_missing"),
                            "stake": c.get("stake"), "runup_20d": c.get("runup_20d"),
                            "adv_eur": (c.get("adv") / fxl) if c.get("adv") and fxl else None,
