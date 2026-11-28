@@ -60,8 +60,15 @@ def parse_header(text: str) -> dict:
     def grab(pat, s=text):
         m = re.search(pat, s); return m.group(1).strip() if m else None
     acc = grab(r"<ACCEPTANCE-DATETIME>(\d{14})")
-    subj = text.split("SUBJECT COMPANY:")[1] if "SUBJECT COMPANY:" in text else ""
-    filer = text.split("FILED BY:")[1] if "FILED BY:" in text else ""
+    def role_block(role):
+        # Never let a missing field fall through into the next entity section.
+        m = re.search(r"(?m)^\s*" + re.escape(role) + r"\s*:\s*$", text)
+        if not m:
+            return ""
+        tail = text[m.end():]
+        return re.split(r"(?m)^\s*(?:SUBJECT COMPANY|FILED BY|REPORTING OWNER|ISSUER|<DOCUMENT>)\s*:?", tail, maxsplit=1)[0]
+    subj = role_block("SUBJECT COMPANY")
+    filer = role_block("FILED BY")
     published = None
     if acc:  # EDGAR-Zeit ist US/Eastern
         from zoneinfo import ZoneInfo
